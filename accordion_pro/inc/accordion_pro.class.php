@@ -357,7 +357,8 @@ class accordion_pro {
 			'allowfullscreen' => array(),
 			'allowscriptaccess' => array(),
 			'height' => array(),
-			'width' => array()
+			'width' => array(),
+			'wmode' => array()
 		);
 
 		$allowedextratags = array_merge($extratags, $allowedposttags);
