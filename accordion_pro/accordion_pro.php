@@ -38,7 +38,7 @@ if (empty($locale)) $locale = 'en_US';
 load_theme_textdomain('accordion_pro', dirname (__FILE__).'/locale/'.$locale.'.mo');
 
 // Plugin version
-define('ACCORDION_PRO_VERSION', '1.0.0');
+define('ACCORDION_PRO_VERSION', '1.1.0');
 
 // Require class
 require('inc/accordion_pro.class.php');
