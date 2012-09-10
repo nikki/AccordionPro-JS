@@ -378,7 +378,7 @@ class accordion_pro {
         $accordion['post_content'] .= '<li><h2><span>'.esc_html($accordion['acc_content']['content_title'][$key]).'</span></h2><div>'.wp_kses_post($content, $allowedextratags);
 
         // !!! check for shortcodes
-        // $accordion['post_content'] .= do_shortcode($content);
+        $accordion['post_content'] .= do_shortcode($content);
 
         // caption
         if ($accordion['acc_content']['content_caption_enabled'][$key]) {
