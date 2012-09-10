@@ -9,5 +9,5 @@ v1.0.1 - 06/02/12
  - Corrected folder name
  - Added 'wmode' to list of permitted attributes 
 
-v1.0.0 - 04/02/12
+v1.0 - 04/02/12
  - Initial release
