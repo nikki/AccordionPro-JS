@@ -3,7 +3,7 @@
 Plugin Name:    Accordion Pro
 Plugin URI:     http://accordionpro.nicolahibbert.com
 Description:    Create jQuery powered horizontal accordions to embed into your WordPress posts &amp; pages.
-Version:        1.0.0
+Version:        1.1.0
 Author:         Nicola Hibbert
 Author:         Mike Rogers
 Author URI:     http://nicolahibbert.com
