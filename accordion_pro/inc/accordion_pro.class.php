@@ -61,6 +61,9 @@ class accordion_pro {
     // Add the shortcode
     add_shortcode('accordion_pro', array($this, 'get_accordion'));
     
+    // Enable ability to execute shortcodes nested in slide content
+    add_filter('the_content', 'do_shortcode');  
+
     // Add the custom post type
     register_post_type(
       'accordion', array( 
@@ -96,9 +99,6 @@ class accordion_pro {
         )
       )
     );
-
-    // Enable ability to execute shortcodes nested in slide content
-    add_filter('the_content', 'do_shortcode');
   }
 
   // Init options on plugin activation
@@ -206,7 +206,7 @@ class accordion_pro {
   public function load_jquery() {
     wp_enqueue_script('jquery');
   }
-    
+
   // Used to call the accordion based on id
   public function get_accordion($atts) {
     if (isset($atts) && is_array($atts)) {
@@ -217,6 +217,7 @@ class accordion_pro {
 
       // Return cached accordion html
       $accordion = $this->get_accordion_settings($atts['id']);
+
       return $accordion['post_content'];
     } else {
       return '';      
@@ -341,6 +342,7 @@ class accordion_pro {
   // this generates the html for the accordion and saves it in the post content area.
   public function update_accordionCache($accordion) {
     global $allowedposttags;
+
     $extratags = array();
 
     $extratags['object'] = array(
@@ -376,9 +378,6 @@ class accordion_pro {
 
         // post content
         $accordion['post_content'] .= '<li><h2><span>'.esc_html($accordion['acc_content']['content_title'][$key]).'</span></h2><div>'.wp_kses_post($content, $allowedextratags);
-
-        // !!! check for shortcodes
-        $accordion['post_content'] .= do_shortcode($content);
 
         // caption
         if ($accordion['acc_content']['content_caption_enabled'][$key]) {
