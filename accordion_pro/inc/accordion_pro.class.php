@@ -381,7 +381,6 @@ class accordion_pro {
         $accordion['post_content'] .= do_shortcode($content);
 
         // caption
-        echo $accordion['acc_content']['content_caption_enabled'];
         if ($accordion['acc_content']['content_caption_enabled'][$key]) {
           $accordion['post_content'] .= '<div class="ap-caption ap-caption-'.$key.'">'.wp_kses_post($accordion['acc_content']['content_caption'][$key]).'</div>';
           $jqueryOptions['onTriggerSlide'] = 'onTriggerSlide: function() { this.find(".ap-caption").fadeOut(); }';
