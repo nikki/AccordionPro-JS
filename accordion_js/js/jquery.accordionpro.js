@@ -12,13 +12,279 @@
 
 ;(function($) {
 
+  var AccordionPro = function(elem, options) {
+    var defaults = {},
+        settings = {},
+        methods = {},
+        setup = {},
+        core = {};
+
+    /**
+     * Plugin defaults
+     */
+
+    defaults = {
+      orientation : 'horizontal',
+      responsive : false,
+
+      width : '100%',                          // fixed (px) or percentage (%)
+      height : 320,                           // fixed (px)
+      tabWidth : 48,                          // fixed (px)
+
+      activateOn : 'click',                   // click or mouseover
+      firstSlide : 1,                         // displays slide (n) on page load
+      slideSpeed : 800,                       // slide animation speed
+      onSlideOpen : function(e) {},        // callback on slide activate
+      onSlideClose : function(e) {},    // callback on slide anim complete
+
+      autoPlay : false,                       // automatically cycle through slides
+      pauseOnHover : false,                   // pause on hover
+      cycleSpeed : 6000,                      // time between slide cycles
+      easing : 'swing',                       // custom easing function
+
+      theme : 'basic',                        // basic, dark, light, or stitch
+      rounded : false,                        // square or rounded corners
+      enumerateSlides : false,                // put numbers on slides
+      linkable : false                        // link slides via hash
+    };
+
+    /**
+     * Merge defaults with options in new settings object
+     */
+
+    settings = $.extend({}, defaults, options);
+
+    // !!!
+    settings.orientation = 'vertical';
+    /**
+     * Delegate transition calls to animate if css3 animations not supported
+     */
+
+    if (!$.support.transition) $.fn.transition = $.fn.animate;
+
+    /**
+     * "Globals"
+     */
+
+    var slides = elem.children('ol').children('li'),
+        header = slides.children(':first-child'),
+        slideLen = slides.length,
+        slideWidth;
+
+    /**
+     * Public methods for triggering animation events
+     */
+
+    methods.play = function(index) {
+      var next;
+      if (core.playing) return;
+
+      // assign next slide value
+      next = core.nextSlide(index && index);
+
+      // start autoplay
+      core.playing = setInterval(function() {
+          header.eq(next()).trigger('click.accordionPro');
+      }, settings.cycleSpeed);
+    };
+
+    /**
+     * Internal plugin setup methods
+     */
+
+    setup.styles = function() {
+        // set container height and width, theme and corner style
+        elem
+            .width(settings.width)
+            .height(settings.height)
+            .addClass('accordionPro ' + settings.orientation)
+            .addClass(settings.rounded && 'rounded')
+            .addClass(settings.theme);
+
+        // set slide heights
+        slides
+            .addClass('slide')
+            .children(':first-child');
+            // .width(settings.tabWidth);
+
+        // use jQuery to calculate slide width value
+        console.log(header.eq(0).height());
+        slideWidth = elem.width() - slideLen * header.eq(0).width();
+    };
+
+
+    setup.getSlideCss = function(index, selected) {
+      var next = header.first().next(),
+          css = {
+            position : {},
+            offset : {},
+            padding : {}
+          };
+
+      // console.log(slideWidth);
+
+      if (settings.orientation === 'horizontal') {
+        css.position = { left : index * settings.tabWidth };
+        css.offset = parseInt(next.css('marginLeft'), 10) || parseInt(next.css('marginRight'), 10) || 0;
+        css.padding = { paddingLeft : settings.tabWidth };
+
+        // compensate for pre-selected slide
+        if (selected.length) {
+          if (index > header.index(selected)) css.position.left += slideWidth;
+        } else {
+          if (index >= settings.firstSlide) css.position.left += slideWidth;
+        }
+
+      } else if (settings.orientation === 'vertical') {
+        css.position = { top : index * settings.tabWidth };
+        css.offset = 0;
+        // css.offset = { paddingTop : parseInt(next.css('marginLeft'), 10) || parseInt(next.css('marginRight'), 10) || 0 };
+
+/*
+        // compensate for pre-selected slide
+        if (selected.length) {
+          if (index > header.index(selected)) css.position.left += slideWidth;
+        } else {
+          if (index >= settings.firstSlide) css.position.left += slideWidth;
+        }
+*/
+
+      }
+
+
+      return css;
+    };
+
+    setup.slidePositions = function() {
+      var selected = header.filter('.selected');
+
+      // account for already selected slide
+      if (!selected.length) header.eq(settings.firstSlide - 1).addClass('selected');
+
+      header.each(function(index) {
+        var $this = $(this),
+            css = setup.getSlideCss(index, selected);
+
+            // console.log(css);
+
+            // left = index * settings.headerWidth,
+            // offset = parseInt(margin.css('marginLeft'), 10) || parseInt(margin.css('marginRight'), 10) || 0;
+
+
+
+/*
+
+                        // set each slide position
+                        $this
+                            .css('left', left)
+                            .width(settings.containerHeight)
+                            .next()
+                                .width(slideWidth - offset)
+                                .css({ left : left, paddingLeft : settings.headerWidth });
+
+ */
+
+
+
+        // set each slide position
+        $this
+            .css(css.position)
+            .width(settings.width)
+            .height(settings.height)
+            .next()
+                .width(slideWidth - css.offset)
+                .css(css.position)
+                .css(css.padding);
+                // paddingLeft : settings.headerWidth });
+
+        // add number to bottom of tab
+        // settings.enumerateSlides && $this.append('<b>' + (index + 1) + '</b>');
+      });
+    };
+
+    setup.events = function() {};
+
+    setup.ie = function() {};
+
+    /**
+     * Internal animation methods
+     */
+
+    core.currentSlide = 0;
+
+    core.nextSlide = 0;
+
+    core.playing = 0;
+
+    core.animationFlag = 0;
+
+    core.animationCycle = function() {};
+
+    core.animateSlide = function() {};
+
+    core.animateGroup = function() {};
+
+    core.init = function() {
+
+
+        setup.styles();
+        setup.slidePositions();
+
+
+    };
+
+    core.init();
+    return methods;
+
+  };
+
+  /**
+   * Add plugin to $.fn
+   */
+
+  $.fn.accordionPro = function(method) {
+    var elem = this,
+        instance = elem.data('accordionPro');
+
+    // if creating a new instance
+    if (typeof method === 'object' || !method) {
+      return elem.each(function() {
+        var accordionPro;
+
+        // if plugin already instantiated, return
+        if (instance) return;
+
+        // otherwise create a new instance
+        accordionPro = new AccordionPro(elem, method);
+        elem.data('accordionPro', accordionPro);
+      });
+
+    // otherwise, call method on current instance
+    } else if (typeof method === 'string' && instance[method]) {
+      // debug method isn't chainable b/c we need the debug object to be returned
+      if (method === 'debug') {
+        return instance[method].call(elem);
+      } else { // the rest of the methods are chainable though
+        instance[method].call(elem);
+        return elem;
+      }
+    }
+  };
+
+
+
+
+/*
+
     var AccordionPro = function(elem, options) {
 
         var defaults = {
+            state : 'horizontal',
+            responsive : false,                     // overrides the above three settings, accordion adjusts to fill container
+
             containerWidth : 960,                   // fixed (px)
             containerHeight : 320,                  // fixed (px)
             headerWidth : 48,                       // fixed (px)
-            responsive : false,                     // overrides the above three settings, accordion adjusts to fill container
 
             activateOn : 'click',                   // click or mouseover
             firstSlide : 1,                         // displays slide (n) on page load
@@ -185,7 +451,7 @@
                         width = elem.parent().width(),
                         scale = width / settings.containerWidth; // linear scale
 
-                    console.log(scale);
+                    // console.log(scale);
 /*
                     if (linear) {
                         // linear scale
@@ -198,7 +464,7 @@
                         scale.y = obj.height / 320;
                     }
 */
-
+/*
                     prefixes.forEach(function(prefix) {
                         elem[0].style[prefix ? prefix + 'Transform' : 'transform'] = 'scale(' + scale + ', ' + scale + ')';
                     });
@@ -457,5 +723,5 @@
             }
         }
     };
-
+*/
 })(jQuery);
