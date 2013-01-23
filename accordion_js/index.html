@@ -5,7 +5,7 @@
         <title>Accordion Pro - a responsive accordion plugin for jQuery</title>
         <style>
             /* css for this page */
-            body { font: 14px/24px 'Helvetica Neue', Arial, sans-serif; color: #333; margin: 30px auto 60px; background: #eee }
+            body { font: 14px/24px 'Helvetica Neue', Arial, sans-serif; color: #333; margin: 30px auto 60px; background: #eee; height: 800px; }
             body > h2 { margin: 30px 0 15px; text-shadow: 1px 1px 0 white; border-bottom: 2px solid #333; padding-bottom: 5px }
             h1 { text-align: center; margin-bottom: 30px; text-shadow: 1px 1px 0 white }
             strong + p { margin-top: 0 }
@@ -297,8 +297,8 @@
 
                 // demos
                 $('#one').accordionPro({
-                        orientation : 'vertical',
-                        width : 300,
+                        width : '40%',
+                        height : '25em',
                         onSlideOpen : function() {
                             this.find('figcaption').fadeOut();
                         },
@@ -311,9 +311,9 @@
                         rounded : true,
                         enumerateSlides : true
                 }).find('figcaption:first').show();
-                $('#two').accordionPro({ orientation : 'vertical' });
-                $('#three').accordionPro({ orientation : 'vertical', theme : 'dark', rounded : true, enumerateSlides : true, firstSlide : 2, linkable : true, easing: 'easeInOutQuart' });
-                $('#four').accordionPro({ orientation : 'vertical', theme : 'light', firstSlide : 3, easing: 'easeOutBounce', activateOn: 'mouseover' });
+                $('#two').accordionPro({ width : '50%', height : '50%' });
+                $('#three').accordionPro({ width : '50%', height : '50%', theme : 'dark', rounded : true, enumerateSlides : true, firstSlide : 2, linkable : true, easing: 'easeInOutQuart' });
+                $('#four').accordionPro({ theme : 'light', width : '50%', height : '500px', firstSlide : 3, easing: 'easeOutBounce', activateOn: 'mouseover' });
 
                 // social links
                 var js, id = 'facebook-jssdk';

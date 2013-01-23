@@ -26,10 +26,11 @@
     defaults = {
       orientation : 'horizontal',
       responsive : false,
+      startClosed : false,
 
-      width : '100%',                          // fixed (px) or percentage (%)
-      height : 320,                           // fixed (px)
-      tabWidth : 48,                          // fixed (px)
+      width : '100%',                         // fixed (px) or percentage (%)
+      height : 800,                           // fixed (px) or percentage (%)
+      tabSize : 48,                           // fixed (px) or percentage (%)
 
       activateOn : 'click',                   // click or mouseover
       firstSlide : 1,                         // displays slide (n) on page load
@@ -67,9 +68,12 @@
      */
 
     var slides = elem.children('ol').children('li'),
-        header = slides.children(':first-child'),
-        slideLen = slides.length,
-        slideWidth;
+        slide = {
+          length : slides.length,
+          width : settings.width,
+          height : settings.height
+        },
+        header = slides.children(':first-child');
 
     /**
      * Public methods for triggering animation events
@@ -93,64 +97,89 @@
      */
 
     setup.styles = function() {
-        // set container height and width, theme and corner style
-        elem
-            .width(settings.width)
-            .height(settings.height)
-            .addClass('accordionPro ' + settings.orientation)
-            .addClass(settings.rounded && 'rounded')
-            .addClass(settings.theme);
+      var padding;
 
-        // set slide heights
-        slides
-            .addClass('slide')
-            .children(':first-child');
-            // .width(settings.tabWidth);
+      // set container height and width, theme and corner style
+      elem
+          .width(settings.width)
+          .height(settings.height)
+          .addClass('accordionPro ' + settings.orientation)
+          .addClass(settings.rounded && 'rounded')
+          .addClass(settings.theme);
 
-        // use jQuery to calculate slide width value
-        console.log(header.eq(0).height());
-        slideWidth = elem.width() - slideLen * header.eq(0).width();
+      // set height and width settings to px value (percentages will cause problems later)
+      settings.width = elem.width();
+      settings.height = elem.height();
+
+      // reset elem dimensions if start closed setting enabled
+      if (settings.startClosed) {
+        if (settings.orientation === 'horizontal') {
+          padding = parseInt(elem.css('paddingLeft'), 10) + parseInt(elem.css('paddingRight'), 10) + parseInt(elem.css('borderLeft'), 10) + parseInt(elem.css('borderRight'), 10);
+          elem.width(slide.length * settings.tabSize + padding);
+        } else if (settings.orientation === 'vertical') {
+          padding = parseInt(elem.css('paddingTop'), 10) + parseInt(elem.css('paddingBottom'), 10) + parseInt(elem.css('borderTop'), 10) + parseInt(elem.css('borderBottom'), 10) * 0.5;
+          elem.height(slide.length * settings.tabSize + padding);
+        }
+      }
+
+      // add slide class to each slide
+      slides.addClass('slide');
+
+      // set tab size on tab elem to calculate px value
+      header.eq(0).height(settings.tabSize);
+      settings.tabSize = header.eq(0).height();
     };
-
 
     setup.getSlideCss = function(index, selected) {
       var next = header.first().next(),
+          offset = parseInt(next.css('marginLeft'), 10) || parseInt(next.css('marginRight'), 10) || 0,
           css = {
             position : {},
-            offset : {},
-            padding : {}
+            padding : {},
+            width : settings.width,
+            slide : {}
           };
 
-      // console.log(slideWidth);
-
       if (settings.orientation === 'horizontal') {
-        css.position = { left : index * settings.tabWidth };
-        css.offset = parseInt(next.css('marginLeft'), 10) || parseInt(next.css('marginRight'), 10) || 0;
-        css.padding = { paddingLeft : settings.tabWidth };
+        // calculate slide.width
+        slide.width = settings.width - slide.length * settings.tabSize;
+        slide.height = header.eq(0).height; // px value
+
+        // calculate css properties
+        css.position = { left : index * settings.tabSize };
+        css.padding = { paddingLeft : settings.tabSize };
+        css.width = settings.height;
+
+        // !!! refactor
+        css.slide.width = slide.width - offset + settings.tabSize;
+        css.slide.height = slide.height;
 
         // compensate for pre-selected slide
         if (selected.length) {
-          if (index > header.index(selected)) css.position.left += slideWidth;
-        } else {
-          if (index >= settings.firstSlide) css.position.left += slideWidth;
+          if (index > header.index(selected)) css.position.left += slide.width;
+        } else if (!settings.startClosed) {
+          if (index >= settings.firstSlide) css.position.left += slide.width;
         }
 
       } else if (settings.orientation === 'vertical') {
-        css.position = { top : index * settings.tabWidth };
-        css.offset = 0;
-        // css.offset = { paddingTop : parseInt(next.css('marginLeft'), 10) || parseInt(next.css('marginRight'), 10) || 0 };
+        // calculate slide.height
+        slide.width = header.eq(0).width; // px value
+        slide.height = settings.height - slide.length * settings.tabSize;
 
-/*
+        // calculate css properties
+        css.position = { top : index * settings.tabSize };
+        css.padding = { paddingTop : settings.tabSize };
+        css.slide.width = slide.width - offset;
+        css.slide.height = slide.height;
+        css.slide.position = { top : index * settings.tabSize };
+
         // compensate for pre-selected slide
         if (selected.length) {
-          if (index > header.index(selected)) css.position.left += slideWidth;
-        } else {
-          if (index >= settings.firstSlide) css.position.left += slideWidth;
+          if (index > header.index(selected)) css.position.top += slide.height;
+        } else if (!settings.startClosed) {
+          if (index >= settings.firstSlide) css.position.top += slide.height;
         }
-*/
-
       }
-
 
       return css;
     };
@@ -159,43 +188,26 @@
       var selected = header.filter('.selected');
 
       // account for already selected slide
-      if (!selected.length) header.eq(settings.firstSlide - 1).addClass('selected');
+      if (!selected.length && !settings.startClosed) header.eq(settings.firstSlide - 1).addClass('selected');
 
       header.each(function(index) {
         var $this = $(this),
-            css = setup.getSlideCss(index, selected);
-
-            // console.log(css);
-
-            // left = index * settings.headerWidth,
-            // offset = parseInt(margin.css('marginLeft'), 10) || parseInt(margin.css('marginRight'), 10) || 0;
-
-
-
-/*
-
-                        // set each slide position
-                        $this
-                            .css('left', left)
-                            .width(settings.containerHeight)
-                            .next()
-                                .width(slideWidth - offset)
-                                .css({ left : left, paddingLeft : settings.headerWidth });
-
- */
-
-
+            css = setup.getSlideCss.call($this, index, selected);
 
         // set each slide position
         $this
+            .width(css.width)
+            .height(settings.tabSize)
             .css(css.position)
-            .width(settings.width)
-            .height(settings.height)
             .next()
-                .width(slideWidth - css.offset)
+                .width(css.slide.width)
+                .height(css.slide.height)
                 .css(css.position)
                 .css(css.padding);
-                // paddingLeft : settings.headerWidth });
+
+                // !!! console.log(css.slide.position || css.position );
+
+
 
         // add number to bottom of tab
         // settings.enumerateSlides && $this.append('<b>' + (index + 1) + '</b>');
@@ -204,7 +216,31 @@
 
     setup.events = function() {};
 
-    setup.ie = function() {};
+    setup.ie = function() {
+      var ua = navigator.userAgent,
+          index = ua.indexOf('MSIE');
+
+      // not ie
+      if (index < 0) return;
+
+      // ie
+      if (index !== -1) {
+        ua = ua.slice(index + 5, index + 7);
+        ua = +ua;
+
+        // ie versions
+        if (ua < 7) methods.destroy();
+        if (ua >= 10) return;
+        if (ua === 7 || ua === 8) {
+            slides.each(function(index) {
+                $(this).addClass('slide-' + index);
+            });
+        }
+
+        // add ie classes for css fallbacks
+        elem.addClass('ie ie' + ua);
+      }
+    };
 
     /**
      * Internal animation methods
@@ -226,7 +262,7 @@
 
     core.init = function() {
 
-
+        setup.ie();
         setup.styles();
         setup.slidePositions();
 
@@ -309,8 +345,8 @@
         // 'globals'
             slides = elem.children('ol').children('li'),
             header = slides.children(':first-child'),
-            slideLen = slides.length,
-            slideWidth = settings.containerWidth - slideLen * settings.headerWidth,
+            slide.length = slides.length,
+            slide.width = settings.containerWidth - slide.length * settings.headerWidth,
 
         // public methods
             methods = {
@@ -336,7 +372,7 @@
                 // trigger next slide
                 next : function() {
                     methods.stop();
-                    header.eq(core.currentSlide === slideLen - 1 ? 0 : core.currentSlide + 1).trigger('click.accordionPro');
+                    header.eq(core.currentSlide === slide.length - 1 ? 0 : core.currentSlide + 1).trigger('click.accordionPro');
                 },
 
                 // trigger previous slide
@@ -426,9 +462,9 @@
 
                         // compensate for already selected slide on resize
                         if (selected.length) {
-                            if (index > header.index(selected)) left += slideWidth;
+                            if (index > header.index(selected)) left += slide.width;
                         } else {
-                            if (index >= settings.firstSlide) left += slideWidth;
+                            if (index >= settings.firstSlide) left += slide.width;
                         }
 
                         // set each slide position
@@ -436,7 +472,7 @@
                             .css('left', left)
                             .width(settings.containerHeight)
                             .next()
-                                .width(slideWidth - offset)
+                                .width(slide.width - offset)
                                 .css({ left : left, paddingLeft : settings.headerWidth });
 
                         // add number to bottom of tab
@@ -528,7 +564,7 @@
 
                     // closure
                     return function() {
-                        return next++ % slideLen;
+                        return next++ % slide.length;
                     };
                 },
 
@@ -566,7 +602,7 @@
                     settings.onTriggerSlide.call(tab.next, $this);
 
                     // animate
-                    if ($this.hasClass('selected') && $this.position().left < slideWidth / 2) {
+                    if ($this.hasClass('selected') && $this.position().left < slide.width / 2) {
                         // animate single selected tab
                         core.animSlide.call(tab);
                     } else {
@@ -585,7 +621,7 @@
                     var _this = this;
 
                     // set pos for single selected tab
-                    if (typeof this.pos === 'undefined') this.pos = slideWidth;
+                    if (typeof this.pos === 'undefined') this.pos = slide.width;
 
                     // remove, then add selected class
                     header.removeClass('selected').filter(this.elem).addClass('selected');
@@ -627,7 +663,7 @@
                             left = 0;
                         } else {
                             filterExpr = ':gt(' + triggerTab.index + ')';
-                            left = slideWidth;
+                            left = slide.width;
                         }
 
                         slides

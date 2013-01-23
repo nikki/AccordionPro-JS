@@ -77,6 +77,7 @@
 .accordionPro.horizontal.dark, .accordionPro.horizontal.light { padding: 5px 5px 6px 0 }
 .accordionPro.horizontal.dark .slide > div , .accordionPro.horizontal.light .slide > div { margin-left: 5px }
 .accordionPro.horizontal.stitch { padding: 5px 0 5px 5px }
+.accordionPro.horizontal.stitch .slide > div { margin-right: 6px }
 
 /*************************************** Vertical */
 .accordionPro.vertical .slide > h2 { width: 100% }
@@ -223,7 +224,6 @@
 .accordionPro.stitch .slide:nth-child(4) > h2 span, .accordionPro.stitch .slide:nth-child(4) > h2:after { background-color: #59abb7 }
 .accordionPro.stitch .slide:nth-child(5) > h2 span, .accordionPro.stitch .slide:nth-child(5) > h2:after { background-color: #bb6098 }
 .accordionPro.stitch .slide > h2 b { top: 19%; color: white; text-shadow: 1px 1px 0 #5b5b5b }
-.accordionPro.stitch .slide > div { margin-right: 6px }
 .accordionPro.stitch.rounded > ol { -webkit-border-radius: 0; -moz-border-radius: 0; -ms-border-radius: 0; border-radius: 0 }
 
 /*************************************** Rounded */
