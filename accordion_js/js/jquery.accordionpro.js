@@ -54,8 +54,8 @@
      */
 
     settings = $.extend({}, defaults, options);
-    settings.orientation = 'vertical';
-    settings.rtl = true;
+    settings.orientation = 'horizontal';
+    settings.rtl = false;
 
     /**
      * Delegate transition calls to animate if css3 animations not supported
@@ -448,7 +448,7 @@
         }
       } else {
         // animate group of slide
-        // core.animateGroup(active);
+        core.animateGroup(active);
       }
 
 /*
@@ -460,21 +460,55 @@
 */
     };
 
+    core.getSlidePosition = function(index, group) {
+      var position = {};
+
+      if (group) {
+        switch (group) {
+          case 'top':
+            position = { top : index * tab.h };
+            break;
+          case 'bottom':
+            position = { top : slide.h + index * tab.h };
+            break;
+          case 'right':
+            if (settings.rtl) {
+              position = { right : slide.w + index * tab.h };
+            } else {
+              position = { left : slide.w + index * tab.h };
+            }
+            break;
+          case 'left':
+          default:
+            if (settings.rtl) {
+              position = { right : index * tab.h };
+            } else {
+              position = { left : index * tab.h };
+            }
+            break;
+        }
+      } else {
+        if (orientation) { // horizontal
+          if (settings.rtl) {
+            position = { right : slide.w + index * tab.h };
+          } else {
+            position = { left : slide.w + index * tab.h };
+          }
+        } else { // vertical
+          position = { top : slide.h + index * tab.h };
+        }
+      }
+
+      return position;
+    };
+
     // animate single slide
     core.animateSlide = function(trigger) {
       var _this = this;
 
       // set position for single selected tab
       if (typeof this.position === 'undefined') {
-        if (orientation) { // horizontal
-          if (settings.rtl) {
-            this.position = { right : slide.w + this.index * tab.h };
-          } else {
-            this.position = { left : slide.w + this.index * tab.h };
-          }
-        } else { // vertical
-          this.position = { top : slide.h + this.index * tab.h };
-        }
+        this.position = core.getSlidePosition(this.index);
       }
 
       // remove, then add selected class
@@ -493,7 +527,7 @@
               // flag ensures that fn is only called one time per triggerSlide
               if (!core.animationFlag) {
                 // trigger callback in context of sibling div (jQuery wrapped)
-                settings.onSlideClose.call(trigger ? trigger.next : _this.prev.next());
+                // settings.onSlideClose.call(trigger ? trigger.next : _this.prev.next());
                 core.animationFlag = true;
               }
             });
@@ -511,43 +545,25 @@
         var filterExpr, position;
 
         if (!index)  {
+          // left side
           filterExpr = ':lt(' + (trigger.index + 1) + ')';
-
-          if (orientation) { // horizontal
-            if (settings.rtl) {
-              position = { right : slide.w + trigger.index * tab.h };
-            } else {
-              position = { left : slide.w + trigger.index * tab.h };
-            }
-          } else { // vertical
-            position = { top : slide.h + trigger.index * tab.h };
-          }
         } else {
+          // right side
           filterExpr = ':gt(' + trigger.index + ')';
-
-          if (orientation) { // horizontal
-            if (settings.rtl) {
-              position = { left : trigger.index * tab.h };
-            } else {
-              position = { right : trigger.index * tab.h };
-            }
-          } else { // vertical
-            position = { top : trigger.index * tab.h };
-          }
         }
 
         slides
           .filter(filterExpr)
-          .each(function(index) {
+          .each(function() {
             var $this = $(this),
                 active = {
                   tab : $this.children('h2'),
                   slide : $this,
                   next : $this.next(),
                   prev : $this.prev(),
-                  index : index,
-                  position : position
+                  index : slides.index($this)
                 };
+                active.position = core.getSlidePosition(active.index, group[index]);
 
             // trigger item anim, pass original trigger context for callback fn
             core.animateSlide.call(active, trigger);
@@ -555,7 +571,7 @@
       });
 
       // remove, then add selected class
-      // tab.removeClass('selected').filter(trigger.elem).addClass('selected');
+      slides.removeClass('selected').filter(trigger.slide).addClass('selected');
     };
 
     core.init = function() {
@@ -572,169 +588,6 @@
     return methods;
 
   };
-
-
-
-
-
-
-
-
-
-/*
-  var core = {
-
-      // counter for autoPlay (zero index firstSlide on init)
-      currentSlide : settings.firstSlide - 1,
-
-      // next slide index
-      nextSlide : function(index) {
-          var next = index + 1 || core.currentSlide + 1;
-
-          // closure
-          return function() {
-              return next++ % slide.length;
-          };
-      },
-
-      // holds interval counter
-      playing : 0,
-
-      slideAnimCompleteFlag : false,
-
-      // trigger slide animation
-      triggerSlide : function(e) {
-          var $this = $(this),
-              tab = {
-                  elem : $this,
-                  index : tab.index($this),
-                  next : $this.next(),
-                  prev : $this.parent().prev().children('h2'),
-                  parent : $this.parent()
-              };
-
-          // current hash not correct?
-          if (settings.linkable && tab.parent.attr('data-slide-name')) {
-              if (tab.parent.attr('data-slide-name') !== window.location.hash.split('#')[1]) {
-                  // exit early and try again (prevents double trigger (issue #60))
-                  return window.location.hash = '#' + tab.parent.attr('data-slide-name');
-              }
-          }
-
-          // update core.currentSlide
-          core.currentSlide = tab.index;
-
-          // reset onSlideAnimComplete callback flag
-          core.slideAnimCompleteFlag = false;
-
-          // trigger callback in context of sibling div (jQuery wrapped)
-          settings.onTriggerSlide.call(tab.next, $this);
-
-          // animate
-          if ($this.hasClass('selected') && $this.position().left < slide.width / 2) {
-              // animate single selected tab
-              core.animSlide.call(tab);
-          } else {
-              // animate groups
-              core.animSlideGroup(tab);
-          }
-
-          // stop autoplay, reset current slide index in core.nextSlide closure
-          if (settings.autoPlay) {
-              methods.stop();
-              methods.play(tab.index(tab.filter('.selected')));
-          }
-      },
-
-      animSlide : function(triggerTab) {
-          var _this = this;
-
-          // set pos for single selected tab
-          if (typeof this.pos === 'undefined') this.pos = slide.width;
-
-          // remove, then add selected class
-          tab.removeClass('selected').filter(this.elem).addClass('selected');
-
-          // if slide index not zero
-          if (!!this.index) {
-              this.elem
-                  .add(this.next)
-                  .stop(true)
-                  .animate({
-                      left : this.pos + this.index * settings.tabWidth
-                  },
-                      settings.slideSpeed,
-                      settings.easing,
-                      function() {
-                          // flag ensures that fn is only called one time per triggerSlide
-                          if (!core.slideAnimCompleteFlag) {
-                              // trigger onSlideAnimComplete callback in context of sibling div (jQuery wrapped)
-                              settings.onSlideAnimComplete.call(triggerTab ? triggerTab.next : _this.prev.next());
-                              core.slideAnimCompleteFlag = true;
-                          }
-                      });
-
-                  // remove, then add selected class
-                  tab.removeClass('selected').filter(this.prev).addClass('selected');
-
-          }
-      },
-
-      // animates left and right groups of slides
-      animSlideGroup : function(triggerTab) {
-          var group = ['left', 'right'];
-
-          $.each(group, function(index, side) {
-              var filterExpr, left;
-
-              if (side === 'left')  {
-                  filterExpr = ':lt(' + (triggerTab.index + 1) + ')';
-                  left = 0;
-              } else {
-                  filterExpr = ':gt(' + triggerTab.index + ')';
-                  left = slide.width;
-              }
-
-              slides
-                  .filter(filterExpr)
-                  .children('h2')
-                  .each(function() {
-                      var $this = $(this),
-                          tab = {
-                              elem : $this,
-                              index : tab.index($this),
-                              next : $this.next(),
-                              prev : $this.parent().prev().children('h2'),
-                              pos : left
-                          };
-
-                      // trigger item anim, pass original trigger context for callback fn
-                      core.animSlide.call(tab, triggerTab);
-                  });
-
-          });
-
-          // remove, then add selected class
-          tab.removeClass('selected').filter(triggerTab.elem).addClass('selected');
-      },
-
-      init : function() {
-          // check slide speed is not faster than cycle speed
-          if (settings.cycleSpeed < settings.slideSpeed) settings.cycleSpeed = settings.slideSpeed;
-
-          // init autoplay
-          settings.autoPlay && methods.play();
-      }
-  };
-*/
-
-
-
-
-
-
-
-
 
   /**
    * Add plugin to $.fn
