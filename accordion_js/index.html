@@ -145,6 +145,15 @@
                         </figure>
                     </div>
                 </li>
+                <li>
+                    <h2><span>Slide Five</span></h2>
+                    <div>
+                        <figure>
+                            <img src="img-demo/5.jpg" alt="image" />
+                            <figcaption class="ap-caption">Slide Five</figcaption>
+                        </figure>
+                    </div>
+                </li>
             </ol>
             <noscript>
                 <p>Please enable JavaScript to get the full experience.</p>
@@ -237,12 +246,6 @@
                         <img src="img-demo/4.jpg" width="768" alt="image" />
                     </div>
                 </li>
-                <li data-slide-name="slide-five">
-                    <h2><span>Slide Five</span></h2>
-                    <div>
-                        <img src="img-demo/5.jpg" alt="image" />
-                    </div>
-                </li>
             </ol>
             <noscript>
                 <p>Please enable JavaScript to get the full experience.</p>
@@ -297,8 +300,10 @@
 
                 // demos
                 $('#one').accordionPro({
-                        width : '40%',
-                        height : '25em',
+                        orientation : 'vertical',
+                        rtl : true,
+                        width : '50%',
+                        height : 600,
                         onSlideOpen : function() {
                             this.find('figcaption').fadeOut();
                         },
@@ -309,11 +314,11 @@
                         pauseOnHover : true,
                         theme : 'stitch',
                         rounded : true,
-                        enumerateSlides : true
+                        showSlideNumbers : true
                 }).find('figcaption:first').show();
-                $('#two').accordionPro({ width : '50%', height : '50%' });
-                $('#three').accordionPro({ width : '50%', height : '50%', theme : 'dark', rounded : true, enumerateSlides : true, firstSlide : 2, linkable : true, easing: 'easeInOutQuart' });
-                $('#four').accordionPro({ theme : 'light', width : '50%', height : '500px', firstSlide : 3, easing: 'easeOutBounce', activateOn: 'mouseover' });
+                $('#two').accordionPro({ width : '50%', height : 400 });
+                $('#three').accordionPro({ rtl : true, orientation : 'vertical', width : '50%', height : 400, theme : 'dark', rounded : true, showSlideNumbers : true, firstSlide : 2, linkable : true, easing: 'easeInOutQuart' });
+                $('#four').accordionPro({ theme : 'light', width : '80%', height : 400, firstSlide : 3, easing: 'easeOutBounce', activateOn: 'mouseover' });
 
                 // social links
                 var js, id = 'facebook-jssdk';
