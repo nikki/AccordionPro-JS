@@ -54,8 +54,8 @@
      */
 
     settings = $.extend({}, defaults, options);
-    settings.orientation = 'horizontal';
-    settings.rtl = false;
+    // settings.orientation = 'horizontal';
+    // settings.rtl = false;
 
     /**
      * Delegate transition calls to animate if css3 animations not supported
@@ -249,7 +249,7 @@
         css.slide.width = '100%';
 
         // calculate tab properties
-        css.tab.width = parent.w;
+        css.tab.width = '100%';
 
         // calculate panel properties
         css.panel.width = '100%';

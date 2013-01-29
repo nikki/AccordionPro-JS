@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Accordion Pro - a responsive accordion plugin for jQuery</title>
+        <style type="text/css">
+            * { margin: 0; padding: 0 }
+            body { background: #F6F4EF; font-family: Georgia; color: #444 }
+            h2 { font-weight: normal; font-size: 18px; height: 40px; padding: 20px 0; }
+
+            .pricing { position: relative; height: 800px; width: 900px; margin: 0 auto }
+            .pricing > * { position: absolute; top: 0; text-align: center; border-radius: 10px;
+                border: 10px solid #EFEDE7; background: #FDFCFA }
+
+            .features { width: 200px; top: 82px; left: 0; border-right: 0; z-index: 10 }
+            .features ul { border-left: 1px solid #D3D3D3; border-top: 1px solid #D3D3D3;
+                border-bottom: 1px solid #D3D3D3; border-top-left-radius: 4px; border-bottom-left-radius: 4px; }
+
+            .grid { height: 400px; left: 200px; padding-bottom: 3px }
+            .grid > li { width: 200px; height: 100%; float: left; border-top: 1px solid #D3D3D3;
+                border-bottom: 1px solid #D3D3D3; box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2) }
+            .liteaccordion { border-top-left-radius: 4px; border-bottom-left-radius: 4px;
+                border-left: 1px solid #D3D3D3; border-right: 1px solid #D3D3D3 }
+            .ap-wp { border-top-right-radius: 4px; border-bottom-right-radius: 4px;
+                border-right: 1px solid #D3D3D3; border-left: 1px solid #D3D3D3 }
+            ul, li { list-style-type: none }
+        </style>
+
+        <!--[if lt IE 9]>
+            <script>
+                document.createElement('figure');
+                document.createElement('figcaption');
+            </script>
+        <![endif]-->
+    </head>
+    <body>
+        <div class="pricing">
+            <div class="features">
+                <ul>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                    <li>a</li>
+                </ul>
+            </div>
+            <ul class="grid">
+                <li class="liteaccordion">
+                    <ul>
+                        <li><h2>liteAccordion <br />jQuery</h2></li>
+                        <li>a</li>
+                        <li>a</li>
+                        <li>a</li>
+                        <li>a</li>
+                        <li>a</li>
+                        <li>a</li>
+                        <li>a</li>
+                        <li>a</li>
+                        <li>a</li>
+                    </ul>
+                </li>
+                <li class="ap-js">
+                    <ul>
+                        <li><h2>Accordion Pro <br />jQuery</h2></li>
+                        <li>b</li>
+                        <li>b</li>
+                        <li>b</li>
+                        <li>b</li>
+                        <li>b</li>
+                        <li>b</li>
+                        <li>b</li>
+                        <li>b</li>
+                        <li>b</li>
+                    </ul>
+                </li>
+                <li class="ap-wp">
+                    <ul>
+                        <li><h2>Accordion Pro WordPress</h2></li>
+                        <li>c</li>
+                        <li>c</li>
+                        <li>c</li>
+                        <li>c</li>
+                        <li>c</li>
+                        <li>c</li>
+                        <li>c</li>
+                        <li>c</li>
+                        <li>c</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>
