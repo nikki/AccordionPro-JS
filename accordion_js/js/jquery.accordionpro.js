@@ -1,3 +1,13 @@
+/**
+ * @name jQuery Swipe plugin (https://github.com/jgarber623/jquery-swipe)
+ * @author Jason Garber
+ * @copyright (cc) Jason Garber (http://sixtwothree.org and http://www.viget.com)
+ *
+ * Licensed under the CC-GNU GPL (http://creativecommons.org/licenses/GPL/2.0/)
+ */
+
+(function(c,b,a,e){var d=function(g,f){this.elem=g;this.$elem=c(g);this.options=f;this.metadata=this.$elem.data("swipe-options")};d.prototype={defaults:{left:function(f){},right:function(f){},up:function(f){},down:function(f){},threshold:{x:100,y:50}},init:function(){this.config=c.extend({},this.defaults,this.options,this.metadata);this.coords={start:{x:0,y:0},end:{x:0,y:0}};c(this.elem).on({touchstart:c.proxy(this.touchStart,this),touchmove:c.proxy(this.touchMove,this),touchend:c.proxy(this.touchEnd,this)});return this},touchEnd:function(f){var g={x:this.coords.start.x-this.coords.end.x,y:this.coords.start.y-this.coords.end.y};if(g.y<this.config.threshold.y&&g.y>(this.config.threshold.y*-1)){if(g.x>this.config.threshold.x){this.config.left()}if(g.x<(this.config.threshold.x*-1)){this.config.right()}}else{if(g.y>=0){this.config.up()}else{this.config.down()}}},touchMove:function(f){f.preventDefault();var g=f.originalEvent.targetTouches[0];this.coords.end={x:g.pageX,y:g.pageY}},touchStart:function(f){var g=f.originalEvent.targetTouches[0];this.coords={start:{x:g.pageX,y:g.pageY},end:{x:g.pageX,y:g.pageY}}}};d.defaults=d.prototype.defaults;c.fn.swipe=function(f){return this.each(function(){new d(this,f).init()})}})(jQuery,window,document);
+
 /*************************************************!
 *
 *   project:    Accordion Pro - a responsive accordion plugin for jQuery
@@ -54,14 +64,6 @@
      */
 
     settings = $.extend({}, defaults, options);
-    // settings.orientation = 'horizontal';
-    // settings.rtl = false;
-
-    /**
-     * Delegate transition calls to animate if css3 animations not supported
-     */
-
-    if (!$.support.transition) $.fn.transition = $.fn.animate;
 
     /**
      * "Globals"
@@ -88,7 +90,7 @@
 
       // start autoplay
       core.playing = setInterval(function() {
-        tab.eq(next()).trigger('click.accordionPro');
+        tabs.eq(next()).trigger('click.accordionPro');
       }, settings.cycleSpeed);
     };
 
@@ -101,13 +103,13 @@
     // trigger next slide
     methods.next = function() {
       methods.stop();
-      tab.eq(core.currentSlide === slide.length - 1 ? 0 : core.currentSlide + 1).trigger('click.accordionPro');
+      tabs.eq(core.currentSlide === slide.length - 1 ? 0 : core.currentSlide + 1).trigger('click.accordionPro');
     };
 
     // trigger previous slide
     methods.prev = function() {
       methods.stop();
-      tab.eq(core.currentSlide - 1).trigger('click.accordionPro');
+      tabs.eq(core.currentSlide - 1).trigger('click.accordionPro');
     };
 
     // destroy plugin instance
@@ -121,7 +123,7 @@
       // remove generated styles, classes, data, events
       elem
         .attr('style', '')
-        .removeClass('accordionPro horizontal vertical basic dark light stitch rounded rtl')
+        .removeClass('accordionPro horizontal vertical basic dark light stitch rounded rtl closed')
         .removeData('accordionPro')
         .off('.accordionPro')
         .find('li > :first-child')
@@ -164,7 +166,8 @@
         .addClass('accordionPro ' + settings.orientation)
         .addClass(settings.rounded && 'rounded')
         .addClass(settings.theme)
-        .addClass(settings.rtl && 'rtl');
+        .addClass(settings.rtl && 'rtl')
+        .addClass(settings.startClosed && 'closed');
 
       // cache parent height and width values
       parent.w = elem.width();
@@ -205,7 +208,7 @@
             panel : {}
           };
 
-      if (orientation) {
+      if (orientation) { // horizontal
         // calculate global slide dimensions
         slide.w = parent.w - slide.l * tab.h;
         slide.h = parent.h;
@@ -238,7 +241,7 @@
         } else if (!settings.startClosed) {
           if (index >= settings.firstSlide) css.slide.position[settings.rtl ? 'right' : 'left'] += slide.w;
         }
-      } else {
+      } else { // vertical
         // calculate global slide dimensions
         slide.w = tabs.eq(0).width; // px value
         slide.h = parent.h - slide.l * tab.h;
@@ -298,15 +301,48 @@
       });
     };
 
+    setup.startClosed = function() {
+      if (elem.hasClass('closed')) {
+        // redeclare parent height and width values
+        elem.css('width', settings.width); // needs to be css width for % rather than px value
+        elem.height(parent.h);
+
+        // remove closed class
+        elem.removeClass('closed');
+
+        // unbind event
+        tabs.off('click.accordionPro.closed touchstart.accordionPro.closed mouseover.accordionPro.closed');
+      }
+    };
+
     setup.events = function() {
       var resizeTimer = 0;
 
       // bind click and mouseover events
       if (settings.activateOn === 'click') {
-        tabs.on('click.accordionPro', core.animate);
+        tabs.on('click.accordionPro touchstart.accordionPro', core.animate);
+        if (settings.startClosed) tabs.on('click.accordionPro.closed touchstart.accordionPro.closed', setup.startClosed);
       } else if (settings.activateOn === 'mouseover') {
-        tabs.on('click.accordionPro mouseover.accordionPro', core.animate);
+        tabs.on('click.accordionPro touchstart.accordionPro mouseover.accordionPro', core.animate);
+        if (settings.startClosed) tabs.on('click.accordionPro.closed touchstart.accordionPro.closed mouseover.accordionPro.closed', setup.startClosed);
       }
+
+      // swipe events
+      slides.swipe({
+        left : function() {
+          if (orientation) settings.rtl ? methods.prev() : methods.next();
+        },
+        right : function() {
+          if (orientation) settings.rtl ? methods.next() : methods.prev();
+        },
+        up : function() {
+          if (!orientation) methods.next();
+        },
+        down : function() {
+          if (!orientation) methods.prev();
+        },
+        threshold: { x: 100, y: 100 }
+      });
 
 /*
       // bind hashchange event
@@ -432,24 +468,24 @@
       core.animationFlag = false;
 
       // trigger callback in context of next slide (jQuery wrapped)
-      // settings.onSlideOpen.call(active.next, $this.children('div'));
+      // settings.onSlideOpen.call($this.next());
 
       // animate
-      if (active.slide.hasClass('selected')) {
-        // animate single selected slide
-        if (orientation) { // horizontal
-          if ((settings.rtl && active.slide.position().left > parent.w / 2) || active.slide.position().left < parent.w / 2) {
-            core.animateSlide.call(active);
-          }
-        } else { // vertical
-          if (active.slide.position().top < parent.h / 2) {
-            core.animateSlide.call(active);
-          }
-        }
-      } else {
+      //if (active.slide.hasClass('selected')) {
+      //  // animate single selected slide
+      //  if (orientation) { // horizontal
+      //    if ((settings.rtl && active.slide.position().left > parent.w / 2) || active.slide.position().left < parent.w / 2) {
+      //      core.animateSlide.call(active);
+      //    }
+      //  } else { // vertical
+      //    if (active.slide.position().top < parent.h / 2) {
+      //      core.animateSlide.call(active);
+      //    }
+      //  }
+      //} else {
         // animate group of slide
         core.animateGroup(active);
-      }
+      //}
 
 /*
       // stop autoplay, reset current slide index in core.nextSlide closure
@@ -460,11 +496,24 @@
 */
     };
 
-    core.getSlidePosition = function(index, group) {
+    core.getSlidePosition = function(index, pos) {
       var position = {};
 
-      if (group) {
-        switch (group) {
+      if (typeof pos === 'number') {
+        if (orientation) { // horizontal
+          if (settings.rtl) {
+            position = { right : pos + index * tab.h };
+          } else {
+            position = { left : pos + index * tab.h };
+          }
+        } else { // vertical
+          position = { top : pos + index * tab.h };
+        }
+
+
+
+/*
+        switch (pos) {
           case 'top':
             position = { top : index * tab.h };
             break;
@@ -487,6 +536,7 @@
             }
             break;
         }
+*/
       } else {
         if (orientation) { // horizontal
           if (settings.rtl) {
@@ -504,11 +554,14 @@
 
     // animate single slide
     core.animateSlide = function(trigger) {
-      var _this = this;
+      var _this = this, position;
 
       // set position for single selected tab
       if (typeof this.position === 'undefined') {
         this.position = core.getSlidePosition(this.index);
+      } else if (typeof this.position === 'number') {
+        position = this.position;
+        this.position = core.getSlidePosition(this.index, position);
       }
 
       // remove, then add selected class
@@ -522,12 +575,12 @@
           .animate(
             this.position,
             settings.slideSpeed,
-            // settings.easing,
+            settings.easing,
             function() {
               // flag ensures that fn is only called one time per triggerSlide
               if (!core.animationFlag) {
                 // trigger callback in context of sibling div (jQuery wrapped)
-                // settings.onSlideClose.call(trigger ? trigger.next : _this.prev.next());
+                settings.onSlideClose.call(trigger ? trigger.next.children('div') : _this.prev.next().children('div'));
                 core.animationFlag = true;
               }
             });
@@ -539,7 +592,7 @@
 
     // animate group of slides
     core.animateGroup = function(trigger) {
-      var group = orientation ? ['left', 'right'] : ['top', 'bottom'];
+      var group = ['left', 'right'];
 
       $.each(group, function(index, side) {
         var filterExpr, position;
@@ -547,9 +600,11 @@
         if (!index)  {
           // left side
           filterExpr = ':lt(' + (trigger.index + 1) + ')';
+          position = 0;
         } else {
           // right side
           filterExpr = ':gt(' + trigger.index + ')';
+          position = orientation ? slide.w : slide.h;
         }
 
         slides
@@ -561,9 +616,10 @@
                   slide : $this,
                   next : $this.next(),
                   prev : $this.prev(),
-                  index : slides.index($this)
+                  index : slides.index($this),
+                  position : position
                 };
-                active.position = core.getSlidePosition(active.index, group[index]);
+                // active.position = core.getSlidePosition(active.index, group[index]);
 
             // trigger item anim, pass original trigger context for callback fn
             core.animateSlide.call(active, trigger);

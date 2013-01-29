@@ -2,10 +2,11 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
         <title>Accordion Pro - a responsive accordion plugin for jQuery</title>
         <style>
             /* css for this page */
-            body { font: 14px/24px 'Helvetica Neue', Arial, sans-serif; color: #333; margin: 30px auto 60px; background: #eee; height: 800px; }
+            body { font: 14px/24px 'Helvetica Neue', Arial, sans-serif; color: #333; margin: 30px auto 60px; background: #eee; height: 1500px; }
             body > h2 { margin: 30px 0 15px; text-shadow: 1px 1px 0 white; border-bottom: 2px solid #333; padding-bottom: 5px }
             h1 { text-align: center; margin-bottom: 30px; text-shadow: 1px 1px 0 white }
             strong + p { margin-top: 0 }
@@ -84,7 +85,6 @@
 
         <!-- easing -->
         <!--<script src="js/jquery.easing.1.3.js"></script>-->
-        <script src="js/jquery.transit.min.js"></script>
 
         <!-- accordionPro js -->
         <script src="js/jquery.accordionpro.js"></script>
@@ -300,12 +300,14 @@
 
                 // demos
                 $('#one').accordionPro({
+                        startClosed : true,
                         orientation : 'vertical',
                         rtl : true,
-                        width : '50%',
+                        width : '100%',
                         height : 600,
                         onSlideOpen : function() {
-                            this.find('figcaption').fadeOut();
+                            this.css('background', 'red');
+                            // this.find('figcaption').fadeOut();
                         },
                         onSlideClose : function() {
                             this.find('figcaption').fadeIn();
@@ -316,9 +318,9 @@
                         rounded : true,
                         showSlideNumbers : true
                 }).find('figcaption:first').show();
-                $('#two').accordionPro({ rtl : true, width : '50%', height : 400 });
-                $('#three').accordionPro({ rtl : true, orientation : 'vertical', width : '50%', height : 400, theme : 'dark', rounded : true, showSlideNumbers : true, firstSlide : 2, linkable : true, easing: 'easeInOutQuart' });
-                $('#four').accordionPro({ theme : 'light', width : '80%', height : 400, firstSlide : 3, easing: 'easeOutBounce', activateOn: 'mouseover' });
+                $('#two').accordionPro({ rtl : true, width : '100%', height : 400 });
+                $('#three').accordionPro({ rtl : true, orientation : 'vertical', width : '100%', height : 400, theme : 'dark', rounded : true, showSlideNumbers : true, firstSlide : 2, linkable : true, easing: 'easeInOutQuart' });
+                $('#four').accordionPro({ theme : 'light', width : '100%', height : 400, firstSlide : 3, easing: 'easeOutBounce', activateOn: 'mouseover' });
 
                 // social links
                 var js, id = 'facebook-jssdk';
