@@ -33,11 +33,11 @@ $(function() {
       return $(this).each(function() {
         var $this = $(this),
             altTransition,
-            easing = (options.easing) ? easing : 'ease-in-out',
+            easing = options.easing || 'ease-in-out',
             prefix = (Modernizr.prefixed('transition').replace(/([A-Z])/g, function(str,m1){ return '-' + m1.toLowerCase(); }).replace(/^ms-/,'-ms-'));
 
             if (Modernizr.csstransitions) {
-              $this.css(prefix, 'all ' + speed / 1000 + 's ease-in-out').css(props);
+              $this.css(prefix, 'all ' + speed / 1000 + 's ' + easing).css(props);
               setTimeout(function() {
                 $this.css(prefix, altTransition);
                 if ($.isFunction(options.complete)) {
@@ -90,12 +90,13 @@ $(function() {
       activateOn : 'click',                   // click or mouseover (tap and swipe touch events enabled by default)
       firstSlide : 1,                         // displays slide (n) on page load
       slideSpeed : 800,                       // slide animation speed
-      onSlideOpen : function(e) {},           // callback on slide open
-      onSlideClose : function(e) {},          // callback on slide animation complete
+      onSlideOpen : function() {},            // callback on slide open
+      onSlideClose : function() {},           // callback on slide animation complete
 
       autoPlay : false,                       // automatically cycle through slides
       pauseOnHover : false,                   // pause on hover
       cycleSpeed : 6000,                      // time between slide cycles
+      easing : 'ease-in-out',                 // animation easing
 
       theme : 'basic',                        // basic, dark, light, or stitch
       rounded : false,                        // square or rounded corners
@@ -118,7 +119,9 @@ $(function() {
         slide = { w : 0, h : 0, l : 0 },
         tabs = slides.children(':first-child'),
         tab = { w : 0, h : 0 },
-        orientation = settings.orientation === 'horizontal' ? 1 : 0;
+        orientation = settings.orientation === 'horizontal' ? 1 : 0,
+        easingFns = ['linear', 'ease', 'ease-in', 'ease-out', 'ease-in-out'],
+        easing = $.inArray(settings.easing, easingFns) >= 0 ? settings.easing : defaults.easing;
 
     /**
      * Public methods for triggering animation events
@@ -161,28 +164,27 @@ $(function() {
       // stop autoplay
       methods.stop();
 
-      // remove hashchange event bound to window
+      // remove hashchange and resize events bound to window
       $(window).off('.accordionPro');
 
       // remove generated styles, classes, data, events
       elem
-        .attr('style', '')
-        .removeClass('accordionPro horizontal vertical basic dark light stitch rounded rtl closed')
-        .removeData('accordionPro')
         .off('.accordionPro')
+        .removeData('accordionPro')
+        .removeAttr('style')
+        .removeClass('accordionPro horizontal vertical basic dark light stitch rounded rtl closed')
         .find('li > :first-child')
         .off('.accordionPro')
-        .filter('.selected')
-        .removeClass('selected')
         .end()
         .find('b')
         .remove();
 
       slides
-        .removeClass('slide')
-        .attr('style', '')
+        .removeClass('slide selected')
+        .removeAttr('style')
+        .removeAttr('data-slide-name')
         .children()
-        .attr('style', '');
+        .removeAttr('style');
     };
 
     // poke around the internals (NOT CHAINABLE)
@@ -330,6 +332,7 @@ $(function() {
           .width(css.slide.width)
           .height(css.slide.height)
           .css(css.slide.position)
+          .attr('data-slide-name', elem[0].id + '-slide-' + (index + 1))
             .children('h2')
             .width(css.tab.width)
             .height(tab.h)
@@ -404,24 +407,6 @@ $(function() {
         });
       }
 
-
-
-/*
-      // bind hashchange event
-      if (settings.linkable) {
-        $(window).on('hashchange.accordionPro', function(e) {
-          var url = slides.filter(function() {
-            return $(this).attr('data-slide-name') === window.location.hash.split('#')[1];
-          });
-
-          // if slide name exists
-          if (url.length) {
-            // trigger slide
-            core.triggerSlide.call(url.children('h2')[0], e);
-          }
-        });
-      }
-
       // pause on hover (can't use custom events with $.hover())
       if (settings.pauseOnHover && settings.autoPlay) {
         elem
@@ -432,7 +417,21 @@ $(function() {
             !core.playing && methods.play(core.currentSlide);
           });
       }
-*/
+
+      // bind hashchange event
+      if (settings.linkable) {
+        $(window).on('hashchange.accordionPro', function(e) {
+          var url = slides.filter(function() {
+            return $(this).attr('data-slide-name') === window.location.hash.split('#')[1];
+          });
+
+          // if slide name exists
+          if (url.length) {
+            // trigger slide
+            core.animationCycle.call(url.children('h2')[0], e);
+          }
+        });
+      }
 
       // resize and orientationchange
       $(window).on('resize.accordionPro orientationchange.accordionPro', function() {
@@ -478,7 +477,7 @@ $(function() {
     };
 
     /**
-     * Internal animation methods
+     * Core animation methods
      */
 
     // counter for autoPlay (zero index firstSlide on init)
@@ -490,7 +489,7 @@ $(function() {
 
       // closure
       return function() {
-        return next++ % slide.length;
+        return next++ % slide.l;
       };
     };
 
@@ -504,17 +503,20 @@ $(function() {
     core.transition = function(trigger) {
       var _this = this;
 
+      // animate slide
       this
         .slide
         .stop(true)
         .animate(
           this.position,
           settings.slideSpeed,
+          easing,
           function() {
             // flag ensures that fn is only called one time per triggerSlide
             if (!core.animationFlag) {
               // trigger callback in context of sibling div (jQuery wrapped)
-              settings.onSlideClose.call(trigger ? trigger.next.children('div') : _this.prev.next().children('div'));
+              // settings.onSlideClose.call(trigger ? trigger.next.children('div') : _this.prev.next().children('div'));
+
               core.animationFlag = true;
             }
           });
@@ -625,15 +627,13 @@ $(function() {
       active.next = active.slide.next();
       active.prev = active.slide.prev();
 
-/*
-      // current hash not correct?
-      if (settings.linkable && tab.parent.attr('data-slide-name')) {
-        if (tab.parent.attr('data-slide-name') !== window.location.hash.split('#')[1]) {
+      // update hash
+      if (settings.linkable && active.slide.attr('data-slide-name')) {
+        if (active.slide.attr('data-slide-name') !== window.location.hash.split('#')[1]) {
           // exit early and try again
-          return window.location.hash = '#' + tab.parent.attr('data-slide-name');
+          return window.location.hash = '#' + active.slide.attr('data-slide-name');
         }
       }
-*/
 
       // update core.currentSlide
       core.currentSlide = active.index;
@@ -642,41 +642,47 @@ $(function() {
       core.animationFlag = false;
 
       // trigger callback in context of next slide (jQuery wrapped)
-      // settings.onSlideOpen.call($this.next());
+      settings.onSlideOpen.call($this.next());
 
-      // animate
-      //if (active.slide.hasClass('selected')) {
-      //  // animate single selected slide
-      //  if (orientation) { // horizontal
-      //    if ((settings.rtl && active.slide.position().left > parent.w / 2) || active.slide.position().left < parent.w / 2) {
-      //      core.animateSlide.call(active);
-      //    }
-      //  } else { // vertical
-      //    if (active.slide.position().top < parent.h / 2) {
-      //      core.animateSlide.call(active);
-      //    }
-      //  }
-      //} else {
-        // animate group of slide
+//      // animate
+//      if (active.slide.hasClass('selected')) {
+//        // animate single selected slide
+//        if (orientation) { // horizontal
+//          // console.log(active.slide.position().left);
+//          if ((settings.rtl && active.slide.position().left > parent.w / 2) || active.slide.position().left < parent.w / 2) {
+//            core.animateSlide.call(active);
+//          }
+//        } else { // vertical
+//          if (active.slide.position().top < parent.h / 2) {
+//            core.animateSlide.call(active);
+//          }
+//        }
+//      } else {
+//        // animate group of slides
         core.animateGroup(active);
-      //}
+//      }
 
-/*
       // stop autoplay, reset current slide index in core.nextSlide closure
       if (settings.autoPlay) {
         methods.stop();
-        methods.play(tab.index(tab.filter('.selected')));
+        methods.play(tabs.index(slides.filter('.selected')));
       }
-*/
     };
 
-
-
     core.init = function() {
+      // ie test
       setup.ie();
+
+      // setup styles, slide positions and events
       setup.styles();
       setup.slidePositions();
       setup.events();
+
+      // check slide speed is not faster than cycle speed
+      if (settings.cycleSpeed < settings.slideSpeed) settings.cycleSpeed = settings.slideSpeed;
+
+      // init autoplay
+      if (settings.autoPlay) methods.play();
     };
 
     // init plugin
