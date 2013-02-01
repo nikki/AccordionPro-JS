@@ -23,6 +23,7 @@
 
     defaults = {
       orientation : 'horizontal',             // 'horizontal' or 'vertical' accordion
+      minHorizontalWidth : 600,               // minimum width of a horizontal accordion -> will switch to vertical orientation at this width
       startClosed : false,                    // start in a closed position
       rtl : false,                            // right to left layout
 
@@ -79,14 +80,14 @@
       next = core.nextSlide(index && index);
 
       // start autoplay
-      core.playing = setInterval(function() {
+      core.playing = setTimeout(function() {
         tabs.eq(next()).trigger('click.accordionPro');
       }, settings.cycleSpeed);
     };
 
     // stop elem animation
     methods.stop = function() {
-      clearInterval(core.playing);
+      clearTimeout(core.playing);
       core.playing = 0;
     };
 
@@ -146,22 +147,32 @@
      * Internal plugin setup methods
      */
 
-    setup.styles = function() {
-      var padding;
+    setup.styles = function(reinit) {
+      var padding = 0;
 
       // set parent theme and corner style
       elem
         .width(settings.width)
         .height(settings.height)
-        .addClass('accordionPro ' + settings.orientation)
+        .addClass('accordionPro')
+        .addClass(orientation ? 'horizontal' : 'vertical')
         .addClass(settings.rounded && 'rounded')
         .addClass(settings.theme)
         .addClass(settings.rtl && 'rtl')
         .addClass(settings.startClosed && 'closed');
 
       // cache parent height and width values
-      parent.w = elem.width();
-      parent.h = elem.height();
+      if (!reinit) {
+        parent.w = elem.width();
+        parent.h = elem.height();
+      } else {
+        // !!! TODO
+        // { w : '100%', h : parent.h + slide.l * tab.h }
+        // elem.width('100%');
+        // elem.height();
+        parent.w = elem.width();
+        parent.h = elem.height();
+      }
 
       // cache slide length
       slide.l = slides.length;
@@ -209,7 +220,7 @@
         // calculate slide properties
         css.slide.width = slide.w + tab.h;
         css.slide.height = '100%';
-        css.slide.position = { left : index * tab.h };
+        css.slide.position = { left : index * tab.h, top : 0 };
 
         // calculate tab properties
         css.tab.width = slide.h;
@@ -217,12 +228,12 @@
         // calculate content panel properties
         css.panel.width = slide.w - offset;
         css.panel.height = slide.h;
-        css.panel.position = { left : tab.h };
+        css.panel.position = { left : tab.h, top : 0 };
 
         // adjust for rtl if necessary
         if (settings.rtl) {
-          css.slide.position = { left : 'auto', right : index * tab.h };
-          css.panel.position = { left : 'auto', right : tab.h - offset };
+          css.slide.position = { left : 'auto', right : index * tab.h, top : 0 };
+          css.panel.position = { left : 'auto', right : tab.h - offset, top : 0 };
         }
 
         // compensate for pre-selected slide
@@ -233,11 +244,11 @@
         }
       } else { // vertical
         // calculate global slide dimensions
-        slide.w = tabs.eq(0).width; // px value
+        slide.w = tabs.eq(0).width(); // px value
         slide.h = parent.h - slide.l * tab.h;
 
         // calculate slide properties
-        css.slide.position = { top : index * tab.h };
+        css.slide.position = { top : index * tab.h, left : 0 };
         css.slide.height = slide.h + tab.h - (settings.theme === 'basic' ? 0 : (tab.h - tabs.eq(0).children().outerHeight()));
         css.slide.width = '100%';
 
@@ -247,7 +258,7 @@
         // calculate panel properties
         css.panel.width = '100%';
         css.panel.height = css.slide.height - tab.h;
-        css.panel.position = { top : tab.h };
+        css.panel.position = { top : tab.h, left : 0 };
 
         // compensate for pre-selected slide
         if (selected.length) {
@@ -377,19 +388,42 @@
       }
 
       // resize and orientationchange
-      $(window).on('resize.accordionPro orientationchange.accordionPro', function() {
+      $(window).on('load.accordionPro resize.accordionPro orientationchange.accordionPro', function() {
         // approximates 'onresizeend'
-        if (orientation) {
-          clearTimeout(resizeTimer);
-          resizeTimer = setTimeout(function() {
-            // redeclare parent height and width values
-            parent.w = elem.width();
-            parent.h = elem.height();
+        clearTimeout(resizeTimer);
 
-            // reset slide positions
-            setup.slidePositions();
-          }, 100);
-        }
+        // resize
+        resizeTimer = setTimeout(function() {
+          if (orientation) { // horizontal
+            // window size under min width?
+            if (window.innerWidth <= settings.minHorizontalWidth) {
+              // change orientation
+              orientation = 0;
+              elem.removeClass('horizontal');
+
+              // reinit styles
+              setup.styles(true);
+              setup.slidePositions();
+            } else {
+              // redeclare parent height and width values
+              parent.w = elem.width();
+              parent.h = elem.height();
+
+              // reset slide positions
+              setup.slidePositions();
+            }
+          } else { // vertical
+            if (settings.orientation === 'horizontal' && window.innerWidth > settings.minHorizontalWidth) {
+              // flip back to horizontal accordion
+              orientation = 1;
+              elem.removeClass('vertical');
+
+              // reinit styles
+              setup.styles();
+              setup.slidePositions();
+            }
+          }
+        }, 100);
       });
     };
 
@@ -426,6 +460,9 @@
     // counter for autoPlay (zero index firstSlide on init)
     core.currentSlide = settings.firstSlide - 1;
 
+    // previous slide
+    core.previousSlide = core.currentSlide;
+
     // next slide index
     core.nextSlide = function(index) {
       var next = index + 1 || core.currentSlide + 1;
@@ -441,29 +478,6 @@
 
     // animation active flag
     core.animationFlag = false;
-
-    // animate with css transitions, else fallback to jQuery animation
-    core.transition = function(trigger) {
-      var _this = this;
-
-      // animate slide
-      this
-        .slide
-        .stop(true)
-        .animate(
-          this.position,
-          settings.slideSpeed,
-          easing,
-          function() {
-            // flag ensures that fn is only called one time per triggerSlide
-            if (!core.animationFlag) {
-              // trigger callback in context of sibling div (jQuery wrapped)
-              // settings.onSlideClose.call(trigger ? trigger.next.children('div') : _this.prev.next().children('div'));
-
-              core.animationFlag = true;
-            }
-          });
-    };
 
     // calculate position of individual slide
     core.getSlidePosition = function(index, pos) {
@@ -492,6 +506,68 @@
       }
 
       return position;
+    };
+
+    // trigger animation cycle
+    core.animationCycle = function() {
+      var $this = $(this),
+          active = {
+            slide : $this.parent(),
+            index : tabs.index($this)
+          };
+
+      // additional props of active slide
+      active.next = active.slide.next();
+      active.prev = active.slide.prev();
+
+      // update hash
+      if (settings.linkable && active.slide.attr('data-slide-name')) {
+        if (active.slide.attr('data-slide-name') !== window.location.hash.split('#')[1]) {
+          // exit early and try again
+          return window.location.hash = '#' + active.slide.attr('data-slide-name');
+        }
+      }
+
+      // update core.previousSlide, core.currentSlide
+      core.previousSlide = core.currentSlide;
+      core.currentSlide = active.index;
+
+      // reset onSlideOpen callback flag
+      core.animationFlag = false;
+
+      // animate
+      if (active.slide.hasClass('selected')) {
+        // trigger callback in context of previous slide's panel <div>
+        settings.onSlideOpen.call(active.prev.children('div')[0]);
+
+        // animate single selected slide
+        if (orientation) { // horizontal
+          if ((settings.rtl && active.slide.position().left > parent.w / 2) || active.slide.position().left < parent.w / 2) {
+            // animate single slide
+            core.animateSlide.call(active);
+          }
+        } else { // vertical
+          if (active.slide.position().top < parent.h / 2) {
+            // animate single slide
+            core.animateSlide.call(active);
+          }
+        }
+      } else {
+        // trigger callback in context of current slide's panel <div>
+        // after delay of slideSpeed
+        setTimeout(function() {
+          settings.onSlideOpen.call(active.slide.children('div')[0]);
+        }, settings.slideSpeed);
+
+        // animate group of slides
+        core.animateGroup(active);
+      }
+
+      // stop autoplay, reset current slide index in core.nextSlide closure
+      if (settings.autoPlay && !settings.linkable) {
+        methods.stop();
+        methods.play(tabs.index(slides.filter('.selected')));
+      }
     };
 
     // animate single slide
@@ -540,11 +616,10 @@
           .each(function() {
             var $this = $(this),
                 active = {
-                  tab : $this.children('h2'),
                   slide : $this,
+                  index : slides.index($this),
                   next : $this.next(),
                   prev : $this.prev(),
-                  index : slides.index($this),
                   position : position
                 };
 
@@ -557,58 +632,28 @@
       slides.removeClass('selected').filter(trigger.slide).addClass('selected');
     };
 
-    // trigger animation cycle
-    core.animationCycle = function() {
-      var $this = $(this),
-          active = {
-            tab : $this,
-            slide : $this.parent(),
-            index : tabs.index($this)
-          };
+    // animate with css transitions, else fallback to jQuery animation
+    core.transition = function(trigger) {
+      var _this = this;
 
-      // additional props of active slide
-      active.next = active.slide.next();
-      active.prev = active.slide.prev();
+      // animate slide
+      this
+        .slide
+        .stop(true)
+        .animate(
+          this.position,
+          settings.slideSpeed,
+          easing,
+          function() {
+            // flag ensures that fn is only called one time per triggerSlide
+            if (!core.animationFlag) {
+              // trigger slide callback
+              settings.onSlideClose.call(slides.eq(core.previousSlide).children('div'));
 
-      // update hash
-      if (settings.linkable && active.slide.attr('data-slide-name')) {
-        if (active.slide.attr('data-slide-name') !== window.location.hash.split('#')[1]) {
-          // exit early and try again
-          return window.location.hash = '#' + active.slide.attr('data-slide-name');
-        }
-      }
-
-      // update core.currentSlide
-      core.currentSlide = active.index;
-
-      // reset onSlideAnimComplete callback flag
-      core.animationFlag = false;
-
-      // trigger callback in context of next slide (jQuery wrapped)
-      settings.onSlideOpen.call($this.next());
-
-      // animate
-      if (active.slide.hasClass('selected')) {
-        // animate single selected slide
-        if (orientation) { // horizontal
-          if ((settings.rtl && active.slide.position().left > parent.w / 2) || active.slide.position().left < parent.w / 2) {
-            core.animateSlide.call(active);
-          }
-        } else { // vertical
-          if (active.slide.position().top < parent.h / 2) {
-            core.animateSlide.call(active);
-          }
-        }
-      } else {
-        // animate group of slides
-        core.animateGroup(active);
-      }
-
-      // stop autoplay, reset current slide index in core.nextSlide closure
-      if (settings.autoPlay) {
-        methods.stop();
-        methods.play(tabs.index(slides.filter('.selected')));
-      }
+              // set animation flag
+              core.animationFlag = true;
+            }
+          });
     };
 
     core.init = function() {
@@ -623,8 +668,8 @@
       // check slide speed is not faster than cycle speed
       if (settings.cycleSpeed < settings.slideSpeed) settings.cycleSpeed = settings.slideSpeed;
 
-      // init autoplay
-      if (settings.autoPlay) methods.play();
+      // init autoplay (autoplay & linkable are not compatible with one another for UX reasons)
+      if (settings.autoPlay && !settings.linkable) methods.play();
     };
 
     // init plugin

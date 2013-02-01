@@ -2,16 +2,16 @@ var fs = require('fs'),
 
     /* css */
     cssp = require('uglifycss').processString,
-    cssfile = '../accordion_js/css/accordionpro.css',
+    cssfile = '../accordionpro_js/css/accordionpro.css',
 
     /* js */
     jsp = require('uglify-js').parser,
     pro = require('uglify-js').uglify,
     jsfiles = [
-      '../accordion_js/js/jquery.swipe.min.js',
-      '../accordion_js/js/modernizr.custom.min.js',
-      '../accordion_js/js/animate.min.js',
-      '../accordion_js/js/jquery.accordionpro.js'
+      '../accordionpro_js/js/jquery.swipe.min.js',
+      '../accordionpro_js/js/modernizr.custom.min.js',
+      '../accordionpro_js/js/animate.min.js',
+      '../accordionpro_js/js/jquery.accordionpro.js'
     ];
 
 desc('Compress and concatentate css');
