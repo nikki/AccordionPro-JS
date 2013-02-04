@@ -22,29 +22,34 @@
      */
 
     defaults = {
+      /* aesthetics */
       orientation : 'horizontal',             // 'horizontal' or 'vertical' accordion
-      minHorizontalWidth : 600,               // minimum width of a horizontal accordion -> will switch to vertical orientation at this width
-      startClosed : false,                    // start in a closed position
-      rtl : false,                            // right to left layout
-
-      width : '100%',                         // fixed (px/em) or fluid (%)
-      height : 320,                           // fixed (px)
-      tabSize : 48,                           // fixed (px)
-
-      activateOn : 'click',                   // click or mouseover (tap and swipe touch events enabled by default)
+      theme : 'basic',                        // basic, dark, light, or stitch
       firstSlide : 1,                         // displays slide (n) on page load
+      startClosed : false,                    // start in a closed position
+      rounded : false,                        // square or rounded corners
+      rtl : false,                            // right to left layout
+      showSlideNumbers : true,                // display numbers on slides
+
+      /* dimensions */
+      baseWidth : 960,                        // base width; fixed (px) - responsive scaling is relative to this value
+      baseHeight : 320,                       // base height; fixed (px) - responsive scaling is relative to this value
+      // tabSize : 48,                        // fixed (px) !!! REMOVED
+      responsive : true,                      // accordion will adapt itself to the page layout
+      minResponsiveWidth : 320,               // accordion will flip to slider at this width
+      maxResponsiveHeight : 960,              // accordion will not scale up beyond this width
+
+      /* slide specific options */
+      activateOn : 'click',                   // click or mouseover (tap and swipe touch events enabled by default)
       slideSpeed : 800,                       // slide animation speed
       onSlideOpen : function() {},            // callback on slide open
       onSlideClose : function() {},           // callback on slide animation complete
 
+      /* animations */
       autoPlay : false,                       // automatically cycle through slides
-      pauseOnHover : false,                   // pause on hover
       cycleSpeed : 6000,                      // time between slide cycles
       easing : 'ease-in-out',                 // animation easing
-
-      theme : 'basic',                        // basic, dark, light, or stitch
-      rounded : false,                        // square or rounded corners
-      showSlideNumbers : true,                // put numbers on slides
+      pauseOnHover : false,                   // pause on hover
       linkable : false                        // link slides via hash
     };
 
@@ -53,6 +58,7 @@
      */
 
     settings = $.extend({}, defaults, options);
+    settings.orientation = 'horizontal';
 
     /**
      * "Globals"
@@ -65,7 +71,8 @@
         tab = { w : 0, h : 0 },
         orientation = settings.orientation === 'horizontal' ? 1 : 0,
         easingFns = ['linear', 'ease', 'ease-in', 'ease-out', 'ease-in-out'],
-        easing = $.inArray(settings.easing, easingFns) >= 0 ? settings.easing : defaults.easing;
+        easing = $.inArray(settings.easing, easingFns) >= 0 ? settings.easing : defaults.easing,
+        tabSize = 48;
 
     /**
      * Public methods for triggering animation events
@@ -147,14 +154,15 @@
      * Internal plugin setup methods
      */
 
-    setup.styles = function(reinit) {
+    setup.styles = function() {
       var padding = 0;
 
       // set parent theme and corner style
       elem
-        .width(settings.width)
-        .height(settings.height)
+        .width(settings.baseWidth)
+        .height(settings.baseHeight)
         .addClass('accordionPro')
+        .addClass(settings.responsive && 'responsive')
         .addClass(orientation ? 'horizontal' : 'vertical')
         .addClass(settings.rounded && 'rounded')
         .addClass(settings.theme)
@@ -162,17 +170,8 @@
         .addClass(settings.startClosed && 'closed');
 
       // cache parent height and width values
-      if (!reinit) {
-        parent.w = elem.width();
-        parent.h = elem.height();
-      } else {
-        // !!! TODO
-        // { w : '100%', h : parent.h + slide.l * tab.h }
-        // elem.width('100%');
-        // elem.height();
-        parent.w = elem.width();
-        parent.h = elem.height();
-      }
+      parent.w = elem.width();
+      parent.h = elem.height();
 
       // cache slide length
       slide.l = slides.length;
@@ -181,8 +180,9 @@
       slides.addClass('slide');
 
       // set tab size on first tab elem to calculate px value
-      tabs.eq(0).height(settings.tabSize);
-      tab.h = tabs.eq(0).height();
+      tabs.eq(0).height(tabSize);
+      // tab.h = tabs.eq(0).height();
+      tab.h = tabSize; // !!! temp fix for ie8, px value only for now
 
       // calculate padding
       if (orientation) {
@@ -300,13 +300,22 @@
           if ($this.children('h2').children('b').length) return;
           $this.children('h2').append('<b>' + (index + 1) + '</b>');
         }
+
+        // compensate for <= ie8's lack of transform origin
+        if (!elem.hasClass('ie8')) return;
+
+        if (elem.hasClass('horizontal') && elem.hasClass('rtl')) {
+          $this.children('h2').css('marginRight', -(slide.h - tab.h));
+        } else if (elem.hasClass('vertical')) {
+          $this.children('h2').css('marginRight', 0);
+        }
       });
     };
 
     setup.startClosed = function() {
       if (elem.hasClass('closed')) {
         // redeclare parent height and width values
-        elem.css('width', settings.width); // needs to be css width for % rather than px value
+        elem.css('width', settings.baseWidth); // needs to be css width for % rather than px value
         elem.height(parent.h);
 
         // remove closed class
@@ -387,44 +396,62 @@
         });
       }
 
-      // resize and orientationchange
-      $(window).on('load.accordionPro resize.accordionPro orientationchange.accordionPro', function() {
-        // approximates 'onresizeend'
-        clearTimeout(resizeTimer);
+      // responsive?
+      if (settings.responsive) {
+        // resize and orientationchange
+        $(window).on('load.accordionPro resize.accordionPro orientationchange.accordionPro', function() {
+          // approximates 'onresizeend'
+          clearTimeout(resizeTimer);
 
-        // resize
-        resizeTimer = setTimeout(function() {
-          if (orientation) { // horizontal
-            // window size under min width?
-            if (window.innerWidth <= settings.minHorizontalWidth) {
-              // change orientation
-              orientation = 0;
-              elem.removeClass('horizontal');
+          // resize
+          resizeTimer = setTimeout(function() {
+            // resize and reposition slides
+            core.responsive();
 
-              // reinit styles
-              setup.styles(true);
-              setup.slidePositions();
-            } else {
-              // redeclare parent height and width values
-              parent.w = elem.width();
-              parent.h = elem.height();
+            // scale down
+            // core.scale();
 
-              // reset slide positions
-              setup.slidePositions();
+            // setup.slidePositions();
+
+            // parent.w = elem.width();
+            // parent.h = elem.height();
+
+
+  /*
+            if (orientation) { // horizontal
+              // window size under min width?
+              if (window.innerWidth <= settings.minHorizontalWidth) {
+                // change orientation
+                orientation = 0;
+                elem.removeClass('horizontal');
+
+                // reinit styles
+                setup.styles(true);
+                setup.slidePositions();
+              } else {
+                // redeclare parent height and width values
+                parent.w = elem.width();
+                parent.h = elem.height();
+
+                // reset slide positions
+                setup.slidePositions();
+              }
+            } else { // vertical
+              if (settings.orientation === 'horizontal' && window.innerWidth > settings.minHorizontalWidth) {
+                // flip back to horizontal accordion
+                orientation = 1;
+                elem.removeClass('vertical');
+
+                // reinit styles
+                setup.styles();
+                setup.slidePositions();
+              }
             }
-          } else { // vertical
-            if (settings.orientation === 'horizontal' && window.innerWidth > settings.minHorizontalWidth) {
-              // flip back to horizontal accordion
-              orientation = 1;
-              elem.removeClass('vertical');
+  */
+          }, 100);
+        });
+      }
 
-              // reinit styles
-              setup.styles();
-              setup.slidePositions();
-            }
-          }
-        }, 100);
-      });
     };
 
     setup.ie = function() {
@@ -454,8 +481,51 @@
     };
 
     /**
-     * Core animation methods
+     * Core scale and animation methods
      */
+
+    core.responsive = function() {
+      if (orientation) { // horizontal
+        if (elem.width() > settings.maxResponsiveWidth) {
+          // redeclare parent height and width values
+          parent.w = elem.width();
+          parent.h = elem.height();
+
+          // reset slide positions
+          setup.slidePositions();
+        }
+
+
+
+/*
+        // parent size under min width?
+        if (elem.width() <= settings.minResponsiveWidth) {
+          // add css hook
+          elem.addClass('minWidth');
+
+          // slides.width('100%').children('div').width('100%');
+
+          // parent.w = elem.width();
+          // parent.h = elem.height();
+
+        } else {
+
+        }
+      } else { // vertical
+*/
+      }
+    };
+
+    core.scale = function() {
+      var scale = Math.min(elem.width() / parent.w, elem.height() / parent.h); // linear scale
+
+      // scale
+      elem.css(Modernizr.prefixed('transform'), 'scale(' + scale + ', ' + scale + ')');
+
+      // redeclare parent height and width values
+      parent.w = elem.width();
+      parent.h = elem.height();
+    };
 
     // counter for autoPlay (zero index firstSlide on init)
     core.currentSlide = settings.firstSlide - 1;
@@ -657,6 +727,11 @@
     };
 
     core.init = function() {
+      // check baseWidth and baseHeight are integers
+      if (typeof settings.baseWidth !== 'number' || typeof settings.baseHeight !== 'number') {
+        throw new Error('baseWidth and baseHeight settings must be numbers.');
+      }
+
       // ie test
       setup.ie();
 

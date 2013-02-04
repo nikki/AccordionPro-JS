@@ -15,6 +15,10 @@
     font-size: 16px;
     line-height: 24px;
     font: 'Helvetica Neue', Verdana, Arial, sans-serif;
+    -webkit-transform-origin: left top;
+    -moz-transform-origin: left top;
+    -o-transform-origin: left top;
+    transform-origin: left top;
 }
 .accordionPro, .accordionPro * {
     margin: 0;
@@ -54,7 +58,6 @@
     left: 0;
     -webkit-backface-visibility: hidden; /* fixes chrome bug */
 }
-.accordionPro.rtl .slide > h2 { left: auto; right: 0 }
 .accordionPro .slide > h2 span {
     display: block;
     height: 90%;
@@ -70,6 +73,15 @@
 .accordionPro .ap-caption { padding: 10px 15px; position: absolute; bottom: 20px; right: 30px; background: black;
     background: rgba(0,0,0,0.7); color: white; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; display: none }
 .accordionPro noscript p { padding: 10px; margin: 0; background: white }
+
+/* minWidth*/
+.accordionPro.minWidth .slide > h2 { display: none }
+.accordionPro.minWidth .slide, .accordionPro.minWidth .slide > div { left: 0 !important }
+.accordionPro.minWidth.rtl .slide, .accordionPro.minWidth.rtl .slide > div { left: auto !important; right: 0 !important }
+.accordionPro.minWidth .slide.selected { z-index: 100 }
+
+/* rtl */
+.accordionPro.rtl .slide > h2 { left: auto; right: 0 }
 
 /************************************* Horizontal */
 /* core */
@@ -154,7 +166,7 @@
 
 /* rtl */
 .accordionPro.vertical.rtl .slide > h2 span { padding-left: 0; padding-right: 4%; text-align: right }
-.accordionPro.vertical.rtl .slide > h2 b { top: 1px; right: auto; left: 5% }
+.accordionPro.vertical.rtl .slide > h2 b { top: 1px !important; right: auto; left: 5% }
 
 /* basic */
 .accordionPro.vertical.basic .slide > h2 { line-height: 285% }
@@ -332,14 +344,21 @@
 .accordionPro.ie .slide > h2,
 .accordionPro.ie .slide > h2 span,
 .accordionPro.ie .slide > h2 b { filter: none; -ms-filter: none; -ms-transform: none }
-.accordionPro.ie7 .slide > h2 { filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3) }
-.accordionPro.ie7 .slide > h2 b { filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1) }
-.accordionPro.ie8 .slide > h2 { -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)" }
-.accordionPro.ie8 .slide > h2 b { -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)" }
-.accordionPro.ie9 .slide > h2 { -ms-transform: translateX(-100%) rotate(-90deg) translateZ(0); -ms-transform-origin: right top }
-.accordionPro.ie9 .slide > h2 b { -ms-transform: rotate(90deg) translateZ(0) }
+.accordionPro.ie.ie7.horizontal .slide > h2 { filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3) }
+.accordionPro.ie.ie7.horizontal .slide > h2 b { filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1) }
+.accordionPro.ie.ie8.horizontal .slide > h2 { -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)" }
+.accordionPro.ie.ie8.horizontal .slide > h2 b { -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)" }
+
+.accordionPro.ie.ie8.horizontal.rtl .slide > h2 { -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)" }
+.accordionPro.ie.ie8.horizontal.rtl .slide > h2 b { -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)" }
+
+.accordionPro.ie.ie9.horizontal .slide > h2 { -ms-transform: translateX(-100%) rotate(-90deg); -ms-transform-origin: right top }
+.accordionPro.ie.ie9.horizontal .slide > h2 b { -ms-transform: rotate(90deg) }
+.accordionPro.ie.ie9.horizontal.rtl .slide > h2 { -ms-transform: translateX(100%) rotate(90deg); -ms-transform-origin: left top }
+.accordionPro.ie.ie9.horizontal.rtl .slide > h2 b { -ms-transform: rotate(-90deg) }
 
 /* misc */
-.accordionPro.ie7 .slide > h2 b, .accordionPro.ie8 .slide > h2 b { top: 44%; left: 5% }
-.accordionPro.ie7.stitch .slide > h2 b, .accordionPro.ie8.stitch .slide > h2 b { top: 36% }
-.accordionPro.ie9.stitch { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4) }
+.accordionPro.ie.vertical .slide > h2 b { line-height: 262% }
+.accordionPro.ie.ie7 .slide > h2 b, .accordionPro.ie.ie8 .slide > h2 b { top: 44%; left: 5% }
+.accordionPro.ie.ie7.stitch .slide > h2 b, .accordionPro.ie.ie8.stitch .slide > h2 b { top: 36% }
+.accordionPro.ie.ie9.stitch { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4) }
