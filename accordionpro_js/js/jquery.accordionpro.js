@@ -22,33 +22,43 @@
      */
 
     defaults = {
-      /* aesthetics */
+      /* layout */
       orientation : 'horizontal',             // 'horizontal' or 'vertical' accordion
-      theme : 'basic',                        // basic, dark, light, or stitch
-      firstSlide : 1,                         // displays slide (n) on page load
       startClosed : false,                    // start in a closed position
+      firstSlide : 1,                         // displays slide (n) on page load
+
+      /* aesthetics */
+      theme : 'basic',                        // basic, dark, light, or stitch
       rounded : false,                        // square or rounded corners
       rtl : false,                            // right to left layout
       showSlideNumbers : true,                // display numbers on slides
 
       /* dimensions */
-      baseWidth : 960,                        // base width; fixed (px) - responsive scaling is relative to this value
-      baseHeight : 320,                       // base height; fixed (px) - responsive scaling is relative to this value
+      baseWidth : 900,                        // base width; fixed (px) - responsive scaling is relative to this value
+      baseHeight : 400,                       // base height; fixed (px) - responsive scaling is relative to this value
       // tabSize : 48,                        // fixed (px) !!! REMOVED
-      responsive : true,                      // accordion will adapt itself to the page layout
-      minResponsiveWidth : 320,               // accordion will flip to slider at this width
-      maxResponsiveHeight : 960,              // accordion will not scale up beyond this width
 
-      /* slide specific options */
+      /* responsive */
+      responsive : true,                      // accordion will adapt itself to the page layout (overrides fluid by default)
+      minResponsiveWidth : 600,               // accordion will hide tabs (and below) this width (set to 0 to disable)
+      maxResponsiveWidth : 1200,              // accordion will not scale up beyond this width
+
+      /* fluid (not compatible with responsive) */
+      fluid : false,                          // accordion will stretch to fill parent container
+      minFluidWidth : 600,                    // accordion will flip to vertical accordion at (and below) this width (set to 0 to disable)
+
+      /* events */
       activateOn : 'click',                   // click or mouseover (tap and swipe touch events enabled by default)
-      slideSpeed : 800,                       // slide animation speed
       onSlideOpen : function() {},            // callback on slide open
       onSlideClose : function() {},           // callback on slide animation complete
 
       /* animations */
       autoPlay : false,                       // automatically cycle through slides
       cycleSpeed : 6000,                      // time between slide cycles
+      slideSpeed : 800,                       // slide animation speed
       easing : 'ease-in-out',                 // animation easing
+
+      /* miscellaneous */
       pauseOnHover : false,                   // pause on hover
       linkable : false                        // link slides via hash
     };
@@ -123,7 +133,7 @@
         .off('.accordionPro')
         .removeData('accordionPro')
         .removeAttr('style')
-        .removeClass('accordionPro horizontal vertical basic dark light stitch rounded rtl closed')
+        .removeClass('accordionPro horizontal vertical basic dark light stitch rounded rtl closed responsive fluid')
         .find('li > :first-child')
         .off('.accordionPro')
         .end()
@@ -163,21 +173,24 @@
         .height(settings.baseHeight)
         .addClass('accordionPro')
         .addClass(settings.responsive && 'responsive')
+        .addClass(settings.fluid && 'fluid')
         .addClass(orientation ? 'horizontal' : 'vertical')
         .addClass(settings.rounded && 'rounded')
         .addClass(settings.theme)
         .addClass(settings.rtl && 'rtl')
         .addClass(settings.startClosed && 'closed');
 
+      // add slide class to each slide
+      slides.addClass('slide');
+    };
+
+    setup.dimensions = function() {
       // cache parent height and width values
       parent.w = elem.width();
       parent.h = elem.height();
 
       // cache slide length
       slide.l = slides.length;
-
-      // add slide class to each slide
-      slides.addClass('slide');
 
       // set tab size on first tab elem to calculate px value
       tabs.eq(0).height(tabSize);
@@ -396,8 +409,8 @@
         });
       }
 
-      // responsive?
-      if (settings.responsive) {
+      // only bind resize events if responsive or fluid options set
+      if (settings.responsive || settings.fluid) {
         // resize and orientationchange
         $(window).on('load.accordionPro resize.accordionPro orientationchange.accordionPro', function() {
           // approximates 'onresizeend'
@@ -405,49 +418,13 @@
 
           // resize
           resizeTimer = setTimeout(function() {
-            // resize and reposition slides
-            core.responsive();
-
-            // scale down
-            // core.scale();
-
-            // setup.slidePositions();
-
-            // parent.w = elem.width();
-            // parent.h = elem.height();
-
-
-  /*
-            if (orientation) { // horizontal
-              // window size under min width?
-              if (window.innerWidth <= settings.minHorizontalWidth) {
-                // change orientation
-                orientation = 0;
-                elem.removeClass('horizontal');
-
-                // reinit styles
-                setup.styles(true);
-                setup.slidePositions();
-              } else {
-                // redeclare parent height and width values
-                parent.w = elem.width();
-                parent.h = elem.height();
-
-                // reset slide positions
-                setup.slidePositions();
-              }
-            } else { // vertical
-              if (settings.orientation === 'horizontal' && window.innerWidth > settings.minHorizontalWidth) {
-                // flip back to horizontal accordion
-                orientation = 1;
-                elem.removeClass('vertical');
-
-                // reinit styles
-                setup.styles();
-                setup.slidePositions();
-              }
+            if (settings.responsive) {
+              // responsive layout (overrides fluid layout!)
+              core.responsive();
+            } else if (settings.fluid) {
+              // reposition slides
+              core.fluid();
             }
-  */
           }, 100);
         });
       }
@@ -467,8 +444,16 @@
         ua = +ua;
 
         // ie versions
+        // ie 6 and below
         if (ua < 7) methods.destroy();
+
+        // kill linkable for ie7
+        if (ua === 7) settings.linkable = false;
+
+        // ie 10+ doesn't need additional styles...
         if (ua >= 10) return;
+
+        // ... but ie 7 and do :(
         if (ua === 7 || ua === 8) {
           slides.each(function(index) {
             $(this).addClass('slide-' + index);
@@ -485,46 +470,76 @@
      */
 
     core.responsive = function() {
-      if (orientation) { // horizontal
-        if (elem.width() > settings.maxResponsiveWidth) {
-          // redeclare parent height and width values
-          parent.w = elem.width();
-          parent.h = elem.height();
+      var w = $(window).width();
 
-          // reset slide positions
-          setup.slidePositions();
-        }
+      // slider
+      if (w <= settings.minResponsiveWidth) {
+        // add css hook
+        elem.addClass('minWidth');
 
+        // bind click event to slides
+        slides.on('click.accordionPro touchstart.accordionPro', core.animationCycle);
 
-
-/*
-        // parent size under min width?
-        if (elem.width() <= settings.minResponsiveWidth) {
-          // add css hook
-          elem.addClass('minWidth');
-
-          // slides.width('100%').children('div').width('100%');
-
-          // parent.w = elem.width();
-          // parent.h = elem.height();
-
-        } else {
-
-        }
-      } else { // vertical
-*/
+        // change slide and panel widths
+        // slides.width('100%').children('div').width('100%');
       }
+
+      // remove slider
+      if (w > settings.minResponsiveWidth && elem.hasClass('minWidth')) {
+        // remove css hook
+        elem.removeClass('minWidth');
+
+        // remove click event from slides
+        slides.off('click.accordionPro touchstart.accordionPro', core.animationCycle);
+
+        // refresh slide positions
+        // setup.slidePositions();
+      }
+
+      // scale
+      if (w <= settings.maxResponsiveWidth) core.scale();
     };
 
     core.scale = function() {
-      var scale = Math.min(elem.width() / parent.w, elem.height() / parent.h); // linear scale
+      var scale = Math.min(elem.parent().width() / settings.baseWidth); // linear scale
 
       // scale
-      elem.css(Modernizr.prefixed('transform'), 'scale(' + scale + ', ' + scale + ')');
+      elem.css(Modernizr.prefixed('transform'), 'scale(' + scale + ')');
+    };
+
+    core.fluid = function() {
+      var w = $(window).width();
+
+      if (orientation) { // horizontal
+        // window size under min width?
+        if (w <= settings.minFluidWidth) {
+          // change orientation
+          orientation = 0;
+          elem.removeClass('horizontal');
+
+          // reinit styles
+          setup.styles();
+
+          // change height
+          elem.height(slide.l * tabSize + slide.h);
+        }
+      } else { // vertical
+        if (settings.orientation === 'horizontal' && w > settings.minFluidWidth) {
+          // flip back to horizontal accordion
+          orientation = 1;
+          elem.removeClass('vertical');
+
+          // reinit styles
+          setup.styles();
+        }
+      }
 
       // redeclare parent height and width values
       parent.w = elem.width();
       parent.h = elem.height();
+
+      // reset slide positions
+      setup.slidePositions();
     };
 
     // counter for autoPlay (zero index firstSlide on init)
@@ -579,12 +594,21 @@
     };
 
     // trigger animation cycle
-    core.animationCycle = function() {
-      var $this = $(this),
-          active = {
-            slide : $this.parent(),
-            index : tabs.index($this)
-          };
+    core.animationCycle = function(e) {
+      var $this = $(this), active = {};
+
+      // double check where event originated from
+      if (e.target.nodeName !== 'H2') {
+        $this = $(e.target).closest('.slide').children('h2');
+      }
+
+      // !!!
+
+      // determine active slide
+      active = {
+        slide : $this.parent(),
+        index : tabs.index($this)
+      };
 
       // additional props of active slide
       active.next = active.slide.next();
@@ -735,8 +759,9 @@
       // ie test
       setup.ie();
 
-      // setup styles, slide positions and events
+      // setup dimensions, styles, slide positions and events
       setup.styles();
+      setup.dimensions();
       setup.slidePositions();
       setup.events();
 

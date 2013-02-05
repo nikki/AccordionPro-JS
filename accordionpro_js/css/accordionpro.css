@@ -34,8 +34,8 @@
     -webkit-backface-visibility: hidden;
     -webkit-transform: translate3d(0,0,0);
     -moz-transform: translate3d(0,0,0);
-    -o-transform: translate3d(0,0,0);
     -ms-transform: translate3d(0,0,0);
+    -o-transform: translate3d(0,0,0);
     transform: translate3d(0,0,0);
     -webkit-tap-highlight-color: transparent;
 }
@@ -74,11 +74,17 @@
     background: rgba(0,0,0,0.7); color: white; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; display: none }
 .accordionPro noscript p { padding: 10px; margin: 0; background: white }
 
+/* fluid */
+.accordionPro.fluid { width: 100% !important }
+
 /* minWidth*/
 .accordionPro.minWidth .slide > h2 { display: none }
-.accordionPro.minWidth .slide, .accordionPro.minWidth .slide > div { left: 0 !important }
-.accordionPro.minWidth.rtl .slide, .accordionPro.minWidth.rtl .slide > div { left: auto !important; right: 0 !important }
+
+.accordionPro.minWidth .slide > div { left: 0 !important; width: 100% !important; margin: 0 !important }
+.accordionPro.minWidth.rtl .slide > div { left: auto !important; right: 0 !important; width: 100% !important; margin: 0 !important }
+/*
 .accordionPro.minWidth .slide.selected { z-index: 100 }
+*/
 
 /* rtl */
 .accordionPro.rtl .slide > h2 { left: auto; right: 0 }
@@ -90,7 +96,7 @@
     -webkit-transform-origin: right top;
     -moz-transform: translateX(-100%) rotate(-90deg) translateZ(0);
     -moz-transform-origin: right top;
-    -o-transform: translateX(-100%) rotate(-90deg) translateZ(0);
+    -o-transform: translateX(-100%) rotate(-90deg);
     -o-transform-origin: right top;
     transform: translateX(-100%) rotate(-90deg) translateZ(0);
     transform-origin: right top;
@@ -102,7 +108,7 @@
     text-align: center;
     -webkit-transform: rotate(90deg) translateZ(0);
     -moz-transform: rotate(90deg) translateZ(0);
-    -o-transform: rotate(90deg) translateZ(0);
+    -o-transform: rotate(90deg);
     transform: rotate(90deg) translateZ(0);
 }
 
@@ -113,7 +119,7 @@
     -webkit-transform-origin: left top;
     -moz-transform: translateX(100%) rotate(90deg) translateZ(0);
     -moz-transform-origin: left top;
-    -o-transform: translateX(100%) rotate(90deg) translateZ(0);
+    -o-transform: translateX(100%) rotate(90deg);
     -o-transform-origin: left top;
     transform: translateX(100%) rotate(90deg) translateZ(0);
     transform-origin: left top;
@@ -121,7 +127,7 @@
 .accordionPro.horizontal.rtl .slide > h2 b {
     -webkit-transform: rotate(-90deg) translateZ(0);
     -moz-transform: rotate(-90deg) translateZ(0);
-    -o-transform: rotate(-90deg) translateZ(0);
+    -o-transform: rotate(-90deg);
     transform: rotate(-90deg) translateZ(0);
 }
 .accordionPro.horizontal.rtl .slide > h2 span { padding-left: 8%; padding-right: 0; text-align: left }
@@ -297,7 +303,7 @@
     right: 38px;
     -webkit-transform: rotate(45deg) translateZ(0);
     -moz-transform: rotate(45deg) translateZ(0);
-    -o-transform: rotate(45deg) translateZ(0);
+    -o-transform: rotate(45deg);
     transform: rotate(45deg) translateZ(0);
     -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
     filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
