@@ -75,22 +75,14 @@
 .accordionPro noscript p { padding: 10px; margin: 0; background: white }
 
 /* responsive */
-.accordionPro.responsive { width: 100% !important }
 .accordionPro.responsive {
-    -webkit-transform: scale(1, 0.85);
-    -moz-transform: scale(1, 0.85);
-    -o-transform: scale(1, 0.85);
-    -ms-transform: scale(1, 0.85);
-    transform: scale(1, 0.85);
+    width: 100% !important;
+    -webkit-transform: scale(1, 0.9);
+    -moz-transform: scale(1, 0.9);
+    -o-transform: scale(1, 0.9);
+    -ms-transform: scale(1, 0.9);
+    transform: scale(1, 0.9);
 }
-
-/* minWidth*/
-/*
-.accordionPro.minWidth .slide > h2 { display: none }
-.accordionPro.minWidth .slide > div { left: 0 !important; width: 100% !important; margin: 0 !important }
-.accordionPro.minWidth.rtl .slide > div { left: auto !important; right: 0 !important; width: 100% !important; margin: 0 !important }
-.accordionPro.minWidth .slide.selected { z-index: 100 }
-*/
 
 /* rtl */
 .accordionPro.rtl .slide > h2 { left: auto; right: 0 }

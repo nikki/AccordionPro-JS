@@ -43,7 +43,7 @@
       /* vertical accordion options */
       verticalWidth : '100%',                 // fixed (px [integer]) or fluid (% [string])
       verticalHeight : 600,                   // base vertical accordion height; fixed (px [integer])
-      verticalSlideHeight : 'fitToContent',   // vertical accordion slide heights can be 'fixed' or 'fitToContent'
+      verticalSlideHeight : 'fixed',          // vertical accordion slide heights can be 'fixed' or 'fitToContent'
 
       /* events */
       activateOn : 'click',                   // click or mouseover (tap and swipe touch events enabled by default)
@@ -67,7 +67,7 @@
 
     settings = $.extend({}, defaults, options);
     settings.orientation = 'horizontal';
-    verticalSlideHeight = 'fitToContent';
+    // !!! verticalSlideHeight = 'fitToContent';
 
     /**
      * "Globals"
@@ -282,8 +282,7 @@
         css.panel.height = css.slide.height - tab.h;
         css.panel.position = { top : tab.h, left : 0 };
 
-        // compensate for pre-selected slide
-/*
+        // !!! compensate for pre-selected slide
         if (selected.length) {
           if (index > slides.index(selected)) {
             css.slide.position.top += fitToContent ? this.prev().height() : slide.h;
@@ -293,7 +292,6 @@
             css.slide.position.top += fitToContent ? this.prev().height() : slide.h;
           }
         }
-*/
       }
 
       return css;
@@ -745,7 +743,7 @@
       // setup dimensions, styles, slide positions and events
       setup.styles();
       setup.dimensions();
-      // setup.slidePositions();
+      setup.slidePositions();
       setup.events();
 
       // check slide speed is not faster than cycle speed
