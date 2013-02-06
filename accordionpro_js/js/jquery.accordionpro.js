@@ -33,15 +33,17 @@
       rtl : false,                            // right to left layout
       showSlideNumbers : true,                // display numbers on slides
 
-      /* dimensions */
-      baseWidth : 900,                        // base width; fixed (px) - responsive scaling is relative to this value
-      baseHeight : 360,                       // base height; fixed (px) - responsive scaling is relative to this value
-      // tabSize : 48,                        // fixed (px) !!! REMOVED
+      /* horizontal accordion options */
+      horizontalWidth : 900,                  // base width; fixed (px [integer]) - responsive scaling is relative to this value
+      horizontalHeight : 300,                 // base horizontal accordion height; fixed (px [integer]) - responsive scaling is relative to this value
+      responsive : true,                      // accordion will adapt itself to the page layout, based on width of parent element
+      minResponsiveWidth : 480,               // horizontal accordion will flip to vertical at (and below) this width
+      maxResponsiveWidth : 1020,              // accordion will not scale up beyond this width
 
-      /* responsive */
-      responsive : true,                      // accordion will adapt itself to the page layout (overrides fluid by default)
-      minResponsiveWidth : 768,               // accordion will hide tabs (and below) this width (set to 0 to disable)
-      maxResponsiveWidth : 1200,              // accordion will not scale up beyond this width
+      /* vertical accordion options */
+      verticalWidth : '100%',                 // fixed (px [integer]) or fluid (% [string])
+      verticalHeight : 600,                   // base vertical accordion height; fixed (px [integer])
+      verticalSlideHeight : 'fitToContent',   // vertical accordion slide heights can be 'fixed' or 'fitToContent'
 
       /* events */
       activateOn : 'click',                   // click or mouseover (tap and swipe touch events enabled by default)
@@ -65,6 +67,7 @@
 
     settings = $.extend({}, defaults, options);
     settings.orientation = 'horizontal';
+    verticalSlideHeight = 'fitToContent';
 
     /**
      * "Globals"
@@ -74,11 +77,10 @@
         slides = elem.children('ol').children('li'),
         slide = { w : 0, h : 0, l : 0 },
         tabs = slides.children(':first-child'),
-        tab = { w : 0, h : 0 },
+        tab = { w : 0, h : 48 },
         orientation = settings.orientation === 'horizontal' ? 1 : 0,
         easingFns = ['linear', 'ease', 'ease-in', 'ease-out', 'ease-in-out'],
-        easing = $.inArray(settings.easing, easingFns) >= 0 ? settings.easing : defaults.easing,
-        tabSize = 48;
+        easing = $.inArray(settings.easing, easingFns) >= 0 ? settings.easing : defaults.easing;
 
     /**
      * Public methods for triggering animation events
@@ -165,10 +167,9 @@
 
       // set parent theme and corner style
       elem
-        .width(settings.baseWidth)
-        .height(settings.baseHeight)
+        .width(orientation ? settings.horizontalWidth : settings.verticalWidth)
+        .height(orientation ? settings.horizontalHeight : settings.verticalHeight)
         .addClass('accordionPro')
-        .addClass(settings.responsive && 'responsive')
         .addClass(orientation ? 'horizontal' : 'vertical')
         .addClass(settings.rounded && 'rounded')
         .addClass(settings.theme)
@@ -186,11 +187,6 @@
 
       // cache slide length
       slide.l = slides.length;
-
-      // set tab size on first tab elem to calculate px value
-      tabs.eq(0).height(tabSize);
-      // tab.h = tabs.eq(0).height();
-      tab.h = tabSize; // !!! temp fix for ie8, px value only for now
 
       // calculate padding
       if (orientation) {
@@ -210,7 +206,10 @@
     };
 
     setup.getSlideCss = function(index, selected) {
-      var panel = tabs.first().next(), offset,
+      var first = tabs.first(),
+          offset,
+          fitToContent = settings.verticalSlideHeight === 'fitToContent' ? true : false,
+          fitToContentHeight = 0,
           css = {
             slide : {},
             tab : {},
@@ -223,7 +222,7 @@
         slide.h = parent.h;
 
         // calculate slide offset
-        offset = parseInt(panel.css('marginLeft'), 10) || parseInt(panel.css('marginRight'), 10) || 0;
+        offset = parseInt(first.next().css('marginLeft'), 10) || parseInt(first.next().css('marginRight'), 10) || 0;
 
         // calculate slide properties
         css.slide.width = slide.w + tab.h;
@@ -255,9 +254,24 @@
         slide.w = tabs.eq(0).width(); // px value
         slide.h = parent.h - slide.l * tab.h;
 
+        // calculate slide offset
+        offset = parseInt(first.height() - first.children().outerHeight());
+
         // calculate slide properties
+        if (fitToContent) {
+          // calculate height of slide based on contents
+          this.children('div').children().each(function() {
+            fitToContentHeight += $(this).outerHeight();
+          });
+
+          // assign content height to slide
+          css.slide.height = fitToContentHeight + tab.h + offset;
+        } else {
+          // fixed height
+          css.slide.height = slide.h + tab.h - offset;
+        }
+
         css.slide.position = { top : index * tab.h, left : 0 };
-        css.slide.height = slide.h + tab.h - (settings.theme === 'basic' ? 0 : (tab.h - tabs.eq(0).children().outerHeight()));
         css.slide.width = '100%';
 
         // calculate tab properties
@@ -269,11 +283,17 @@
         css.panel.position = { top : tab.h, left : 0 };
 
         // compensate for pre-selected slide
+/*
         if (selected.length) {
-          if (index > slides.index(selected)) css.slide.position.top += slide.h;
+          if (index > slides.index(selected)) {
+            css.slide.position.top += fitToContent ? this.prev().height() : slide.h;
+          }
         } else if (!settings.startClosed) {
-          if (index >= settings.firstSlide) css.slide.position.top += slide.h;
+          if (index >= settings.firstSlide) {
+            css.slide.position.top += fitToContent ? this.prev().height() : slide.h;
+          }
         }
+*/
       }
 
       return css;
@@ -322,9 +342,9 @@
 
     setup.startClosed = function() {
       if (elem.hasClass('closed')) {
-        // redeclare parent height and width values
-        elem.css('width', settings.baseWidth); // needs to be css width for % rather than px value
-        elem.height(parent.h);
+        // !!! redeclare parent height and width values
+        // elem.css('width', settings.width); // needs to be css width for % rather than px value
+        // elem.height(parent.h);
 
         // remove closed class
         elem.removeClass('closed');
@@ -460,81 +480,38 @@
      */
 
     core.responsive = function() {
-      var w = $(window).width();
-
-      // slider
-      if (w <= settings.minResponsiveWidth) {
-        // change orientation
-        orientation = 0;
-
-        // remove horizontal class and any scaling
-        elem.removeClass('horizontal').css(Modernizr.prefixed('transform'), '');
-
-        // reinit styles
-        setup.styles();
-
-        // change height
-        elem.height(slide.l * tabSize + slide.h);
-
-        // redeclare parent height and width values
-        parent.w = elem.width();
-        parent.h = elem.height();
-
-        // reset slide positions
-        setup.slidePositions();
-
-        // bind click event to slides
-        // slides.on('click.accordionPro touchstart.accordionPro', core.animationCycle);
-
-        // change slide and panel widths
-        // slides.width('100%').children('div').width('100%');
-      }
-
-      // remove slider
-      if (w > settings.minResponsiveWidth && elem.hasClass('minWidth')) {
-        // remove click event from slides
-        slides.off('click.accordionPro touchstart.accordionPro', core.animationCycle);
-
-        // refresh slide positions
-        // setup.slidePositions();
-      }
-
-      // scale
-      if (w > settings.minResponsiveWidth && w <= settings.maxResponsiveWidth) core.scale();
-    };
-
-    core.scale = function() {
-      var scale = Math.min(elem.parent().width() / settings.baseWidth); // linear scale
-
-      // scale
-      elem.css(Modernizr.prefixed('transform'), 'scale(' + scale + ')');
-    };
-
-/*
-    core.fluid = function() {
-      var w = $(window).width();
+      var w = elem.parent().width(); // responsive reaction to parent element width, not window width
 
       if (orientation) { // horizontal
-        // window size under min width?
-        if (w <= settings.minFluidWidth) {
+        // flip to vertical
+        if (w <= settings.minResponsiveWidth) {
           // change orientation
           orientation = 0;
-          elem.removeClass('horizontal');
+
+          // remove horizontal class and any scaling
+          elem.removeClass('horizontal').addClass('responsive').css(Modernizr.prefixed('transform'), '');
 
           // reinit styles
           setup.styles();
 
           // change height
-          elem.height(slide.l * tabSize + slide.h);
+          elem.height(slide.l * tab.h + slide.h);
+        } else {
+          // scale
+          core.scale();
         }
       } else { // vertical
-        if (settings.orientation === 'horizontal' && w > settings.minFluidWidth) {
+        // flip back to horizontal
+        if (w > settings.minResponsiveWidth && elem.hasClass('responsive')) {
           // flip back to horizontal accordion
           orientation = 1;
-          elem.removeClass('vertical');
+          elem.removeClass('vertical responsive');
 
           // reinit styles
           setup.styles();
+
+          // scale
+          core.scale();
         }
       }
 
@@ -545,7 +522,17 @@
       // reset slide positions
       setup.slidePositions();
     };
-*/
+
+    core.scale = function() {
+      var scale = Math.min(elem.parent().width() / settings.horizontalWidth), // linear scale
+          max = Math.min(settings.maxResponsiveWidth / settings.horizontalWidth);
+
+      // limit scale to maximum
+      if (scale > max) scale = max;
+
+      // scale
+      elem.css(Modernizr.prefixed('transform'), 'scale(' + scale + ')');
+    };
 
     // counter for autoPlay (zero index firstSlide on init)
     core.currentSlide = settings.firstSlide - 1;
@@ -600,20 +587,11 @@
 
     // trigger animation cycle
     core.animationCycle = function(e) {
-      var $this = $(this), active = {};
-
-      // double check where event originated from
-      if (e.target.nodeName !== 'H2') {
-        $this = $(e.target).closest('.slide').children('h2');
-      }
-
-      // !!!
-
-      // determine active slide
-      active = {
-        slide : $this.parent(),
-        index : tabs.index($this)
-      };
+      var $this = $(this),
+          active = {
+            slide : $this.parent(),
+            index : tabs.index($this)
+          };
 
       // additional props of active slide
       active.next = active.slide.next();
@@ -623,7 +601,7 @@
       if (settings.linkable && active.slide.attr('data-slide-name')) {
         if (active.slide.attr('data-slide-name') !== window.location.hash.split('#')[1]) {
           // exit early and try again
-          return window.location.hash = '#' + active.slide.attr('data-slide-name');
+          // return window.location.hash = '#' + active.slide.attr('data-slide-name');
         }
       }
 
@@ -756,9 +734,9 @@
     };
 
     core.init = function() {
-      // check baseWidth and baseHeight are integers
-      if (typeof settings.baseWidth !== 'number' || typeof settings.baseHeight !== 'number') {
-        throw new Error('baseWidth and baseHeight settings must be numbers.');
+      // check width and baseHeight are integers
+      if (typeof settings.horizontalWidth !== 'number' || typeof settings.horizontalHeight !== 'number' || typeof settings.verticalHeight !== 'number') {
+        throw new Error('horizontalWidth, horizontalHeight, and verticalHeight options must be integers.');
       }
 
       // ie test
@@ -767,7 +745,7 @@
       // setup dimensions, styles, slide positions and events
       setup.styles();
       setup.dimensions();
-      setup.slidePositions();
+      // setup.slidePositions();
       setup.events();
 
       // check slide speed is not faster than cycle speed

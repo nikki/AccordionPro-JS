@@ -74,8 +74,15 @@
     background: rgba(0,0,0,0.7); color: white; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; display: none }
 .accordionPro noscript p { padding: 10px; margin: 0; background: white }
 
-/* fluid */
-.accordionPro.fluid { width: 100% !important }
+/* responsive */
+.accordionPro.responsive { width: 100% !important }
+.accordionPro.responsive {
+    -webkit-transform: scale(1, 0.85);
+    -moz-transform: scale(1, 0.85);
+    -o-transform: scale(1, 0.85);
+    -ms-transform: scale(1, 0.85);
+    transform: scale(1, 0.85);
+}
 
 /* minWidth*/
 /*
