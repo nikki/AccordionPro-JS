@@ -78,11 +78,10 @@
 .accordionPro.fluid { width: 100% !important }
 
 /* minWidth*/
+/*
 .accordionPro.minWidth .slide > h2 { display: none }
-
 .accordionPro.minWidth .slide > div { left: 0 !important; width: 100% !important; margin: 0 !important }
 .accordionPro.minWidth.rtl .slide > div { left: auto !important; right: 0 !important; width: 100% !important; margin: 0 !important }
-/*
 .accordionPro.minWidth .slide.selected { z-index: 100 }
 */
 
