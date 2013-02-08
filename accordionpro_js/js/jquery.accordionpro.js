@@ -66,8 +66,11 @@
      */
 
     settings = $.extend({}, defaults, options);
-    settings.orientation = 'horizontal';
-    // !!! verticalSlideHeight = 'fitToContent';
+    settings.orientation = 'vertical';
+    settings.verticalSlideHeight = 'fitToContent';
+    settings.firstSlide = 2;
+    // !!! settings.startClosed = true;
+    // !!! settings.linkable = true;
 
     /**
      * "Globals"
@@ -78,9 +81,11 @@
         slide = { w : 0, h : 0, l : 0 },
         tabs = slides.children(':first-child'),
         tab = { w : 0, h : 48 },
+        offset = 0,
         orientation = settings.orientation === 'horizontal' ? 1 : 0,
         easingFns = ['linear', 'ease', 'ease-in', 'ease-out', 'ease-in-out'],
-        easing = $.inArray(settings.easing, easingFns) >= 0 ? settings.easing : defaults.easing;
+        easing = $.inArray(settings.easing, easingFns) >= 0 ? settings.easing : defaults.easing,
+        fitToContent = !orientation && settings.verticalSlideHeight === 'fitToContent' ? true : false;
 
     /**
      * Public methods for triggering animation events
@@ -194,21 +199,10 @@
       } else {
         padding = parseInt(elem.css('paddingTop'), 10) + parseInt(elem.css('paddingBottom'), 10) + parseInt(elem.css('borderTop'), 10) + parseInt(elem.css('borderBottom'), 10);
       }
-
-      // reset elem dimensions if start closed setting enabled
-      if (settings.startClosed) {
-        if (orientation) {
-          elem.width(slide.l * tab.h + padding);
-        } else {
-          elem.height(slide.l * tab.h + padding);
-        }
-      }
     };
 
     setup.getSlideCss = function(index, selected) {
       var first = tabs.first(),
-          offset,
-          fitToContent = settings.verticalSlideHeight === 'fitToContent' ? true : false,
           fitToContentHeight = 0,
           css = {
             slide : {},
@@ -246,9 +240,9 @@
         // compensate for pre-selected slide
         if (selected.length) {
           if (index > slides.index(selected)) css.slide.position[settings.rtl ? 'right' : 'left'] += slide.w;
-        } else if (!settings.startClosed) {
+        } /*else if (!settings.startClosed) {
           if (index >= settings.firstSlide) css.slide.position[settings.rtl ? 'right' : 'left'] += slide.w;
-        }
+        }*/
       } else { // vertical
         // calculate global slide dimensions
         slide.w = tabs.eq(0).width(); // px value
@@ -265,7 +259,7 @@
           });
 
           // assign content height to slide
-          css.slide.height = fitToContentHeight + tab.h + offset;
+          css.slide.height = fitToContentHeight + tab.h;
         } else {
           // fixed height
           css.slide.height = slide.h + tab.h - offset;
@@ -285,13 +279,18 @@
         // !!! compensate for pre-selected slide
         if (selected.length) {
           if (index > slides.index(selected)) {
-            css.slide.position.top += fitToContent ? this.prev().height() : slide.h;
+            if (fitToContent) {
+              css.slide.position.top += selected.height() - tab.h + offset;
+            } else {
+              css.slide.position.top += slide.h;
+            }
           }
-        } else if (!settings.startClosed) {
+        } /* else if (!settings.startClosed) {
           if (index >= settings.firstSlide) {
-            css.slide.position.top += fitToContent ? this.prev().height() : slide.h;
+            // css.slide.position.top += fitToContent ? this.prev().height() : slide.h;
+            css.slide.position.top += slide.h;
           }
-        }
+        }*/
       }
 
       return css;
@@ -301,7 +300,10 @@
       var selected = slides.filter('.selected');
 
       // account for already selected slide
-      if (!selected.length && !settings.startClosed) slides.eq(settings.firstSlide - 1).addClass('selected');
+      if (!selected.length && !settings.startClosed) {
+        slides.eq(settings.firstSlide - 1).addClass('selected');
+        selected = slides.filter('.selected');
+      }
 
       slides.each(function(index) {
         var $this = $(this),
@@ -328,27 +330,25 @@
         }
 
         // compensate for <= ie8's lack of transform origin
-        if (!elem.hasClass('ie8')) return;
-
-        if (elem.hasClass('horizontal') && elem.hasClass('rtl')) {
-          $this.children('h2').css('marginRight', -(slide.h - tab.h));
-        } else if (elem.hasClass('vertical')) {
-          $this.children('h2').css('marginRight', 0);
+        if (elem.hasClass('ie8')) {
+          if (elem.hasClass('horizontal') && elem.hasClass('rtl')) {
+            $this.children('h2').css('marginRight', -(slide.h - tab.h));
+          } else if (elem.hasClass('vertical')) {
+            $this.children('h2').css('marginRight', 0);
+          }
         }
       });
+
+      // fit to content on init
+      if (fitToContent) core.fitToContent(selected);
     };
 
     setup.startClosed = function() {
-      if (elem.hasClass('closed')) {
-        // !!! redeclare parent height and width values
-        // elem.css('width', settings.width); // needs to be css width for % rather than px value
-        // elem.height(parent.h);
-
-        // remove closed class
-        elem.removeClass('closed');
-
-        // unbind event
-        tabs.off('click.accordionPro.closed touchstart.accordionPro.closed mouseover.accordionPro.closed');
+      // start accordion in closed position
+      if (orientation) {
+        elem.width(slide.l * tab.h + padding);
+      } else {
+        elem.height(slide.l * tab.h + padding);
       }
     };
 
@@ -357,11 +357,17 @@
 
       // bind click and mouseover events
       if (settings.activateOn === 'click') {
+        // trigger animation cycle
         tabs.on('click.accordionPro touchstart.accordionPro', core.animationCycle);
-        if (settings.startClosed) tabs.on('click.accordionPro.closed touchstart.accordionPro.closed', setup.startClosed);
+
+        // fire start closed event once
+        if (settings.startClosed) tabs.on('click.accordionPro.closed touchstart.accordionPro.closed', core.startClosed);
       } else if (settings.activateOn === 'mouseover') {
+        // trigger animation cycle
         tabs.on('click.accordionPro touchstart.accordionPro mouseover.accordionPro', core.animationCycle);
-        if (settings.startClosed) tabs.on('click.accordionPro.closed touchstart.accordionPro.closed mouseover.accordionPro.closed', setup.startClosed);
+
+        // fire start closed event once
+        if (settings.startClosed) tabs.on('click.accordionPro.closed touchstart.accordionPro.closed mouseover.accordionPro.closed', core.startClosed);
       }
 
       // bind touch events (swipe)
@@ -477,6 +483,27 @@
      * Core scale and animation methods
      */
 
+    core.startClosed = function() {
+      if (elem.hasClass('closed')) {
+        // !!! redeclare parent height and width values
+        // elem.css('width', orientation ? settings.horizontalWidth : settings.verticalWidth); // needs to be css width for % rather than px value
+        // elem.height(parent.h);
+
+        // remove closed class
+        elem.removeClass('closed');
+
+        // unbind event
+        tabs.off('click.accordionPro.closed touchstart.accordionPro.closed mouseover.accordionPro.closed');
+      }
+    };
+
+    core.fitToContent = function(selected) {
+      elem
+        .animate({
+          height : (slide.l - 1) * (tab.h + offset) + selected.height()
+        }, settings.slideSpeed);
+    };
+
     core.responsive = function() {
       var w = elem.parent().width(); // responsive reaction to parent element width, not window width
 
@@ -559,6 +586,7 @@
       var position = {};
 
       if (typeof pos === 'number') {
+        // group of slides
         if (orientation) { // horizontal
           if (settings.rtl) {
             position = { right : pos + index * tab.h };
@@ -569,6 +597,7 @@
           position = { top : pos + index * tab.h };
         }
       } else {
+        // single slide above mid point
         if (orientation) { // horizontal
           if (settings.rtl) {
             position = { right : slide.w + index * tab.h };
@@ -599,7 +628,7 @@
       if (settings.linkable && active.slide.attr('data-slide-name')) {
         if (active.slide.attr('data-slide-name') !== window.location.hash.split('#')[1]) {
           // exit early and try again
-          // return window.location.hash = '#' + active.slide.attr('data-slide-name');
+          // !!! return window.location.hash = '#' + active.slide.attr('data-slide-name');
         }
       }
 
@@ -638,6 +667,9 @@
         core.animateGroup(active);
       }
 
+      // wrap height of accordion around slides
+      if (!orientation && fitToContent) core.fitToContent(active.slide);
+
       // stop autoplay, reset current slide index in core.nextSlide closure
       if (settings.autoPlay && !settings.linkable) {
         methods.stop();
@@ -652,7 +684,7 @@
       // set position for single selected tab
       if (typeof this.position === 'undefined') {
         this.position = core.getSlidePosition(this.index);
-      } else if (typeof this.position === 'number') {
+      } else if (typeof this.position === 'number') { // group, or single tab below mid point
         position = this.position;
         this.position = core.getSlidePosition(this.index, position);
       }
@@ -677,13 +709,24 @@
         var filterExpr, position;
 
         if (!index)  {
-          // left side
+          // left side of expr (left or top position)
           filterExpr = ':lt(' + (trigger.index + 1) + ')';
           position = 0;
         } else {
-          // right side
+          // right side of expr (bottom or right position)
           filterExpr = ':gt(' + trigger.index + ')';
-          position = orientation ? slide.w : slide.h;
+
+          if (orientation) { // horizontal
+            position = slide.w;
+          } else { // vertical
+            if (fitToContent) {
+              // fit To content
+              position = trigger.slide.height() - tab.h + offset;
+            } else {
+              // fixed height
+              position = slide.h;
+            }
+          }
         }
 
         slides
@@ -743,6 +786,7 @@
       // setup dimensions, styles, slide positions and events
       setup.styles();
       setup.dimensions();
+      if (settings.startClosed || fitToContent) setup.startClosed();
       setup.slidePositions();
       setup.events();
 
