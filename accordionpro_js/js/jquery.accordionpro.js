@@ -68,8 +68,8 @@
     settings = $.extend({}, defaults, options);
     settings.orientation = 'vertical';
     settings.verticalSlideHeight = 'fitToContent';
-    settings.firstSlide = 2;
-    // !!! settings.startClosed = true;
+
+    settings.startClosed = true;
     // !!! settings.linkable = true;
 
     /**
@@ -178,8 +178,7 @@
         .addClass(orientation ? 'horizontal' : 'vertical')
         .addClass(settings.rounded && 'rounded')
         .addClass(settings.theme)
-        .addClass(settings.rtl && 'rtl')
-        .addClass(settings.startClosed && 'closed');
+        .addClass(settings.rtl && 'rtl');
 
       // add slide class to each slide
       slides.addClass('slide');
@@ -285,7 +284,7 @@
               css.slide.position.top += slide.h;
             }
           }
-        } /* else if (!settings.startClosed) {
+        } /*else if (!settings.startClosed) {
           if (index >= settings.firstSlide) {
             // css.slide.position.top += fitToContent ? this.prev().height() : slide.h;
             css.slide.position.top += slide.h;
@@ -299,7 +298,7 @@
     setup.slidePositions = function() {
       var selected = slides.filter('.selected');
 
-      // account for already selected slide
+      // account for already selected slide if startClosed option not enabled
       if (!selected.length && !settings.startClosed) {
         slides.eq(settings.firstSlide - 1).addClass('selected');
         selected = slides.filter('.selected');
@@ -340,10 +339,13 @@
       });
 
       // fit to content on init
-      if (fitToContent) core.fitToContent(selected);
+      if (fitToContent && !elem.hasClass('closed')) core.fitToContent(selected);
     };
 
     setup.startClosed = function() {
+      // add closed class here rather than in setup.styles
+      if (settings.startClosed) elem.addClass('closed');
+
       // start accordion in closed position
       if (orientation) {
         elem.width(slide.l * tab.h + padding);
@@ -431,7 +433,7 @@
       // only bind resize events if responsive or fluid options set
       if (settings.responsive) {
         // resize and orientationchange
-        $(window).on('load.accordionPro resize.accordionPro orientationchange.accordionPro', function() {
+        $(window).on('resize.accordionPro orientationchange.accordionPro', function() {
           // approximates 'onresizeend'
           clearTimeout(resizeTimer);
 
@@ -485,8 +487,17 @@
 
     core.startClosed = function() {
       if (elem.hasClass('closed')) {
-        // !!! redeclare parent height and width values
-        // elem.css('width', orientation ? settings.horizontalWidth : settings.verticalWidth); // needs to be css width for % rather than px value
+        // redeclare parent height and width values
+        if (orientation) { // horizontal
+
+        } else { // vertical
+          elem
+            .animate({ // !!!
+              height : fitToContent ? (slide.l - 1) * (tab.h + offset) + slides.filter('.selected').height() : settings.verticalHeight
+            }, settings.slideSpeed);
+        }
+
+        elem.css('width', orientation ? settings.horizontalWidth : settings.verticalWidth); // needs to be css width for % rather than px value
         // elem.height(parent.h);
 
         // remove closed class
@@ -507,6 +518,10 @@
     core.responsive = function() {
       var w = elem.parent().width(); // responsive reaction to parent element width, not window width
 
+      // not responsive until first slide opened
+      if (elem.hasClass('closed')) return;
+
+      // respond to layout changes
       if (orientation) { // horizontal
         // flip to vertical
         if (w <= settings.minResponsiveWidth) {

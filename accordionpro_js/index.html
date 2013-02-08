@@ -256,9 +256,7 @@
 
                 // demos
                 $('#one').accordionPro({
-                    autoPlay : true,
-                    linkable : true,
-                    closed : true,
+                    autoPlay : false,
                     onSlideOpen : function() {
                         // var slides = $('#one').find('.slide').children('div');
                         // console.log(slides.index(this));
@@ -273,11 +271,12 @@
                 }).find('figcaption:first').show();
 
                 $('#two').accordionPro({
+                    autoPlay : false,
                     rtl : true
                 });
 
                 $('#three').accordionPro({
-                    autoPlay : true,
+                    autoPlay : false,
                     linkable : true,
                     closed : true,
                     rtl : true,
@@ -289,6 +288,7 @@
                 });
 
                 $('#four').accordionPro({
+                    autoPlay : false,
                     easing : 'linear',
                     theme : 'light',
                     firstSlide : 3,
