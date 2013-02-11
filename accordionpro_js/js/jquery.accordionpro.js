@@ -68,6 +68,7 @@
     settings = $.extend({}, defaults, options);
     settings.orientation = 'vertical';
     settings.verticalSlideHeight = 'fitToContent';
+    settings.firstSlide = 2;
 
     settings.startClosed = true;
     // !!! settings.linkable = true;
@@ -201,7 +202,7 @@
     };
 
     setup.getSlideCss = function(index, selected) {
-      var first = tabs.first(),
+      var firstPanel = slides.eq(0).children('div'),
           fitToContentHeight = 0,
           css = {
             slide : {},
@@ -209,13 +210,16 @@
             panel : {}
           };
 
+      // calculate slide offset
+      offset =
+        parseInt(firstPanel.css('marginLeft'), 10) ||
+        parseInt(firstPanel.css('marginRight'), 10) ||
+        parseInt(firstPanel.css('marginBottom'), 10) || 0;
+
       if (orientation) { // horizontal
         // calculate global slide dimensions
         slide.w = parent.w - slide.l * tab.h;
         slide.h = parent.h;
-
-        // calculate slide offset
-        offset = parseInt(first.next().css('marginLeft'), 10) || parseInt(first.next().css('marginRight'), 10) || 0;
 
         // calculate slide properties
         css.slide.width = slide.w + tab.h;
@@ -237,18 +241,11 @@
         }
 
         // compensate for pre-selected slide
-        if (selected.length) {
-          if (index > slides.index(selected)) css.slide.position[settings.rtl ? 'right' : 'left'] += slide.w;
-        } /*else if (!settings.startClosed) {
-          if (index >= settings.firstSlide) css.slide.position[settings.rtl ? 'right' : 'left'] += slide.w;
-        }*/
+        if (selected.length && index > slides.index(selected)) css.slide.position[settings.rtl ? 'right' : 'left'] += slide.w;
       } else { // vertical
         // calculate global slide dimensions
         slide.w = tabs.eq(0).width(); // px value
         slide.h = parent.h - slide.l * tab.h;
-
-        // calculate slide offset
-        offset = parseInt(first.height() - first.children().outerHeight());
 
         // calculate slide properties
         if (fitToContent) {
@@ -258,38 +255,28 @@
           });
 
           // assign content height to slide
-          css.slide.height = fitToContentHeight + tab.h;
+          css.slide.height = fitToContentHeight + tab.h + offset;
+          css.panel.height = fitToContentHeight;
         } else {
           // fixed height
-          css.slide.height = slide.h + tab.h - offset;
+          css.slide.height = slide.h + tab.h;
+          css.panel.height = css.slide.height - tab.h - offset;
         }
 
-        css.slide.position = { top : index * tab.h, left : 0 };
-        css.slide.width = '100%';
-
-        // calculate tab properties
-        css.tab.width = '100%';
-
-        // calculate panel properties
-        css.panel.width = '100%';
-        css.panel.height = css.slide.height - tab.h;
         css.panel.position = { top : tab.h, left : 0 };
+        css.slide.position = { top : index * tab.h, left : 0 };
+        css.slide.width = css.tab.width = css.panel.width = '100%';
 
         // !!! compensate for pre-selected slide
         if (selected.length) {
           if (index > slides.index(selected)) {
             if (fitToContent) {
-              css.slide.position.top += selected.height() - tab.h + offset;
+              css.slide.position.top += selected.height() - tab.h;
             } else {
               css.slide.position.top += slide.h;
             }
           }
-        } /*else if (!settings.startClosed) {
-          if (index >= settings.firstSlide) {
-            // css.slide.position.top += fitToContent ? this.prev().height() : slide.h;
-            css.slide.position.top += slide.h;
-          }
-        }*/
+        }
       }
 
       return css;
@@ -348,9 +335,10 @@
 
       // start accordion in closed position
       if (orientation) {
-        elem.width(slide.l * tab.h + padding);
+        elem.width(slide.l * tab.h);
+        if (settings.responsive && elem.parent().width() > settings.minResponsiveWidth) core.scale();
       } else {
-        elem.height(slide.l * tab.h + padding);
+        elem.height(slide.l * tab.h);
       }
     };
 
@@ -431,9 +419,9 @@
       }
 
       // only bind resize events if responsive or fluid options set
-      if (settings.responsive) {
+      if (settings.orientation === 'horizontal' && settings.responsive) {
         // resize and orientationchange
-        $(window).on('resize.accordionPro orientationchange.accordionPro', function() {
+        $(window).on('load.accordionPro resize.accordionPro orientationchange.accordionPro', function() {
           // approximates 'onresizeend'
           clearTimeout(resizeTimer);
 
@@ -444,7 +432,6 @@
           }, 100);
         });
       }
-
     };
 
     setup.ie = function() {
@@ -489,30 +476,39 @@
       if (elem.hasClass('closed')) {
         // redeclare parent height and width values
         if (orientation) { // horizontal
-
+          elem.css('width', settings.horizontalWidth);
         } else { // vertical
           elem
-            .animate({ // !!!
+            .animate({
               height : fitToContent ? (slide.l - 1) * (tab.h + offset) + slides.filter('.selected').height() : settings.verticalHeight
             }, settings.slideSpeed);
         }
-
-        elem.css('width', orientation ? settings.horizontalWidth : settings.verticalWidth); // needs to be css width for % rather than px value
-        // elem.height(parent.h);
 
         // remove closed class
         elem.removeClass('closed');
 
         // unbind event
         tabs.off('click.accordionPro.closed touchstart.accordionPro.closed mouseover.accordionPro.closed');
+
+        // trigger responsive reflow
+        if (settings.orientation === 'horizontal' && settings.responsive) core.responsive();
       }
     };
 
     core.fitToContent = function(selected) {
+/*
       elem
         .animate({
-          height : (slide.l - 1) * (tab.h + offset) + selected.height()
+          //m height : (slide.l - 1) * (tab.h + offset) + selected.height()
         }, settings.slideSpeed);
+*/
+
+      // !!!
+
+      elem.height((slide.l - 1) * tab.h + selected.height() + 11 + offset);
+
+
+
     };
 
     core.responsive = function() {
@@ -609,7 +605,7 @@
             position = { left : pos + index * tab.h };
           }
         } else { // vertical
-          position = { top : pos + index * tab.h };
+          position = { top : pos + index * tab.h};
         }
       } else {
         // single slide above mid point
@@ -620,6 +616,7 @@
             position = { left : slide.w + index * tab.h };
           }
         } else { // vertical
+          // fixed height
           position = { top : slide.h + index * tab.h };
         }
       }
@@ -666,7 +663,13 @@
             core.animateSlide.call(active);
           }
         } else { // vertical
-          if (active.slide.position().top < parent.h / 2) {
+          if (fitToContent && active.index) {
+            // animate group (slide not index zero)
+            core.animateGroup(active, true);
+
+            // wrap height of accordion around slides
+            core.fitToContent(active.prev);
+          } else if (active.slide.position().top < parent.h / 2) {
             // animate single slide
             core.animateSlide.call(active);
           }
@@ -680,10 +683,10 @@
 
         // animate group of slides
         core.animateGroup(active);
-      }
 
-      // wrap height of accordion around slides
-      if (!orientation && fitToContent) core.fitToContent(active.slide);
+        // wrap height of accordion around slides
+        if (fitToContent) core.fitToContent(active.slide);
+      }
 
       // stop autoplay, reset current slide index in core.nextSlide closure
       if (settings.autoPlay && !settings.linkable) {
@@ -698,26 +701,20 @@
 
       // set position for single selected tab
       if (typeof this.position === 'undefined') {
-        this.position = core.getSlidePosition(this.index);
+        this.position = core.getSlidePosition.call(this, this.index);
+        // remove, then add selected class on single slide
+        if (this.index) slides.removeClass('selected').filter(this.prev).addClass('selected');
       } else if (typeof this.position === 'number') { // group, or single tab below mid point
         position = this.position;
         this.position = core.getSlidePosition(this.index, position);
       }
 
-      // remove, then add selected class
-      slides.removeClass('selected').filter(this.slide).addClass('selected');
-
       // if slide index not zero
-      if (!!this.index) {
-        core.transition.call(this, trigger);
-
-        // remove, then add selected class
-        slides.removeClass('selected').filter(this.prev).addClass('selected');
-      }
+      if (this.index) core.transition.call(this, trigger);
     };
 
     // animate group of slides
-    core.animateGroup = function(trigger) {
+    core.animateGroup = function(trigger, single) {
       var group = ['left', 'right'];
 
       $.each(group, function(index, side) {
@@ -725,18 +722,30 @@
 
         if (!index)  {
           // left side of expr (left or top position)
-          filterExpr = ':lt(' + (trigger.index + 1) + ')';
+          if (single) {
+            filterExpr = ':lt(' + (trigger.index) + ')';
+          } else {
+            filterExpr = ':lt(' + (trigger.index + 1) + ')';
+          }
           position = 0;
         } else {
           // right side of expr (bottom or right position)
-          filterExpr = ':gt(' + trigger.index + ')';
+          if (single) {
+            filterExpr = ':gt(' + (trigger.index - 1) + ')';
+          } else {
+            filterExpr = ':gt(' + trigger.index + ')';
+          }
 
           if (orientation) { // horizontal
             position = slide.w;
           } else { // vertical
             if (fitToContent) {
-              // fit To content
-              position = trigger.slide.height() - tab.h + offset;
+              if (single) {
+                position = trigger.prev.height() - tab.h;
+              } else {
+                // fit to content
+                position = trigger.slide.height() - tab.h;
+              }
             } else {
               // fixed height
               position = slide.h;
@@ -762,7 +771,7 @@
       });
 
       // remove, then add selected class
-      slides.removeClass('selected').filter(trigger.slide).addClass('selected');
+      slides.removeClass('selected').filter(single ? trigger.prev : trigger.slide).addClass('selected');
     };
 
     // animate with css transitions, else fallback to jQuery animation
@@ -800,10 +809,14 @@
 
       // setup dimensions, styles, slide positions and events
       setup.styles();
-      setup.dimensions();
-      if (settings.startClosed || fitToContent) setup.startClosed();
-      setup.slidePositions();
-      setup.events();
+
+      // check images are loaded before setting up slide positions
+      elem.imagesLoaded(function() {
+        setup.dimensions();
+        if (settings.startClosed || fitToContent) setup.startClosed();
+        setup.slidePositions();
+        setup.events();
+      });
 
       // check slide speed is not faster than cycle speed
       if (settings.cycleSpeed < settings.slideSpeed) settings.cycleSpeed = settings.slideSpeed;
@@ -817,7 +830,6 @@
 
     // expose methods
     return methods;
-
   };
 
   /**

@@ -187,9 +187,11 @@
 .accordionPro.vertical.rtl.dark .slide.selected > h2 b { background: #373737 }
 .accordionPro.vertical.light .slide > h2 b { background: #EEEEEE; color: #909090; text-shadow: -1px 1px 0 white; height: 85% }
 .accordionPro.vertical.rtl.light .slide > h2 b { background: white; width: 10% }
+.accordionPro.vertical.dark .slide > div, .accordionPro.vertical.light .slide > div { margin-bottom: 5px }
 
 /* stitch */
 .accordionPro.vertical.stitch { padding: 5px 5px 0 5px }
+.accordionPro.vertical.stitch .slide > div { margin-bottom: 6px }
 
 /***************************************** THEMES */
 /****************************************** Basic */

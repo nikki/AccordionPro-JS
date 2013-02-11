@@ -11,6 +11,7 @@ var fs = require('fs'),
       '../accordionpro_js/js/jquery.swipe.min.js',
       '../accordionpro_js/js/modernizr.custom.min.js',
       '../accordionpro_js/js/animate.min.js',
+      '../accordionpro_js/js/jquery.imagesloaded.min.js',
       '../accordionpro_js/js/jquery.accordionpro.js'
     ];
 
