@@ -1,18 +1,17 @@
 <?php
 /*
-Plugin Name:    Accordion Pro
+Plugin Name:    Accordion Pro WP
 Plugin URI:     http://accordionpro.nicolahibbert.com
-Description:    Create jQuery powered horizontal accordions to embed into your WordPress posts &amp; pages.
-Version:        1.1.0
+Description:    Create jQuery powered responsive accordions to embed into your WordPress posts &amp; pages.
+Version:        2.0.0
 Author:         Nicola Hibbert
-Author:         Mike Rogers
 Author URI:     http://nicolahibbert.com
 Text Domain:    accordion_pro
 
-Copyright 2011  Nicola Hibbert
+Copyright 2013  Nicola Hibbert
 
 This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License, version 2, as 
+it under the terms of the GNU General Public License, version 2, as
 published by the Free Software Foundation.
 
 This program is distributed in the hope that it will be useful,

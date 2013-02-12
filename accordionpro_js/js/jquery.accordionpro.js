@@ -46,7 +46,8 @@
       verticalSlideHeight : 'fixed',          // vertical accordion slide heights can be 'fixed' or 'fitToContent'
 
       /* events */
-      activateOn : 'click',                   // click or mouseover (tap and swipe touch events enabled by default)
+      activateOn : 'click',                   // click or mouseover
+      touchEnabled : true,                    // touch events?
       onSlideOpen : function() {},            // callback on slide open
       onSlideClose : function() {},           // callback on slide animation complete
 
@@ -57,7 +58,7 @@
       easing : 'ease-in-out',                 // animation easing
 
       /* miscellaneous */
-      pauseOnHover : false,                   // pause on hover
+      pauseOnHover : true,                    // pause on hover
       linkable : false                        // link slides via hash
     };
 
@@ -66,12 +67,13 @@
      */
 
     settings = $.extend({}, defaults, options);
+
     settings.orientation = 'vertical';
     settings.verticalSlideHeight = 'fitToContent';
     settings.firstSlide = 2;
 
-    settings.startClosed = true;
-    // !!! settings.linkable = true;
+    settings.startClosed = false;
+    // settings.linkable = true;
 
     /**
      * "Globals"
@@ -83,6 +85,7 @@
         tabs = slides.children(':first-child'),
         tab = { w : 0, h : 48 },
         offset = 0,
+        border = 0,
         orientation = settings.orientation === 'horizontal' ? 1 : 0,
         easingFns = ['linear', 'ease', 'ease-in', 'ease-out', 'ease-in-out'],
         easing = $.inArray(settings.easing, easingFns) >= 0 ? settings.easing : defaults.easing,
@@ -216,6 +219,9 @@
         parseInt(firstPanel.css('marginRight'), 10) ||
         parseInt(firstPanel.css('marginBottom'), 10) || 0;
 
+      // calculate slide border
+      border = elem.outerHeight() - elem.height();
+
       if (orientation) { // horizontal
         // calculate global slide dimensions
         slide.w = parent.w - slide.l * tab.h;
@@ -267,7 +273,7 @@
         css.slide.position = { top : index * tab.h, left : 0 };
         css.slide.width = css.tab.width = css.panel.width = '100%';
 
-        // !!! compensate for pre-selected slide
+        // compensate for pre-selected slide
         if (selected.length) {
           if (index > slides.index(selected)) {
             if (fitToContent) {
@@ -361,7 +367,7 @@
       }
 
       // bind touch events (swipe)
-      if (Modernizr.touch) {
+      if (Modernizr.touch && settings.touchEnabled) {
         slides.swipe({
           left : function() {
             if (orientation) {
@@ -410,11 +416,8 @@
             return $(this).attr('data-slide-name') === window.location.hash.split('#')[1];
           });
 
-          // if slide name exists
-          if (url.length) {
-            // trigger slide
-            core.animationCycle.call(url.children('h2')[0], e);
-          }
+          // if slide name exists, trigger slide
+          if (url.length) core.animationCycle.call(url.children('h2')[0], e);
         });
       }
 
@@ -425,11 +428,10 @@
           // approximates 'onresizeend'
           clearTimeout(resizeTimer);
 
-          // resize
           resizeTimer = setTimeout(function() {
             // responsive layout
             core.responsive();
-          }, 100);
+          }, 200);
         });
       }
     };
@@ -447,17 +449,14 @@
         ua = +ua;
 
         // ie versions
-        // ie 6 and below
-        if (ua < 7) methods.destroy();
-
-        // kill linkable for ie7
-        if (ua === 7) settings.linkable = false;
+        // ie 7 and below
+        if (ua <= 7) methods.destroy();
 
         // ie 10+ doesn't need additional styles...
         if (ua >= 10) return;
 
-        // ... but ie 7 and do :(
-        if (ua === 7 || ua === 8) {
+        // ... but ie 8 does :(
+        if (ua === 8) {
           slides.each(function(index) {
             $(this).addClass('slide-' + index);
           });
@@ -480,8 +479,11 @@
         } else { // vertical
           elem
             .animate({
-              height : fitToContent ? (slide.l - 1) * (tab.h + offset) + slides.filter('.selected').height() : settings.verticalHeight
+              height : fitToContent ? (slide.l - 1) * tab.h + border + slides.filter('.selected').height() : settings.verticalHeight
             }, settings.slideSpeed);
+
+          // consideration of border not required with height (jQ box model calc bug?)
+          // elem.height(fitToContent ? (slide.l - 1) * tab.h + slides.filter('.selected').height() : settings.verticalHeight);
         }
 
         // remove closed class
@@ -496,19 +498,15 @@
     };
 
     core.fitToContent = function(selected) {
-/*
-      elem
-        .animate({
-          //m height : (slide.l - 1) * (tab.h + offset) + selected.height()
-        }, settings.slideSpeed);
-*/
+      if (!elem.hasClass('closed')) {
+        elem
+          .animate({
+            height : (slide.l - 1) * tab.h + border + selected.height()
+          }, settings.slideSpeed);
 
-      // !!!
-
-      elem.height((slide.l - 1) * tab.h + selected.height() + 11 + offset);
-
-
-
+        // consideration of border not required with height (jQ box model calc bug?)
+        elem.height((slide.l - 1) * tab.h + selected.height());
+      }
     };
 
     core.responsive = function() {
@@ -525,7 +523,12 @@
           orientation = 0;
 
           // remove horizontal class and any scaling
-          elem.removeClass('horizontal').addClass('responsive').css(Modernizr.prefixed('transform'), '');
+          if (!elem.hasClass('ie8')) {
+            elem.removeClass('horizontal').addClass('responsive').css(Modernizr.prefixed('transform'), '');
+          } else {
+            elem.removeClass('horizontal').addClass('responsive');
+            elem.add(elem.children('ol')).add(slides).add(slides.children('div').children()).css(Modernizr.prefixed('filter'), '');
+          }
 
           // reinit styles
           setup.styles();
@@ -542,6 +545,8 @@
           // flip back to horizontal accordion
           orientation = 1;
           elem.removeClass('vertical responsive');
+
+          console.log('reinit');
 
           // reinit styles
           setup.styles();
@@ -566,8 +571,12 @@
       // limit scale to maximum
       if (scale > max) scale = max;
 
-      // scale
-      elem.css(Modernizr.prefixed('transform'), 'scale(' + scale + ')');
+      // css3 scaling not supported in ie8
+      if (!elem.hasClass('ie8')) {
+        elem.css(Modernizr.prefixed('transform'), 'scale(' + scale + ')');
+      } else {
+        elem.add(elem.children('ol')).add(slides).add(slides.children('div').children()).css(Modernizr.prefixed('filter'), "progid:DXImageTransform.Microsoft.Matrix(M11=" + scale + ",M12=0,M21=0,M22=" + scale + ",SizingMethod='auto expand')");
+      }
     };
 
     // counter for autoPlay (zero index firstSlide on init)
@@ -637,12 +646,14 @@
       active.prev = active.slide.prev();
 
       // update hash
+/*
       if (settings.linkable && active.slide.attr('data-slide-name')) {
         if (active.slide.attr('data-slide-name') !== window.location.hash.split('#')[1]) {
           // exit early and try again
           // !!! return window.location.hash = '#' + active.slide.attr('data-slide-name');
         }
       }
+*/
 
       // update core.previousSlide, core.currentSlide
       core.previousSlide = core.currentSlide;
@@ -689,7 +700,7 @@
       }
 
       // stop autoplay, reset current slide index in core.nextSlide closure
-      if (settings.autoPlay && !settings.linkable) {
+      if (settings.autoPlay) {
         methods.stop();
         methods.play(tabs.index(slides.filter('.selected')));
       }
@@ -821,8 +832,11 @@
       // check slide speed is not faster than cycle speed
       if (settings.cycleSpeed < settings.slideSpeed) settings.cycleSpeed = settings.slideSpeed;
 
-      // init autoplay (autoplay & linkable are not compatible with one another for UX reasons)
-      if (settings.autoPlay && !settings.linkable) methods.play();
+      // linkable and startClosed not compatible
+      if (settings.linkable) settings.startClosed = false;
+
+      // init autoplay
+      if (settings.autoPlay) methods.play();
     };
 
     // init plugin
