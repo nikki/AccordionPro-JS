@@ -42,7 +42,7 @@ if (!class_exists('WP')) {
 </form>
 
 <form method="post" action="?page=accordion_pro">
-	<p><?php _e('If you wish to remove all the data associated with this plugin, use the uninstall button below.', 'accordion_pro'); ?></p>	
+	<p><?php _e('If you wish to remove all the data associated with this plugin, use the uninstall button below.', 'accordion_pro'); ?></p>
 	<p class="submit"><input type="submit" name="uninstall" id="uninstall" class="button-primary" value="<?php _e('Uninstall', 'accordion_pro'); ?>"></p>
 	<?php wp_nonce_field('uninstall', 'accordion_pro'); ?>
 </form>

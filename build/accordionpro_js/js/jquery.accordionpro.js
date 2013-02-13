@@ -18,7 +18,7 @@
  * http://addyosmani.com/blog/css3transitions-jquery/
  */ /* build */
 
-$(function() {
+;(function($) {
   $.fn.extend({
     defaultAnimate: $.fn.animate,
     animate: function(props, speed, easing, callback) {
@@ -61,7 +61,7 @@ $(function() {
       })
     }
   });
-});
+})(jQuery);
 
 /*!
  * jQuery imagesLoaded plugin v2.1.1

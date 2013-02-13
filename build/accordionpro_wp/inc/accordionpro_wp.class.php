@@ -395,7 +395,7 @@ class accordion_pro {
     $accordion['post_content'] .= '</ol><noscript><p>'.__('Please enable JavaScript to get the full experience.', 'accordion_pro').'</p></noscript></div>';
 
     // js to instantiate accordion
-    $accordion['post_content'] .= '<script type="text/javascript">jQuery(function($) { $(\'.accordion_pro_'.$accordion['ID'].'\').liteAccordion({ ';
+    $accordion['post_content'] .= '<script type="text/javascript">jQuery(function($) { $(\'.accordion_pro_'.$accordion['ID'].'\').accordionPro({ ';
 
     // accordion user opts
     foreach ($this->jQueryOptions as $key => $default) {

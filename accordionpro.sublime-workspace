@@ -520,7 +520,7 @@
 	"buffers":
 	[
 		{
-			"file": "accordionpro_wp/accordionpro_wp.php",
+			"file": "accordion_pro/accordion_pro.php",
 			"settings":
 			{
 				"buffer_size": 1677,
@@ -528,7 +528,7 @@
 			}
 		},
 		{
-			"file": "accordionpro_wp/css/style.php",
+			"file": "accordion_pro/css/style.php",
 			"settings":
 			{
 				"buffer_size": 179,
@@ -552,7 +552,7 @@
 			}
 		},
 		{
-			"file": "accordionpro_wp/inc/accordionpro_wp.class.php",
+			"file": "accordion_pro/inc/accordion_pro.class.php",
 			"settings":
 			{
 				"buffer_size": 18030,
@@ -560,7 +560,7 @@
 			}
 		},
 		{
-			"file": "accordionpro_wp/css/accordionpro.css.php",
+			"file": "accordion_pro/css/accordionpro.css.php",
 			"settings":
 			{
 				"buffer_size": 182,
@@ -831,7 +831,7 @@
 			"manage",
 			"admin.js",
 			"accordion_pro",
-			"/accordion_pro/",
+			"/accordionpro_wp/",
 			"plugin",
 			"url",
 			"swipe",
@@ -1020,7 +1020,7 @@
 			"0",
 			"19px",
 			"10px",
-			".liteAccordion",
+			".accordionPro",
 			"ball.circ / 2",
 			"this.explosionSize",
 			"ball.y",
@@ -1096,7 +1096,7 @@
 			[
 				{
 					"buffer": 0,
-					"file": "accordionpro_wp/accordionpro_wp.php",
+					"file": "accordion_pro/accordion_pro.php",
 					"settings":
 					{
 						"buffer_size": 1677,
@@ -1122,7 +1122,7 @@
 				},
 				{
 					"buffer": 1,
-					"file": "accordionpro_wp/css/style.php",
+					"file": "accordion_pro/css/style.php",
 					"settings":
 					{
 						"buffer_size": 179,
@@ -1202,7 +1202,7 @@
 				},
 				{
 					"buffer": 4,
-					"file": "accordionpro_wp/inc/accordionpro_wp.class.php",
+					"file": "accordion_pro/inc/accordion_pro.class.php",
 					"settings":
 					{
 						"buffer_size": 18030,
@@ -1230,7 +1230,7 @@
 				},
 				{
 					"buffer": 5,
-					"file": "accordionpro_wp/css/accordionpro.css.php",
+					"file": "accordion_pro/css/accordionpro.css.php",
 					"settings":
 					{
 						"buffer_size": 182,

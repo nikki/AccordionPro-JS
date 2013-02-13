@@ -6,7 +6,7 @@ Description:    Create jQuery powered responsive accordions to embed into your W
 Version:        1.1.0
 Author:         Nicola Hibbert
 Author URI:     http://nicolahibbert.com
-Text Domain:    accordionpro_wp
+Text Domain:    accordion_pro
 
 Copyright 2013  Nicola Hibbert
 
@@ -40,7 +40,7 @@ load_theme_textdomain('accordion_pro', dirname (__FILE__).'/locale/'.$locale.'.m
 define('ACCORDION_PRO_VERSION', '1.1.0');
 
 // Require class
-require('inc/accordionpro_wp.class.php');
+require('inc/accordion_pro.class.php');
 
 // Instantiate plugin
 global $accordion_pro;

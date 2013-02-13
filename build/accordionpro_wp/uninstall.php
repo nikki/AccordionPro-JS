@@ -27,7 +27,7 @@ $posts = get_posts(array(
     'order'           => 'asc',
     'post_type'       => 'accordion',
     'post_status'     => 'publish' ));
-     
+
 foreach($posts as $post) {
     wp_delete_post($post->ID);
 }

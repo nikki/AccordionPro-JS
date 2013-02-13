@@ -2,7 +2,7 @@
 
 $accIds = '';
 
-$css = file_get_contents('accordionpro.min.css');
-/*$css = str_replace('.liteAccordion', '#accordionPro', $css);*/
+$css = file_get_contents('admin.css');
+
 
 echo $css;

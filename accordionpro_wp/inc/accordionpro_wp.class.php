@@ -8,13 +8,10 @@ if (!class_exists('WP')) {
 
 class accordion_pro {
 
-  public $notices,
+  public
+  $notices,
   $options = array(
-    'loadCSS'       => true,
-    'loadjQuery'    => true,
-    'loadJS'      => true,
-    'loadJSEasing'    => true,
-    'version'       => ACCORDION_PRO_VERSION
+    'version'               => ACCORDION_PRO_VERSION
   ),
   $accContent = array(
     'content_title'         => array(),
@@ -45,18 +42,20 @@ class accordion_pro {
     wp_register_style('accordion_pro_admin', WP_PLUGIN_URL . '/accordionpro_wp/css/admin.css');
     wp_register_script('accordion_pro_admin', WP_PLUGIN_URL . '/accordionpro_wp/js/admin.js', false, false, true);
 
-    // Register Accordion JS & CSS
-    wp_register_style('accordion_pro', WP_PLUGIN_URL . '/accordionpro_wp/css/accordionpro.css.php');
-    wp_register_script('accordion_pro', WP_PLUGIN_URL . '/accordionpro_wp/js/jquery.accordionpro.min.js', false, false, false);
-    // wp_register_script('accordion_pro_easing', WP_PLUGIN_URL . '/accordionpro_wp/js/jquery.easing.1.3.js', false, false, false);
-
     // Add the admin hooks/actions
     add_action('admin_init', array($this, 'admin_init'));
     add_action('admin_menu', array($this, 'admin_menu'));
     add_action('wp_ajax_admin_slide_tmpl', array($this, 'admin_slide_tmpl'));
 
     // Ensure jQuery is loaded in the head of the page to prevent race condition
-    add_action('get_header', array($this, 'load_jquery'));
+    add_action('wp_head', array($this, 'load_jquery'));
+
+    // Register Accordion JS & CSS
+    // wp_register_style('accordion_pro', WP_PLUGIN_URL . '/accordionpro_wp/css/accordionpro.css.php');
+    wp_register_script('accordion_pro', WP_PLUGIN_URL . '/accordionpro_wp/js/jquery.accordionpro.min.js');
+
+    // Create Dynamic stylesheet
+    add_action('the_posts', array($this, 'load_styles'));
 
     // Add the shortcode
     add_shortcode('accordion_pro', array($this, 'get_accordion'));
@@ -207,13 +206,63 @@ class accordion_pro {
     wp_enqueue_script('jquery');
   }
 
+  // Dynamic styles
+  public function load_styles($posts) {
+    $ids = array();
+    $count = 0;
+
+    // no posts?
+    if (empty($posts)) return;
+
+    // !!! get ids of all accordions in post
+    // load css
+
+    // iterate over posts
+    foreach ($posts as $post) {
+      preg_match('[accordion_pro', $post->post_content, $matches);
+
+      print_r($matches);
+
+      foreach ($matches as $key => $val) {
+        echo $val[$key];
+      }
+
+      // $count = substr_count($post->post_content, '[accordion_pro');
+      // if ($count) {
+
+      // }
+      // $pos = strpos($post->post_content, '[accordion_pro');
+      // if ($pos) {
+      //   $shortcode_found = true;
+      //   $ids[] = intval(substr($post->post_content, $pos + 19, 5), 10);
+      // }
+    }
+
+
+
+    // if ($count) {
+
+      // print_r($ids);
+      // enqueue here
+      // wp_enqueue_style('my-style', '/style.css');
+      //  wp_enqueue_script('my-script', '/script.js');
+    // }
+
+    return $posts;
+
+
+
+    // about to be printed
+    // print_r($enqueued);
+
+    // wp_enqueue_style('accordion_pro', WP_PLUGIN_URL . '/accordionpro_wp/css/accordionpro.css.php?id=' . $atts['id']);
+  }
+
   // Used to call the accordion based on id
   public function get_accordion($atts) {
     if (isset($atts) && is_array($atts)) {
-
-      // load accordion css and js only into page with shortcode
-      wp_enqueue_style('accordion_pro');
-      wp_enqueue_script(array('accordion_pro_easing', 'accordion_pro'));
+      // load accordion js only into page with shortcode
+      wp_enqueue_script('accordion_pro');
 
       // Return cached accordion html
       $accordion = $this->get_accordion_settings($atts['id']);
@@ -368,7 +417,7 @@ class accordion_pro {
     $allowedextratags = array_merge($extratags, $allowedposttags);
 
     // Generate the 'post_content', which is a cached version of the html
-    $accordion['post_content'] = '<div id="accordion" class="accordion_pro_'.$accordion['ID'].'"><ol>';
+    $accordion['post_content'] = '<div id="accordionPro'.$accordion['ID'].'"><ol>';
 
     // esc html on title
     // allow tags on caption
@@ -395,7 +444,7 @@ class accordion_pro {
     $accordion['post_content'] .= '</ol><noscript><p>'.__('Please enable JavaScript to get the full experience.', 'accordion_pro').'</p></noscript></div>';
 
     // js to instantiate accordion
-    $accordion['post_content'] .= '<script type="text/javascript">jQuery(function($) { $(\'.accordion_pro_'.$accordion['ID'].'\').liteAccordion({ ';
+    $accordion['post_content'] .= '<script type="text/javascript">jQuery(function($) { $(\'#accordionPro'.$accordion['ID'].'\').accordionPro({ ';
 
     // accordion user opts
     foreach ($this->jQueryOptions as $key => $default) {

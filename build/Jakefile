@@ -1,17 +1,23 @@
 var fs = require('fs'),
     ncp = require('ncp').ncp;
 
-desc('Compress and concatentate css');
-task('css', function() {
-  var cssp = require('uglifycss').processString,
-      cssSource = '../accordionpro_js/css/accordionpro.css',
-      cssDest = 'accordionpro_js/css/accordionpro.css',
-      output = '', css;
+desc('Copy source css to build folder');
+task('cssSource', { async : true }, function() {
+  var cssSource = '../accordionpro_js/css/accordionpro.css',
+      cssDest = 'accordionpro_js/css/accordionpro.css';
 
   // copy unminified source file over to dest
   ncp(cssSource, cssDest, function (err) {
    if (err) return console.error(err);
+   complete();
   });
+});
+
+desc('Compress and concatentate css, write to build folder');
+task('cssMin', function() {
+  var cssp = require('uglifycss').processString,
+      cssSource = '../accordionpro_js/css/accordionpro.css',
+      output = '', css;
 
   // read css file
   css = fs.readFileSync(cssSource).toString();
@@ -30,7 +36,7 @@ task('css', function() {
   fs.writeFileSync('accordionpro_js/css/accordionpro.min.css', output);
 });
 
-desc('Compress and concatentate js');
+desc('Compress and concatentate js, write to build folder');
 task('js', function() {
   var jsp = require('uglify-js').parser,
       pro = require('uglify-js').uglify,
@@ -81,18 +87,20 @@ task('js', function() {
 });
 
 desc('Copy JS build to WP Dev');
-task('copyJStoWP', ['css', 'js'], function() {
+task('copyJStoWP', ['cssSource', 'cssMin', 'js'], { async : true }, function() {
   var jsSource = '/Volumes/Nikki/webserver/projects/Accordion-Pro/build/accordionpro_js',
       jsDest = '/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp';
 
   // copy js...
+  ncp.limit = 16;
   ncp(jsSource, jsDest, function (err) {
    if (err) return console.error(err);
+   complete();
   });
 });
 
 desc('Drop copy of WP plugin into build folder');
-task('buildWP', ['copyJStoWP'], function() {
+task('buildWP', ['copyJStoWP'], { async : true }, function() {
   var ncp = require('ncp').ncp,
       source = '/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp',
       destination = '/Volumes/Nikki/webserver/projects/Accordion-Pro/build/accordionpro_wp';
@@ -100,11 +108,12 @@ task('buildWP', ['copyJStoWP'], function() {
   ncp.limit = 16;
   ncp(source, destination, function (err) {
    if (err) return console.error(err);
+   complete();
   });
 });
 
 desc('Drop copy of WP plugin into WP test install plugin folder');
-task('testWP', ['buildWP'], function() {
+task('testWP', ['buildWP'], { async : true }, function() {
   var ncp = require('ncp').ncp,
       source = '/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp',
       destination = '/Volumes/Nikki/webserver/websites/kodogames.com/wp-content/plugins/accordionpro_wp';
@@ -112,6 +121,7 @@ task('testWP', ['buildWP'], function() {
   ncp.limit = 16;
   ncp(source, destination, function (err) {
    if (err) return console.error(err);
+   complete(); // required for async tasks
   });
 });
 
@@ -123,5 +133,5 @@ task('default', function() {
   // jake.Task['buildWP'].execute();
 
   // all other tasks are pre-reqs to this one
-  jake.Task['testWP'].invoke(); // invoke -> run task & pre-reqa
+  jake.Task['testWP'].execute(); // invoke -> run task & pre-reqs
 });
