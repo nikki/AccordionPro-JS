@@ -3,10 +3,10 @@
 Plugin Name:    Accordion Pro WP
 Plugin URI:     http://accordionpro.nicolahibbert.com
 Description:    Create jQuery powered responsive accordions to embed into your WordPress posts &amp; pages.
-Version:        2.0.0
+Version:        1.1.0
 Author:         Nicola Hibbert
 Author URI:     http://nicolahibbert.com
-Text Domain:    accordion_pro
+Text Domain:    accordionpro_wp
 
 Copyright 2013  Nicola Hibbert
 
@@ -40,7 +40,7 @@ load_theme_textdomain('accordion_pro', dirname (__FILE__).'/locale/'.$locale.'.m
 define('ACCORDION_PRO_VERSION', '1.1.0');
 
 // Require class
-require('inc/accordion_pro.class.php');
+require('inc/accordionpro_wp.class.php');
 
 // Instantiate plugin
 global $accordion_pro;

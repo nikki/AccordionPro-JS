@@ -1,26 +1,20 @@
 var fs = require('fs'),
-
-    /* css */
-    cssp = require('uglifycss').processString,
-    cssfile = '../accordionpro_js/css/accordionpro.css',
-
-    /* js */
-    jsp = require('uglify-js').parser,
-    pro = require('uglify-js').uglify,
-    jsfiles = [
-      '../accordionpro_js/js/jquery.swipe.min.js',
-      '../accordionpro_js/js/modernizr.custom.min.js',
-      '../accordionpro_js/js/animate.min.js',
-      '../accordionpro_js/js/jquery.imagesloaded.min.js',
-      '../accordionpro_js/js/jquery.accordionpro.js'
-    ];
+    ncp = require('ncp').ncp;
 
 desc('Compress and concatentate css');
 task('css', function() {
-  var output = '', css;
+  var cssp = require('uglifycss').processString,
+      cssSource = '../accordionpro_js/css/accordionpro.css',
+      cssDest = 'accordionpro_js/css/accordionpro.css',
+      output = '', css;
 
-  // read file
-  css = fs.readFileSync(cssfile).toString();
+  // copy unminified source file over to dest
+  ncp(cssSource, cssDest, function (err) {
+   if (err) return console.error(err);
+  });
+
+  // read css file
+  css = fs.readFileSync(cssSource).toString();
 
   // split comment block
   css = css.split('/* build */');
@@ -38,15 +32,27 @@ task('css', function() {
 
 desc('Compress and concatentate js');
 task('js', function() {
-  var output = '';
+  var jsp = require('uglify-js').parser,
+      pro = require('uglify-js').uglify,
+      jsSource = [
+        '../accordionpro_js/js/jquery.swipe.min.js',
+        '../accordionpro_js/js/modernizr.custom.min.js',
+        '../accordionpro_js/js/animate.js',
+        '../accordionpro_js/js/jquery.imagesloaded.min.js',
+        '../accordionpro_js/js/jquery.accordionpro.js'
+      ],
+      concat = output = '';
 
   // concat
-  jsfiles.map(function(file, index) {
-    var js, ast;
+  jsSource.map(function(file, index) {
+    var js = fs.readFileSync(file), ast;
+
+    // keep unminified version (not particularly elegant, but *shrug*)
+    concat += js + '\n\n';
 
     if (!file.match('min')) {
       // read file
-      js = fs.readFileSync(file).toString();
+      js = js.toString();
 
       // split comment block
       js = js.split('/* build */');
@@ -58,20 +64,64 @@ task('js', function() {
       ast = pro.ast_squeeze(ast);
       js[1] = pro.gen_code(ast) + ';';
 
+      // not last file?
+      if (index < jsSource.length - 1) js[1] += '\n\n';
+
       // concat
       output += js.join('');
     } else {
       // concat
-      output += fs.readFileSync(file) + '\n\n';
+      output += js + '\n\n';
     }
   });
 
   // output
+  fs.writeFileSync('accordionpro_js/js/jquery.accordionpro.js', concat);
   fs.writeFileSync('accordionpro_js/js/jquery.accordionpro.min.js', output);
+});
+
+desc('Copy JS build to WP Dev');
+task('copyJStoWP', ['css', 'js'], function() {
+  var jsSource = '/Volumes/Nikki/webserver/projects/Accordion-Pro/build/accordionpro_js',
+      jsDest = '/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp';
+
+  // copy js...
+  ncp(jsSource, jsDest, function (err) {
+   if (err) return console.error(err);
+  });
+});
+
+desc('Drop copy of WP plugin into build folder');
+task('buildWP', ['copyJStoWP'], function() {
+  var ncp = require('ncp').ncp,
+      source = '/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp',
+      destination = '/Volumes/Nikki/webserver/projects/Accordion-Pro/build/accordionpro_wp';
+
+  ncp.limit = 16;
+  ncp(source, destination, function (err) {
+   if (err) return console.error(err);
+  });
+});
+
+desc('Drop copy of WP plugin into WP test install plugin folder');
+task('testWP', ['buildWP'], function() {
+  var ncp = require('ncp').ncp,
+      source = '/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp',
+      destination = '/Volumes/Nikki/webserver/websites/kodogames.com/wp-content/plugins/accordionpro_wp';
+
+  ncp.limit = 16;
+  ncp(source, destination, function (err) {
+   if (err) return console.error(err);
+  });
 });
 
 desc('Run all tasks');
 task('default', function() {
-  jake.Task['css'].execute();
-  jake.Task['js'].execute();
+  // jake.Task['css'].execute(); // execute -> run task without pre-reqs
+  // jake.Task['js'].execute();
+  // jake.Task['copyJStoWP'].execute();
+  // jake.Task['buildWP'].execute();
+
+  // all other tasks are pre-reqs to this one
+  jake.Task['testWP'].invoke(); // invoke -> run task & pre-reqa
 });

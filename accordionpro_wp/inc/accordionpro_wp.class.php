@@ -42,14 +42,13 @@ class accordion_pro {
   // Init
   public function __construct() {
     // Register Admin JS & CSS
-    wp_register_style('accordion_pro_admin', WP_PLUGIN_URL . '/accordion_pro/css/admin.css');
-    wp_register_script('accordion_pro_admin', WP_PLUGIN_URL . '/accordion_pro/js/admin.js', false, false, true);
+    wp_register_style('accordion_pro_admin', WP_PLUGIN_URL . '/accordionpro_wp/css/admin.css');
+    wp_register_script('accordion_pro_admin', WP_PLUGIN_URL . '/accordionpro_wp/js/admin.js', false, false, true);
 
     // Register Accordion JS & CSS
-    // wp_register_style('accordion_pro', WP_PLUGIN_URL . '/accordion_pro/css/liteaccordion.css');
-    wp_register_style('accordion_pro', WP_PLUGIN_URL . '/accordion_pro/css/style.php');
-    wp_register_script('accordion_pro', WP_PLUGIN_URL . '/accordion_pro/js/liteaccordion.jquery.min.js', false, false, false);
-    wp_register_script('accordion_pro_easing', WP_PLUGIN_URL . '/accordion_pro/js/jquery.easing.1.3.js', false, false, false);
+    wp_register_style('accordion_pro', WP_PLUGIN_URL . '/accordionpro_wp/css/accordionpro.css.php');
+    wp_register_script('accordion_pro', WP_PLUGIN_URL . '/accordionpro_wp/js/jquery.accordionpro.min.js', false, false, false);
+    // wp_register_script('accordion_pro_easing', WP_PLUGIN_URL . '/accordionpro_wp/js/jquery.easing.1.3.js', false, false, false);
 
     // Add the admin hooks/actions
     add_action('admin_init', array($this, 'admin_init'));
@@ -197,7 +196,7 @@ class accordion_pro {
   public function admin_menu() {
     add_menu_page(__('Accordion Pro', 'accordion_pro'), __('Accordion Pro', 'accordion_pro'), 'manage_options', 'accordion_pro', array($this, 'admin_settings'));
     add_submenu_page( 'accordion_pro', __('Accordion Pro', 'accordion_pro').' - '.__('Manage Accordions', 'accordion_pro'), __('Manage Accordions', 'accordion_pro'), 'manage_options', 'accordion_pro', array($this, 'admin_settings'));
-    add_submenu_page( 'accordion_pro', __('Accordion Pro', 'accordion_pro').' - '.__('Add Accordions', 'accordion_pro'), __('Add Accordions', 'accordion_pro'), 'manage_options', 'accordion_pro_add', array($this, 'admin_settings'));
+    add_submenu_page( 'accordion_pro', __('Accordion Pro', 'accordion_pro').' - '.__('Create Accordions', 'accordion_pro'), __('Create Accordions', 'accordion_pro'), 'manage_options', 'accordion_pro_add', array($this, 'admin_settings'));
 
     // settings page
     // add_submenu_page( 'accordion_pro', __('Accordion Pro', 'accordion_pro').' - '.__('Settings', 'accordion_pro'), __('Settings', 'accordion_pro'), 'manage_options', 'accordion_pro_settings', array($this, 'admin_settings'));
@@ -259,7 +258,7 @@ class accordion_pro {
         }
 
         // inc slide manager page
-        include('admin/manageAccordion.inc.php');
+        include('admin/manage.inc.php');
       } else {
         // If someone is adding/updating an accordion
         if (isset($_GET['delete_accordion']) && check_admin_referer('delete')) {
@@ -267,7 +266,7 @@ class accordion_pro {
         }
 
         // inc overview page
-        include('admin/showOverview.inc.php');
+        include('admin/overview.inc.php');
       }
     } /*else if ($page === 'accordion_pro_settings') {
       // save settings
@@ -287,7 +286,7 @@ class accordion_pro {
     $key = absint($_POST['data']['slideNum']);
 
     // inc slide template
-    include('admin/slideTemplate.inc.php');
+    include('admin/template.inc.php');
 
     die();
   }

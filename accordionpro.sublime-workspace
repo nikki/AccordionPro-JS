@@ -1,0 +1,1338 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"touch",
+				"touchEnabled"
+			],
+			[
+				"verti",
+				"vertical"
+			],
+			[
+				"res",
+				"resizeTimer"
+			],
+			[
+				"con",
+				"console"
+			],
+			[
+				"ver",
+				"vertical"
+			],
+			[
+				"fit",
+				"fitToContent"
+			],
+			[
+				"respon",
+				"responsive"
+			],
+			[
+				"filter",
+				"filterExpr"
+			],
+			[
+				"fitT",
+				"fitToContent"
+			],
+			[
+				"vert",
+				"verticalHeight"
+			],
+			[
+				"fitTo",
+				"fitToContent"
+			],
+			[
+				"str",
+				"startClosed"
+			],
+			[
+				"ho",
+				"horizontal"
+			],
+			[
+				"cy",
+				"cycleSpeed"
+			],
+			[
+				"anim",
+				"animate"
+			],
+			[
+				"first",
+				"firstSlide"
+			],
+			[
+				"conte",
+				"contentHeight"
+			],
+			[
+				"hor",
+				"horizontal"
+			],
+			[
+				"base",
+				"baseHorizontalHeight"
+			],
+			[
+				"vertical",
+				"verticalSlideHeight"
+			],
+			[
+				"ma",
+				"maxResponsiveWidth"
+			],
+			[
+				"min",
+				"minResponsiveWidth"
+			],
+			[
+				"respo",
+				"minResponsiveWidth"
+			],
+			[
+				"current",
+				"currentSlide"
+			],
+			[
+				"previou",
+				"previousSlide"
+			],
+			[
+				"easing",
+				"easingFns"
+			],
+			[
+				"animate",
+				"animationCycle"
+			],
+			[
+				"animation",
+				"animationCycle"
+			],
+			[
+				"curren",
+				"currentSlide"
+			],
+			[
+				"curre",
+				"currentSlide"
+			],
+			[
+				"start",
+				"startClosed"
+			],
+			[
+				"closed",
+				"startClosed"
+			],
+			[
+				"accordi",
+				"accordionPro"
+			],
+			[
+				"calc",
+				"calculateSlidePosition"
+			],
+			[
+				"on",
+				"onSlideClose"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"orie",
+				"orientation"
+			],
+			[
+				"stat",
+				"startClosed"
+			],
+			[
+				"tab",
+				"tabSize"
+			],
+			[
+				"slide",
+				"slideWidth"
+			],
+			[
+				"Accor",
+				"AccordionPro"
+			],
+			[
+				"tog",
+				"toggleLight"
+			],
+			[
+				"move",
+				"moveRight"
+			],
+			[
+				"pts",
+				"ptsImage"
+			],
+			[
+				"expl",
+				"explosionImage"
+			],
+			[
+				"Exp",
+				"explosionImage"
+			],
+			[
+				"vis",
+				"visible"
+			],
+			[
+				"faceBoo",
+				"facebookURL"
+			],
+			[
+				"create",
+				"createPattern"
+			],
+			[
+				"error",
+				"errorText"
+			],
+			[
+				"black",
+				"blacklistIp"
+			],
+			[
+				"backgroun",
+				"background-size"
+			],
+			[
+				"p",
+				"prototype"
+			],
+			[
+				"star",
+				"starsAwarded"
+			],
+			[
+				"ac",
+				"activeBombs"
+			],
+			[
+				"exp",
+				"explosionFrames"
+			],
+			[
+				"explo",
+				"explosionFrames"
+			],
+			[
+				"text",
+				"textFrames"
+			],
+			[
+				"frame",
+				"frameWidth"
+			],
+			[
+				"stroke",
+				"strokeStyle"
+			],
+			[
+				"explosio",
+				"explosionText"
+			],
+			[
+				"bom",
+				"bombImage"
+			],
+			[
+				"complete",
+				"completeScreen"
+			],
+			[
+				"o",
+				"offset"
+			],
+			[
+				"hi",
+				"hideURLBar"
+			],
+			[
+				"back",
+				"background"
+			],
+			[
+				"lt",
+				"ltImage"
+			],
+			[
+				"off",
+				"offsetLeft"
+			],
+			[
+				"leve",
+				"levelTransitionFlag"
+			],
+			[
+				"WI",
+				"WIRBestScore"
+			],
+			[
+				"WIR",
+				"WIRScores"
+			],
+			[
+				"background",
+				"background"
+			],
+			[
+				"timer",
+				"timerId"
+			],
+			[
+				"track",
+				"trackBombs"
+			],
+			[
+				"set",
+				"setLevelTransition"
+			],
+			[
+				"setL",
+				"setLevelTransition"
+			],
+			[
+				"dr",
+				"drawClock"
+			],
+			[
+				"draw",
+				"drawLine"
+			],
+			[
+				"parti",
+				"particleLen"
+			],
+			[
+				"bomb",
+				"bombLen"
+			],
+			[
+				"part",
+				"particleLen"
+			],
+			[
+				"numO",
+				"numPreload"
+			],
+			[
+				"sta",
+				"startTime"
+			],
+			[
+				"best",
+				"bestScore"
+			],
+			[
+				"n",
+				":nth-child(|)"
+			],
+			[
+				"tim",
+				"timerId"
+			],
+			[
+				"level",
+				"levelTransition"
+			],
+			[
+				"check",
+				"checkpoints"
+			],
+			[
+				"tota",
+				"totalScore"
+			],
+			[
+				"Chec",
+				"checkpoint"
+			],
+			[
+				"feedbac",
+				"feedbackId"
+			],
+			[
+				"bac",
+				"background"
+			],
+			[
+				"get",
+				"getContext"
+			],
+			[
+				"en",
+				"endtime"
+			],
+			[
+				"inter",
+				"intervalId"
+			],
+			[
+				"pa",
+				"particleImage"
+			],
+			[
+				"backgou",
+				"background-size"
+			],
+			[
+				"su",
+				"surfaceImage"
+			],
+			[
+				"u",
+				"url()"
+			],
+			[
+				"de",
+				"default"
+			],
+			[
+				"prot",
+				"prototype"
+			],
+			[
+				"bottom",
+				"bottomLeft"
+			],
+			[
+				"bo",
+				"bottomLeft"
+			],
+			[
+				"reset",
+				"resetIndicators"
+			],
+			[
+				"match",
+				"matchLen"
+			],
+			[
+				"dyn",
+				"dynamicHelpers"
+			],
+			[
+				"dyna",
+				"dynamic-helpers"
+			],
+			[
+				"togg",
+				"toggleAudio"
+			],
+			[
+				"vel",
+				"velY"
+			],
+			[
+				"particle",
+				"particleBuffer"
+			],
+			[
+				"new",
+				"newGameAnimating"
+			],
+			[
+				"cell",
+				"cellSize"
+			],
+			[
+				"ball",
+				"balloonz"
+			],
+			[
+				"pause",
+				"pauseDrawing"
+			],
+			[
+				"balloo",
+				"balloonBuffer"
+			],
+			[
+				"cla",
+				"clsName"
+			],
+			[
+				"hall",
+				"hallOfFame"
+			],
+			[
+				"mysql_er",
+				"mysql_error"
+			],
+			[
+				"float",
+				"floatBalloons"
+			],
+			[
+				"local",
+				"localStorage"
+			],
+			[
+				"grid",
+				"gridSize"
+			],
+			[
+				"last",
+				"lastMatchDelta"
+			],
+			[
+				"matchT",
+				"lastMatchDelta"
+			],
+			[
+				"visual",
+				"visualTimer"
+			],
+			[
+				"highlgh",
+				"highlightBalloon"
+			],
+			[
+				"webkit",
+				"webkitTransitionEnd"
+			],
+			[
+				"translate",
+				"translateZ"
+			],
+			[
+				"gri",
+				"gridSize"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "accordionpro_wp/accordionpro_wp.php",
+			"settings":
+			{
+				"buffer_size": 1677,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "accordionpro_wp/css/style.php",
+			"settings":
+			{
+				"buffer_size": 179,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "build/Jakefile",
+			"settings":
+			{
+				"buffer_size": 3672,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "accordionpro_js/js/jquery.imagesloaded.min.js",
+			"settings":
+			{
+				"buffer_size": 1174,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "accordionpro_wp/inc/accordionpro_wp.class.php",
+			"settings":
+			{
+				"buffer_size": 18030,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "accordionpro_wp/css/accordionpro.css.php",
+			"settings":
+			{
+				"buffer_size": 182,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "Packages/User/Jake.sublime-build",
+	"command_palette":
+	{
+		"height": 67.0,
+		"selected_items":
+		[
+			[
+				"remo",
+				"Package Control: Remove Package"
+			],
+			[
+				"rem",
+				"Package Control: Remove Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"remov",
+				"Package Control: Remove Package"
+			],
+			[
+				"instl",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"add",
+				"Project: Add Folder"
+			],
+			[
+				"cs",
+				"CSS rules compact"
+			],
+			[
+				"css",
+				"CSS rules compact"
+			],
+			[
+				"disb",
+				"Package Control: Disable Package"
+			],
+			[
+				"prefix",
+				"Preferences: Prefixr Key Bindings – Default"
+			],
+			[
+				"list",
+				"Package Control: List Packages"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"upda",
+				"Package Control: Upgrade/Overwrite All Packages"
+			],
+			[
+				"pack",
+				"Package Control: Remove Package"
+			],
+			[
+				"ins",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"dis",
+				"Package Control: Discover Packages"
+			],
+			[
+				"re",
+				"Package Control: Remove Package"
+			],
+			[
+				"packag",
+				"Package Control: Enable Package"
+			],
+			[
+				"packa",
+				"Package Control: Disable Package"
+			],
+			[
+				"pa",
+				"Package Control: List Packages"
+			],
+			[
+				"pac",
+				"Package Control: Remove Package"
+			],
+			[
+				"jso",
+				"Plist Json Converter: PLIST to JSON"
+			],
+			[
+				"pl",
+				"Plist Json Converter: PLIST to JSON"
+			],
+			[
+				"",
+				"Package Control: Upgrade Package"
+			],
+			[
+				"rein",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"in",
+				"Package Control: Install Package"
+			],
+			[
+				"LiveR",
+				"Package Control: Discover Packages"
+			],
+			[
+				"up",
+				"Package Control: Upgrade Package"
+			],
+			[
+				"p",
+				"Package Control: Install Package"
+			],
+			[
+				"snippet f",
+				"Snippet: function …"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 247.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/inc/accordion_pro.class.php",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/js/animate.js",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/index.html",
+		"/Users/nikki/Library/Application Support/Sublime Text 2/Packages/User/SublimeOnSaveBuild.sublime-settings",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/build/Jakefile",
+		"/Users/nikki/Library/Application Support/Sublime Text 2/Packages/CommandOnSave/Base File.sublime-settings",
+		"/Users/nikki/Library/Application Support/Sublime Text 2/Packages/SublimeOnSaveBuild/SublimeOnSaveBuild.sublime-settings",
+		"/Users/nikki/Library/Application Support/Sublime Text 2/Packages/SublimeOnSaveBuild/README.md",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/inc/admin/slideTemplate.inc.php",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro/accordion_pro.php",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/css/accordionpro.css",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/js/jquery.accordionpro.js",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/testing/js/demosuite.js",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/testing/index.html",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/testing/demo-suite.html",
+		"/Users/nikki/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/js/animate.min.js",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/build/accordionpro_js/css/accordionpro.min.css",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/js/jquery.imagesloaded.min.js",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro/css/liteaccordion.css",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro/css/admin.css",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/.gitignore"
+	],
+	"find":
+	{
+		"height": 39.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"-/Volumes/Nikki/webserver/js-games/wreck-it-ralph/assets/*, -/Volumes/Nikki/webserver/js-games/wreck-it-ralph/prototype/*",
+			"-/Volumes/Nikki/webserver/js-games/wreck-it-ralph/assets/*",
+			"-/Volumes/Nikki/webserver/js-games/wreck-it-ralph/assets/",
+			"-./node_modules",
+			"-./node_modules,-./prototype,-/Volumes/Nikki/webserver/js-games/wreck-it-ralph/assets/*",
+			"-./node_modules,-./prototype,-/Volumes/Nikki/webserver/js-games/wreck-it-ralph/assets",
+			"-./node_modules,-./prototype,-./assets/*",
+			"-./node_modules,-./prototype,-./assets",
+			"-./node_modules,-./prototype,-.\\#assets/*",
+			"-./node_modules,-./prototype,-./\\#assets/*",
+			"-./node_modules,-./prototype,-./\\#assets",
+			"-./node_modules,-./prototype,-./#assets",
+			"-./node_modules,-./prototype",
+			"-./node_modules, -./prototype, -./#assets",
+			"-./node_modules, -./prototype, -./\\#assets",
+			"-./node_modules",
+			"",
+			"-/node_modules/",
+			"-node_modules",
+			"",
+			"-Jakefile, -audio.js",
+			"-Jakefile",
+			"-brickout.min.js",
+			"-/Volumes/Nikki/webserver/js-games/brickout/mobile/js/brickout.min.js",
+			"",
+			"/Volumes/Nikki/webserver/websites/codecgames/build,/Volumes/Nikki/webserver/websites/codecgames/dev,/Volumes/Nikki/webserver/websites/codecgames/game,/Volumes/Nikki/webserver/websites/codecgames/lib,/Volumes/Nikki/webserver/websites/codecgames/models,/Volumes/Nikki/webserver/websites/codecgames/private,/Volumes/Nikki/webserver/websites/codecgames/public,/Volumes/Nikki/webserver/websites/codecgames/site,/Volumes/Nikki/webserver/websites/codecgames/test,/Volumes/Nikki/webserver/websites/codecgames/tmp",
+			"",
+			"/Volumes/Nikki/webserver/websites/codecgames,-./node_modules",
+			"/Volumes/Nikki/webserver/websites/codecgames",
+			"/Volumes/Nikki/webserver/websites/codecgames,-/node_modules",
+			"/Volumes/Nikki/webserver/websites/codecgames,-node_modules",
+			"/Volumes/Nikki/webserver/websites/codecgames/dev,/Volumes/Nikki/webserver/websites/codecgames/game,/Volumes/Nikki/webserver/websites/codecgames/models,/Volumes/Nikki/webserver/websites/codecgames/shared,/Volumes/Nikki/webserver/websites/codecgames/site",
+			"/Volumes/Nikki/webserver/js-games/spaceout/",
+			"/Volumes/Nikki/webserver/js-games/spaceout/srccog",
+			"/Volumes/Nikki/webserver/websites/codecgames/dev,/Volumes/Nikki/webserver/websites/codecgames/game,/Volumes/Nikki/webserver/websites/codecgames/site",
+			"<open folders>",
+			"/Volumes/Nikki/webserver/websites/codecgames/",
+			"/Volumes/Nikki/webserver/websites/codecgames/site/",
+			"/Volumes/Nikki/webserver/websites/codecgames/shared/",
+			"/Volumes/Nikki/webserver/websites/codecgames/game/",
+			"/Volumes/Nikki/webserver/websites/codecgames/dev/",
+			"/Volumes/Nikki/webserver/websites/codecgames/user/",
+			"/Volumes/Nikki/webserver/websites/codecgames/dev/",
+			"/Volumes/Nikki/webserver/websites/codecgames/dev/views",
+			"/Volumes/Nikki/webserver/websites/codecgames",
+			"/Volumes/Nikki/webserver/websites/codecgames/dev.codecgames.com/views/dev",
+			"/Volumes/Nikki/webserver/websites/codecgames/#assets,/Volumes/Nikki/webserver/websites/codecgames/lib,/Volumes/Nikki/webserver/websites/codecgames/models,/Volumes/Nikki/webserver/websites/codecgames/public,/Volumes/Nikki/webserver/websites/codecgames/routes,/Volumes/Nikki/webserver/websites/codecgames/test,/Volumes/Nikki/webserver/websites/codecgames/views",
+			"<open files>,<open folders>",
+			"<open files>",
+			"/Volumes/d$/Nikki/WebServer/Websites/derby-comms/wp-content/plugins/accordion_pro",
+			"<open files>",
+			"<open folders>",
+			"<open files>,<open folders>",
+			"<open files>",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"css",
+			"console",
+			"css",
+			"js",
+			"php",
+			"jsfiles",
+			"\n      ",
+			"Add",
+			"accordion_pro_add",
+			"Add",
+			"manage",
+			"admin.js",
+			"accordion_pro",
+			"/accordion_pro/",
+			"plugin",
+			"url",
+			"swipe",
+			"dammit",
+			"fire",
+			"addClass(orientation",
+			"addClass('vert",
+			"vertical",
+			"scale",
+			"easing",
+			"linear",
+			"easing",
+			"selected",
+			"ie7",
+			"update hash",
+			"linkable",
+			"playing",
+			"*/      ",
+			"linkable",
+			"data",
+			"linkable",
+			"offset",
+			"easing",
+			"fitToCo",
+			"core.fitTo",
+			"elem.css",
+			"elem.height",
+			"height",
+			"fitToContent",
+			"startClosed",
+			"fitToContent",
+			"slide.h",
+			"core.startClosed",
+			"setup.startClosed",
+			"startClosed",
+			"!!this",
+			"slides.removeClass",
+			"'selected'",
+			"addClass",
+			"margin",
+			"offset",
+			"getSlideCss",
+			"fitToContent",
+			"fitToContetn",
+			"slidePositions",
+			");\n",
+			"selected",
+			"fitToContent",
+			"getSlidePosition",
+			"animateGroup",
+			"getSlidePosition",
+			"single",
+			"settings.responsive",
+			"responsive",
+			"off",
+			"responsive",
+			"setup.startC",
+			"startClosed",
+			"methods.play",
+			"settings.linkable",
+			"addClass('selected",
+			"fitTo",
+			"animateP",
+			"wrap",
+			"animateSlide",
+			"transition",
+			"offset",
+			"getSlidePosition",
+			"if (!settings.startClosed)",
+			"addClass('selected')",
+			"selected",
+			"setup.startC",
+			"fitToContent",
+			"setup.startCl",
+			"startClose",
+			"85",
+			"!!!",
+			"tabSize",
+			"tab.h",
+			"tabSize",
+			"0.8",
+			"8",
+			"0.8",
+			"(px)",
+			"settings.width",
+			"baseVerticalHeight",
+			"baseHorizontalHeight",
+			"baseWidth",
+			"baseH",
+			"parent.h",
+			"fitToContent",
+			"parent().wi",
+			"window.inn",
+			"animation",
+			"responsive",
+			"fluid",
+			"animation",
+			"slider",
+			"closed",
+			"-o-t",
+			"-o",
+			"opacity",
+			"ease",
+			"ease-out",
+			"0.3s",
+			"3s",
+			"transition",
+			"all",
+			" ?)",
+			"anti",
+			"max",
+			"responsive",
+			"!!!",
+			"minWidth"
+		],
+		"highlight": false,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"/accordionpro_wp/",
+			"verticalHeight",
+			"horizontalHeight",
+			"width",
+			"settings.baseHeight",
+			"settings.baseWidth",
+			"event.originalEvent.targetTouches",
+			"elem",
+			"tab.h",
+			"tab",
+			"showSlideNumbers",
+			"slide.width",
+			"slide.length",
+			"tabSize",
+			"jquery.accordionpro.js",
+			"accordionpro",
+			"accordionPro",
+			"<figcaption class=\"ap-caption\">",
+			"128",
+			"()",
+			")",
+			"(",
+			"this",
+			"G",
+			"wir",
+			"$('#bombs')[0]",
+			" ",
+			"register",
+			"config",
+			"'",
+			"mobile_competition",
+			"frameSize",
+			"kill",
+			"2 - 3",
+			"totalScore",
+			"levelScore",
+			"Canvas",
+			"currentY",
+			"currentX",
+			"doc",
+			"win",
+			"ad_source",
+			"balloonz",
+			"balloonzScores",
+			"balloonz",
+			"        a.brand(href='/') play\n          span zap",
+			"playzap",
+			"playzap.net",
+			"Candies",
+			"candies",
+			"candy",
+			"Candy",
+			"candy",
+			"balloonz.matrix",
+			"loading",
+			"highscores",
+			"menu-float",
+			"float",
+			"u",
+			"0.3",
+			"0.25",
+			"0.4",
+			"21px",
+			"20px",
+			"0",
+			"19px",
+			"10px",
+			".liteAccordion",
+			"ball.circ / 2",
+			"this.explosionSize",
+			"ball.y",
+			"ball.x",
+			"ball.cy",
+			"ball.cx",
+			"balls[i]",
+			"ball.circ",
+			"audio.playSound('menu');",
+			"Shrink",
+			"srcPal.cols",
+			"brickout",
+			"BrickOut!",
+			"233, 135, 0",
+			"253, 255, 4",
+			"gfx",
+			"sfx",
+			"gfx",
+			"objects",
+			"Objects",
+			"drawBricks",
+			"objects",
+			"gameObjects",
+			"object",
+			"running",
+			"gameOver",
+			"gameover",
+			"assets",
+			"width",
+			"height",
+			"c:2",
+			"{c:2}",
+			"{t:0}",
+			"",
+			"c:0",
+			"t:1",
+			"{t:0,c:1}",
+			"Cog",
+			"i.icon-star.empty",
+			"i.icon-heart.empty",
+			"/img/",
+			"link(rel='stylesheet', href='/css/lib/bootstrap.min.css')",
+			"data",
+			"type",
+			"level.data",
+			"site",
+			"item.ratings",
+			"Comment",
+			"'../img/spr_royalSlider.png'",
+			"/private/conf",
+			"/public",
+			"/lib/",
+			"Stats",
+			"commentSystem",
+			"$GLOBALS",
+			"_GLOBALS",
+			"sendForm",
+			"methods",
+			"submitForm",
+			"maker"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "accordionpro_wp/accordionpro_wp.php",
+					"settings":
+					{
+						"buffer_size": 1677,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1412,
+								1412
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 193.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "accordionpro_wp/css/style.php",
+					"settings":
+					{
+						"buffer_size": 179,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								167,
+								167
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "build/Jakefile",
+					"settings":
+					{
+						"buffer_size": 3672,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3672,
+								3672
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1802.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "accordionpro_js/js/jquery.imagesloaded.min.js",
+					"settings":
+					{
+						"buffer_size": 1174,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								128,
+								128
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "accordionpro_wp/inc/accordionpro_wp.class.php",
+					"settings":
+					{
+						"buffer_size": 18030,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1382,
+								1382
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "accordionpro_wp/css/accordionpro.css.php",
+					"settings":
+					{
+						"buffer_size": 182,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								98,
+								98
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 34.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 216.0
+	},
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"utils",
+				"source/Utils.js"
+			],
+			[
+				"cs",
+				"css/style.css"
+			],
+			[
+				"css",
+				"css/style.css"
+			],
+			[
+				"can",
+				"prototype/canvas-particles.html"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 221.0,
+	"status_bar_visible": true
+}

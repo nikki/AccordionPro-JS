@@ -1,0 +1,21 @@
+{
+	"folders":
+	[
+		{
+			"path": "/Volumes/Nikki/webserver/projects/Accordion-Pro"
+		}
+	],
+  "build_systems":
+  [
+    {
+        "name" : "Accordion-Pro",
+        "cmd" : ["/usr/local/bin/jake"],
+        "path" : "/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:",
+        "working_dir" : "/Volumes/Nikki/webserver/projects/Accordion-Pro/build"
+    }
+  ],
+  "settings" :
+  {
+      "build_on_save": 1
+  }
+}

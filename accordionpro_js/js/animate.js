@@ -1,7 +1,7 @@
 /**
  * jQuery animate -> CSS3 Transitions
  * http://addyosmani.com/blog/css3transitions-jquery/
- */
+ */ /* build */
 
 $(function() {
   $.fn.extend({
