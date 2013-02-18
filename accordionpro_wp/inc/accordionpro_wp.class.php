@@ -23,7 +23,8 @@ class accordion_pro {
   public
   $notices,
   $options = array(
-    'version'                   => ACCORDION_PRO_VERSION
+    'version'                   => ACCORDION_PRO_VERSION,
+    'additional_css'            => '#my_accordion { background: red }'
   ),
   $accContent = array(
     'content_title'             => array(),
@@ -32,7 +33,6 @@ class accordion_pro {
     'content'                   => array()
   ),
   $jQueryOptions = array(
-
     'orientation'               => 'horizontal',
     'startClosed'               => false,
     'firstSlide'                => 1,
@@ -56,22 +56,6 @@ class accordion_pro {
     'easing'                    => 'ease-in-out',
     'pauseOnHover'              => true,
     'linkable'                  => false
-/*
-    'theme'                     => 'basic',
-    'easing'                    => 'swing',
-    'containerWidth'            => '960',
-    'containerHeight'           => '320',
-    'headerWidth'               => '48',
-    'activateOn'                => 'click',
-    'firstSlide'                => '1',
-    'slideSpeed'                => '800',
-    'autoPlay'                  => false,
-    'pauseOnHover'              => false,
-    'cycleSpeed'                => '6000',
-    'rounded'                   => false,
-    'enumerateSlides'           => false,
-    'linkable'                  => false
-*/
   );
 
   /**
@@ -151,7 +135,7 @@ class accordion_pro {
 
   public function init_options() {
     foreach ($this->options as $key => $value) {
-      update_option('accordion_pro_'.$key, $value);
+      update_option('accordion_pro_' . $key, $value);
     }
   }
 
@@ -164,44 +148,7 @@ class accordion_pro {
   }
 
   /**
-   * Load options
-   */
-
-  public function load_options() {
-    // Cycle through and update with the users settings.
-    foreach ($this->options as $key => $value) {
-      $this->options[$key] = get_option('accordion_pro_'.$key, $value);
-    }
-    return $this->options;
-  }
-
-  /**
-   * Sets an option
-   */
-
-  public function set_option($key, $value) {
-    // If the value is currently a boolean, keep it that way.
-    if (is_bool($this->options[$key])) $value = $value === '' ? false : true;
-
-    // Now update it in the array/database
-    $this->options[$key] = $value;
-    update_option('accordion_pro_'.$key, $value);
-  }
-
-  /**
-   * Affix the plugin name to post metas
-   */
-
-  public function update_post_meta($id, $key, $value) {
-    return update_post_meta($id, 'accordion_pro_'.$key, $value);
-  }
-
-  public function get_post_meta($id, $key) {
-    return get_post_meta($id, 'accordion_pro_'.$key, true);
-  }
-
-  /**
-   * ADMIN PAGES
+   * ADMIN SETUP
    */
 
   /**
@@ -213,8 +160,10 @@ class accordion_pro {
     // strpos can return 0 as first index, so need to check strict equality
     if (strpos($_GET['page'], 'accordion_pro') === false) return;
 
-    wp_deregister_script('autosave'); // disable autosave
+    // disable autosave
+    wp_deregister_script('autosave');
 
+    // enqueue scripts
     wp_enqueue_script(array('jquery', 'accordion_pro_admin', 'editor', 'thickbox', 'media-upload'));
     wp_enqueue_style('accordion_pro_admin', 'thickbox');
   }
@@ -238,15 +187,19 @@ class accordion_pro {
   }
 
   /**
+   * ADMIN PAGES
+   */
+
+  /**
    * Router
    */
 
   public function admin_settings() {
     $get = array('page', 'mode', 'id');
 
-    foreach ($get as $key) {
-      if (isset($_GET[$key])) {
-        $clean[$key] = $this->sanitize($_GET[$key]);
+    foreach ($get as $value) {
+      if (isset($_GET[$value])) {
+        $clean[$value] = $this->sanitize($_GET[$value]);
       }
     }
 
@@ -286,7 +239,7 @@ class accordion_pro {
     } else if ($clean['page'] === 'accordion_pro_settings') {
       // save settings
       if (isset($_POST['save_settings']) && check_admin_referer('save_settings', 'accordion_pro')) {
-        $this->updateSettings();
+        $this->update_settings();
       }
 
       // inc setting page
@@ -295,6 +248,10 @@ class accordion_pro {
 
     echo '</div>';
   }
+
+  /**
+   * CREATE & MANAGE PAGES
+   */
 
   /**
    * Returns new slide editor via ajax
@@ -307,19 +264,6 @@ class accordion_pro {
     include('admin/template.inc.php');
 
     die();
-  }
-
-  /**
-   * MANAGEMENT FUNCTIONS
-   */
-
-  /**
-   * Delete accordion
-   */
-
-  public function delete_accordion($id, $notice=true) {
-    wp_delete_post($id);
-    if ($notice) $this->notices[] = __('Accordion Deleted.', 'accordion_pro');
   }
 
   /**
@@ -449,6 +393,46 @@ class accordion_pro {
   }
 
   /**
+   * Delete accordion
+   */
+
+  public function delete_accordion($id, $notice=true) {
+    wp_delete_post($id);
+    if ($notice) $this->notices[] = __('Accordion Deleted.', 'accordion_pro');
+  }
+
+  /**
+   * CLIENT-SIDE RENDERING
+   */
+
+  /**
+   * Ensure jQuery loaded head of page
+   */
+
+  public function load_jquery() {
+    wp_enqueue_script('jquery');
+  }
+
+  /**
+   * Call accordion based on ID
+   */
+
+  public function get_accordion($atts) {
+    if (isset($atts) && is_array($atts)) {
+      // load accordion js only into page with shortcode
+      wp_enqueue_script('accordion_pro');
+
+      // cached accordion html
+      $accordion = $this->get_accordion_settings($atts['id']);
+
+      // return accordion
+      return $accordion['post_content'];
+    } else {
+      return '';
+    }
+  }
+
+  /**
    * Fetchs accordion custom post
    */
 
@@ -500,110 +484,131 @@ class accordion_pro {
   }
 
   /**
-   * Update settings
-   */
-
-  public function updateSettings() {
-    foreach ($this->options as $key) {
-      $this->set_option($key, $this->sanitize($_POST[$key]));
-    }
-
-    // Throw a notice
-    $this->notices[] = __('Settings Updated.', 'accordion_pro');
-  }
-
-  /**
-   * CLIENT-SIDE RENDERING
-   */
-
-  /**
-   * Ensure jQuery loaded head of page
-   */
-
-  public function load_jquery() {
-    wp_enqueue_script('jquery');
-  }
-
-  /**
-   * Call accordion based on ID
-   */
-
-  public function get_accordion($atts) {
-    if (isset($atts) && is_array($atts)) {
-      // load accordion js only into page with shortcode
-      wp_enqueue_script('accordion_pro');
-
-      // Return cached accordion html
-      $accordion = $this->get_accordion_settings($atts['id']);
-
-      return $accordion['post_content'];
-    } else {
-      return '';
-    }
-  }
-
-  /**
    * Dynamic styles
    */
 
   public function load_styles($posts) {
     $ids = array();
-    $count = 0;
 
-    // no posts?
+    // No posts?
     if (empty($posts)) return;
 
-    // !!! get ids of all accordions in post
-    // load css
-
-    // iterate over posts
+    // Get IDs of all accordions being rendered
     foreach ($posts as $post) {
-      preg_match('[accordion_pro', $post->post_content, $matches);
-
-      print_r($matches);
-
-      foreach ($matches as $key => $val) {
-        echo $val[$key];
-      }
-
-      // $count = substr_count($post->post_content, '[accordion_pro');
-      // if ($count) {
-
-      // }
-      // $pos = strpos($post->post_content, '[accordion_pro');
-      // if ($pos) {
-      //   $shortcode_found = true;
-      //   $ids[] = intval(substr($post->post_content, $pos + 19, 5), 10);
-      // }
+      $ids[] = $this->search_for_shortcode($post->post_content);
     }
 
-    // if ($count) {
+    // flatten array, convert to comma-separated string
+    $ids = implode('-', $this->flatten($ids));
 
-      // print_r($ids);
-      // enqueue here
-      // wp_enqueue_style('my-style', '/style.css');
-      //  wp_enqueue_script('my-script', '/script.js');
-    // }
+    // load css
+    wp_enqueue_style('accordion_pro', WP_PLUGIN_URL . '/accordionpro_wp/css/accordionpro.css.php?ids=' . $ids);
 
+    // required
     return $posts;
+  }
 
-    // about to be printed
-    // print_r($enqueued);
+  /**
+   * Recursively search post content for shortcode
+   */
 
-    // wp_enqueue_style('accordion_pro', WP_PLUGIN_URL . '/accordionpro_wp/css/accordionpro.css.php?id=' . $atts['id']);
+  public function search_for_shortcode($content, $ids = array()) {
+    // first occurence of shortcode
+    $start = strpos($content, '[accordion_pro');
+    $end = 0;
+
+    if ($start !== false) {
+      // first occurence of end bracket
+      $end = strpos($content, ']', $start);
+
+      // save id
+      $ids[] = filter_var(substr($content, $start, $end - $start), FILTER_SANITIZE_NUMBER_INT);
+
+      // truncate content
+      $content = substr($content, $end);
+      return $this->search_for_shortcode($content, $ids);
+    }
+
+    return $ids;
+  }
+
+  /**
+   * SETTINGS PAGE
+   */
+
+  /**
+   * Load option
+   */
+
+  public function get_option($option) {
+    if ($option) return get_option('accordion_pro_' . $option);
+  }
+
+  /**
+   * Load options // !!! THIS UPDATES!
+   */
+
+  public function load_options() {
+    // Cycle through and update with the users settings.
+    foreach ($this->options as $key => $value) {
+      $this->options[$key] = get_option('accordion_pro_'.$key, $value);
+    }
+    return $this->options;
+  }
+
+  /**
+   * Sets an option
+   */
+
+  public function set_option($key, $value) {
+    // If the value is currently a boolean, keep it that way.
+    // !!! empty string is a boolean!!
+    // if (is_bool($this->options[$key])) $value = $value === '' ? false : true;
+
+    // Update
+    $this->options[$key] = $value;
+    update_option('accordion_pro_' . $key, $value);
+  }
+
+  /**
+   * Update settings
+   */
+
+  public function update_settings() {
+    foreach ($this->options as $key => $value) {
+      $data = $_POST[$key]; // !!!
+
+      // only user-changable option now is for custom css, but sanitize fn is too greedy
+      // $this->set_option($key, $this->sanitize($_POST[$key]));
+
+      // !!! need a way to sanitize css, this is potentially (slight risk?) unsafe
+      $this->set_option($key, $data);
+
+      // write css to file
+      if ($key === 'additional_css') {
+        file_put_contents(WP_PLUGIN_DIR . '/accordionpro_wp/css/additional.css', $data);
+      }
+    }
+
+    // Throw notice
+    $this->notices[] = __('Settings Updated.', 'accordion_pro');
+  }
+
+  /**
+   * Affix the plugin name to post metas
+   */
+
+  public function update_post_meta($id, $key, $value) {
+    return update_post_meta($id, 'accordion_pro_'.$key, $value);
+  }
+
+  public function get_post_meta($id, $key) {
+    return get_post_meta($id, 'accordion_pro_'.$key, true);
   }
 
   /**
    * PLUGIN HELPERS
    */
-
-  /**
-   * Sanitize a string (alphanumeric plus underscore only)
-   */
-
-  public function sanitize($val) {
-    return preg_replace('/[^a-zA-Z0-9_]/', '', $val);
-  }
 
   /**
    * Display notices if set
@@ -646,5 +651,30 @@ class accordion_pro {
     if (isset($array['custom']) && $showCustom !== false) {
       echo '<input type="number" name="'.$field['name'].'" value="'.$selected.'" />';
     }
+  }
+
+  /**
+   * Sanitize a string (alphanumeric plus underscore only)
+   */
+
+  public function sanitize($val) {
+    return preg_replace('/[^a-zA-Z0-9_]/', '', $val);
+  }
+
+  /**
+   * Flatten an array
+   */
+
+  public function flatten($array, $return) {
+    for ($x = 0; $x <= count($array); $x++) {
+      if (is_array($array[$x])) {
+        $return = $this->flatten($array[$x], $return);
+      } else {
+        if ($array[$x]) {
+          $return[] = $array[$x];
+        }
+      }
+    }
+    return array_unique($return);
   }
 }
