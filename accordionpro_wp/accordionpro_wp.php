@@ -1,10 +1,11 @@
 <?php
 /*
-Plugin Name:    Accordion Pro WP
+Plugin Name:    Accordion Pro
 Plugin URI:     http://accordionpro.nicolahibbert.com
 Description:    Create jQuery powered responsive accordions to embed into your WordPress posts &amp; pages.
-Version:        1.1.0
+Version:        2.0.0
 Author:         Nicola Hibbert
+Author:         Mike Rogers
 Author URI:     http://nicolahibbert.com
 Text Domain:    accordion_pro
 
@@ -24,35 +25,57 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-// Prevents loading file directly
+/**
+ * Prevents loading file directly
+ */
+
 if (!class_exists('WP')) {
-    header('Status: 403 Forbidden');
-    header('HTTP/1.1 403 Forbidden');
-    die();
+  header('Status: 403 Forbidden');
+  header('HTTP/1.1 403 Forbidden');
+  die();
 }
 
-// Set up localisation
+/**
+ * Set up localisation
+ */
+
 $locale = get_locale();
 if (empty($locale)) $locale = 'en_US';
 load_theme_textdomain('accordion_pro', dirname (__FILE__).'/locale/'.$locale.'.mo');
 
-// Plugin version
-define('ACCORDION_PRO_VERSION', '1.1.0');
+/**
+ * Define plugin version
+ */
 
-// UPGRADE
+define('ACCORDION_PRO_VERSION', '2.0.0');
 
+/**
+ * Require class
+ */
 
-
-// Require class
 require('inc/accordionpro_wp.class.php');
 
-// Instantiate plugin
+/**
+ * Instantiate plugin
+ */
+
 global $accordion_pro;
 $accordion_pro = new accordion_pro();
 
-// Set options on init
+/**
+ * Set options on init
+ */
+
 register_activation_hook (__FILE__, 'init_options');
 function init_options() {
-    global $accordion_pro;
-    $accordion_pro->init_options();
+  global $accordion_pro;
+  $v = $accordion_pro->load_options();
+
+  if ($v['version'] != '2.0.0') {
+    // run upgrade script
+    $accordion_pro->upgrade();
+  }
+
+  // init
+  $accordion_pro->init_options();
 }
