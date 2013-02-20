@@ -77,7 +77,7 @@ class accordion_pro {
     add_action('wp_ajax_admin_slide_tmpl', array($this, 'admin_slide_tmpl'));
 
     // Ensure jQuery is loaded in the head of the page to prevent race condition
-    add_action('wp_head', array($this, 'load_jquery'));
+    add_action('wp_head', array($this, 'load_jquery'), 5);
 
     // Register accordion JS & CSS
     // wp_register_style('accordion_pro', WP_PLUGIN_URL . '/accordionpro_wp/css/accordionpro.css.php');
@@ -350,8 +350,16 @@ class accordion_pro {
     if (!empty($accordion['acc_content']['content']) && is_array($accordion['acc_content']['content'])) {
       foreach($accordion['acc_content']['content'] as $key => $content) {
 
-        // post content
-        $accordion['post_content'] .= '<li><h2><span>'.esc_html($accordion['acc_content']['content_title'][$key]).'</span></h2><div>'.wp_kses_post($content, $allowedextratags);
+        // tab
+        $accordion['post_content'] .= '<li><h2><span>';
+        if ($accordion['acc_content']['content_title'][$key]) {
+          $accordion['post_content'] .= esc_html($accordion['acc_content']['content_title'][$key]);
+        } else {
+          $accordion['post_content'] .= '&nbsp;';
+        }
+
+        // slide content
+        $accordion['post_content'] .= '</span></h2><div>' . wp_kses_post($content, $allowedextratags);
 
         // caption
         if ($accordion['acc_content']['content_caption_enabled'][$key]) {

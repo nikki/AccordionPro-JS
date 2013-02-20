@@ -129,8 +129,8 @@ desc('Run all tasks');
 task('default', function() {
   // jake.Task['css'].execute(); // execute -> run task without pre-reqs
   // jake.Task['js'].execute();
-  // jake.Task['copyJStoWP'].execute();
-  // jake.Task['buildWP'].execute();
+  // jake.Task['copyJStoWP'].invoke();
+  // jake.Task['buildWP'].invoke();
 
   // all other tasks are pre-reqs to this one
   jake.Task['testWP'].execute(); // invoke -> run task & pre-reqs

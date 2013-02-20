@@ -96,7 +96,7 @@ if (!class_exists('WP')) {
 			}
 				?>
 
-			<input id="ap-add" type="button" value="<?php _e('Add Another Slide', 'accordion_pro'); ?>" />
+			<input id="ap-add" type="button" class="button-secondary" value="<?php _e('Add Another Slide', 'accordion_pro'); ?>" />
 			<div class="ap-wait"></div>
 			<input type="submit" name="save_accordion" class="button-primary ap-save" value="<?php _e('Save Accordion', 'accordion_pro'); ?>" />
 		</div><!-- /ap-slides -->
@@ -111,10 +111,133 @@ if (!class_exists('WP')) {
 						<input id="accordionName" name="accordionName" value="<?php echo $accordion['post_title']; ?>" required placeholder="<?php _e('Accordion Name', 'accordion_pro'); ?>" />
 					</p>
 					<p class="submit">
-			            <input type="submit" name="save_accordion" class="button-primary" value="<?php _e('Save Accordion', 'accordion_pro'); ?>" />
-			        </p>
+	           <input type="submit" name="save_accordion" class="button-primary" value="<?php _e('Save Accordion', 'accordion_pro'); ?>" />
+	        </p>
 				</div>
 			</div>
+
+
+
+
+
+<!--
+      /* layout */
+      orientation : 'horizontal',             // 'horizontal' or 'vertical' accordion
+      startClosed : false,                    // start in a closed position
+      firstSlide : 1,                         // displays slide (n) on page load
+
+      /* aesthetics */
+      theme : 'basic',                        // basic, dark, light, or stitch
+      rounded : false,                        // square or rounded corners
+      rtl : false,                            // right to left layout
+      showSlideNumbers : true,                // display numbers on slides
+
+      /* horizontal accordion options */
+      horizontalWidth : 900,                  // base width; fixed (px [integer]) - responsive scaling is relative to this value
+      horizontalHeight : 300,                 // base horizontal accordion height; fixed (px [integer]) - responsive scaling is relative to this value
+      responsive : true,                      // accordion will adapt itself to the page layout, based on width of parent element
+      minResponsiveWidth : 400,               // horizontal accordion will flip to vertical at (and below) this width
+      maxResponsiveWidth : 1020,              // accordion will not scale up beyond this width
+
+      /* vertical accordion options */
+      verticalWidth : '100%',                 // fixed (px [integer]) or fluid (% [string])
+      verticalHeight : 600,                   // base vertical accordion height; fixed (px [integer])
+      verticalSlideHeight : 'fixed',          // vertical accordion slide heights can be 'fixed' or 'fitToContent'
+
+      /* events */
+      activateOn : 'click',                   // click or mouseover
+      touchEnabled : true,                    // touch events?
+      onSlideOpen : function() {},            // callback on slide open
+      onSlideClose : function() {},           // callback on slide animation complete
+
+      /* animations */
+      autoPlay : false,                       // automatically cycle through slides
+      cycleSpeed : 6000,                      // time between slide cycles
+      slideSpeed : 800,                       // slide animation speed
+      easing : 'ease-in-out',                 // animation easing
+
+      /* miscellaneous */
+      pauseOnHover : true,                    // pause on hover
+      linkable : false                        // link slides via hash
+-->
+
+			<div class="postbox">
+				<h3><span><?php _e('Layout Options', 'accordion_pro'); ?></span></h3>
+				<div class="inside">
+
+<!--
+      orientation : 'horizontal',             // 'horizontal' or 'vertical' accordion
+      startClosed : false,                    // start in a closed position
+      firstSlide : 1,                         // displays slide (n) on page load
+-->
+
+
+					<p>
+						<?php
+							$this->showSelectField(array(
+								'name'=>__('orientation', 'accordion_pro'),
+								'title'=>__('Orientation', 'accordion_pro')), array(
+									'horizontal'=>__('Horizontal', 'accordion_pro'),
+									'vertical'=>__('Vertical', 'accordion_pro')),
+								$accordion['jQuerySettings']['orientation']);
+						?>
+					</p>
+
+
+					<p>
+						<?php
+							$this->showSelectField(array(
+								'name'=>__('orientation', 'accordion_pro'),
+								'title'=>__('Orientation', 'accordion_pro')), array(
+									'horizontal'=>__('Horizontal', 'accordion_pro'),
+									'vertical'=>__('Vertical', 'accordion_pro')),
+								$accordion['jQuerySettings']['orientation']);
+						?>
+					</p>
+
+					<p>
+						<?php
+							$this->showSelectField(array(
+								'name'=>__('orientation', 'accordion_pro'),
+								'title'=>__('Orientation', 'accordion_pro')), array(
+									'horizontal'=>__('Horizontal', 'accordion_pro'),
+									'vertical'=>__('Vertical', 'accordion_pro')),
+								$accordion['jQuerySettings']['orientation']);
+						?>
+					</p>
+
+
+
+				</div>
+			</div>
+
+			<div class="postbox">
+				<h3><span><?php _e('Display Options', 'accordion_pro'); ?></span></h3>
+				<div class="inside"></div>
+			</div>
+
+			<div class="postbox">
+				<h3><span><?php _e('Horizontal Accordions', 'accordion_pro'); ?></span></h3>
+				<div class="inside"></div>
+			</div>
+
+			<div class="postbox">
+				<h3><span><?php _e('Vertical Accordions', 'accordion_pro'); ?></span></h3>
+				<div class="inside"></div>
+			</div>
+
+			<div class="postbox">
+				<h3><span><?php _e('Trigger Events', 'accordion_pro'); ?></span></h3>
+				<div class="inside"></div>
+			</div>
+
+			<div class="postbox">
+				<h3><span><?php _e('Animation Options', 'accordion_pro'); ?></span></h3>
+				<div class="inside"></div>
+			</div>
+
+
+
 
 			<div class="postbox">
 				<h3><span><?php _e('Accordion Options (Basic)', 'accordion_pro'); ?></span></h3>
