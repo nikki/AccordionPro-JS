@@ -523,15 +523,15 @@
 			"file": "accordionpro_wp/inc/accordionpro_wp.class.php",
 			"settings":
 			{
-				"buffer_size": 20947,
+				"buffer_size": 21190,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "accordionpro_wp/css/accordionpro.css.php",
+			"file": "accordionpro_wp/inc/admin/manage.inc.php",
 			"settings":
 			{
-				"buffer_size": 616,
+				"buffer_size": 16067,
 				"line_ending": "Unix"
 			}
 		}
@@ -696,21 +696,24 @@
 	},
 	"file_history":
 	[
-		"/Volumes/Nikki/webserver/js-games/candy-shop/source/loader.js",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/css/accordionpro.min.css",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/inc/admin/template.inc.php",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/css/accordionpro.css",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/build/Jakefile",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/css/accordionpro.css",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/inc/accordionpro_wp.class.php",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/css/accordionpro.css.php",
+		"/Volumes/Nikki/webserver/js-games/candy-shop/source/loader.js",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/inc/admin/settings.inc.php",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/accordionpro_wp.php",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/css/additional.css",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/inc/admin/manage.inc.php",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/inc/admin/overview.inc.php",
-		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/inc/admin/template.inc.php",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/uninstall.php",
 		"/Users/nikki/.profile",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/build/accordionpro_wp/inc/admin/template.inc.php",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/build/accordionpro_wp/inc/accordionpro_wp.class.php",
-		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/inc/accordionpro_wp.class.php",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro.sublime-workspace",
-		"/Volumes/Nikki/webserver/projects/Accordion-Pro/build/Jakefile",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/build/accordionpro_wp/accordionpro_wp.php",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/build/accordionpro_wp/uninstall.php",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/build/accordionpro_wp/inc/admin/manage.inc.php",
@@ -732,7 +735,6 @@
 		"/Users/nikki/Library/Application Support/Sublime Text 2/Packages/SublimeOnSaveBuild/README.md",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/inc/admin/slideTemplate.inc.php",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro/accordion_pro.php",
-		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/css/accordionpro.css",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/js/jquery.accordionpro.js",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/testing/js/demosuite.js",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/testing/index.html",
@@ -814,6 +816,15 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"load",
+			"onload",
+			"jQuery",
+			"Caption",
+			"upload",
+			"ap-remove",
+			"add",
+			"save",
+			"render",
 			"as $key",
 			"get_accordion",
 			"strpos",
@@ -932,16 +943,7 @@
 			"offset",
 			"getSlideCss",
 			"fitToContent",
-			"fitToContetn",
-			"slidePositions",
-			");\n",
-			"selected",
-			"fitToContent",
-			"getSlidePosition",
-			"animateGroup",
-			"getSlidePosition",
-			"single",
-			"settings.responsive"
+			"fitToContetn"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -1087,7 +1089,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -1095,15 +1097,15 @@
 					"file": "accordionpro_wp/inc/accordionpro_wp.class.php",
 					"settings":
 					{
-						"buffer_size": 20947,
+						"buffer_size": 21190,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								16502,
-								16502
+								610,
+								610
 							]
 						],
 						"settings":
@@ -1113,33 +1115,34 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 8447.0,
+						"translation.y": 421.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "accordionpro_wp/css/accordionpro.css.php",
+					"file": "accordionpro_wp/inc/admin/manage.inc.php",
 					"settings":
 					{
-						"buffer_size": 616,
+						"buffer_size": 16067,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								274,
-								274
+								7924,
+								7924
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/PHP/PHP.tmLanguage"
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 3777.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"

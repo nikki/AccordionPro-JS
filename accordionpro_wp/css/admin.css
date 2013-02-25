@@ -4,8 +4,9 @@
 .ap-right { float: right; clear: right; width: 300px }
 
 .ap-slides { margin: 0 325px 0 5px }
-.ap-slide h3 { font-size: 14px; line-height: 18px; 
-	font-family: Georgia, "Times New Roman", "Bitstream Charter", Times,serif; cursor: default }
+.ap-slide.ajax { display: none }
+.ap-slide h3 { font-size: 14px; line-height: 18px;
+	font-family: Georgia, "Times New Roman", "Bitstream Charter", Times,serif; cursor: default !important }
 .ap-slide .ap-controls { padding: 0 10px }
 .ap-slide .ap-inner { padding: 10px }
 .ap-slide .ap-inner label { display: inline-block; width: 75px }
@@ -17,9 +18,13 @@
 
 .ap-options { width: 285px; margin: 0 auto }
 .ap-options .postbox { overflow: hidden }
+.ap-options .postbox h3 { cursor: default }
+.ap-options .accordionName { margin-bottom: 0 }
 .ap-options .accordionName label { display: inline-block; width: 60px }
 .ap-options .accordionName input { margin: 0; width: 162px }
-.ap-options .button-primary { float: left; margin: 10px 0 }
-.ap-options label, 
-.ap-options select { display: inline-block; width: 49% }
-.ap-options input { width: 120px; margin-left: 129px }
+.ap-options p.submit { overflow: hidden; margin: 0; padding-bottom: 0.9em }
+.ap-options .button-primary { float: left }
+.ap-options label,
+.ap-options select { display: inline-block; width: 48% }
+.ap-options label { margin-right: 3% }
+.ap-options .inside div input { width: 50px; margin-left: 135px; text-align: center }

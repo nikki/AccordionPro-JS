@@ -639,7 +639,7 @@ class accordion_pro {
   public function showSelectField($field, $array, $selected) {
     $showCustom = true;
 
-    echo '<label for="'.$field['name'].'">'.$field['title'].'</label><select id="'.$field['name'].'" name="'.$field['name'].'">';
+    echo '<label for="'.$field['name'].'" title="'.$field['alt'].'">'.$field['title'].'</label><select id="'.$field['name'].'" name="'.$field['name'].'">';
     foreach ($array as $value => $title) {
       if ($selected == '') $selected = $value;
       echo '<option value="'.$value.'" ';
@@ -655,9 +655,13 @@ class accordion_pro {
     }
     echo '</select>';
 
+    /// !!!
     // If we can show custom & user has picked a custom value
     if (isset($array['custom']) && $showCustom !== false) {
-      echo '<input type="number" name="'.$field['name'].'" value="'.$selected.'" />';
+      echo '<div id="'.$field['name'].'_wrapper">';
+      echo '<input type="text" name="'.$field['name'].'" value="'.$selected.'" />';
+      echo '<span> px</span>';
+      echo '</div>';
     }
   }
 
