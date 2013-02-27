@@ -24,7 +24,7 @@ class accordion_pro {
   $notices,
   $options = array(
     'version'                   => ACCORDION_PRO_VERSION,
-    'additional_css'            => '#my_accordion { background: red }'
+    'additional_css'            => '#my_accordion { background: none }'
   ),
   $accContent = array(
     'content_title'             => array(),
@@ -280,7 +280,7 @@ class accordion_pro {
         'post_title'      => $clean['title'],
         'post_content'    => '',
         'post_status'     => 'publish',
-        'post_type'       => 'accordion', // Custom post types being used.
+        'post_type'       => 'accordion', // Custom post types being used
         'comment_status'  => 'closed',
         'ping_status'     => 'closed'
     );
@@ -296,6 +296,7 @@ class accordion_pro {
       $this->notices[] = __('Accordion Added. <a href="?page=accordion_pro">Manage</a>', 'accordion_pro');
     }
 
+    // Update jQ opts
     foreach($this->jQueryOptions as $key=>$default) {
       $this->update_post_meta($post['ID'], $key, $this->sanitize($_POST[$key]));
     }
@@ -570,7 +571,7 @@ class accordion_pro {
 
   public function set_option($key, $value) {
     // If the value is currently a boolean, keep it that way.
-    // !!! empty string is a boolean!!
+    // !!! empty string (of css) is a boolean!!
     // if (is_bool($this->options[$key])) $value = $value === '' ? false : true;
 
     // Update
@@ -588,11 +589,12 @@ class accordion_pro {
 
       // only user-changable option now is for custom css, but sanitize fn is too greedy
       // $this->set_option($key, $this->sanitize($_POST[$key]));
+      $data = filter_var($_POST[$key], FILTER_SANITIZE_STRING);
 
-      // !!! need a way to sanitize css, this is potentially (slight risk?) unsafe
+      // set custom css option
       $this->set_option($key, $data);
 
-      // write css to file
+      // write css to file (can't access WPDB from style php)
       if ($key === 'additional_css') {
         file_put_contents(WP_PLUGIN_DIR . '/accordionpro_wp/css/additional.css', $data);
       }
@@ -666,11 +668,11 @@ class accordion_pro {
   }
 
   /**
-   * Sanitize a string (alphanumeric plus underscore only)
+   * Sanitize a string (alphanumeric plus dashes and underscore)
    */
 
   public function sanitize($val) {
-    return preg_replace('/[^a-zA-Z0-9_]/', '', $val);
+    return preg_replace('/[^a-zA-Z0-9-_]/', '', $val);
   }
 
   /**
