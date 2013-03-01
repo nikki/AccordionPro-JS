@@ -22,9 +22,13 @@
 .ap-options .accordionName { margin-bottom: 0 }
 .ap-options .accordionName label { display: inline-block; width: 60px }
 .ap-options .accordionName input { margin: 0; width: 162px }
+.ap-options .inside div { margin-bottom: 5px }
+.ap-options .inside div input { width: 50px; text-align: center }
 .ap-options p.submit { overflow: hidden; margin: 0; padding-bottom: 0.9em }
 .ap-options .button-primary { float: left }
 .ap-options label,
 .ap-options select { display: inline-block; width: 48% }
 .ap-options label { margin-right: 3% }
-.ap-options .inside div input { width: 50px; margin-left: 135px; text-align: center }
+.ap-options .verticalWidth div { display: inline-block; width: 75px; }
+.ap-options .verticalWidth div label { margin: 0; width: 45%; padding-left: 5%; }
+.ap-options .verticalWidth div input { width: auto; margin: 0 }

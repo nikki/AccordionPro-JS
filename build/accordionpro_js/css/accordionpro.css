@@ -173,7 +173,7 @@
 
 /* rtl */
 .accordionPro.vertical.rtl .slide > h2 span { padding-left: 0; padding-right: 4%; text-align: right }
-.accordionPro.vertical.rtl .slide > h2 b { top: 1px !important; right: auto; left: 5% }
+.accordionPro.vertical.rtl .slide > h2 b { right: auto; left: 5% }
 
 /* basic */
 .accordionPro.vertical.basic .slide > h2 { line-height: 285% }

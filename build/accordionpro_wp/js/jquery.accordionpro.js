@@ -142,14 +142,6 @@ n();return d?d.promise(g):g}})(jQuery);
      */
 
     settings = $.extend({}, defaults, options);
-/*
-    settings.orientation = 'horizontal';
-    settings.verticalSlideHeight = 'fitToContent';
-    settings.firstSlide = 2;
-
-    settings.startClosed = false;
-    settings.theme = 'stitch';
-    // settings.linkable = true;
 
     /**
      * "Globals"
@@ -252,8 +244,8 @@ n();return d?d.promise(g):g}})(jQuery);
 
       // set parent theme and corner style
       elem
-        .width(orientation ? settings.horizontalWidth : settings.verticalWidth)
-        .height(orientation ? settings.horizontalHeight : settings.verticalHeight)
+        .outerWidth(orientation ? settings.horizontalWidth : settings.verticalWidth)
+        .outerHeight(orientation ? settings.horizontalHeight : settings.verticalHeight)
         .addClass('accordionPro')
         .addClass(orientation ? 'horizontal' : 'vertical')
         .addClass(settings.rounded && 'rounded')
@@ -375,7 +367,9 @@ n();return d?d.promise(g):g}})(jQuery);
 
       slides.each(function(index) {
         var $this = $(this),
-            css = setup.getSlideCss.call($this, index, selected);
+            css = setup.getSlideCss.call($this, index, selected),
+            h = $this.children('h2'),
+            b = h.children('b');
 
         // set each slide position
         $this
@@ -393,8 +387,11 @@ n();return d?d.promise(g):g}})(jQuery);
 
         // add number to bottom of tab
         if (settings.showSlideNumbers) {
-          if ($this.children('h2').children('b').length) return;
-          $this.children('h2').append('<b>' + (index + 1) + '</b>');
+          if (b.length) return;
+          h.append('<b>' + (index + 1) + '</b>');
+        } else {
+          // hide b if exists
+          if (b.length) b.hide();
         }
 
         // compensate for <= ie8's lack of transform origin
@@ -418,7 +415,7 @@ n();return d?d.promise(g):g}})(jQuery);
       // start accordion in closed position
       if (orientation) {
         elem.width(slide.l * tab.h);
-        if (settings.responsive && elem.parent().width() > settings.minResponsiveWidth) core.scale();
+        if (settings.responsive && elem.parent().outerWidth(true) > settings.minResponsiveWidth) core.scale();
       } else {
         elem.height(slide.l * tab.h);
       }
@@ -586,7 +583,7 @@ n();return d?d.promise(g):g}})(jQuery);
     };
 
     core.responsive = function() {
-      var w = elem.parent().width(); // responsive reaction to parent element width, not window width
+      var w = elem.parent().outerWidth(true); // responsive reaction to parent element width, not window width
 
       // not responsive until first slide opened
       if (elem.hasClass('closed')) return;
@@ -622,8 +619,6 @@ n();return d?d.promise(g):g}})(jQuery);
           orientation = 1;
           elem.removeClass('vertical responsive');
 
-          console.log('reinit');
-
           // reinit styles
           setup.styles();
 
@@ -641,7 +636,7 @@ n();return d?d.promise(g):g}})(jQuery);
     };
 
     core.scale = function() {
-      var scale = Math.min(elem.parent().width() / settings.horizontalWidth), // linear scale
+      var scale = Math.min(elem.parent().outerWidth(true) / settings.horizontalWidth), // linear scale
           max = Math.min(settings.maxResponsiveWidth / settings.horizontalWidth);
 
       // limit scale to maximum

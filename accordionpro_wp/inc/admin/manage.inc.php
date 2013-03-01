@@ -126,52 +126,53 @@ if (!class_exists('WP')) {
 			<div class="postbox">
 				<h3><span><?php _e('Display Options', 'accordion_pro'); ?></span></h3>
 				<div class="inside">
-					<p>
-						<?php
-							$this->showSelectField(array(
+					<?php
+						$this->showField(
+							'select',
+							array(
 								'name'=>__('theme', 'accordion_pro'),
 								'title'=>__('Theme', 'accordion_pro'),
-								'alt'=>__("Choose from basic, dark, light, or stitch themes", 'accordion_pro')), array(
-									'basic'=>__('basic', 'accordion_pro'),
-									'dark'=>__('dark', 'accordion_pro'),
-									'light'=>__('light', 'accordion_pro'),
-									'stitch'=>__('stitch', 'accordion_pro')),
-								$accordion['jQuerySettings']['theme']);
-						?>
-					</p>
-					<p>
-						<?php
-							$this->showSelectField(array(
+								'alt'=>__("Choose from basic, dark, light, or stitch themes", 'accordion_pro')),
+							array(
+								'basic'=>__('basic', 'accordion_pro'),
+								'dark'=>__('dark', 'accordion_pro'),
+								'light'=>__('light', 'accordion_pro'),
+								'stitch'=>__('stitch', 'accordion_pro')),
+							$accordion['jQuerySettings']['theme']);
+
+						$this->showField(
+							'select',
+							array(
 								'name'=>__('rounded', 'accordion_pro'),
 								'title'=>__('Rounded', 'accordion_pro'),
-								'alt'=>__('Square or rounded corners', 'accordion_pro')), array(
-									'false'=>__('false', 'accordion_pro'),
-									'true'=>__('true', 'accordion_pro')),
-								$accordion['jQuerySettings']['rounded']);
-						?>
-					</p>
-					<p>
-						<?php
-							$this->showSelectField(array(
+								'alt'=>__('Square or rounded corners', 'accordion_pro')),
+							array(
+								'false'=>__('false', 'accordion_pro'),
+								'true'=>__('true', 'accordion_pro')),
+							$accordion['jQuerySettings']['rounded']);
+
+						$this->showField(
+							'select',
+							array(
 								'name'=>__('rtl', 'accordion_pro'),
 								'title'=>__('Right to Left', 'accordion_pro'),
-								'alt'=>__("Right to left display", 'accordion_pro')), array(
-									'false'=>__('false', 'accordion_pro'),
-									'true'=>__('true', 'accordion_pro')),
-								$accordion['jQuerySettings']['rtl']);
-						?>
-					</p>
-					<p>
-						<?php
-							$this->showSelectField(array(
+								'alt'=>__("Right to left display", 'accordion_pro')),
+							array(
+								'false'=>__('false', 'accordion_pro'),
+								'true'=>__('true', 'accordion_pro')),
+							$accordion['jQuerySettings']['rtl']);
+
+						$this->showField(
+							'select',
+							array(
 								'name'=>__('showSlideNumbers', 'accordion_pro'),
 								'title'=>__('Show Slide Numbers', 'accordion_pro'),
-								'alt'=>__('Display numbers on slides', 'accordion_pro')), array(
-									'true'=>__('true', 'accordion_pro'),
-									'false'=>__('false', 'accordion_pro')),
-								$accordion['jQuerySettings']['showSlideNumbers']);
-						?>
-					</p>
+								'alt'=>__('Display numbers on slides', 'accordion_pro')),
+							array(
+								'true'=>__('true', 'accordion_pro'),
+								'false'=>__('false', 'accordion_pro')),
+							$accordion['jQuerySettings']['showSlideNumbers']);
+					?>
 				</div>
 			</div>
 
@@ -184,39 +185,38 @@ if (!class_exists('WP')) {
 			<div class="postbox">
 				<h3><span><?php _e('Layout Options', 'accordion_pro'); ?></span></h3>
 				<div class="inside">
-					<p>
-						<?php
-							$this->showSelectField(array(
+					<?php
+						$this->showField(
+							'select',
+							array(
 								'name'=>__('orientation', 'accordion_pro'),
 								'title'=>__('Orientation', 'accordion_pro'),
-								'alt'=>__("Create either a horizontal or a vertical accordion", 'accordion_pro')), array(
-									'horizontal'=>__('horizontal', 'accordion_pro'),
-									'vertical'=>__('vertical', 'accordion_pro')),
-								$accordion['jQuerySettings']['orientation']);
-						?>
-					</p>
-					<p>
-						<?php
-							$this->showSelectField(array(
+								'alt'=>__("Create either a horizontal or a vertical accordion", 'accordion_pro')),
+							array(
+								'horizontal'=>__('horizontal', 'accordion_pro'),
+								'vertical'=>__('vertical', 'accordion_pro')),
+							$accordion['jQuerySettings']['orientation']);
+
+						$this->showField(
+							'select',
+							array(
 								'name'=>__('startClosed', 'accordion_pro'),
 								'title'=>__('Start Closed', 'accordion_pro'),
-								'alt'=>__('Start accordion in a closed position', 'accordion_pro')), array(
-									'false'=>__('false', 'accordion_pro'),
-									'true'=>__('true', 'accordion_pro')),
-								$accordion['jQuerySettings']['startClosed']);
-						?>
-					</p>
-					<p>
-						<?php
-							$this->showSelectField(array(
+								'alt'=>__('Start accordion in a closed position', 'accordion_pro')),
+							array(
+								'false'=>__('false', 'accordion_pro'),
+								'true'=>__('true', 'accordion_pro')),
+							$accordion['jQuerySettings']['startClosed']);
+
+						$this->showField(
+							'input',
+							array(
 								'name'=>__('firstSlide', 'accordion_pro'),
 								'title'=>__('First Slide', 'accordion_pro'),
-								'alt'=>__('Display slide (n) on page load', 'accordion_pro')), array(
-									'1'=>__('1', 'accordion_pro'),
-									'custom'=>__('... or enter a slide number', 'accordion_pro')),
-								$accordion['jQuerySettings']['firstSlide']);
-						?>
-					</p>
+								'alt'=>__('Display slide (n) on page load', 'accordion_pro')),
+							null,
+							$accordion['jQuerySettings']['firstSlide']);
+					?>
 				</div>
 			</div>
 
@@ -231,61 +231,54 @@ if (!class_exists('WP')) {
 			<div id="horizontal-opts" class="postbox">
 				<h3><span><?php _e('Horizontal Accordion Options', 'accordion_pro'); ?></span></h3>
 				<div class="inside">
-					<p>
-						<?php
-							$this->showSelectField(array(
+					<?php
+						$this->showField(
+							'input',
+							array(
 								'name'=>__('horizontalWidth', 'accordion_pro'),
 								'title'=>__('Horizontal Accordion Width (px)', 'accordion_pro'),
-								'alt'=>__('Base horizontal accordion width - responsive scaling is relative to this value', 'accordion_pro')), array(
-									'900'=>__('900', 'accordion_pro'),
-									'custom'=>__('... or enter a custom numeric value', 'accordion_pro')),
-								$accordion['jQuerySettings']['horizontalWidth']);
-						?>
-					</p>
-					<p>
-						<?php
-							$this->showSelectField(array(
+								'alt'=>__('Base horizontal accordion width - responsive scaling is relative to this value', 'accordion_pro')),
+							null,
+							$accordion['jQuerySettings']['horizontalWidth']);
+
+						$this->showField(
+							'input',
+							array(
 								'name'=>__('horizontalHeight', 'accordion_pro'),
 								'title'=>__('Horizontal Accordion Height (px)', 'accordion_pro'),
-								'alt'=>__('Base horizontal accordion height - responsive scaling is relative to this value', 'accordion_pro')), array(
-									'300'=>__('300', 'accordion_pro'),
-									'custom'=>__('... or enter a custom numeric value', 'accordion_pro')),
-								$accordion['jQuerySettings']['horizontalHeight']);
-						?>
-					</p>
-					<p>
-						<?php
-							$this->showSelectField(array(
+								'alt'=>__('Base horizontal accordion height - responsive scaling is relative to this value', 'accordion_pro')),
+							null,
+							$accordion['jQuerySettings']['horizontalHeight']);
+
+						$this->showField(
+							'select',
+							array(
 								'name'=>__('responsive', 'accordion_pro'),
 								'title'=>__('Responsive', 'accordion_pro'),
-								'alt'=>__('Accordion will adapt itself to the page layout, based on width of parent element', 'accordion_pro')), array(
-									'true'=>__('true', 'accordion_pro'),
-									'false'=>__('false', 'accordion_pro')),
-								$accordion['jQuerySettings']['responsive']);
-						?>
-					</p>
-					<p>
-						<?php
-							$this->showSelectField(array(
+								'alt'=>__('Accordion will adapt itself to the page layout, based on width of parent element', 'accordion_pro')),
+							array(
+								'true'=>__('true', 'accordion_pro'),
+								'false'=>__('false', 'accordion_pro')),
+							$accordion['jQuerySettings']['responsive']);
+
+						$this->showField(
+							'input',
+							array(
 								'name'=>__('minResponsiveWidth', 'accordion_pro'),
 								'title'=>__('Minimum Responsive Width (px)', 'accordion_pro'),
-								'alt'=>__('Horizontal accordion will flip to vertical accordion at (and below) this width', 'accordion_pro')), array(
-									'400'=>__('400', 'accordion_pro'),
-									'custom'=>__('... or enter a custom numeric value', 'accordion_pro')),
-								$accordion['jQuerySettings']['minResponsiveWidth']);
-						?>
-					</p>
-					<p>
-						<?php
-							$this->showSelectField(array(
+								'alt'=>__('Horizontal accordion will flip to vertical accordion at (and below) this width', 'accordion_pro')),
+							null,
+							$accordion['jQuerySettings']['minResponsiveWidth']);
+
+						$this->showField(
+							'input',
+							array(
 								'name'=>__('maxResponsiveWidth', 'accordion_pro'),
 								'title'=>__('Maximum Responsive Width (px)', 'accordion_pro'),
-								'alt'=>__('Horizontal accordion will not scale up beyond this width', 'accordion_pro')), array(
-									'1020'=>__('1020', 'accordion_pro'),
-									'custom'=>__('... or enter a custom numeric value', 'accordion_pro')),
-								$accordion['jQuerySettings']['maxResponsiveWidth']);
-						?>
-					</p>
+								'alt'=>__('Horizontal accordion will not scale up beyond this width', 'accordion_pro')),
+							null,
+							$accordion['jQuerySettings']['maxResponsiveWidth']);
+					?>
 				</div>
 			</div>
 
@@ -298,39 +291,36 @@ if (!class_exists('WP')) {
 			<div id="vertical-opts" class="postbox">
 				<h3><span><?php _e('Vertical Accordion Options', 'accordion_pro'); ?></span></h3>
 				<div class="inside">
-					<p>
-						<?php
-							$this->showSelectField(array(
+					<?php
+						$this->showField(
+							'input',
+							array(
 								'name'=>__('verticalWidth', 'accordion_pro'),
 								'title'=>__('Vertical Width (px or %)', 'accordion_pro'),
-								'alt'=>__('Sets the width of vertical accordion', 'accordion_pro')), array(
-									'100%'=>__('100%', 'accordion_pro'),
-									'custom'=>__('... or enter a custom value', 'accordion_pro')),
-								$accordion['jQuerySettings']['verticalWidth']);
-						?>
-					</p>
-					<p>
-						<?php
-							$this->showSelectField(array(
+								'alt'=>__('Sets the width of vertical accordion', 'accordion_pro')),
+							null,
+							$accordion['jQuerySettings']['verticalWidth'], $accordion['jQuerySettings']['verticalWidthUnit']);
+
+						$this->showField(
+							'input',
+							array(
 								'name'=>__('verticalHeight', 'accordion_pro'),
 								'title'=>__('Vertical Accordion Height (px)', 'accordion_pro'),
-								'alt'=>__('Base vertical accordion height', 'accordion_pro')), array(
-									'600'=>__('600', 'accordion_pro'),
-									'custom'=>__('... or enter a custom numeric value', 'accordion_pro')),
-								$accordion['jQuerySettings']['verticalHeight']);
-						?>
-					</p>
-					<p>
-						<?php
-							$this->showSelectField(array(
+								'alt'=>__('Base vertical accordion height', 'accordion_pro')),
+							null,
+							$accordion['jQuerySettings']['verticalHeight']);
+
+						$this->showField(
+							'select',
+							array(
 								'name'=>__('verticalSlideHeight', 'accordion_pro'),
 								'title'=>__('Vertical Slide Height', 'accordion_pro'),
-								'alt'=>__('Vertical accordion slide heights can be fixed or fitToContent', 'accordion_pro')), array(
-									'fixed'=>__('fixed', 'accordion_pro'),
-									'fitToContent'=>__('fitToContent', 'accordion_pro')),
-								$accordion['jQuerySettings']['verticalSlideHeight']);
-						?>
-					</p>
+								'alt'=>__('Vertical accordion slide heights can be fixed or fitToContent', 'accordion_pro')),
+							array(
+								'fixed'=>__('fixed', 'accordion_pro'),
+								'fitToContent'=>__('fitToContent', 'accordion_pro')),
+							$accordion['jQuerySettings']['verticalSlideHeight']);
+					?>
 				</div>
 			</div>
 
@@ -347,50 +337,51 @@ if (!class_exists('WP')) {
 			<div class="postbox">
 				<h3><span><?php _e('Events', 'accordion_pro'); ?></span></h3>
 				<div class="inside">
-					<p>
-						<?php
-							$this->showSelectField(array(
+					<?php
+						$this->showField(
+							'select',
+							array(
 								'name'=>__('activateOn', 'accordion_pro'),
 								'title'=>__('Activate On...', 'accordion_pro'),
-								'alt'=>__('Accordion can be activated on click or mouseover', 'accordion_pro')), array(
-									'click'=>__('click', 'accordion_pro'),
-									'mouseover'=>__('mouseover', 'accordion_pro')),
-								$accordion['jQuerySettings']['activateOn']);
-						?>
-					</p>
-					<p>
-						<?php
-							$this->showSelectField(array(
+								'alt'=>__('Accordion can be activated on click or mouseover', 'accordion_pro')),
+							array(
+								'click'=>__('click', 'accordion_pro'),
+								'mouseover'=>__('mouseover', 'accordion_pro')),
+							$accordion['jQuerySettings']['activateOn']);
+
+						$this->showField(
+							'select',
+							array(
 								'name'=>__('touchEnabled', 'accordion_pro'),
 								'title'=>__('Touch Enabled', 'accordion_pro'),
-								'alt'=>__('Accordion is touch enabled?', 'accordion_pro')), array(
-									'true'=>__('true', 'accordion_pro'),
-									'false'=>__('false', 'accordion_pro')),
-								$accordion['jQuerySettings']['touchEnabled']);
-						?>
-					</p>
-					<p>
-						<?php
-							$this->showSelectField(array(
+								'alt'=>__('Accordion is touch enabled?', 'accordion_pro')),
+							array(
+								'true'=>__('true', 'accordion_pro'),
+								'false'=>__('false', 'accordion_pro')),
+							$accordion['jQuerySettings']['touchEnabled']);
+
+						$this->showField(
+							'select',
+							array(
 								'name'=>__('pauseOnHover', 'accordion_pro'),
 								'title'=>__('Pause On Hover', 'accordion_pro'),
-								'alt'=>__('Pause slides if you hover over them when autoPlay is on', 'accordion_pro')), array(
-									'true'=>__('true', 'accordion_pro'),
-									'false'=>__('false', 'accordion_pro')),
-								$accordion['jQuerySettings']['pauseOnHover']);
-						?>
-					</p>
-					<p>
-						<?php
-							$this->showSelectField(array(
+								'alt'=>__('Pause slides if you hover over them when autoPlay is on', 'accordion_pro')),
+							array(
+								'true'=>__('true', 'accordion_pro'),
+								'false'=>__('false', 'accordion_pro')),
+							$accordion['jQuerySettings']['pauseOnHover']);
+
+						$this->showField(
+							'select',
+							array(
 								'name'=>__('linkable', 'accordion_pro'),
 								'title'=>__('Linkable', 'accordion_pro'),
-								'alt'=>__('Link to slides via #hash', 'accordion_pro')), array(
-									'false'=>__('false', 'accordion_pro'),
-									'true'=>__('true', 'accordion_pro')),
-								$accordion['jQuerySettings']['linkable']);
-						?>
-					</p>
+								'alt'=>__('Link to slides via #hash', 'accordion_pro')),
+							array(
+								'false'=>__('false', 'accordion_pro'),
+								'true'=>__('true', 'accordion_pro')),
+							$accordion['jQuerySettings']['linkable']);
+					?>
 				</div>
 			</div>
 
@@ -404,53 +395,50 @@ if (!class_exists('WP')) {
 			<div class="postbox">
 				<h3><span><?php _e('Animation Options', 'accordion_pro'); ?></span></h3>
 				<div class="inside">
-					<p>
-						<?php
-							$this->showSelectField(array(
+					<?php
+						$this->showField(
+							'select',
+							array(
 								'name'=>__('autoPlay', 'accordion_pro'),
 								'title'=>__('AutoPlay', 'accordion_pro'),
-								'alt'=>__('Automatically cycle through slides', 'accordion_pro')), array(
-									'false'=>__('false', 'accordion_pro'),
-									'true'=>__('true', 'accordion_pro')),
-								$accordion['jQuerySettings']['autoPlay']);
-						?>
-					</p>
-					<p>
-						<?php
-							$this->showSelectField(array(
+								'alt'=>__('Automatically cycle through slides', 'accordion_pro')),
+							array(
+								'false'=>__('false', 'accordion_pro'),
+								'true'=>__('true', 'accordion_pro')),
+							$accordion['jQuerySettings']['autoPlay']);
+
+						$this->showField(
+							'input',
+							array(
 								'name'=>__('cycleSpeed', 'accordion_pro'),
 								'title'=>__('Cycle Speed', 'accordion_pro'),
-								'alt'=>__('Time between slide cycles', 'accordion_pro')), array(
-									'6000'=>__('6000', 'accordion_pro'),
-									'custom'=>__('... or enter a custom numeric value', 'accordion_pro')),
-								$accordion['jQuerySettings']['cycleSpeed']);
-						?>
-					</p>
-					<p>
-						<?php
-							$this->showSelectField(array(
+								'alt'=>__('Time between slide cycles', 'accordion_pro')),
+							null,
+							$accordion['jQuerySettings']['cycleSpeed']);
+
+						$this->showField(
+							'input',
+							array(
 								'name'=>__('slideSpeed', 'accordion_pro'),
 								'title'=>__('Slide Speed', 'accordion_pro'),
-								'alt'=>__('Slide animation speed', 'accordion_pro')), array(
-									'800'=>__('800', 'accordion_pro'),
-									'custom'=>__('... or enter a custom numeric value', 'accordion_pro')),
-								$accordion['jQuerySettings']['slideSpeed']);
-						?>
-					</p>
-					<p>
-						<?php
-							$this->showSelectField(array(
+								'alt'=>__('Slide animation speed', 'accordion_pro')),
+							null,
+							$accordion['jQuerySettings']['slideSpeed']);
+
+						$this->showField(
+							'select',
+							array(
 								'name'=>__('easing', 'accordion_pro'),
 								'title'=>__('Easing', 'accordion_pro'),
-								'alt'=>__('CSS3 easing type. Select from linear, ease, ease-in, ease-out, ease-in-out', 'accordion_pro')), array(
-									'ease-in-out'=>__('ease-in-out', 'accordion_pro'),
-									'linear'=>__('linear', 'accordion_pro'),
-									'ease'=>__('ease', 'accordion_pro'),
-									'ease-in'=>__('ease-in', 'accordion_pro'),
-									'ease-out'=>__('ease-out', 'accordion_pro')),
-								$accordion['jQuerySettings']['easing']);
-						?>
-					</p>
+								'alt'=>__('CSS3 easing type. Select from linear, ease, ease-in, ease-out, ease-in-out', 'accordion_pro')),
+							array(
+								'ease-in-out'=>__('ease-in-out', 'accordion_pro'),
+								'linear'=>__('linear', 'accordion_pro'),
+								'ease'=>__('ease', 'accordion_pro'),
+								'ease-in'=>__('ease-in', 'accordion_pro'),
+								'ease-out'=>__('ease-out', 'accordion_pro')),
+							$accordion['jQuerySettings']['easing']);
+					?>
 				</div>
 			</div>
 

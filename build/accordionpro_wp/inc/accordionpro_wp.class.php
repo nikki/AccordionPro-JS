@@ -24,7 +24,7 @@ class accordion_pro {
   $notices,
   $options = array(
     'version'                   => ACCORDION_PRO_VERSION,
-    'additional_css'            => '#my_accordion { background: red }'
+    'additional_css'            => '#my_accordion { background: none }'
   ),
   $accContent = array(
     'content_title'             => array(),
@@ -34,28 +34,28 @@ class accordion_pro {
   ),
   $jQueryOptions = array(
     'orientation'               => 'horizontal',
-    'startClosed'               => false,
-    'firstSlide'                => 1,
+    'startClosed'               => 'false',
+    'firstSlide'                => '1',
     'theme'                     => 'basic',
-    'rounded'                   => false,
-    'rtl'                       => false,
-    'showSlideNumbers'          => true,
-    'horizontalWidth'           => 900,
-    'horizontalHeight'          => 300,
-    'responsive'                => true,
-    'minResponsiveWidth'        => 400,
-    'maxResponsiveWidth'        => 1020,
+    'rounded'                   => 'false',
+    'rtl'                       => 'false',
+    'showSlideNumbers'          => 'true',
+    'horizontalWidth'           => '900',
+    'horizontalHeight'          => '300',
+    'responsive'                => 'true',
+    'minResponsiveWidth'        => '400',
+    'maxResponsiveWidth'        => '1020',
     'verticalWidth'             => '100%',
-    'verticalHeight'            => 600,
+    'verticalHeight'            => '600',
     'verticalSlideHeight'       => 'fixed',
     'activateOn'                => 'click',
-    'touchEnabled'              => true,
-    'autoPlay'                  => false,
-    'cycleSpeed'                => 6000,
-    'slideSpeed'                => 800,
+    'touchEnabled'              => 'true',
+    'autoPlay'                  => 'false',
+    'cycleSpeed'                => '6000',
+    'slideSpeed'                => '800',
     'easing'                    => 'ease-in-out',
-    'pauseOnHover'              => true,
-    'linkable'                  => false
+    'pauseOnHover'              => 'true',
+    'linkable'                  => 'false'
   );
 
   /**
@@ -280,7 +280,7 @@ class accordion_pro {
         'post_title'      => $clean['title'],
         'post_content'    => '',
         'post_status'     => 'publish',
-        'post_type'       => 'accordion', // Custom post types being used.
+        'post_type'       => 'accordion', // Custom post types being used
         'comment_status'  => 'closed',
         'ping_status'     => 'closed'
     );
@@ -296,6 +296,7 @@ class accordion_pro {
       $this->notices[] = __('Accordion Added. <a href="?page=accordion_pro">Manage</a>', 'accordion_pro');
     }
 
+    // Update jQ opts
     foreach($this->jQueryOptions as $key=>$default) {
       $this->update_post_meta($post['ID'], $key, $this->sanitize($_POST[$key]));
     }
@@ -317,18 +318,16 @@ class accordion_pro {
   public function update_accordionCache($accordion) {
     global $allowedposttags;
 
+    $options = array();
     $extratags = array();
-
     $extratags['object'] = array(
       'height' => array(),
       'width' => array()
     );
-
     $extratags['param'] = array(
       'name' => array(),
       'value' => array()
     );
-
     $extratags['embed'] = array(
       'src' => array(),
       'type' => array(),
@@ -338,7 +337,6 @@ class accordion_pro {
       'width' => array(),
       'wmode' => array()
     );
-
     $allowedextratags = array_merge($extratags, $allowedposttags);
 
     // Generate the 'post_content', which is a cached version of the html
@@ -381,22 +379,33 @@ class accordion_pro {
 
     // accordion user opts
     foreach ($this->jQueryOptions as $key => $default) {
-      if ($accordion['jQuerySettings'][$key] != $default) {
+      if ($accordion['jQuerySettings'][$key] !== $default) {
+        // parse types
+        if ($default === 'true') {
+          $default = true;
+        } else if ($default === 'false') {
+          $default = false;
+        } else if (intval($default)) {
+          if ($key !== 'verticalWidth') { // possible value of '100%'
+            $default = intval($default);
+          }
+        }
+
+        // assign value
         if (is_bool($default) || is_numeric($default)) {
-          $jqueryOptions[] = $key.': '.$accordion['jQuerySettings'][$key];
+          $options[] = $key.': '.$accordion['jQuerySettings'][$key];
         } else {
-          $jqueryOptions[] = $key.': \''.addslashes($accordion['jQuerySettings'][$key]).'\'';
+          $options[] = $key.': \''.addslashes($accordion['jQuerySettings'][$key]).'\'';
         }
       }
     }
 
-    if (is_array($jqueryOptions)) {
-      $accordion['post_content'] .= implode(', ', $jqueryOptions);
-    }
-
+    // save
+    if (!empty($options)) $accordion['post_content'] .= implode(', ', $options);
     $accordion['post_content'] .= ' }).show(); });'; // fixes FOUC
     $accordion['post_content'] .= '</script>';
 
+    // insert post
     wp_insert_post($accordion);
   }
 
@@ -570,7 +579,7 @@ class accordion_pro {
 
   public function set_option($key, $value) {
     // If the value is currently a boolean, keep it that way.
-    // !!! empty string is a boolean!!
+    // !!! empty string (of css) is a boolean!!
     // if (is_bool($this->options[$key])) $value = $value === '' ? false : true;
 
     // Update
@@ -588,11 +597,12 @@ class accordion_pro {
 
       // only user-changable option now is for custom css, but sanitize fn is too greedy
       // $this->set_option($key, $this->sanitize($_POST[$key]));
+      $data = filter_var($_POST[$key], FILTER_SANITIZE_STRING);
 
-      // !!! need a way to sanitize css, this is potentially (slight risk?) unsafe
+      // set custom css option
       $this->set_option($key, $data);
 
-      // write css to file
+      // write css to file (can't access WPDB from style php)
       if ($key === 'additional_css') {
         file_put_contents(WP_PLUGIN_DIR . '/accordionpro_wp/css/additional.css', $data);
       }
@@ -639,7 +649,7 @@ class accordion_pro {
   public function showSelectField($field, $array, $selected) {
     $showCustom = true;
 
-    echo '<label for="'.$field['name'].'">'.$field['title'].'</label><select id="'.$field['name'].'" name="'.$field['name'].'">';
+    echo '<label for="'.$field['name'].'" title="'.$field['alt'].'">'.$field['title'].'</label><select id="'.$field['name'].'" name="'.$field['name'].'">';
     foreach ($array as $value => $title) {
       if ($selected == '') $selected = $value;
       echo '<option value="'.$value.'" ';
@@ -655,18 +665,22 @@ class accordion_pro {
     }
     echo '</select>';
 
+    /// !!!
     // If we can show custom & user has picked a custom value
     if (isset($array['custom']) && $showCustom !== false) {
-      echo '<input type="number" name="'.$field['name'].'" value="'.$selected.'" />';
+      echo '<div id="'.$field['name'].'_wrapper">';
+      echo '<input type="text" name="'.$field['name'].'" value="'.$selected.'" />';
+      echo '<span> px</span>';
+      echo '</div>';
     }
   }
 
   /**
-   * Sanitize a string (alphanumeric plus underscore only)
+   * Sanitize a string (alphanumeric plus dashes and underscore)
    */
 
   public function sanitize($val) {
-    return preg_replace('/[^a-zA-Z0-9_]/', '', $val);
+    return preg_replace('/[^a-zA-Z0-9-_]/', '', $val);
   }
 
   /**
