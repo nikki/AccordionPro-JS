@@ -169,7 +169,6 @@
 .accordionPro.horizontal.stitch .slide > div { margin-right: 6px }
 
 .accordionPro.horizontal.rtl.stitch { padding: 5px 5px 5px 0 }
-.accordionPro.horizontal.rtl.stitch .slide > h2 span {}
 .accordionPro.horizontal.rtl.stitch .slide.selected > h2:after { right: auto; left: 38px }
 
 /*************************************** Vertical */
@@ -180,7 +179,7 @@
 
 /* rtl */
 .accordionPro.vertical.rtl .slide > h2 span { padding-left: 0; padding-right: 4%; text-align: right }
-.accordionPro.vertical.rtl .slide > h2 b { right: auto; left: 5% }
+.accordionPro.vertical.rtl .slide > h2 b { right: auto !important; left: 5% !important; text-align: left !important }
 
 /* basic */
 .accordionPro.vertical.basic .slide > h2 { line-height: 285% }
@@ -195,8 +194,9 @@
 }
 .accordionPro.vertical.dark .slide.selected > h2 b { background: #535353 }
 .accordionPro.vertical.rtl.dark .slide.selected > h2 b { background: #373737 }
+.accordionPro.vertical.rtl.light .slide > h2 b { width: 5% }
 .accordionPro.vertical.light .slide > h2 b { background: #EEEEEE; color: #909090; text-shadow: -1px 1px 0 white; height: 85% }
-.accordionPro.vertical.rtl.light .slide > h2 b { background: white; width: 10% }
+.accordionPro.vertical.rtl.light .slide > h2 b { background: #FBFBFB }
 .accordionPro.vertical.dark .slide > div, .accordionPro.vertical.light .slide > div { margin-bottom: 5px }
 
 /* stitch */
@@ -340,16 +340,16 @@
 /******************************************** IE */
 /* stitch */
 .accordionPro.ie.stitch .slide.selected > h2:after { display: none }
-.accordionPro.ie.stitch .slide-0 > h2 span { background-color: #c25252 }
-.accordionPro.ie.stitch .slide-1 > h2 span { background-color: #ca9859 }
-.accordionPro.ie.stitch .slide-2 > h2 span { background-color: #96ba5f }
-.accordionPro.ie.stitch .slide-3 > h2 span { background-color: #59abb7 }
-.accordionPro.ie.stitch .slide-4 > h2 span { background-color: #bb6098 }
-.accordionPro.ie.stitch .slide-5 > h2 span { background-color: #c25252 }
-.accordionPro.ie.stitch .slide-6 > h2 span { background-color: #ca9859 }
-.accordionPro.ie.stitch .slide-7 > h2 span { background-color: #96ba5f }
-.accordionPro.ie.stitch .slide-8 > h2 span { background-color: #59abb7 }
-.accordionPro.ie.stitch .slide-9 > h2 span { background-color: #bb6098 }
+.accordionPro.ie.stitch .slide-0 > h2 * { background-color: #c25252 }
+.accordionPro.ie.stitch .slide-1 > h2 * { background-color: #ca9859 }
+.accordionPro.ie.stitch .slide-2 > h2 * { background-color: #96ba5f }
+.accordionPro.ie.stitch .slide-3 > h2 * { background-color: #59abb7 }
+.accordionPro.ie.stitch .slide-4 > h2 * { background-color: #bb6098 }
+.accordionPro.ie.stitch .slide-5 > h2 * { background-color: #c25252 }
+.accordionPro.ie.stitch .slide-6 > h2 * { background-color: #ca9859 }
+.accordionPro.ie.stitch .slide-7 > h2 * { background-color: #96ba5f }
+.accordionPro.ie.stitch .slide-8 > h2 * { background-color: #59abb7 }
+.accordionPro.ie.stitch .slide-9 > h2 * { background-color: #bb6098 }
 
 /* transforms */
 .accordionPro.ie .slide > h2,
@@ -358,7 +358,7 @@
 .accordionPro.ie.ie8.horizontal .slide > h2 { -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)" }
 .accordionPro.ie.ie8.horizontal .slide > h2 b { -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)" }
 .accordionPro.ie.ie8.horizontal.rtl .slide > h2 { -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)" }
-.accordionPro.ie.ie8.horizontal.rtl .slide > h2 b { -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)" }
+.accordionPro.ie.ie8.horizontal.rtl .slide > h2 b { -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)" }
 .accordionPro.ie.ie9.horizontal .slide > h2 { -ms-transform: translateX(-100%) rotate(-90deg); -ms-transform-origin: right top }
 .accordionPro.ie.ie9.horizontal .slide > h2 b { -ms-transform: rotate(90deg) }
 .accordionPro.ie.ie9.horizontal.rtl .slide > h2 { -ms-transform: translateX(100%) rotate(90deg); -ms-transform-origin: left top }
@@ -370,10 +370,15 @@
 .accordionPro.ie.light .slide > h2 b { background: #EDEDED }
 .accordionPro.ie.light .slide.selected > h2 b { background: #FFFFFF }
 
-.accordionPro.ie.ie8 .slide > h2 b { top: 44%; left: 5% }
-.accordionPro.ie.ie8.vertical .slide > h2 b { width: 5%; text-align: right; top: 1px !important; left: auto; right: 5%; }
+.accordionPro.ie.ie8 .slide > h2 b { width: 5%; top: 44%; left: 5% }
+.accordionPro.ie.ie8.vertical .slide > h2 b { text-align: right; top: 1px !important; left: auto; right: 5%; }
 .accordionPro.ie.ie8.horizontal.stitch .slide > h2 b { top: 34% !important }
-.accordionPro.ie.ie8.stitch .slide > h2 b { background-color: red }
+.accordionPro.ie.ie8.vertical.rtl.light .slide > h2 b { background: #EDEDED; width: 10% }
+.accordionPro.ie.ie8.vertical.rtl.light .slide.selected > h2 b { background: #FFFFFF }
+.accordionPro.ie.ie8.vertical.rtl.dark .slide.selected > h2 b { background: #555555 }
 
+.accordionPro.ie.ie8.vertical.stitch .slide > h2 b,
+.accordionPro.ie.ie9.stitch .slide > h2 b { background-color: transparent !important }
 .accordionPro.ie.ie9.stitch { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4) }
 .accordionPro.ie.ie9.vertical.stitch .slide > h2 b { top: 1px !important }
+

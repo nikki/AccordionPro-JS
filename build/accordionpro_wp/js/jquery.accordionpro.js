@@ -252,8 +252,6 @@ n();return d?d.promise(g):g}})(jQuery);
         .addClass(settings.theme)
         .addClass(settings.rtl && 'rtl');
 
-      console.log(elem.width(), elem.children('ol').width());
-
       // add slide class to each slide
       slides.addClass('slide');
     };
@@ -605,7 +603,7 @@ n();return d?d.promise(g):g}})(jQuery);
           } else {
             elem.removeClass('horizontal').addClass('responsive');
             // elem.add(elem.children('ol')).add(slides).add(slides.children('div').children()).css(Modernizr.prefixed('filter'), '');
-            elem.css('zoom', '');
+            // elem.css('zoom', '');
           }
 
           // reinit styles
@@ -652,7 +650,11 @@ n();return d?d.promise(g):g}})(jQuery);
         elem.css(Modernizr.prefixed('transform'), 'scale(' + scale + ')');
       } else {
         // elem.add(elem.children('ol')).add(slides).add(slides.children('div').children()).css(Modernizr.prefixed('filter'), "progid:DXImageTransform.Microsoft.Matrix(M11=" + scale + ",M12=0,M21=0,M22=" + scale + ",SizingMethod='auto expand')");
-        elem.css('zoom', scale);
+        // elem.css('zoom', scale);
+        // elem.children('ol').add(slides).css('height', elem.height());
+        // elem.css('zoom', scale);
+
+        // alert(elem.height());
       }
     };
 
