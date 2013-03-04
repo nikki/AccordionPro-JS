@@ -42,7 +42,7 @@
 
       /* vertical accordion options */
       verticalWidth : '100%',                 // fixed (px [integer]) or fluid (% [string])
-      verticalHeight : 600,                   // base vertical accordion height; fixed (px [integer])
+      verticalHeight : 400,                   // base vertical accordion height; fixed (px [integer])
       verticalSlideHeight : 'fixed',          // vertical accordion slide heights can be 'fixed' or 'fitToContent'
 
       /* events */
@@ -320,6 +320,7 @@
         }
 
         // compensate for <= ie8's lack of transform origin
+/*
         if (elem.hasClass('ie8')) {
           if (elem.hasClass('horizontal') && elem.hasClass('rtl')) {
             $this.children('h2').css('marginRight', -(slide.h - tab.h));
@@ -327,6 +328,7 @@
             $this.children('h2').css('marginRight', 0);
           }
         }
+*/
       });
 
       // fit to content on init
@@ -525,7 +527,8 @@
             elem.removeClass('horizontal').addClass('responsive').css(Modernizr.prefixed('transform'), '');
           } else {
             elem.removeClass('horizontal').addClass('responsive');
-            elem.add(elem.children('ol')).add(slides).add(slides.children('div').children()).css(Modernizr.prefixed('filter'), '');
+            // elem.add(elem.children('ol')).add(slides).add(slides.children('div').children()).css(Modernizr.prefixed('filter'), '');
+            elem.css('zoom', '');
           }
 
           // reinit styles
@@ -571,7 +574,8 @@
       if (!elem.hasClass('ie8')) {
         elem.css(Modernizr.prefixed('transform'), 'scale(' + scale + ')');
       } else {
-        elem.add(elem.children('ol')).add(slides).add(slides.children('div').children()).css(Modernizr.prefixed('filter'), "progid:DXImageTransform.Microsoft.Matrix(M11=" + scale + ",M12=0,M21=0,M22=" + scale + ",SizingMethod='auto expand')");
+        // elem.add(elem.children('ol')).add(slides).add(slides.children('div').children()).css(Modernizr.prefixed('filter'), "progid:DXImageTransform.Microsoft.Matrix(M11=" + scale + ",M12=0,M21=0,M22=" + scale + ",SizingMethod='auto expand')");
+        elem.css('zoom', scale);
       }
     };
 

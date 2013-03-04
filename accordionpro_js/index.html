@@ -270,9 +270,11 @@
                     onSlideClose : function() {
                         $(this).find('figcaption').fadeOut();
                     },
-                    theme : 'basic',
+                    orientation : 'vertical',
+                    theme : 'stitch',
                     rounded : true,
-                    showSlideNumbers : false
+                    showSlideNumbers : true,
+                    verticalSlideHeight : 'fitToContent'
                 }).find('figcaption:first').show();
 
                 $('#two').accordionPro({

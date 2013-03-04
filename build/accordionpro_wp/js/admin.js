@@ -106,20 +106,6 @@ jQuery(function($) {
       });
     },
 
-    customSelects : function() {
-      $('.ap-options').find('select').bind('change', function() {
-        var $this = $(this),
-            name = $this.attr('name'),
-            span = '<span> px</span>';
-
-        if ($this.val() === 'custom') {
-          $this.after('<div id="' + name + '_wrapper"><input type="text" name="' + name + '" value="" />' + span + '</div>');
-        } else if ($('#' + name + '_wrapper')) {
-          $('#' + name + '_wrapper').remove();
-        }
-      });
-    },
-
     switchOrientation : function() {
       var handler = function() {
         var val = $('#orientation').val();
@@ -178,7 +164,6 @@ jQuery(function($) {
       this.removeSlide();
       this.toggleSlide();
       this.toggleCaption();
-      this.customSelects();
       this.switchOrientation();
       this.switchEditor();
       this.addMedia();

@@ -41,7 +41,7 @@
     transform: translate3d(0,0,0);
     -webkit-tap-highlight-color: transparent;
 }
-.accordionPro > ol { position: relative; overflow: hidden; height: 100%; margin: 0; padding: 0; list-style: none }
+.accordionPro > ol { position: relative; overflow: hidden; width: auto; height: 100%; margin: 0; padding: 0; list-style: none }
 .accordionPro .slide {
     list-style: none;
     position: absolute;
@@ -88,6 +88,7 @@
 }
 
 /* rtl */
+.accordionPro.rtl { direction: rtl; text-align: right }
 .accordionPro.rtl .slide > h2 { left: auto; right: 0 }
 
 /************************************* Horizontal */
@@ -114,7 +115,13 @@
 }
 
 /* rtl */
-/*.accordionPro.horizontal.rtl { float: right; clear: both }*/
+.accordionPro.horizontal.rtl {
+    -webkit-transform-origin: right top;
+    -moz-transform-origin: right top;
+    -ms-transform-origin: right top;
+    -o-transform-origin: right top;
+    transform-origin: right top;
+}
 .accordionPro.horizontal.rtl .slide > h2 {
     -webkit-transform: translateX(100%) rotate(90deg) translateZ(0);
     -webkit-transform-origin: left top;
@@ -147,7 +154,7 @@
     background: -ms-linear-gradient(top,  #3a3a3a 0%,#363636 100%);
     background: linear-gradient(top,  #3a3a3a 0%,#363636 100%);
 }
-.accordionPro.horizontal.light .slide > h2 b { background: #ffffff; color: #909090; text-shadow: -1px 1px 0 white }
+.accordionPro.horizontal.light .slide > h2 b { color: #909090; text-shadow: -1px 1px 0 white }
 .accordionPro.horizontal.dark .slide > div , .accordionPro.horizontal.light .slide > div { margin-left: 5px }
 .accordionPro.horizontal.rtl.dark .slide > div , .accordionPro.horizontal.rtl.light .slide > div { margin: 0 5px 0 0 }
 
@@ -239,21 +246,19 @@
 }
 .accordionPro.light .slide > h2 { background: #a0a0a0; text-shadow: 0 -1px 0 white; line-height: 265% }
 .accordionPro.light .slide > h2 span {
-    background: #fcfcfc;
+    background: #ededed;
     background: -moz-linear-gradient(left,  #fcfcfc 0%, #ededed 100%);
     background: -webkit-gradient(linear, left top, right top, color-stop(0%,#fcfcfc), color-stop(100%,#ededed));
     background: -webkit-linear-gradient(left,  #fcfcfc 0%,#ededed 100%);
     background: -o-linear-gradient(left,  #fcfcfc 0%,#ededed 100%);
     background: -ms-linear-gradient(left,  #fcfcfc 0%,#ededed 100%);
     background: linear-gradient(left,  #fcfcfc 0%,#ededed 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=1 );
     -webkit-box-shadow: -1px -1px 0 #909090 inset, 1px 1px 0 #909090 inset;
     -moz-box-shadow: -1px -1px 0 #909090 inset, 1px 1px 0 #909090 inset;
     -o-box-shadow: -1px -1px 0 #909090 inset, 1px 1px 0 #909090 inset;
     box-shadow: -1px -1px 0 #909090 inset, 1px 1px 0 #909090 inset;
     color: #909090;
 }
-
 .accordionPro.light .slide.selected > h2 span, .accordionPro.light .slide.selected > h2 span:hover, .accordionPro.light .slide.selected > h2 b { background: #ffffff }
 .accordionPro.light .slide { background: #a0a0a0 }
 
@@ -334,8 +339,6 @@
 
 /******************************************** IE */
 /* stitch */
-.accordionPro.ie.stitch .slide > h2 { /*line-height: 265%*/ }
-.accordionPro.ie.stitch .slide > h2 span { /*height: 89%; padding-right: 8%*/ }
 .accordionPro.ie.stitch .slide.selected > h2:after { display: none }
 .accordionPro.ie.stitch .slide-0 > h2 span { background-color: #c25252 }
 .accordionPro.ie.stitch .slide-1 > h2 span { background-color: #ca9859 }
@@ -363,12 +366,14 @@
 
 /* misc */
 .accordionPro.ie.vertical .slide > h2 b { line-height: 262% }
-.accordionPro.ie.ie8 .slide > h2 b { top: 44%; left: 5% }
-.accordionPro.ie.ie8.stitch .slide > h2 b { top: 36% }
-.accordionPro.ie.ie9.stitch { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4) }
-.accordionPro.ie.ie9.dark .slide.selected > h2 b { background: #555555 }
+.accordionPro.ie.dark .slide.selected > h2 b { background: #555555 }
+.accordionPro.ie.light .slide > h2 b { background: #EDEDED }
+.accordionPro.ie.light .slide.selected > h2 b { background: #FFFFFF }
 
-/*
-.accordionPro.dark .slide.selected > h2 span, .accordionPro.dark .slide.selected > h2 span:hover {
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient( startColorstr='#353535', endColorstr='#555555',GradientType=1 )"
-}*/
+.accordionPro.ie.ie8 .slide > h2 b { top: 44%; left: 5% }
+.accordionPro.ie.ie8.vertical .slide > h2 b { width: 5%; text-align: right; top: 1px !important; left: auto; right: 5%; }
+.accordionPro.ie.ie8.horizontal.stitch .slide > h2 b { top: 34% !important }
+.accordionPro.ie.ie8.stitch .slide > h2 b { background-color: red }
+
+.accordionPro.ie.ie9.stitch { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4) }
+.accordionPro.ie.ie9.vertical.stitch .slide > h2 b { top: 1px !important }

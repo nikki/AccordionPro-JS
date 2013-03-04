@@ -34,28 +34,29 @@ class accordion_pro {
   ),
   $jQueryOptions = array(
     'orientation'               => 'horizontal',
-    'startClosed'               => 'false',
-    'firstSlide'                => '1',
+    'startClosed'               => false,
+    'firstSlide'                => 1,
     'theme'                     => 'basic',
-    'rounded'                   => 'false',
-    'rtl'                       => 'false',
-    'showSlideNumbers'          => 'true',
-    'horizontalWidth'           => '900',
-    'horizontalHeight'          => '300',
-    'responsive'                => 'true',
-    'minResponsiveWidth'        => '400',
-    'maxResponsiveWidth'        => '1020',
+    'rounded'                   => false,
+    'rtl'                       => false,
+    'showSlideNumbers'          => true,
+    'horizontalWidth'           => 900,
+    'horizontalHeight'          => 300,
+    'responsive'                => true,
+    'minResponsiveWidth'        => 400,
+    'maxResponsiveWidth'        => 1020,
     'verticalWidth'             => '100%',
-    'verticalHeight'            => '600',
+    'verticalWidthUnit'         => 'perc', // % or px
+    'verticalHeight'            => 400,
     'verticalSlideHeight'       => 'fixed',
     'activateOn'                => 'click',
-    'touchEnabled'              => 'true',
-    'autoPlay'                  => 'false',
-    'cycleSpeed'                => '6000',
-    'slideSpeed'                => '800',
+    'touchEnabled'              => true,
+    'autoPlay'                  => false,
+    'cycleSpeed'                => 6000,
+    'slideSpeed'                => 800,
     'easing'                    => 'ease-in-out',
-    'pauseOnHover'              => 'true',
-    'linkable'                  => 'false'
+    'pauseOnHover'              => true,
+    'linkable'                  => false
   );
 
   /**
@@ -379,23 +380,26 @@ class accordion_pro {
 
     // accordion user opts
     foreach ($this->jQueryOptions as $key => $default) {
-      if ($accordion['jQuerySettings'][$key] !== $default) {
-        // parse types
-        if ($default === 'true') {
-          $default = true;
-        } else if ($default === 'false') {
-          $default = false;
-        } else if (intval($default)) {
-          if ($key !== 'verticalWidth') { // possible value of '100%'
-            $default = intval($default);
+      $value = $accordion['jQuerySettings'][$key];
+
+      // skip this prop
+      if ($key === 'verticalWidthUnit') continue;
+
+      // parse verticalWidth for % or px
+      if ($value !== $default) {
+        if ($key === 'verticalWidth') {
+          if ($accordion['jQuerySettings']['verticalWidthUnit'] === 'perc') {
+            $value = $value . '%';
+          } else if ($accordion['jQuerySettings']['verticalWidthUnit'] === 'px') {
+            $value = $value . 'px';
           }
         }
 
         // assign value
         if (is_bool($default) || is_numeric($default)) {
-          $options[] = $key.': '.$accordion['jQuerySettings'][$key];
+          $options[] = $key . ': ' . $this->sanitize($value);
         } else {
-          $options[] = $key.': \''.addslashes($accordion['jQuerySettings'][$key]).'\'';
+          $options[] = $key . ': \'' . addslashes($value) . '\'';
         }
       }
     }
@@ -443,7 +447,7 @@ class accordion_pro {
       $accordion = $this->get_accordion_settings($atts['id']);
 
       // return accordion
-      return $accordion['post_content'];
+      return do_shortcode($accordion['post_content']);
     } else {
       return '';
     }
@@ -646,33 +650,71 @@ class accordion_pro {
    * Generate select field
    */
 
-  public function showSelectField($field, $array, $selected) {
-    $showCustom = true;
+  public function showField($type, $field, $selectValues, $selected, $unit) {
+    echo '<div class="' . $type . ' ' . $field['name'] . '">';
+    echo '<label for="'.$field['name'].'" title="'.$field['alt'].'">'.$field['title'].'</label>';
 
-    echo '<label for="'.$field['name'].'" title="'.$field['alt'].'">'.$field['title'].'</label><select id="'.$field['name'].'" name="'.$field['name'].'">';
-    foreach ($array as $value => $title) {
-      if ($selected == '') $selected = $value;
-      echo '<option value="'.$value.'" ';
-
-      // If the field is selected, select it and make custom not to be selected
-      if ($value == $selected) {
-        echo ' selected="selected" ';
-        $showCustom = false;
-      }
-
-      if ($value === 'custom' && $showCustom) echo ' selected="selected" ';
-      echo '>'.$title.'</option>';
-    }
-    echo '</select>';
-
-    /// !!!
-    // If we can show custom & user has picked a custom value
-    if (isset($array['custom']) && $showCustom !== false) {
-      echo '<div id="'.$field['name'].'_wrapper">';
+    if ($type === 'input') {
+      // input
+      // echo '<div id="'.$field['name'].'_wrapper">';
       echo '<input type="text" name="'.$field['name'].'" value="'.$selected.'" />';
-      echo '<span> px</span>';
-      echo '</div>';
+
+      // custom field measurement labels
+      switch ($field['name']) {
+        case 'verticalWidth':
+          // px or %
+          echo '<div>';
+
+          // pre-pop checked unit
+          echo '<label><input type="radio" name="verticalWidthUnit" value="perc" ';
+          if ($unit === 'perc') {
+            echo 'checked="checked" /> %</label>';
+          } else {
+            echo '/> %</label>';
+          }
+
+          echo '<label><input type="radio" name="verticalWidthUnit" value="px" ';
+          if ($unit === 'px') {
+            echo 'checked="checked" /> px</label>';
+          } else {
+            echo '/> px</label>';
+          }
+
+          echo '</div>';
+          break;
+        case 'horizontalWidth':
+        case 'horizontalHeight':
+        case 'minResponsiveWidth':
+        case 'maxResponsiveWidth':
+        case 'verticalHeight':
+          echo '<span> px</span>';
+          break;
+        case 'cycleSpeed':
+        case 'slideSpeed':
+          echo '<span> ms</span>';
+          break;
+        default:
+          echo '<span></span>';
+          break;
+      }
+    } else {
+      // select
+      echo '<select id="'.$field['name'].'" name="'.$field['name'].'">';
+      foreach ($selectValues as $value => $title) {
+        if ($selected == '') $selected = $value;
+        echo '<option value="'.$value.'" ';
+
+        // If the field is selected, select it and make custom not to be selected
+        if ($value == $selected) {
+          echo ' selected="selected" ';
+        }
+
+        if ($value === 'custom' && $showCustom) echo ' selected="selected" ';
+        echo '>'.$title.'</option>';
+      }
+      echo '</select>';
     }
+    echo '</div>';
   }
 
   /**

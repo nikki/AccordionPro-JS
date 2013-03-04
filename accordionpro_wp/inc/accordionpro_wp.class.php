@@ -47,7 +47,7 @@ class accordion_pro {
     'maxResponsiveWidth'        => 1020,
     'verticalWidth'             => '100%',
     'verticalWidthUnit'         => 'perc', // % or px
-    'verticalHeight'            => 600,
+    'verticalHeight'            => 400,
     'verticalSlideHeight'       => 'fixed',
     'activateOn'                => 'click',
     'touchEnabled'              => true,
