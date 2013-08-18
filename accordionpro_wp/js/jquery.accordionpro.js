@@ -117,7 +117,7 @@ n();return d?d.promise(g):g}})(jQuery);
 
       /* vertical accordion options */
       verticalWidth : '100%',                 // fixed (px [integer]) or fluid (% [string])
-      verticalHeight : 400,                   // base vertical accordion height; fixed (px [integer])
+      verticalHeight : 500,                   // base vertical accordion height; fixed (px [integer])
       verticalSlideHeight : 'fixed',          // vertical accordion slide heights can be 'fixed' or 'fitToContent'
 
       /* events */

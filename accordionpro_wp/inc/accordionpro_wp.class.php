@@ -47,7 +47,7 @@ class accordion_pro {
     'maxResponsiveWidth'        => 1020,
     'verticalWidth'             => '100%',
     'verticalWidthUnit'         => 'perc', // % or px
-    'verticalHeight'            => 400,
+    'verticalHeight'            => 500,
     'verticalSlideHeight'       => 'fixed',
     'activateOn'                => 'click',
     'touchEnabled'              => true,
@@ -70,7 +70,7 @@ class accordion_pro {
   public function __construct() {
     // Register admin JS & CSS
     wp_register_style('accordion_pro_admin', WP_PLUGIN_URL . '/accordionpro_wp/css/admin.css');
-    wp_register_script('accordion_pro_admin', WP_PLUGIN_URL . '/accordionpro_wp/js/admin.js', false, false, true);
+    wp_register_script('accordion_pro_admin', WP_PLUGIN_URL . '/accordionpro_wp/js/admin.js', array('jquery'));
 
     // Add the admin hooks/actions
     add_action('admin_init', array($this, 'admin_init'));
@@ -82,7 +82,7 @@ class accordion_pro {
 
     // Register accordion JS & CSS
     // wp_register_style('accordion_pro', WP_PLUGIN_URL . '/accordionpro_wp/css/accordionpro.css.php');
-    wp_register_script('accordion_pro', WP_PLUGIN_URL . '/accordionpro_wp/js/jquery.accordionpro.min.js');
+    wp_register_script('accordion_pro', WP_PLUGIN_URL . '/accordionpro_wp/js/jquery.accordionpro.min.js', array('jquery'));
 
     // Create dynamic stylesheet
     add_action('the_posts', array($this, 'load_styles'));

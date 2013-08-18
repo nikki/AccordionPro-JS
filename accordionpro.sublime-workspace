@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"backgroun",
+				"background-color"
+			],
+			[
 				"verti",
 				"verticalWidthUnit"
 			],
@@ -234,10 +238,6 @@
 			[
 				"black",
 				"blacklistIp"
-			],
-			[
-				"backgroun",
-				"background-size"
 			],
 			[
 				"p",
@@ -519,45 +519,25 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "accordionpro_wp/inc/accordionpro_wp.class.php",
-			"settings":
-			{
-				"buffer_size": 22991,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "accordionpro_wp/js/admin.js",
-			"settings":
-			{
-				"buffer_size": 4706,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "accordionpro_wp/css/admin.css",
-			"settings":
-			{
-				"buffer_size": 1762,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "accordionpro_wp/inc/admin/manage.inc.php",
-			"settings":
-			{
-				"buffer_size": 17428,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "Accordion-Pro",
 	"command_palette":
 	{
-		"height": 392.0,
+		"height": 47.0,
 		"selected_items":
 		[
+			[
+				"disab",
+				"Package Control: Disable Package"
+			],
+			[
+				"list",
+				"Package Control: List Packages"
+			],
+			[
+				"disa",
+				"Package Control: Disable Package"
+			],
 			[
 				"lis",
 				"Package Control: List Packages"
@@ -613,10 +593,6 @@
 			[
 				"prefix",
 				"Preferences: Prefixr Key Bindings – Default"
-			],
-			[
-				"list",
-				"Package Control: List Packages"
 			],
 			[
 				"instal",
@@ -712,13 +688,20 @@
 	},
 	"file_history":
 	[
-		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/css/accordionpro.css",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/build/Jakefile",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/marketing/responsive/index.html",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/marketing/responsive/css/style.css",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/build/accordionpro_js/js/jquery.accordionpro.js",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/marketing/index.html",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/js/jquery.accordionpro.js",
-		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/css/accordionpro.min.css",
-		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/css/admin.css",
+		"/Volumes/Nikki/webserver/projects/NickTheme/index.html",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/css/accordionpro.css",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/index.html",
-		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/inc/admin/manage.inc.php"
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/inc/accordionpro_wp.class.php",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/js/admin.js",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/css/admin.css",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/inc/admin/manage.inc.php",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/css/accordionpro.min.css"
 	],
 	"find":
 	{
@@ -791,6 +774,37 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"do_",
+			"elem.parent()",
+			"holder",
+			"icon",
+			"carousel",
+			"register",
+			"auto",
+			"white",
+			"scale",
+			"zoom",
+			"xoom",
+			"zoom",
+			"ol",
+			"zoom",
+			"border-box",
+			"ie8",
+			"important",
+			"load.ac",
+			"compensate",
+			"ie",
+			"filter",
+			"ie8",
+			"ie",
+			"19%",
+			".slide > h2 b",
+			"light.hor",
+			"light.hot",
+			"555555",
+			"ie9",
+			"left",
+			"rtl",
 			"shortcode",
 			"customSe",
 			"'input'",
@@ -887,38 +901,7 @@
 			"enqueue",
 			"class",
 			".acco",
-			"sanitize",
-			"clean",
-			"/accordion_pro/",
-			"accordionpro_wp",
-			"accordion_pro",
-			"options",
-			"enqueue",
-			"get",
-			"id",
-			"complete();",
-			"liteAccordion",
-			".liteAccordion",
-			"liteAccordion",
-			"css",
-			"console",
-			"css",
-			"js",
-			"php",
-			"jsfiles",
-			"\n      ",
-			"Add",
-			"accordion_pro_add",
-			"Add",
-			"manage",
-			"admin.js",
-			"accordion_pro",
-			"/accordion_pro/",
-			"plugin",
-			"url",
-			"swipe",
-			"dammit",
-			"fire"
+			"sanitize"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -1064,118 +1047,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "accordionpro_wp/inc/accordionpro_wp.class.php",
-					"settings":
-					{
-						"buffer_size": 22991,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								14203,
-								14203
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 7393.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "accordionpro_wp/js/admin.js",
-					"settings":
-					{
-						"buffer_size": 4706,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4555,
-								4555
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 2468.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "accordionpro_wp/css/admin.css",
-					"settings":
-					{
-						"buffer_size": 1762,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1546,
-								1546
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/CSS/CSS.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "accordionpro_wp/inc/admin/manage.inc.php",
-					"settings":
-					{
-						"buffer_size": 17428,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4322,
-								4322
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 284.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],

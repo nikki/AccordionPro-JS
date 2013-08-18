@@ -33,13 +33,17 @@
 }
 .accordionPro, .accordionPro .slide, .accordionPro .slide > * {
     -webkit-perspective: 1000;
+    -webkit-tap-highlight-color: transparent;
     -webkit-backface-visibility: hidden;
+    /*-moz-backface-visibility: hidden;*/ /* FF is having rendering issues with videos in hw accelerated slide :s */
+    -ms-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    /*backface-visibility: hidden;*/
     -webkit-transform: translate3d(0,0,0);
-    -moz-transform: translate3d(0,0,0);
+    /*-moz-transform: translate3d(0,0,0);*/
     -ms-transform: translate3d(0,0,0);
     -o-transform: translate3d(0,0,0);
-    transform: translate3d(0,0,0);
-    -webkit-tap-highlight-color: transparent;
+    /*transform: translate3d(0,0,0);*/
 }
 .accordionPro > ol { position: relative; overflow: hidden; width: auto; height: 100%; margin: 0; padding: 0; list-style: none }
 .accordionPro .slide {
@@ -373,7 +377,7 @@
 .accordionPro.ie.ie8 .slide > h2 b { width: 5%; top: 44%; left: 5% }
 .accordionPro.ie.ie8.vertical .slide > h2 b { text-align: right; top: 1px !important; left: auto; right: 5%; }
 .accordionPro.ie.ie8.horizontal.stitch .slide > h2 b { top: 34% !important }
-.accordionPro.ie.ie8.vertical.rtl.light .slide > h2 b { background: #EDEDED; width: 10% }
+.accordionPro.ie.ie8.vertical.rtl.light .slide > h2 b { background: #EDEDED }
 .accordionPro.ie.ie8.vertical.rtl.light .slide.selected > h2 b { background: #FFFFFF }
 .accordionPro.ie.ie8.vertical.rtl.dark .slide.selected > h2 b { background: #555555 }
 
