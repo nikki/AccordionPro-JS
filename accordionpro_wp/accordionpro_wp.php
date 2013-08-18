@@ -39,9 +39,11 @@ if (!class_exists('WP')) {
  * Set up localisation
  */
 
+/* // !!! Probable fix for RTL admin panel bug
 $locale = get_locale();
 if (empty($locale)) $locale = 'en_US';
 load_theme_textdomain('accordion_pro', dirname (__FILE__).'/locale/'.$locale.'.mo');
+*/
 
 /**
  * Define plugin version
