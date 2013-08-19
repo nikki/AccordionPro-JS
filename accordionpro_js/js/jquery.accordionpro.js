@@ -28,15 +28,16 @@
       firstSlide : 1,                         // displays slide (n) on page load
 
       /* aesthetics */
-      theme : 'basic',                        // basic, dark, light, or stitch
+      theme : 'basic',                        // basic, dark, light, stitch or transparent
       rounded : false,                        // square or rounded corners
       rtl : false,                            // right to left layout
       showSlideNumbers : true,                // display numbers on slides
 
       /* horizontal accordion options */
+      responsive : true,                      // accordion will adapt itself to the page layout, based on width of parent element
+      scaleImagesToFit : true,                // scales images to fit slide width and height
       horizontalWidth : 900,                  // base width; fixed (px [integer]) - responsive scaling is relative to this value
       horizontalHeight : 300,                 // base horizontal accordion height; fixed (px [integer]) - responsive scaling is relative to this value
-      responsive : true,                      // accordion will adapt itself to the page layout, based on width of parent element
       minResponsiveWidth : 400,               // horizontal accordion will flip to vertical at (and below) this width
       maxResponsiveWidth : 1020,              // accordion will not scale up beyond this width
 
@@ -133,7 +134,7 @@
         .off('.accordionPro')
         .removeData('accordionPro')
         .removeAttr('style')
-        .removeClass('accordionPro horizontal vertical basic dark light stitch rounded rtl closed responsive')
+        .removeClass('accordionPro horizontal vertical basic dark light stitch transparent rounded rtl closed responsive scaleImages')
         .find('li > :first-child')
         .off('.accordionPro')
         .end()
@@ -165,8 +166,6 @@
      */
 
     setup.styles = function() {
-      var padding = 0;
-
       // set parent theme and corner style
       elem
         .outerWidth(orientation ? settings.horizontalWidth : settings.verticalWidth)
@@ -175,13 +174,16 @@
         .addClass(orientation ? 'horizontal' : 'vertical')
         .addClass(settings.rounded && 'rounded')
         .addClass(settings.theme)
-        .addClass(settings.rtl && 'rtl');
+        .addClass(settings.rtl && 'rtl')
+        .addClass(settings.scaleImagesToFit && 'scaleImages');
 
       // add slide class to each slide
       slides.addClass('slide');
     };
 
     setup.dimensions = function() {
+      var padding = 0;
+
       // cache parent height and width values
       parent.w = elem.width();
       parent.h = elem.height();
@@ -229,14 +231,24 @@
         css.tab.width = slide.h;
 
         // calculate content panel properties
-        css.panel.width = slide.w - offset;
-        css.panel.height = slide.h;
-        css.panel.position = { left : tab.h, top : 0 };
+        if (settings.theme !== 'transparent') {
+          css.panel.width = slide.w - offset;
+          css.panel.height = slide.h;
+          css.panel.position = { left : tab.h, top : 0 };
+        } else {
+          css.panel.width = slide.w + tab.h;
+          css.panel.height = slide.h;
+          css.panel.position = { left : 0, top : 0 };
+        }
 
         // adjust for rtl if necessary
         if (settings.rtl) {
           css.slide.position = { left : 'auto', right : index * tab.h, top : 0 };
-          css.panel.position = { left : 'auto', right : tab.h - offset, top : 0 };
+          if (settings.theme !== 'transparent') {
+            css.panel.position = { left : 'auto', right : tab.h - offset, top : 0 };
+          } else {
+            css.panel.position = { left : 'auto', right : 0 - offset, top : 0 };
+          }
         }
 
         // compensate for pre-selected slide
@@ -421,10 +433,13 @@
         });
       }
 
-      // only bind resize events if responsive or fluid options set
+      // bind resize events if responsive or fluid options set
       if (settings.orientation === 'horizontal' && settings.responsive) {
+        // responsive layout (first run)
+        core.responsive();
+
         // resize and orientationchange
-        $(window).on('load.accordionPro resize.accordionPro orientationchange.accordionPro', function() {
+        $(window).on('resize.accordionPro orientationchange.accordionPro', function() {
           // approximates 'onresizeend'
           clearTimeout(resizeTimer);
 
@@ -565,7 +580,7 @@
 
     core.scale = function() {
       var scale = Math.min(elem.parent().outerWidth(true) / settings.horizontalWidth), // linear scale
-          max = Math.min(settings.maxResponsiveWidth / settings.horizontalWidth);
+          max = 1;
 
       // limit scale to maximum
       if (scale > max) scale = max;

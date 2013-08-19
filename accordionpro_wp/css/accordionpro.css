@@ -35,15 +35,15 @@
     -webkit-perspective: 1000;
     -webkit-tap-highlight-color: transparent;
     -webkit-backface-visibility: hidden;
-    /*-moz-backface-visibility: hidden;*/ /* FF is having rendering issues with videos in hw accelerated slide :s */
+    -moz-backface-visibility: hidden; /* FF is having rendering issues with videos in hw accelerated slide :s */
     -ms-backface-visibility: hidden;
     -o-backface-visibility: hidden;
-    /*backface-visibility: hidden;*/
+    backface-visibility: hidden;
     -webkit-transform: translate3d(0,0,0);
-    /*-moz-transform: translate3d(0,0,0);*/
+    -moz-transform: translate3d(0,0,0);
     -ms-transform: translate3d(0,0,0);
     -o-transform: translate3d(0,0,0);
-    /*transform: translate3d(0,0,0);*/
+    transform: translate3d(0,0,0);
 }
 .accordionPro > ol { position: relative; overflow: hidden; width: auto; height: 100%; margin: 0; padding: 0; list-style: none }
 .accordionPro .slide {
@@ -54,6 +54,7 @@
     overflow: hidden;
 }
 .accordionPro .slide > h2 {
+    -webkit-backface-visibility: hidden; /* fixes chrome bug */
     color: black;
     font-size: 16px;
     font-weight: normal;
@@ -63,7 +64,6 @@
     position: absolute;
     top: 0;
     left: 0;
-    -webkit-backface-visibility: hidden; /* fixes chrome bug */
 }
 .accordionPro .slide > h2 span {
     display: block;
@@ -82,6 +82,12 @@
 .accordionPro noscript p { padding: 10px; margin: 0; background: white }
 
 /* responsive */
+.accordionPro.scaleImages .slide > div img {
+    width: 100%;
+    height: 100%;
+}
+
+/*
 .accordionPro.responsive {
     width: 100% !important;
     -webkit-transform: scale(1, 0.9);
@@ -90,10 +96,12 @@
     -ms-transform: scale(1, 0.9);
     transform: scale(1, 0.9);
 }
+*/
 
 /* rtl */
-.accordionPro.rtl { direction: rtl; text-align: right }
+.accordionPro.rtl { text-align: right }
 .accordionPro.rtl .slide > h2 { left: auto; right: 0 }
+.accordionPro.rtl .slide > div { direction: rtl }
 
 /************************************* Horizontal */
 /* core */
@@ -119,13 +127,6 @@
 }
 
 /* rtl */
-.accordionPro.horizontal.rtl {
-    -webkit-transform-origin: right top;
-    -moz-transform-origin: right top;
-    -ms-transform-origin: right top;
-    -o-transform-origin: right top;
-    transform-origin: right top;
-}
 .accordionPro.horizontal.rtl .slide > h2 {
     -webkit-transform: translateX(100%) rotate(90deg) translateZ(0);
     -webkit-transform-origin: left top;
@@ -336,6 +337,10 @@
 .accordionPro.stitch .slide > h2 b { top: 19% !important; color: white; text-shadow: 1px 1px 0 #5b5b5b }
 .accordionPro.stitch.rounded > ol { -webkit-border-radius: 0; -moz-border-radius: 0; -ms-border-radius: 0; border-radius: 0 }
 .accordionPro.stitch .slide { background: #353535 }
+
+/*********************************** Transparent */
+.accordionPro.transparent .slide > h2 * { visibility: hidden }
+.accordionPro.transparent .slide > h2:hover { background: rgba(255,255,255,0.5) }
 
 /*************************************** Rounded */
 .accordionPro.rounded, .rounded > ol { -webkit-border-radius: 6px; -moz-border-radius: 6px; -ms-border-radius: 6px; border-radius: 6px }
