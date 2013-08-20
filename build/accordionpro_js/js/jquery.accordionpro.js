@@ -113,8 +113,7 @@ n();return d?d.promise(g):g}})(jQuery);
       scaleImagesToFit : true,                // scales images to fit slide width and height
       horizontalWidth : 900,                  // base width; fixed (px [integer]) - responsive scaling is relative to this value
       horizontalHeight : 300,                 // base horizontal accordion height; fixed (px [integer]) - responsive scaling is relative to this value
-      minResponsiveWidth : 400,               // horizontal accordion will flip to vertical at (and below) this width
-      maxResponsiveWidth : 1020,              // accordion will not scale up beyond this width
+      minResponsiveWidth : 300,               // horizontal accordion will flip to vertical at (and below) this width
 
       /* vertical accordion options */
       verticalWidth : '100%',                 // fixed (px [integer]) or fluid (% [string])
