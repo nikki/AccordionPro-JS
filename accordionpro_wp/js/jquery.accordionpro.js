@@ -113,7 +113,6 @@ n();return d?d.promise(g):g}})(jQuery);
       scaleImagesToFit : true,                // scales images to fit slide width and height
       horizontalWidth : 900,                  // base width; fixed (px [integer]) - responsive scaling is relative to this value
       horizontalHeight : 300,                 // base horizontal accordion height; fixed (px [integer]) - responsive scaling is relative to this value
-      minResponsiveWidth : 300,               // horizontal accordion will flip to vertical at (and below) this width
 
       /* vertical accordion options */
       verticalWidth : '100%',                 // fixed (px [integer]) or fluid (% [string])
@@ -443,7 +442,6 @@ n();return d?d.promise(g):g}})(jQuery);
       // start accordion in closed position
       if (orientation) {
         elem.css('width', (slide.l * tab.h) + (border / 2) + (padding * 2) - 1);
-        // if (settings.responsive && elem.parent().outerWidth(true) > settings.minResponsiveWidth) core.scale();
       } else {
         elem.css('height', slide.l * tab.h + border);
       }
@@ -620,49 +618,11 @@ n();return d?d.promise(g):g}})(jQuery);
     };
 
     core.responsive = function() {
-      var w = elem.parent().outerWidth(true); // responsive reaction to parent element width, not window width
+      // reinit styles
+      // setup.styles();
 
-      // respond to layout changes
-      if (orientation) { // horizontal
-        // flip to vertical
-        if (w <= settings.minResponsiveWidth) {
-          // change orientation
-          orientation = 0;
-
-          // remove horizontal class and any scaling
-          if (!elem.hasClass('ie8')) {
-            elem.removeClass('horizontal').addClass('responsive').css(Modernizr.prefixed('transform'), '').css('margin-bottom', 0);
-          } else {
-            elem.removeClass('horizontal').addClass('responsive');
-            // elem.add(elem.children('ol')).add(slides).add(slides.children('div').children()).css(Modernizr.prefixed('filter'), '');
-            // elem.css('zoom', '');
-          }
-
-          // reinit styles
-          setup.styles();
-
-          if (!elem.hasClass('closed')) {
-            // change height
-            elem.height(slide.l * tab.h + slide.h);
-          }
-        } else {
-          // scale
-          core.scale();
-        }
-      } else { // vertical
-        // flip back to horizontal
-        if (w > settings.minResponsiveWidth && elem.hasClass('responsive')) {
-          // flip back to horizontal accordion
-          orientation = 1;
-          elem.removeClass('vertical responsive');
-
-          // reinit styles
-          setup.styles();
-
-          // scale
-          core.scale();
-        }
-      }
+      // scale
+      core.scale();
 
       // redeclare parent height and width values
       parent.w = elem.width();
