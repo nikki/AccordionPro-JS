@@ -21,7 +21,7 @@
 
   <div class="wrapper">
 
-    <h1>Basic setup - horizontal accordion</h1>
+    <h1>RTL startclosed - vertical accordion</h1>
 
     <?php
 /*
@@ -62,24 +62,34 @@
       // have to wrap bools in string for js
       $jQueryOptions = array(
         'basic' => array(
-          'orientation' => 'horizontal',
-          'theme'       => 'basic'
+          'orientation' => 'vertical',
+          'theme'       => 'basic',
+          'rtl'         => 'true',
+          'startClosed' => 'true'
         ),
         'dark' => array(
-          'orientation' => 'horizontal',
-          'theme'       => 'dark'
+          'orientation' => 'vertical',
+          'theme'       => 'dark',
+          'rtl'         => 'true',
+          'startClosed' => 'true'
         ),
         'light' => array(
-          'orientation' => 'horizontal',
-          'theme'       => 'light'
+          'orientation' => 'vertical',
+          'theme'       => 'light',
+          'rtl'         => 'true',
+          'startClosed' => 'true'
         ),
         'stitch' => array(
-          'orientation' => 'horizontal',
-          'theme'       => 'stitch'
+          'orientation' => 'vertical',
+          'theme'       => 'stitch',
+          'rtl'         => 'true',
+          'startClosed' => 'true'
         ),
         'transparent' => array(
-          'orientation' => 'horizontal',
-          'theme'       => 'transparent'
+          'orientation' => 'vertical',
+          'theme'       => 'transparent',
+          'rtl'         => 'true',
+          'startClosed' => 'true'
         )
       );
 

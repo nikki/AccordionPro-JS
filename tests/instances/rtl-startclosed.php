@@ -21,7 +21,7 @@
 
   <div class="wrapper">
 
-    <h1>Basic setup - horizontal accordion</h1>
+    <h1>RTL startclosed - horizontal accordion</h1>
 
     <?php
 /*
@@ -63,23 +63,33 @@
       $jQueryOptions = array(
         'basic' => array(
           'orientation' => 'horizontal',
-          'theme'       => 'basic'
+          'theme'       => 'basic',
+          'rtl'         => 'true',
+          'startClosed' => 'true'
         ),
         'dark' => array(
           'orientation' => 'horizontal',
-          'theme'       => 'dark'
+          'theme'       => 'dark',
+          'rtl'         => 'true',
+          'startClosed' => 'true'
         ),
         'light' => array(
           'orientation' => 'horizontal',
-          'theme'       => 'light'
+          'theme'       => 'light',
+          'rtl'         => 'true',
+          'startClosed' => 'true'
         ),
         'stitch' => array(
           'orientation' => 'horizontal',
-          'theme'       => 'stitch'
+          'theme'       => 'stitch',
+          'rtl'         => 'true',
+          'startClosed' => 'true'
         ),
         'transparent' => array(
           'orientation' => 'horizontal',
-          'theme'       => 'transparent'
+          'theme'       => 'transparent',
+          'rtl'         => 'true',
+          'startClosed' => 'true'
         )
       );
 

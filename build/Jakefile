@@ -1,11 +1,12 @@
 // sublime: x_syntax Packages/JavaScript/JavaScript.tmLanguage
 var fs = require('fs'),
-    ncp = require('ncp').ncp;
+    ncp = require('ncp').ncp,
+    path = '/Volumes/Nikki/webserver/projects/Accordion-Pro/';
 
 desc('Copy source css to build folder');
 task('cssSource', { async : true }, function() {
-  var cssSource = '../accordionpro_js/css/accordionpro.css',
-      cssDest = 'accordionpro_js/css/accordionpro.css';
+  var cssSource = path + 'accordionpro_js/css/accordionpro.css',
+      cssDest = path + 'build/accordionpro_js/css/accordionpro.css';
 
   // copy unminified source file over to dest
   ncp(cssSource, cssDest, function (err) {
@@ -17,7 +18,7 @@ task('cssSource', { async : true }, function() {
 desc('Compress and concatentate css, write to build folder');
 task('cssMin', function() {
   var cssp = require('uglifycss').processString,
-      cssSource = '../accordionpro_js/css/accordionpro.css',
+      cssSource = path + 'accordionpro_js/css/accordionpro.css',
       output = '', css;
 
   // read css file
@@ -34,7 +35,7 @@ task('cssMin', function() {
   output += css.join('');
 
   // output
-  fs.writeFileSync('accordionpro_js/css/accordionpro.min.css', output);
+  fs.writeFileSync(path + 'build/accordionpro_js/css/accordionpro.min.css', output);
 });
 
 desc('Compress and concatentate js, write to build folder');
@@ -42,11 +43,11 @@ task('js', function() {
   var jsp = require('uglify-js').parser,
       pro = require('uglify-js').uglify,
       jsSource = [
-        '../accordionpro_js/js/jquery.swipe.min.js',
-        '../accordionpro_js/js/modernizr.custom.min.js',
-        '../accordionpro_js/js/animate.js',
-        '../accordionpro_js/js/jquery.imagesloaded.min.js',
-        '../accordionpro_js/js/jquery.accordionpro.js'
+        path + 'accordionpro_js/js/jquery.swipe.min.js',
+        path + 'accordionpro_js/js/modernizr.custom.min.js',
+        path + 'accordionpro_js/js/animate.js',
+        path + 'accordionpro_js/js/jquery.imagesloaded.min.js',
+        path + 'accordionpro_js/js/jquery.accordionpro.js'
       ],
       concat = output = '';
 
@@ -83,14 +84,14 @@ task('js', function() {
   });
 
   // output
-  fs.writeFileSync('accordionpro_js/js/jquery.accordionpro.js', concat);
-  fs.writeFileSync('accordionpro_js/js/jquery.accordionpro.min.js', output);
+  fs.writeFileSync(path + 'build/accordionpro_js/js/jquery.accordionpro.js', concat);
+  fs.writeFileSync(path + 'build/accordionpro_js/js/jquery.accordionpro.min.js', output);
 });
 
 desc('Copy JS build to WP Dev');
 task('copyJStoWP', ['cssSource', 'cssMin', 'js'], { async : true }, function() {
-  var jsSource = '/Volumes/Nikki/webserver/projects/Accordion-Pro/build/accordionpro_js',
-      jsDest = '/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp';
+  var jsSource = path + 'build/accordionpro_js',
+      jsDest = path + 'accordionpro_wp';
 
   // copy js...
   ncp.limit = 16;
@@ -103,8 +104,8 @@ task('copyJStoWP', ['cssSource', 'cssMin', 'js'], { async : true }, function() {
 desc('Drop copy of WP plugin into build folder');
 task('buildWP', ['copyJStoWP'], { async : true }, function() {
   var ncp = require('ncp').ncp,
-      source = '/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp',
-      destination = '/Volumes/Nikki/webserver/projects/Accordion-Pro/build/accordionpro_wp';
+      source = path + '/accordionpro_wp',
+      destination = path + '/build/accordionpro_wp';
 
   ncp.limit = 16;
   ncp(source, destination, function (err) {
@@ -116,8 +117,8 @@ task('buildWP', ['copyJStoWP'], { async : true }, function() {
 desc('Drop copy of WP plugin into WP test install plugin folder');
 task('testWP', ['buildWP'], { async : true }, function() {
   var ncp = require('ncp').ncp,
-      source = '/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp',
-      destination = '/Volumes/Nikki/webserver/websites/kodogames.com/wp-content/plugins/accordionpro_wp';
+      source = path + 'accordionpro_wp',
+      destination = '/Volumes/Nikki/webserver/websites/wordpress/wp-content/plugins/accordionpro_wp';
 
   ncp.limit = 16;
   ncp(source, destination, function (err) {

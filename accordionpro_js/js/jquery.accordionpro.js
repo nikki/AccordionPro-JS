@@ -39,7 +39,6 @@
       horizontalWidth : 900,                  // base width; fixed (px [integer]) - responsive scaling is relative to this value
       horizontalHeight : 300,                 // base horizontal accordion height; fixed (px [integer]) - responsive scaling is relative to this value
       minResponsiveWidth : 400,               // horizontal accordion will flip to vertical at (and below) this width
-      maxResponsiveWidth : 1020,              // accordion will not scale up beyond this width
 
       /* vertical accordion options */
       verticalWidth : '100%',                 // fixed (px [integer]) or fluid (% [string])
@@ -78,12 +77,14 @@
         slide = { w : 0, h : 0, l : 0 },
         tabs = slides.children(':first-child'),
         tab = { w : 0, h : 48 },
-        offset = 0,
+        padding = 0,
         border = 0,
+        offset = 0,
         orientation = settings.orientation === 'horizontal' ? 1 : 0,
         easingFns = ['linear', 'ease', 'ease-in', 'ease-out', 'ease-in-out'],
         easing = $.inArray(settings.easing, easingFns) >= 0 ? settings.easing : defaults.easing,
-        fitToContent = !orientation && settings.verticalSlideHeight === 'fitToContent' ? true : false;
+        fitToContent = !orientation && settings.verticalSlideHeight === 'fitToContent' ? true : false,
+        transparent = (settings.theme === 'transparent');
 
     /**
      * Public methods for triggering animation events
@@ -179,43 +180,42 @@
 
       // add slide class to each slide
       slides.addClass('slide');
+
+      // cache slide length
+      slide.l = slides.length;
     };
 
     setup.dimensions = function() {
-      var padding = 0;
+      var firstPanel = slides.eq(0).children('div');
 
       // cache parent height and width values
       parent.w = elem.width();
       parent.h = elem.height();
 
-      // cache slide length
-      slide.l = slides.length;
+      // calculate slide border
+      border = elem.outerHeight() - elem.height();
 
-      // calculate padding
-      if (orientation) {
-        padding = parseInt(elem.css('paddingLeft'), 10) + parseInt(elem.css('paddingRight'), 10) + parseInt(elem.css('borderLeft'), 10) + parseInt(elem.css('borderRight'), 10);
-      } else {
-        padding = parseInt(elem.css('paddingTop'), 10) + parseInt(elem.css('paddingBottom'), 10) + parseInt(elem.css('borderTop'), 10) + parseInt(elem.css('borderBottom'), 10);
-      }
-    };
-
-    setup.getSlideCss = function(index, selected) {
-      var firstPanel = slides.eq(0).children('div'),
-          fitToContentHeight = 0,
-          css = {
-            slide : {},
-            tab : {},
-            panel : {}
-          };
-
-      // calculate slide offset
+      // calculate slide offset (once only)
       offset =
         parseInt(firstPanel.css('marginLeft'), 10) ||
         parseInt(firstPanel.css('marginRight'), 10) ||
         parseInt(firstPanel.css('marginBottom'), 10) || 0;
 
-      // calculate slide border
-      border = elem.outerHeight() - elem.height();
+      // calculate padding
+      if (orientation) {
+        padding = parseInt(elem.css('paddingLeft'), 10) + parseInt(elem.css('paddingRight'), 10);
+      } else {
+        padding = parseInt(elem.css('paddingTop'), 10) + parseInt(elem.css('paddingBottom'), 10);
+      }
+    };
+
+    setup.getSlideCss = function(index, selected) {
+      var fitToContentHeight = 0,
+          css = {
+            slide : {},
+            tab : {},
+            panel : {}
+          };
 
       if (orientation) { // horizontal
         // calculate global slide dimensions
@@ -231,7 +231,7 @@
         css.tab.width = slide.h;
 
         // calculate content panel properties
-        if (settings.theme !== 'transparent') {
+        if (!transparent) {
           css.panel.width = slide.w - offset;
           css.panel.height = slide.h;
           css.panel.position = { left : tab.h, top : 0 };
@@ -244,7 +244,7 @@
         // adjust for rtl if necessary
         if (settings.rtl) {
           css.slide.position = { left : 'auto', right : index * tab.h, top : 0 };
-          if (settings.theme !== 'transparent') {
+          if (!transparent) {
             css.panel.position = { left : 'auto', right : tab.h - offset, top : 0 };
           } else {
             css.panel.position = { left : 'auto', right : 0 - offset, top : 0 };
@@ -266,15 +266,29 @@
           });
 
           // assign content height to slide
-          css.slide.height = fitToContentHeight + tab.h + offset;
-          css.panel.height = fitToContentHeight;
+          if (!transparent) {
+            css.slide.height = fitToContentHeight + tab.h + offset;
+            css.panel.height = fitToContentHeight;
+          } else {
+
+          }
         } else {
           // fixed height
           css.slide.height = slide.h + tab.h;
-          css.panel.height = css.slide.height - tab.h - offset;
+          if (!transparent) {
+            css.panel.height = css.slide.height - tab.h - offset;
+          } else {
+            css.panel.height = css.slide.height;
+          }
         }
 
-        css.panel.position = { top : tab.h, left : 0 };
+        // panel positions
+        if (!transparent) {
+          css.panel.position = { top : tab.h, left : 0 };
+        } else {
+          css.panel.position = { top : 0, left : 0 };
+        }
+
         css.slide.position = { top : index * tab.h, left : 0 };
         css.slide.width = css.tab.width = css.panel.width = '100%';
 
@@ -353,10 +367,10 @@
 
       // start accordion in closed position
       if (orientation) {
-        elem.width(slide.l * tab.h);
-        if (settings.responsive && elem.parent().outerWidth(true) > settings.minResponsiveWidth) core.scale();
+        elem.css('width', (slide.l * tab.h) + (border / 2) + (padding * 2) - 1);
+        // if (settings.responsive && elem.parent().outerWidth(true) > settings.minResponsiveWidth) core.scale();
       } else {
-        elem.height(slide.l * tab.h);
+        elem.css('height', slide.l * tab.h + border);
       }
     };
 
@@ -491,6 +505,12 @@
         // redeclare parent height and width values
         if (orientation) { // horizontal
           elem.css('width', settings.horizontalWidth);
+/*
+          elem
+            .animate({
+              width : 900
+            }, settings.slideSpeed);
+*/
         } else { // vertical
           elem
             .animate({
@@ -527,9 +547,6 @@
     core.responsive = function() {
       var w = elem.parent().outerWidth(true); // responsive reaction to parent element width, not window width
 
-      // not responsive until first slide opened
-      if (elem.hasClass('closed')) return;
-
       // respond to layout changes
       if (orientation) { // horizontal
         // flip to vertical
@@ -539,7 +556,7 @@
 
           // remove horizontal class and any scaling
           if (!elem.hasClass('ie8')) {
-            elem.removeClass('horizontal').addClass('responsive').css(Modernizr.prefixed('transform'), '');
+            elem.removeClass('horizontal').addClass('responsive').css(Modernizr.prefixed('transform'), '').css('margin-bottom', 0);
           } else {
             elem.removeClass('horizontal').addClass('responsive');
             // elem.add(elem.children('ol')).add(slides).add(slides.children('div').children()).css(Modernizr.prefixed('filter'), '');
@@ -549,8 +566,10 @@
           // reinit styles
           setup.styles();
 
-          // change height
-          elem.height(slide.l * tab.h + slide.h);
+          if (!elem.hasClass('closed')) {
+            // change height
+            elem.height(slide.l * tab.h + slide.h);
+          }
         } else {
           // scale
           core.scale();
@@ -588,6 +607,10 @@
       // css3 scaling not supported in ie8
       if (!elem.hasClass('ie8')) {
         elem.css(Modernizr.prefixed('transform'), 'scale(' + scale + ')');
+
+        if (orientation) { // horizontal?
+          elem.css('margin-bottom', -(settings.horizontalHeight - (settings.horizontalHeight * scale)));
+        }
       } else {
         // elem.add(elem.children('ol')).add(slides).add(slides.children('div').children()).css(Modernizr.prefixed('filter'), "progid:DXImageTransform.Microsoft.Matrix(M11=" + scale + ",M12=0,M21=0,M22=" + scale + ",SizingMethod='auto expand')");
         // elem.css('zoom', scale);
@@ -834,6 +857,9 @@
         throw new Error('horizontalWidth, horizontalHeight, and verticalHeight options must be integers.');
       }
 
+      // FOUC prevention
+      elem.hide();
+
       // ie test
       setup.ie();
 
@@ -843,9 +869,10 @@
       // check images are loaded before setting up slide positions
       elem.imagesLoaded(function() {
         setup.dimensions();
-        if (settings.startClosed || fitToContent) setup.startClosed();
         setup.slidePositions();
         setup.events();
+        if (settings.startClosed || fitToContent) setup.startClosed();
+        elem.show(); // images loaded -> set plugin to visible
       });
 
       // check slide speed is not faster than cycle speed
