@@ -73,14 +73,14 @@
     },
 
     touchMove: function( event ) {
-      event.preventDefault();
-
       var touches = event.originalEvent.targetTouches[0];
 
       this.coords.end = {
         x: touches.pageX,
         y: touches.pageY
       };
+
+      event.preventDefault();
     },
 
     touchStart: function( event ) {

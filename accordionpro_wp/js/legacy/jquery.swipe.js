@@ -73,8 +73,7 @@
     },
 
     touchMove: function( event ) {
-      event.preventDefault();
-
+      // event.preventDefault();
       var touches = event.originalEvent.targetTouches[0];
 
       this.coords.end = {

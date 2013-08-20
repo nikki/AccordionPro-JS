@@ -45,7 +45,7 @@ task('js', function() {
       jsSource = [
         path + 'accordionpro_js/js/jquery.swipe.min.js',
         path + 'accordionpro_js/js/modernizr.custom.min.js',
-        path + 'accordionpro_js/js/animate.js',
+        path + 'accordionpro_js/js/animate.min.js',
         path + 'accordionpro_js/js/jquery.imagesloaded.min.js',
         path + 'accordionpro_js/js/jquery.accordionpro.js'
       ],

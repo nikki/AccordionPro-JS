@@ -5,7 +5,7 @@
  *
  * Licensed under the CC-GNU GPL (http://creativecommons.org/licenses/GPL/2.0/)
  */
-(function(c,b,a,e){var d=function(g,f){this.elem=g;this.$elem=c(g);this.options=f;this.metadata=this.$elem.data("swipe-options")};d.prototype={defaults:{left:function(f){},right:function(f){},up:function(f){},down:function(f){},threshold:{x:100,y:50}},init:function(){this.config=c.extend({},this.defaults,this.options,this.metadata);this.coords={start:{x:0,y:0},end:{x:0,y:0}};c(this.elem).on({touchstart:c.proxy(this.touchStart,this),touchmove:c.proxy(this.touchMove,this),touchend:c.proxy(this.touchEnd,this)});return this},touchEnd:function(f){var g={x:this.coords.start.x-this.coords.end.x,y:this.coords.start.y-this.coords.end.y};if(g.y<this.config.threshold.y&&g.y>(this.config.threshold.y*-1)){if(g.x>this.config.threshold.x){this.config.left()}if(g.x<(this.config.threshold.x*-1)){this.config.right()}}else{if(g.y>=0){this.config.up()}else{this.config.down()}}},touchMove:function(f){f.preventDefault();var g=f.originalEvent.targetTouches[0];this.coords.end={x:g.pageX,y:g.pageY}},touchStart:function(f){var g=f.originalEvent.targetTouches[0];this.coords={start:{x:g.pageX,y:g.pageY},end:{x:g.pageX,y:g.pageY}}}};d.defaults=d.prototype.defaults;c.fn.swipe=function(f){return this.each(function(){new d(this,f).init()})}})(jQuery,window,document);
+;(function(c,b,a,e){var d=function(g,f){this.elem=g;this.$elem=c(g);this.options=f;this.metadata=this.$elem.data("swipe-options")};d.prototype={defaults:{left:function(f){},right:function(f){},up:function(f){},down:function(f){},threshold:{x:100,y:50}},init:function(){this.config=c.extend({},this.defaults,this.options,this.metadata);this.coords={start:{x:0,y:0},end:{x:0,y:0}};c(this.elem).on({touchstart:c.proxy(this.touchStart,this),touchmove:c.proxy(this.touchMove,this),touchend:c.proxy(this.touchEnd,this)});return this},touchEnd:function(f){var g={x:this.coords.start.x-this.coords.end.x,y:this.coords.start.y-this.coords.end.y};if(g.y<this.config.threshold.y&&g.y>(this.config.threshold.y*-1)){if(g.x>this.config.threshold.x){this.config.left()}if(g.x<(this.config.threshold.x*-1)){this.config.right()}}else{if(g.y>=0){this.config.up()}else{this.config.down()}}},touchMove:function(f){var g=f.originalEvent.targetTouches[0];this.coords.end={x:g.pageX,y:g.pageY};f.preventDefault()},touchStart:function(f){var g=f.originalEvent.targetTouches[0];this.coords={start:{x:g.pageX,y:g.pageY},end:{x:g.pageX,y:g.pageY}}}};d.defaults=d.prototype.defaults;c.fn.swipe=function(f){return this.each(function(){new d(this,f).init()})}})(jQuery,window,document);
 
 /*
  * Modernizr 2.6.2 (Custom Build) | MIT & BSD
@@ -16,52 +16,9 @@
 /**
  * jQuery animate -> CSS3 Transitions
  * http://addyosmani.com/blog/css3transitions-jquery/
- */ /* build */
+ */
+;(function(a){a.fn.extend({defaultAnimate:a.fn.animate,animate:function(b,c,d,e){var f=c&&typeof c=="object"?jQuery.extend({},c):{complete:e||!e&&d||jQuery.isFunction(c)&&c,duration:c,easing:e&&d||d&&!jQuery.isFunction(d)&&d};return a(this).each(function(){var d=a(this),e,g;Modernizr.csstransitions&&(d.hasClass("accordionPro")||d.hasClass("slide"))?(e=f.easing||"ease-in-out",g=Modernizr.prefixed("transition").replace(/([A-Z])/g,function(a,b){return"-"+b.toLowerCase()}).replace(/^ms-/,"-ms-"),d.css(g,"all "+c/1e3+"s "+e).css(b),setTimeout(function(){d.css(g),a.isFunction(f.complete)&&f.complete()},c)):(f.easing="swing",d.defaultAnimate(b,f))})}})})(jQuery);
 
-;(function($) {
-  $.fn.extend({
-    defaultAnimate: $.fn.animate,
-    animate: function(props, speed, easing, callback) {
-      var options = speed && typeof speed === "object" ? jQuery.extend({}, speed) : {
-            complete: callback || !callback && easing || jQuery.isFunction( speed ) && speed,
-            duration: speed,
-            easing: callback && easing || easing && !jQuery.isFunction(easing) && easing
-          };
-
-      return $(this).each(function() {
-        var $this = $(this), easing, prefix;
-
-          // check if transitions supported; only animate parent accordion element or slide list items
-          if (Modernizr.csstransitions && ($this.hasClass('accordionPro') || $this.hasClass('slide'))) {
-
-            // set default css easing function
-            easing = options.easing || 'ease-in-out';
-
-            // get prefix
-            prefix = (Modernizr.prefixed('transition').replace(/([A-Z])/g, function(str,m1){ return '-' + m1.toLowerCase(); }).replace(/^ms-/,'-ms-'));
-
-            // animate with css transitions
-            $this.css(prefix, 'all ' + speed / 1000 + 's ' + easing).css(props);
-
-            // callback
-            setTimeout(function() {
-              $this.css(prefix);
-              if ($.isFunction(options.complete)) {
-                options.complete();
-              }
-            }, speed);
-          }
-          else {
-            // set default jQuery easing function
-            options.easing = 'swing';
-
-            // animate with jQuery
-            $this.defaultAnimate(props, options);
-          }
-      })
-    }
-  });
-})(jQuery);
 
 /*!
  * jQuery imagesLoaded plugin v2.1.1
@@ -69,7 +26,7 @@
  *
  * MIT License. by Paul Irish et al.
  */
-(function(c,q){var m="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";c.fn.imagesLoaded=function(f){function n(){var b=c(j),a=c(h);d&&(h.length?d.reject(e,b,a):d.resolve(e));c.isFunction(f)&&f.call(g,e,b,a)}function p(b){k(b.target,"error"===b.type)}function k(b,a){b.src===m||-1!==c.inArray(b,l)||(l.push(b),a?h.push(b):j.push(b),c.data(b,"imagesLoaded",{isBroken:a,src:b.src}),r&&d.notifyWith(c(b),[a,e,c(j),c(h)]),e.length===l.length&&(setTimeout(n),e.unbind(".imagesLoaded",
+;(function(c,q){var m="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";c.fn.imagesLoaded=function(f){function n(){var b=c(j),a=c(h);d&&(h.length?d.reject(e,b,a):d.resolve(e));c.isFunction(f)&&f.call(g,e,b,a)}function p(b){k(b.target,"error"===b.type)}function k(b,a){b.src===m||-1!==c.inArray(b,l)||(l.push(b),a?h.push(b):j.push(b),c.data(b,"imagesLoaded",{isBroken:a,src:b.src}),r&&d.notifyWith(c(b),[a,e,c(j),c(h)]),e.length===l.length&&(setTimeout(n),e.unbind(".imagesLoaded",
 p)))}var g=this,d=c.isFunction(c.Deferred)?c.Deferred():0,r=c.isFunction(d.notify),e=g.find("img").add(g.filter("img")),l=[],j=[],h=[];c.isPlainObject(f)&&c.each(f,function(b,a){if("callback"===b)f=a;else if(d)d[b](a)});e.length?e.bind("load.imagesLoaded error.imagesLoaded",p).each(function(b,a){var d=a.src,e=c.data(a,"imagesLoaded");if(e&&e.src===d)k(a,e.isBroken);else if(a.complete&&a.naturalWidth!==q)k(a,0===a.naturalWidth||0===a.naturalHeight);else if(a.readyState||a.complete)a.src=m,a.src=d}):
 n();return d?d.promise(g):g}})(jQuery);
 
@@ -521,7 +478,7 @@ n();return d?d.promise(g):g}})(jQuery);
       }
 
       // bind resize events if responsive or fluid options set
-      if (settings.orientation === 'horizontal' && settings.responsive) {
+      if (orientation && settings.responsive) {
         // responsive layout (first run)
         core.responsive();
 
@@ -601,7 +558,7 @@ n();return d?d.promise(g):g}})(jQuery);
         tabs.off('click.accordionPro.closed touchstart.accordionPro.closed mouseover.accordionPro.closed');
 
         // trigger responsive reflow
-        if (settings.orientation === 'horizontal' && settings.responsive) core.responsive();
+        if (orientation && settings.responsive) core.responsive();
       }
     };
 
@@ -618,33 +575,29 @@ n();return d?d.promise(g):g}})(jQuery);
     };
 
     core.responsive = function() {
-      // reinit styles
-      // setup.styles();
-
       // scale
       core.scale();
 
       // redeclare parent height and width values
-      parent.w = elem.width();
-      parent.h = elem.height();
+      // parent.w = elem.width();
+      // parent.h = elem.height();
 
       // reset slide positions
-      setup.slidePositions();
+      // setup.slidePositions();
     };
 
     core.scale = function() {
-      var scale = Math.min(elem.parent().outerWidth(true) / settings.horizontalWidth), // linear scale
-          max = 1;
+      var scale = Math.min(elem.parent().outerWidth(true) / settings.horizontalWidth); // linear scale
 
-      // limit scale to maximum
-      if (scale > max) scale = max;
+      // limit max scale to 1
+      scale = (Math.min(scale, 1)).toFixed(2);
 
       // css3 scaling not supported in ie8
       if (!elem.hasClass('ie8')) {
         elem.css(Modernizr.prefixed('transform'), 'scale(' + scale + ')');
 
         if (orientation) { // horizontal?
-          elem.css('margin-bottom', -(settings.horizontalHeight - (settings.horizontalHeight * scale)));
+          elem.css('margin-bottom', -(settings.horizontalHeight - (settings.horizontalHeight * scale)).toFixed(2));
         }
       } else {
         // elem.add(elem.children('ol')).add(slides).add(slides.children('div').children()).css(Modernizr.prefixed('filter'), "progid:DXImageTransform.Microsoft.Matrix(M11=" + scale + ",M12=0,M21=0,M22=" + scale + ",SizingMethod='auto expand')");

@@ -446,7 +446,7 @@
       }
 
       // bind resize events if responsive or fluid options set
-      if (settings.orientation === 'horizontal' && settings.responsive) {
+      if (orientation && settings.responsive) {
         // responsive layout (first run)
         core.responsive();
 
@@ -526,7 +526,7 @@
         tabs.off('click.accordionPro.closed touchstart.accordionPro.closed mouseover.accordionPro.closed');
 
         // trigger responsive reflow
-        if (settings.orientation === 'horizontal' && settings.responsive) core.responsive();
+        if (orientation && settings.responsive) core.responsive();
       }
     };
 
@@ -547,26 +547,25 @@
       core.scale();
 
       // redeclare parent height and width values
-      parent.w = elem.width();
-      parent.h = elem.height();
+      // parent.w = elem.width();
+      // parent.h = elem.height();
 
       // reset slide positions
-      setup.slidePositions();
+      // setup.slidePositions();
     };
 
     core.scale = function() {
-      var scale = Math.min(elem.parent().outerWidth(true) / settings.horizontalWidth), // linear scale
-          max = 1;
+      var scale = Math.min(elem.parent().outerWidth(true) / settings.horizontalWidth); // linear scale
 
-      // limit scale to maximum
-      if (scale > max) scale = max;
+      // limit max scale to 1
+      scale = (Math.min(scale, 1)).toFixed(2);
 
       // css3 scaling not supported in ie8
       if (!elem.hasClass('ie8')) {
         elem.css(Modernizr.prefixed('transform'), 'scale(' + scale + ')');
 
         if (orientation) { // horizontal?
-          elem.css('margin-bottom', -(settings.horizontalHeight - (settings.horizontalHeight * scale)));
+          elem.css('margin-bottom', -(settings.horizontalHeight - (settings.horizontalHeight * scale)).toFixed(2));
         }
       } else {
         // elem.add(elem.children('ol')).add(slides).add(slides.children('div').children()).css(Modernizr.prefixed('filter'), "progid:DXImageTransform.Microsoft.Matrix(M11=" + scale + ",M12=0,M21=0,M22=" + scale + ",SizingMethod='auto expand')");
