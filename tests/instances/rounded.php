@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE HTML>
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <title>Accordion Pro - a responsive accordion plugin for jQuery</title>

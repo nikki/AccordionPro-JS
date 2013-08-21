@@ -345,15 +345,9 @@
         }
 
         // compensate for <= ie8's lack of transform origin
-/*
-        if (elem.hasClass('ie8')) {
-          if (elem.hasClass('horizontal') && elem.hasClass('rtl')) {
-            $this.children('h2').css('marginRight', -(slide.h - tab.h));
-          } else if (elem.hasClass('vertical')) {
-            $this.children('h2').css('marginRight', 0);
-          }
+        if (elem.hasClass('ie8') && elem.hasClass('horizontal') && elem.hasClass('rtl')) {
+          $this.children('h2').css('marginRight', -(slide.h - tab.h));
         }
-*/
       });
 
       // fit to content on init
@@ -448,7 +442,7 @@
       // bind resize events if responsive or fluid options set
       if (orientation && settings.responsive) {
         // responsive layout (first run)
-        core.responsive();
+        core.scale();
 
         // resize and orientationchange
         $(window).on('resize.accordionPro orientationchange.accordionPro', function() {
@@ -457,7 +451,7 @@
 
           resizeTimer = setTimeout(function() {
             // responsive layout
-            core.responsive();
+            core.scale();
           }, 200);
         });
       }
@@ -484,8 +478,24 @@
 
         // ... but ie 8 does :(
         if (ua === 8) {
+          if (orientation) { // horizontal accordion
+            // ie8 responsive hax
+            if (!settings.startClosed) {
+              elem.children('ol').css({
+                'min-width' : settings.horizontalWidth - border + padding,
+                'min-height' : settings.horizontalHeight - border
+              });
+            } else {
+              elem.children('ol').css({
+                'min-width' : slide.l * tab.h,
+                'min-height' : settings.horizontalHeight - border
+              });
+            }
+          }
+
+          // css = ie8 responsive hax
           slides.each(function(index) {
-            $(this).addClass('slide-' + index);
+            $(this).addClass('slide-' + index).css({ 'min-height' : settings.horizontalHeight - border });
           });
         }
 
@@ -503,20 +513,18 @@
         // redeclare parent height and width values
         if (orientation) { // horizontal
           elem.css('width', settings.horizontalWidth);
-/*
-          elem
-            .animate({
-              width : 900
-            }, settings.slideSpeed);
-*/
+
+          // stupid ie8 responsive hax
+          if (elem.hasClass('ie8')) { // then I hate you so much.
+              elem.children('ol').css({
+                'min-width' : settings.horizontalWidth - border + padding
+              });
+          }
         } else { // vertical
           elem
             .animate({
               height : fitToContent ? (slide.l - 1) * tab.h + border + slides.filter('.selected').height() : settings.verticalHeight
             }, settings.slideSpeed);
-
-          // consideration of border not required with height (jQ box model calc bug?)
-          // elem.height(fitToContent ? (slide.l - 1) * tab.h + slides.filter('.selected').height() : settings.verticalHeight);
         }
 
         // remove closed class
@@ -526,7 +534,7 @@
         tabs.off('click.accordionPro.closed touchstart.accordionPro.closed mouseover.accordionPro.closed');
 
         // trigger responsive reflow
-        if (orientation && settings.responsive) core.responsive();
+        if (orientation && settings.responsive) core.scale();
       }
     };
 
@@ -542,20 +550,9 @@
       }
     };
 
-    core.responsive = function() {
-      // scale
-      core.scale();
-
-      // redeclare parent height and width values
-      // parent.w = elem.width();
-      // parent.h = elem.height();
-
-      // reset slide positions
-      // setup.slidePositions();
-    };
-
     core.scale = function() {
       var scale = Math.min(elem.parent().outerWidth(true) / settings.horizontalWidth); // linear scale
+      var ieOl;
 
       // limit max scale to 1
       scale = (Math.min(scale, 1)).toFixed(2);
@@ -568,12 +565,7 @@
           elem.css('margin-bottom', -(settings.horizontalHeight - (settings.horizontalHeight * scale)).toFixed(2));
         }
       } else {
-        // elem.add(elem.children('ol')).add(slides).add(slides.children('div').children()).css(Modernizr.prefixed('filter'), "progid:DXImageTransform.Microsoft.Matrix(M11=" + scale + ",M12=0,M21=0,M22=" + scale + ",SizingMethod='auto expand')");
-        // elem.css('zoom', scale);
-        // elem.children('ol').add(slides).css('height', elem.height());
-        // elem.css('zoom', scale);
-
-        // alert(elem.height());
+        elem.css('zoom', scale);
       }
     };
 
@@ -816,15 +808,13 @@
       // FOUC prevention
       elem.hide();
 
-      // ie test
-      setup.ie();
-
       // setup dimensions, styles, slide positions and events
       setup.styles();
 
       // check images are loaded before setting up slide positions
       elem.imagesLoaded(function() {
         setup.dimensions();
+        setup.ie();
         setup.slidePositions();
         setup.events();
         if (settings.startClosed || fitToContent) setup.startClosed();

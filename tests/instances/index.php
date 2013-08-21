@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE HTML>
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <title>Accordion Pro - a responsive accordion plugin for jQuery</title>
@@ -20,6 +21,26 @@
 <body>
 
   <div class="wrapper">
+
+    <ul>
+      <li><a href="index.php">index</a></li>
+      <li><a href="index-vertical.php">index vertical</a></li>
+
+      <li><a href="startclosed.php">startclosed</a></li>
+      <li><a href="startclosed-vertical.php">startclosed vertical</a></li>
+
+      <li><a href="firstslide.php">firstslide</a></li>
+      <li><a href="firstslide-vertical.php">firstslide vertical</a></li>
+
+      <li><a href="rounded.php">rounded</a></li>
+      <li><a href="rounded-vertical.php">rounded vertical</a></li>
+
+      <li><a href="rtl.php">rtl</a></li>
+      <li><a href="rtl-vertical.php">rtl vertical</a></li>
+
+      <li><a href="rtl-startclosed.php">rtl startclosed</a></li>
+      <li><a href="rtl-vertical-startclosed.php">rtl vertical startclosed</a></li>
+    </ul>
 
     <h1>Basic setup - horizontal accordion</h1>
 

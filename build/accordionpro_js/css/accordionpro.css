@@ -31,8 +31,8 @@
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
-.accordionPro, .accordionPro .slide, .accordionPro .slide > * {
-    -webkit-perspective: 1000;
+.accordionPro > ol { position: relative; overflow: hidden; width: 100%; height: 100%; margin: 0; padding: 0; list-style: none }
+.accordionPro, .accordionPro .slide {
     -webkit-tap-highlight-color: transparent;
     -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden; /* FF is having rendering issues with videos in hw accelerated slide :s */
@@ -45,7 +45,6 @@
     -o-transform: translate3d(0,0,0);
     transform: translate3d(0,0,0);
 }
-.accordionPro > ol { position: relative; overflow: hidden; width: auto; height: 100%; margin: 0; padding: 0; list-style: none }
 .accordionPro .slide {
     list-style: none;
     position: absolute;
@@ -339,7 +338,8 @@
 .accordionPro.stitch .slide { background: #353535 }
 
 /*********************************** Transparent */
-.accordionPro.transparent .slide > h2 * { visibility: hidden }
+.accordionPro.transparent .slide > h2 { background: rgba(255,255,255,0) } /* hack for ie9/10 */
+.accordionPro.transparent .slide > h2 * { opacity: 0 }
 .accordionPro.transparent .slide > h2:hover { background: rgba(255,255,255,0.5) }
 
 /*************************************** Rounded */
@@ -361,13 +361,33 @@
 .accordionPro.ie.stitch .slide-9 > h2 * { background-color: #bb6098 }
 
 /* transforms */
+/* ie8 standard */
 .accordionPro.ie .slide > h2,
 .accordionPro.ie .slide > h2 span,
 .accordionPro.ie .slide > h2 b { filter: none; -ms-filter: none; -ms-transform: none }
 .accordionPro.ie.ie8.horizontal .slide > h2 { -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)" }
 .accordionPro.ie.ie8.horizontal .slide > h2 b { -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)" }
-.accordionPro.ie.ie8.horizontal.rtl .slide > h2 { -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)" }
-.accordionPro.ie.ie8.horizontal.rtl .slide > h2 b { -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)" }
+
+/* ie8 transparent (horizontal) */
+.accordionPro.ie.ie8.horizontal.transparent .slide > h2 { background: white; -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3), progid:DXImageTransform.Microsoft.Alpha(Opacity=0)" }
+.accordionPro.ie.ie8.horizontal.transparent .slide > h2 * { -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1), progid:DXImageTransform.Microsoft.Alpha(Opacity=0)" }
+.accordionPro.ie.ie8.horizontal.transparent .slide > h2:hover { background: white; -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3), progid:DXImageTransform.Microsoft.Alpha(Opacity=50)" }
+
+/* ie8 transparent (vertical) */
+.accordionPro.ie.ie8.vertical.transparent .slide > h2 { background: white; -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)" }
+.accordionPro.ie.ie8.vertical.transparent .slide > h2 * { -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)" }
+.accordionPro.ie.ie8.vertical.transparent .slide > h2:hover { background: white; -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)" }
+
+/* ie8 rtl */
+.accordionPro.ie.ie8.horizontal.rtl .slide > h2 { -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)"; }
+.accordionPro.ie.ie8.horizontal.rtl .slide > h2 b { -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)"; left: 85% !important }
+
+/* ie8 rtl transparent */
+.accordionPro.ie.ie8.horizontal.rtl.transparent .slide > h2 { background: white; -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1), progid:DXImageTransform.Microsoft.Alpha(Opacity=0)" }
+.accordionPro.ie.ie8.horizontal.rtl.transparent .slide > h2 * { -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3), progid:DXImageTransform.Microsoft.Alpha(Opacity=0)" }
+.accordionPro.ie.ie8.horizontal.rtl.transparent .slide > h2:hover { background: white; -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3), progid:DXImageTransform.Microsoft.Alpha(Opacity=50)" }
+
+/* ie9 */
 .accordionPro.ie.ie9.horizontal .slide > h2 { -ms-transform: translateX(-100%) rotate(-90deg); -ms-transform-origin: right top }
 .accordionPro.ie.ie9.horizontal .slide > h2 b { -ms-transform: rotate(90deg) }
 .accordionPro.ie.ie9.horizontal.rtl .slide > h2 { -ms-transform: translateX(100%) rotate(90deg); -ms-transform-origin: left top }
@@ -379,9 +399,12 @@
 .accordionPro.ie.light .slide > h2 b { background: #EDEDED }
 .accordionPro.ie.light .slide.selected > h2 b { background: #FFFFFF }
 
-.accordionPro.ie.ie8 .slide > h2 b { width: 5%; top: 44%; left: 5% }
+.accordionPro.ie.ie8.horizontal .slide > h2 b { width: 5%; top: 44% !important; left: 3% }
+.accordionPro.ie.ie8.horizontal.rtl .slide > h2 b,
+.accordionPro.ie.ie8.horizontal.stitch .slide > h2 b { top: 32% !important }
+.accordionPro.ie.ie8.horizontal.basic .slide > h2 b { top: 38% !important }
 .accordionPro.ie.ie8.vertical .slide > h2 b { text-align: right; top: 1px !important; left: auto; right: 5%; }
-.accordionPro.ie.ie8.horizontal.stitch .slide > h2 b { top: 34% !important }
+
 .accordionPro.ie.ie8.vertical.rtl.light .slide > h2 b { background: #EDEDED }
 .accordionPro.ie.ie8.vertical.rtl.light .slide.selected > h2 b { background: #FFFFFF }
 .accordionPro.ie.ie8.vertical.rtl.dark .slide.selected > h2 b { background: #555555 }
@@ -390,4 +413,3 @@
 .accordionPro.ie.ie9.stitch .slide > h2 b { background-color: transparent !important }
 .accordionPro.ie.ie9.stitch { box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4) }
 .accordionPro.ie.ie9.vertical.stitch .slide > h2 b { top: 1px !important }
-
