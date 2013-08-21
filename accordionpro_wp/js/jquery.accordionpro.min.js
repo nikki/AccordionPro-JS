@@ -31,7 +31,7 @@ p)))}var g=this,d=c.isFunction(c.Deferred)?c.Deferred():0,r=c.isFunction(d.notif
 n();return d?d.promise(g):g}})(jQuery);
 
 /**
- * Project:    Accordion Pro - a responsive accordion plugin for jQuery
+ * Project:    Accordion Pro JS - a responsive accordion plugin for jQuery
  * Author:     Nicola Hibbert
  * URL:        http://codecanyon.net/item/accordion-pro/1506395?ref=nicolahibbert
  * Demo:       http://accordionpro.nicolahibbert.com/

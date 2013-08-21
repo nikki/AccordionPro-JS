@@ -24,7 +24,7 @@
 
     <ul>
       <li><a href="index.php">index</a></li>
-      <li><a href="vertical.php">index vertical</a></li>
+      <li><a href="index-vertical.php">index vertical</a></li>
 
       <li><a href="startclosed.php">startclosed</a></li>
       <li><a href="startclosed-vertical.php">startclosed vertical</a></li>
@@ -40,17 +40,9 @@
 
       <li><a href="rtl-startclosed.php">rtl startclosed</a></li>
       <li><a href="rtl-vertical-startclosed.php">rtl vertical startclosed</a></li>
-
-      <li><a href="autoplay.php">autoplay</a></li>
-      <li><a href="autoplay-vertical.php">autoplay-vertical</a></li>
-
-      <li><a href="slidenumbers.php">disable slidenumbers</a></li>
-      <li><a href="slidenumbers-vertical.php">disable slidenumbers vertical</a></li>
-
-      <li><a href="vertical-fittocontent.php">vertical fittocontent</a></li>
     </ul>
 
-    <h1>Basic setup - horizontal accordion</h1>
+    <h1>Autoplay - vertical accordion</h1>
 
     <?php
 /*
@@ -91,24 +83,29 @@
       // have to wrap bools in string for js
       $jQueryOptions = array(
         'basic' => array(
-          'orientation' => 'horizontal',
-          'theme'       => 'basic'
+          'orientation' => 'vertical',
+          'theme'       => 'basic',
+          'autoPlay'    => 'true'
         ),
         'dark' => array(
-          'orientation' => 'horizontal',
-          'theme'       => 'dark'
+          'orientation' => 'vertical',
+          'theme'       => 'dark',
+          'autoPlay'    => 'true'
         ),
         'light' => array(
-          'orientation' => 'horizontal',
-          'theme'       => 'light'
+          'orientation' => 'vertical',
+          'theme'       => 'light',
+          'autoPlay'    => 'true'
         ),
         'stitch' => array(
-          'orientation' => 'horizontal',
-          'theme'       => 'stitch'
+          'orientation' => 'vertical',
+          'theme'       => 'stitch',
+          'autoPlay'    => 'true'
         ),
         'transparent' => array(
-          'orientation' => 'horizontal',
-          'theme'       => 'transparent'
+          'orientation' => 'vertical',
+          'theme'       => 'transparent',
+          'autoPlay'    => 'true'
         )
       );
 

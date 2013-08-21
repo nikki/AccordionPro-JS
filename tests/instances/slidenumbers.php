@@ -24,7 +24,7 @@
 
     <ul>
       <li><a href="index.php">index</a></li>
-      <li><a href="vertical.php">index vertical</a></li>
+      <li><a href="index-vertical.php">index vertical</a></li>
 
       <li><a href="startclosed.php">startclosed</a></li>
       <li><a href="startclosed-vertical.php">startclosed vertical</a></li>
@@ -43,14 +43,9 @@
 
       <li><a href="autoplay.php">autoplay</a></li>
       <li><a href="autoplay-vertical.php">autoplay-vertical</a></li>
-
-      <li><a href="slidenumbers.php">disable slidenumbers</a></li>
-      <li><a href="slidenumbers-vertical.php">disable slidenumbers vertical</a></li>
-
-      <li><a href="vertical-fittocontent.php">vertical fittocontent</a></li>
     </ul>
 
-    <h1>Basic setup - horizontal accordion</h1>
+    <h1>Disable slide numbers - horizontal</h1>
 
     <?php
 /*
@@ -92,23 +87,28 @@
       $jQueryOptions = array(
         'basic' => array(
           'orientation' => 'horizontal',
-          'theme'       => 'basic'
+          'theme'       => 'basic',
+          'showSlideNumbers' => 'false'
         ),
         'dark' => array(
           'orientation' => 'horizontal',
-          'theme'       => 'dark'
+          'theme'       => 'dark',
+          'showSlideNumbers' => 'false'
         ),
         'light' => array(
           'orientation' => 'horizontal',
-          'theme'       => 'light'
+          'theme'       => 'light',
+          'showSlideNumbers' => 'false'
         ),
         'stitch' => array(
           'orientation' => 'horizontal',
-          'theme'       => 'stitch'
+          'theme'       => 'stitch',
+          'showSlideNumbers' => 'false'
         ),
         'transparent' => array(
           'orientation' => 'horizontal',
-          'theme'       => 'transparent'
+          'theme'       => 'transparent',
+          'showSlideNumbers' => 'false'
         )
       );
 
@@ -168,7 +168,15 @@
             </noscript>
             <script>
               (function() {
-                $('#<?php echo $key; ?>').accordionPro(<?php echo json_encode($value); ?>);
+                var opts = <?php echo json_encode($value); ?>;
+                for (var o in opts) {
+                  if (opts.hasOwnProperty(o)) {
+                    // recast string as boolean
+                    if (opts[o] === 'false') opts[o] = false;
+                  }
+                }
+
+                $('#<?php echo $key; ?>').accordionPro(opts);
               })();
             </script>
         </div>
