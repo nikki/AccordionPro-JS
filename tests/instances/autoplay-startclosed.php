@@ -10,7 +10,7 @@
     .wrapper { width: 100% }
     h1, dd { margin: 0 }
     dt { font-weight: bold }
-    figure { float: left; display: block; width: 100%; overflow: hidden; margin: 0 }
+    figure { display: block; width: 100%; height: 100%; margin: 0 }
     figcaption { padding: 10px 15px; position: absolute; bottom: 20px; right: 30px; z-index: 3; background: black; background: rgba(0,0,0,0.7); color: white;
         -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px }
   </style>
@@ -24,7 +24,7 @@
 
     <ul>
       <li><a href="index.php">index</a></li>
-      <li><a href="vertical.php">index vertical</a></li>
+      <li><a href="index-vertical.php">index vertical</a></li>
 
       <li><a href="startclosed.php">startclosed</a></li>
       <li><a href="startclosed-vertical.php">startclosed vertical</a></li>
@@ -40,29 +40,9 @@
 
       <li><a href="rtl-startclosed.php">rtl startclosed</a></li>
       <li><a href="rtl-vertical-startclosed.php">rtl vertical startclosed</a></li>
-
-      <li><a href="autoplay.php">autoplay</a></li>
-      <li><a href="autoplay-vertical.php">autoplay-vertical</a></li>
-
-      <li><a href="autoplay-startclosed-firstslide.php">autoplay startclosed firstslide</a></li>
-      <li><a href="autoplay-startclosed.php">autoplay startclosed</a></li>
-      <li><a href="autoplay-vertical-startclosed.php">autoplay vertical startclosed</a></li>
-
-      <li><a href="slidenumbers.php">disable slidenumbers</a></li>
-      <li><a href="slidenumbers-vertical.php">disable slidenumbers vertical</a></li>
-
-      <li><a href="linkable.php">linkable</a></li>
-      <a href="/tests/instances/linkable-vertical.php">linkable vertical</a>
-      <a href="/tests/instances/linkable-autoplay.php">linkable autoplay</a>
-      <a href="/tests/instances/linkable-vertical-autoplay.php">linkable vertical autoplay</a>
-
-      <li><a href="vertical-fittocontent.php">vertical fittocontent</a></li>
     </ul>
 
-
-
-
-    <h1>Basic setup - horizontal accordion</h1>
+    <h1>Autoplay startclosed - horizontal accordion</h1>
 
     <?php
 /*
@@ -104,23 +84,33 @@
       $jQueryOptions = array(
         'basic' => array(
           'orientation' => 'horizontal',
-          'theme'       => 'basic'
+          'theme'       => 'basic',
+          'autoPlay'    => 'true',
+          'startClosed' => 'true'
         ),
         'dark' => array(
           'orientation' => 'horizontal',
-          'theme'       => 'dark'
+          'theme'       => 'dark',
+          'autoPlay'    => 'true',
+          'startClosed' => 'true'
         ),
         'light' => array(
           'orientation' => 'horizontal',
-          'theme'       => 'light'
+          'theme'       => 'light',
+          'autoPlay'    => 'true',
+          'startClosed' => 'true'
         ),
         'stitch' => array(
           'orientation' => 'horizontal',
-          'theme'       => 'stitch'
+          'theme'       => 'stitch',
+          'autoPlay'    => 'true',
+          'startClosed' => 'true'
         ),
         'transparent' => array(
           'orientation' => 'horizontal',
-          'theme'       => 'transparent'
+          'theme'       => 'transparent',
+          'autoPlay'    => 'true',
+          'startClosed' => 'true'
         )
       );
 

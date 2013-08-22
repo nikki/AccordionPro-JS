@@ -21,14 +21,11 @@
 
 
 /*!
- * jQuery imagesLoaded plugin v2.1.1
- * http://github.com/desandro/imagesloaded
- *
- * MIT License. by Paul Irish et al.
+ * imagesLoaded PACKAGED v3.0.4
+ * JavaScript is all like "You images are done yet or what?"
  */
-;(function(c,q){var m="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";c.fn.imagesLoaded=function(f){function n(){var b=c(j),a=c(h);d&&(h.length?d.reject(e,b,a):d.resolve(e));c.isFunction(f)&&f.call(g,e,b,a)}function p(b){k(b.target,"error"===b.type)}function k(b,a){b.src===m||-1!==c.inArray(b,l)||(l.push(b),a?h.push(b):j.push(b),c.data(b,"imagesLoaded",{isBroken:a,src:b.src}),r&&d.notifyWith(c(b),[a,e,c(j),c(h)]),e.length===l.length&&(setTimeout(n),e.unbind(".imagesLoaded",
-p)))}var g=this,d=c.isFunction(c.Deferred)?c.Deferred():0,r=c.isFunction(d.notify),e=g.find("img").add(g.filter("img")),l=[],j=[],h=[];c.isPlainObject(f)&&c.each(f,function(b,a){if("callback"===b)f=a;else if(d)d[b](a)});e.length?e.bind("load.imagesLoaded error.imagesLoaded",p).each(function(b,a){var d=a.src,e=c.data(a,"imagesLoaded");if(e&&e.src===d)k(a,e.isBroken);else if(a.complete&&a.naturalWidth!==q)k(a,0===a.naturalWidth||0===a.naturalHeight);else if(a.readyState||a.complete)a.src=m,a.src=d}):
-n();return d?d.promise(g):g}})(jQuery);
+
+(function(){"use strict";function e(){}function t(e,t){for(var n=e.length;n--;)if(e[n].listener===t)return n;return-1}var n=e.prototype;n.getListeners=function(e){var t,n,i=this._getEvents();if("object"==typeof e){t={};for(n in i)i.hasOwnProperty(n)&&e.test(n)&&(t[n]=i[n])}else t=i[e]||(i[e]=[]);return t},n.flattenListeners=function(e){var t,n=[];for(t=0;e.length>t;t+=1)n.push(e[t].listener);return n},n.getListenersAsObject=function(e){var t,n=this.getListeners(e);return n instanceof Array&&(t={},t[e]=n),t||n},n.addListener=function(e,n){var i,r=this.getListenersAsObject(e),o="object"==typeof n;for(i in r)r.hasOwnProperty(i)&&-1===t(r[i],n)&&r[i].push(o?n:{listener:n,once:!1});return this},n.on=n.addListener,n.addOnceListener=function(e,t){return this.addListener(e,{listener:t,once:!0})},n.once=n.addOnceListener,n.defineEvent=function(e){return this.getListeners(e),this},n.defineEvents=function(e){for(var t=0;e.length>t;t+=1)this.defineEvent(e[t]);return this},n.removeListener=function(e,n){var i,r,o=this.getListenersAsObject(e);for(r in o)o.hasOwnProperty(r)&&(i=t(o[r],n),-1!==i&&o[r].splice(i,1));return this},n.off=n.removeListener,n.addListeners=function(e,t){return this.manipulateListeners(!1,e,t)},n.removeListeners=function(e,t){return this.manipulateListeners(!0,e,t)},n.manipulateListeners=function(e,t,n){var i,r,o=e?this.removeListener:this.addListener,s=e?this.removeListeners:this.addListeners;if("object"!=typeof t||t instanceof RegExp)for(i=n.length;i--;)o.call(this,t,n[i]);else for(i in t)t.hasOwnProperty(i)&&(r=t[i])&&("function"==typeof r?o.call(this,i,r):s.call(this,i,r));return this},n.removeEvent=function(e){var t,n=typeof e,i=this._getEvents();if("string"===n)delete i[e];else if("object"===n)for(t in i)i.hasOwnProperty(t)&&e.test(t)&&delete i[t];else delete this._events;return this},n.emitEvent=function(e,t){var n,i,r,o,s=this.getListenersAsObject(e);for(r in s)if(s.hasOwnProperty(r))for(i=s[r].length;i--;)n=s[r][i],o=n.listener.apply(this,t||[]),(o===this._getOnceReturnValue()||n.once===!0)&&this.removeListener(e,s[r][i].listener);return this},n.trigger=n.emitEvent,n.emit=function(e){var t=Array.prototype.slice.call(arguments,1);return this.emitEvent(e,t)},n.setOnceReturnValue=function(e){return this._onceReturnValue=e,this},n._getOnceReturnValue=function(){return this.hasOwnProperty("_onceReturnValue")?this._onceReturnValue:!0},n._getEvents=function(){return this._events||(this._events={})},"function"==typeof define&&define.amd?define(function(){return e}):"undefined"!=typeof module&&module.exports?module.exports=e:this.EventEmitter=e}).call(this),function(e){"use strict";var t=document.documentElement,n=function(){};t.addEventListener?n=function(e,t,n){e.addEventListener(t,n,!1)}:t.attachEvent&&(n=function(t,n,i){t[n+i]=i.handleEvent?function(){var t=e.event;t.target=t.target||t.srcElement,i.handleEvent.call(i,t)}:function(){var n=e.event;n.target=n.target||n.srcElement,i.call(t,n)},t.attachEvent("on"+n,t[n+i])});var i=function(){};t.removeEventListener?i=function(e,t,n){e.removeEventListener(t,n,!1)}:t.detachEvent&&(i=function(e,t,n){e.detachEvent("on"+t,e[t+n]);try{delete e[t+n]}catch(i){e[t+n]=void 0}});var r={bind:n,unbind:i};"function"==typeof define&&define.amd?define(r):e.eventie=r}(this),function(e){"use strict";function t(e,t){for(var n in t)e[n]=t[n];return e}function n(e){return"[object Array]"===c.call(e)}function i(e){var t=[];if(n(e))t=e;else if("number"==typeof e.length)for(var i=0,r=e.length;r>i;i++)t.push(e[i]);else t.push(e);return t}function r(e,n){function r(e,n,s){if(!(this instanceof r))return new r(e,n);"string"==typeof e&&(e=document.querySelectorAll(e)),this.elements=i(e),this.options=t({},this.options),"function"==typeof n?s=n:t(this.options,n),s&&this.on("always",s),this.getImages(),o&&(this.jqDeferred=new o.Deferred);var a=this;setTimeout(function(){a.check()})}function c(e){this.img=e}r.prototype=new e,r.prototype.options={},r.prototype.getImages=function(){this.images=[];for(var e=0,t=this.elements.length;t>e;e++){var n=this.elements[e];"IMG"===n.nodeName&&this.addImage(n);for(var i=n.querySelectorAll("img"),r=0,o=i.length;o>r;r++){var s=i[r];this.addImage(s)}}},r.prototype.addImage=function(e){var t=new c(e);this.images.push(t)},r.prototype.check=function(){function e(e,r){return t.options.debug&&a&&s.log("confirm",e,r),t.progress(e),n++,n===i&&t.complete(),!0}var t=this,n=0,i=this.images.length;if(this.hasAnyBroken=!1,!i)return this.complete(),void 0;for(var r=0;i>r;r++){var o=this.images[r];o.on("confirm",e),o.check()}},r.prototype.progress=function(e){this.hasAnyBroken=this.hasAnyBroken||!e.isLoaded;var t=this;setTimeout(function(){t.emit("progress",t,e),t.jqDeferred&&t.jqDeferred.notify(t,e)})},r.prototype.complete=function(){var e=this.hasAnyBroken?"fail":"done";this.isComplete=!0;var t=this;setTimeout(function(){if(t.emit(e,t),t.emit("always",t),t.jqDeferred){var n=t.hasAnyBroken?"reject":"resolve";t.jqDeferred[n](t)}})},o&&(o.fn.imagesLoaded=function(e,t){var n=new r(this,e,t);return n.jqDeferred.promise(o(this))});var f={};return c.prototype=new e,c.prototype.check=function(){var e=f[this.img.src];if(e)return this.useCached(e),void 0;if(f[this.img.src]=this,this.img.complete&&void 0!==this.img.naturalWidth)return this.confirm(0!==this.img.naturalWidth,"naturalWidth"),void 0;var t=this.proxyImage=new Image;n.bind(t,"load",this),n.bind(t,"error",this),t.src=this.img.src},c.prototype.useCached=function(e){if(e.isConfirmed)this.confirm(e.isLoaded,"cached was confirmed");else{var t=this;e.on("confirm",function(e){return t.confirm(e.isLoaded,"cache emitted confirmed"),!0})}},c.prototype.confirm=function(e,t){this.isConfirmed=!0,this.isLoaded=e,this.emit("confirm",this,t)},c.prototype.handleEvent=function(e){var t="on"+e.type;this[t]&&this[t](e)},c.prototype.onload=function(){this.confirm(!0,"onload"),this.unbindProxyEvents()},c.prototype.onerror=function(){this.confirm(!1,"onerror"),this.unbindProxyEvents()},c.prototype.unbindProxyEvents=function(){n.unbind(this.proxyImage,"load",this),n.unbind(this.proxyImage,"error",this)},r}var o=e.jQuery,s=e.console,a=s!==void 0,c=Object.prototype.toString;"function"==typeof define&&define.amd?define(["eventEmitter/EventEmitter","eventie/eventie"],r):e.imagesLoaded=r(e.EventEmitter,e.eventie)}(window);
 
 /**
  * Project:    Accordion Pro JS - a responsive accordion plugin for jQuery
@@ -67,7 +64,7 @@ n();return d?d.promise(g):g}})(jQuery);
 
       /* horizontal accordion options */
       responsive : true,                      // accordion will adapt itself to the page layout, based on width of parent element
-      scaleImagesToFit : true,                // scales images to fit slide width and height
+      scaleImages : true,                     // scales images to fit slide width and height
       horizontalWidth : 900,                  // base width; fixed (px [integer]) - responsive scaling is relative to this value
       horizontalHeight : 300,                 // base horizontal accordion height; fixed (px [integer]) - responsive scaling is relative to this value
 
@@ -166,7 +163,7 @@ n();return d?d.promise(g):g}})(jQuery);
         .off('.accordionPro')
         .removeData('accordionPro')
         .removeAttr('style')
-        .removeClass('accordionPro horizontal vertical basic dark light stitch transparent rounded rtl closed responsive scaleImages')
+        .removeClass('accordionPro horizontal vertical basic dark light stitch transparent rounded rtl closed responsive fitToContent scaleImages')
         .find('li > :first-child')
         .off('.accordionPro')
         .end()
@@ -207,7 +204,8 @@ n();return d?d.promise(g):g}})(jQuery);
         .addClass(settings.rounded && 'rounded')
         .addClass(settings.theme)
         .addClass(settings.rtl && 'rtl')
-        .addClass(settings.scaleImagesToFit && 'scaleImages');
+        .addClass(!orientation && fitToContent && 'fitToContent')
+        .addClass(settings.scaleImages && 'scaleImages');
 
       // add slide class to each slide
       slides.addClass('slide');
@@ -241,7 +239,7 @@ n();return d?d.promise(g):g}})(jQuery);
     };
 
     setup.getSlideCss = function(index, selected) {
-      var fitToContentHeight = 0,
+      var $this = this,
           css = {
             slide : {},
             tab : {},
@@ -254,32 +252,20 @@ n();return d?d.promise(g):g}})(jQuery);
         slide.h = parent.h;
 
         // calculate slide properties
-        css.slide.width = slide.w + tab.h;
-        css.slide.height = '100%';
-        css.slide.position = { left : index * tab.h, top : 0 };
+        css.slide = { width : slide.w + tab.h, height : '100%', position : { left : index * tab.h, top : 0 }};
 
         // calculate tab properties
         css.tab.width = slide.h;
 
         // calculate content panel properties
-        if (!transparent) {
-          css.panel.width = slide.w - offset;
-          css.panel.height = slide.h;
-          css.panel.position = { left : tab.h, top : 0 };
-        } else {
-          css.panel.width = slide.w + tab.h;
-          css.panel.height = slide.h;
-          css.panel.position = { left : 0, top : 0 };
-        }
+        css.panel = transparent
+          ? { width : slide.w + tab.h, height : slide.h, position : { left : 0, top : 0 }}
+          : { width : slide.w - offset, height : slide.h, position : { left : tab.h, top : 0 }};
 
         // adjust for rtl if necessary
         if (settings.rtl) {
           css.slide.position = { left : 'auto', right : index * tab.h, top : 0 };
-          if (!transparent) {
-            css.panel.position = { left : 'auto', right : tab.h - offset, top : 0 };
-          } else {
-            css.panel.position = { left : 'auto', right : 0 - offset, top : 0 };
-          }
+          css.panel.position = transparent ? { left : 'auto', right : 0 - offset, top : 0 } : { left : 'auto', right : tab.h - offset, top : 0 };
         }
 
         // compensate for pre-selected slide
@@ -291,35 +277,16 @@ n();return d?d.promise(g):g}})(jQuery);
 
         // calculate slide properties
         if (fitToContent) {
-          // calculate height of slide based on contents
-          this.children('div').children().each(function() {
-            fitToContentHeight += $(this).outerHeight();
-          });
-
-          // assign content height to slide
-          if (!transparent) {
-            css.slide.height = fitToContentHeight + tab.h + offset;
-            css.panel.height = fitToContentHeight;
-          } else {
-
-          }
+          css.panel.height = $this.children('div').height();
+          css.slide.height = transparent ? css.panel.height : css.panel.height + tab.h;
         } else {
           // fixed height
           css.slide.height = slide.h + tab.h;
-          if (!transparent) {
-            css.panel.height = css.slide.height - tab.h - offset;
-          } else {
-            css.panel.height = css.slide.height;
-          }
+          css.panel.height = transparent ? css.slide.height : css.slide.height - tab.h - offset;
         }
 
         // panel positions
-        if (!transparent) {
-          css.panel.position = { top : tab.h, left : 0 };
-        } else {
-          css.panel.position = { top : 0, left : 0 };
-        }
-
+        css.panel.position = transparent ? { top : 0, left : 0 } : { top : tab.h, left : 0 };
         css.slide.position = { top : index * tab.h, left : 0 };
         css.slide.width = css.tab.width = css.panel.width = '100%';
 
@@ -347,6 +314,7 @@ n();return d?d.promise(g):g}})(jQuery);
         selected = slides.filter('.selected');
       }
 
+      // wait a tick to get calculated heights
       slides.each(function(index) {
         var $this = $(this),
             css = setup.getSlideCss.call($this, index, selected),
@@ -358,6 +326,7 @@ n();return d?d.promise(g):g}})(jQuery);
           .width(css.slide.width)
           .height(css.slide.height)
           .css(css.slide.position)
+          // slide name = div id + -slide- + index
           .attr('data-slide-name', elem[0].id + '-slide-' + (index + 1))
             .children('h2')
             .width(css.tab.width)
@@ -444,7 +413,7 @@ n();return d?d.promise(g):g}})(jQuery);
           down : function() {
             if (!orientation && core.currentSlide) methods.prev();
           },
-          threshold: { x: 100, y: 100 }
+          threshold: { x: 80, y: 80 }
         });
       }
 
@@ -452,10 +421,10 @@ n();return d?d.promise(g):g}})(jQuery);
       if (settings.pauseOnHover && settings.autoPlay) {
         elem
           .on('mouseover.accordionPro', function() {
-            core.playing && methods.stop();
+            if (!elem.hasClass('closed')) core.playing && methods.stop();
           })
           .on('mouseout.accordionPro', function() {
-            !core.playing && methods.play(core.currentSlide);
+            if (!elem.hasClass('closed')) !core.playing && methods.play(core.currentSlide);
           });
       }
 
@@ -567,6 +536,9 @@ n();return d?d.promise(g):g}})(jQuery);
 
         // trigger responsive reflow
         if (orientation && settings.responsive) core.scale();
+
+        // trigger autoplay
+        if (!settings.startClosed && settings.autoPlay) methods.play();
       }
     };
 
@@ -577,7 +549,7 @@ n();return d?d.promise(g):g}})(jQuery);
             height : (slide.l - 1) * tab.h + border + selected.height()
           }, settings.slideSpeed);
 
-        // consideration of border not required with height (jQ box model calc bug?)
+        // consideration of border not required with height
         elem.height((slide.l - 1) * tab.h + selected.height());
       }
     };
@@ -840,27 +812,30 @@ n();return d?d.promise(g):g}})(jQuery);
       // FOUC prevention
       elem.hide();
 
-      // setup dimensions, styles, slide positions and events
-      setup.styles();
-
-      // check images are loaded before setting up slide positions
-      elem.imagesLoaded(function() {
-        setup.dimensions();
-        setup.ie();
-        setup.slidePositions();
-        setup.events();
-        if (settings.startClosed || fitToContent) setup.startClosed();
-        elem.show(); // images loaded -> set plugin to visible
-      });
-
-      // check slide speed is not faster than cycle speed
-      if (settings.cycleSpeed < settings.slideSpeed) settings.cycleSpeed = settings.slideSpeed;
+      // fitToContent and scaleImages not compatible (?)
+      if (fitToContent) settings.scaleImages = false;
 
       // linkable and startClosed not compatible
       if (settings.linkable) settings.startClosed = false;
 
+      // check slide speed is not faster than cycle speed
+      if (settings.cycleSpeed < settings.slideSpeed) settings.cycleSpeed = settings.slideSpeed;
+
+      // setup dimensions, styles, slide positions and events
+      setup.styles();
+
+      // check images are loaded before setting up slide positions
+      imagesLoaded(elem, function() {
+        setup.dimensions();
+        setup.ie();
+        elem.show(); // images loaded -> set plugin to visible before slidepositions need setting
+        setup.slidePositions();
+        setup.events();
+        if (settings.startClosed) setup.startClosed();
+      });
+
       // init autoplay
-      if (settings.autoPlay) methods.play();
+      if (!settings.startClosed && settings.autoPlay) methods.play();
     };
 
     // init plugin

@@ -10,7 +10,7 @@
     .wrapper { width: 100% }
     h1, dd { margin: 0 }
     dt { font-weight: bold }
-    figure { display: block; width: 100%; height: 100%; margin: 0 }
+    figure { display: block; width: 100%; margin: 0 }
     figcaption { padding: 10px 15px; position: absolute; bottom: 20px; right: 30px; z-index: 3; background: black; background: rgba(0,0,0,0.7); color: white;
         -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px }
   </style>
@@ -22,7 +22,7 @@
 
   <div class="wrapper">
 
-    <h1>Basic setup - vertical accordion</h1>
+    <h1>Fit to content - vertical accordion</h1>
 
     <?php
 /*
@@ -97,6 +97,7 @@
                     <h2><span>Slide One</span></h2>
                     <div>
                         <figure>
+                            <p>Some text goes in here. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, voluptate, itaque, dolorum, culpa perferendis atque non officia eum esse sequi nisi delectus sunt minima dolores laborum architecto expedita commodi similique!</p>
                             <img src="../../build/accordionpro_js/img-demo/1.jpg" alt="image" />
                             <figcaption class="ap-caption">Slide One</figcaption>
                         </figure>
@@ -106,8 +107,11 @@
                     <h2><span>Slide Two</span></h2>
                     <div>
                         <figure>
-                            <p>Some text goes in here.</p>
-                            <!-- <iframe width="715" height="320" src="http://www.youtube.com/embed/QH2-TGUlwu4" frameborder="0" allowfullscreen></iframe> -->
+                            <p>Some text goes in here. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, voluptate, itaque, dolorum, culpa perferendis atque non officia eum esse sequi nisi delectus sunt minima dolores laborum architecto expedita commodi similique!</p>
+                            <p>Some text goes in here. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, voluptate, itaque, dolorum, culpa perferendis atque non officia eum esse sequi nisi delectus sunt minima dolores laborum architecto expedita commodi similique!</p>
+                            <p>Some text goes in here. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, voluptate, itaque, dolorum, culpa perferendis atque non officia eum esse sequi nisi delectus sunt minima dolores laborum architecto expedita commodi similique!</p>
+                            <p>Some text goes in here. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, voluptate, itaque, dolorum, culpa perferendis atque non officia eum esse sequi nisi delectus sunt minima dolores laborum architecto expedita commodi similique!</p>
+                            <p>Some text goes in here. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, voluptate, itaque, dolorum, culpa perferendis atque non officia eum esse sequi nisi delectus sunt minima dolores laborum architecto expedita commodi similique!</p>
                             <figcaption class="ap-caption">Slide Two</figcaption>
                         </figure>
                     </div>
@@ -115,10 +119,8 @@
                 <li>
                     <h2><span>Slide Three</span></h2>
                     <div>
-                        <figure>
-                            <img src="../../build/accordionpro_js/img-demo/3.jpg" alt="image" />
-                            <figcaption class="ap-caption">Slide Three</figcaption>
-                        </figure>
+                      <img src="../../build/accordionpro_js/img-demo/3.jpg" alt="image" />
+                      <p>Some text goes in here. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, voluptate, itaque, dolorum, culpa perferendis atque non officia eum esse sequi nisi delectus sunt minima dolores laborum architecto expedita commodi similique!</p>
                     </div>
                 </li>
                 <li>

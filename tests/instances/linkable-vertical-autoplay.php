@@ -10,7 +10,7 @@
     .wrapper { width: 100% }
     h1, dd { margin: 0 }
     dt { font-weight: bold }
-    figure { float: left; display: block; width: 100%; overflow: hidden; margin: 0 }
+    figure { display: block; width: 100%; height: 100%; margin: 0 }
     figcaption { padding: 10px 15px; position: absolute; bottom: 20px; right: 30px; z-index: 3; background: black; background: rgba(0,0,0,0.7); color: white;
         -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px }
   </style>
@@ -51,18 +51,15 @@
       <li><a href="slidenumbers.php">disable slidenumbers</a></li>
       <li><a href="slidenumbers-vertical.php">disable slidenumbers vertical</a></li>
 
+
       <li><a href="linkable.php">linkable</a></li>
-      <a href="/tests/instances/linkable-vertical.php">linkable vertical</a>
-      <a href="/tests/instances/linkable-autoplay.php">linkable autoplay</a>
-      <a href="/tests/instances/linkable-vertical-autoplay.php">linkable vertical autoplay</a>
+
 
       <li><a href="vertical-fittocontent.php">vertical fittocontent</a></li>
+
     </ul>
 
-
-
-
-    <h1>Basic setup - horizontal accordion</h1>
+    <h1>Linkable autoplay - vertical accordion</h1>
 
     <?php
 /*
@@ -103,24 +100,34 @@
       // have to wrap bools in string for js
       $jQueryOptions = array(
         'basic' => array(
-          'orientation' => 'horizontal',
-          'theme'       => 'basic'
+          'orientation' => 'vertical',
+          'theme'       => 'basic',
+          'linkable'    => 'true',
+          'autoPlay'    => 'true'
         ),
         'dark' => array(
-          'orientation' => 'horizontal',
-          'theme'       => 'dark'
+          'orientation' => 'vertical',
+          'theme'       => 'dark',
+          'linkable'    => 'true',
+          'autoPlay'    => 'true'
         ),
         'light' => array(
-          'orientation' => 'horizontal',
-          'theme'       => 'light'
+          'orientation' => 'vertical',
+          'theme'       => 'light',
+          'linkable'    => 'true',
+          'autoPlay'    => 'true'
         ),
         'stitch' => array(
-          'orientation' => 'horizontal',
-          'theme'       => 'stitch'
+          'orientation' => 'vertical',
+          'theme'       => 'stitch',
+          'linkable'    => 'true',
+          'autoPlay'    => 'true'
         ),
         'transparent' => array(
-          'orientation' => 'horizontal',
-          'theme'       => 'transparent'
+          'orientation' => 'vertical',
+          'theme'       => 'transparent',
+          'linkable'    => 'true',
+          'autoPlay'    => 'true'
         )
       );
 
@@ -184,6 +191,18 @@
               })();
             </script>
         </div>
+
+        <div>
+          <h2>Links</h2>
+          <ul>
+            <li><a href="#<?php echo $key; ?>-slide-1">one</a></li>
+            <li><a href="#<?php echo $key; ?>-slide-2">two</a></li>
+            <li><a href="#<?php echo $key; ?>-slide-3">three</a></li>
+            <li><a href="#<?php echo $key; ?>-slide-4">four</a></li>
+            <li><a href="#<?php echo $key; ?>-slide-5">five</a></li>
+          </ul>
+        </div>
+
     <?php } ?>
   </div>
 

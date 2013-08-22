@@ -2,7 +2,6 @@
 var fs = require('fs'),
     ncp = require('ncp').ncp,
     path = '/Volumes/Nikki/webserver/projects/Accordion-Pro/';
-console.log('build');
 
 desc('Copy source css to build folder');
 task('cssSource', { async : true }, function() {
@@ -138,4 +137,6 @@ task('default', function() {
 
   // all other tasks are pre-reqs to this one
   // jake.Task['testWP'].execute(); // invoke -> run task & pre-reqs
+
+  console.log('Build completed.');
 });

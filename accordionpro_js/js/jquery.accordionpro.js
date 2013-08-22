@@ -35,7 +35,7 @@
 
       /* horizontal accordion options */
       responsive : true,                      // accordion will adapt itself to the page layout, based on width of parent element
-      scaleImagesToFit : true,                // scales images to fit slide width and height
+      scaleImages : true,                     // scales images to fit slide width and height
       horizontalWidth : 900,                  // base width; fixed (px [integer]) - responsive scaling is relative to this value
       horizontalHeight : 300,                 // base horizontal accordion height; fixed (px [integer]) - responsive scaling is relative to this value
 
@@ -134,7 +134,7 @@
         .off('.accordionPro')
         .removeData('accordionPro')
         .removeAttr('style')
-        .removeClass('accordionPro horizontal vertical basic dark light stitch transparent rounded rtl closed responsive scaleImages')
+        .removeClass('accordionPro horizontal vertical basic dark light stitch transparent rounded rtl closed responsive fitToContent scaleImages')
         .find('li > :first-child')
         .off('.accordionPro')
         .end()
@@ -175,7 +175,8 @@
         .addClass(settings.rounded && 'rounded')
         .addClass(settings.theme)
         .addClass(settings.rtl && 'rtl')
-        .addClass(settings.scaleImagesToFit && 'scaleImages');
+        .addClass(!orientation && fitToContent && 'fitToContent')
+        .addClass(settings.scaleImages && 'scaleImages');
 
       // add slide class to each slide
       slides.addClass('slide');
@@ -209,7 +210,7 @@
     };
 
     setup.getSlideCss = function(index, selected) {
-      var fitToContentHeight = 0,
+      var $this = this,
           css = {
             slide : {},
             tab : {},
@@ -222,32 +223,20 @@
         slide.h = parent.h;
 
         // calculate slide properties
-        css.slide.width = slide.w + tab.h;
-        css.slide.height = '100%';
-        css.slide.position = { left : index * tab.h, top : 0 };
+        css.slide = { width : slide.w + tab.h, height : '100%', position : { left : index * tab.h, top : 0 }};
 
         // calculate tab properties
         css.tab.width = slide.h;
 
         // calculate content panel properties
-        if (!transparent) {
-          css.panel.width = slide.w - offset;
-          css.panel.height = slide.h;
-          css.panel.position = { left : tab.h, top : 0 };
-        } else {
-          css.panel.width = slide.w + tab.h;
-          css.panel.height = slide.h;
-          css.panel.position = { left : 0, top : 0 };
-        }
+        css.panel = transparent
+          ? { width : slide.w + tab.h, height : slide.h, position : { left : 0, top : 0 }}
+          : { width : slide.w - offset, height : slide.h, position : { left : tab.h, top : 0 }};
 
         // adjust for rtl if necessary
         if (settings.rtl) {
           css.slide.position = { left : 'auto', right : index * tab.h, top : 0 };
-          if (!transparent) {
-            css.panel.position = { left : 'auto', right : tab.h - offset, top : 0 };
-          } else {
-            css.panel.position = { left : 'auto', right : 0 - offset, top : 0 };
-          }
+          css.panel.position = transparent ? { left : 'auto', right : 0 - offset, top : 0 } : { left : 'auto', right : tab.h - offset, top : 0 };
         }
 
         // compensate for pre-selected slide
@@ -259,35 +248,16 @@
 
         // calculate slide properties
         if (fitToContent) {
-          // calculate height of slide based on contents
-          this.children('div').children().each(function() {
-            fitToContentHeight += $(this).outerHeight();
-          });
-
-          // assign content height to slide
-          if (!transparent) {
-            css.slide.height = fitToContentHeight + tab.h + offset;
-            css.panel.height = fitToContentHeight;
-          } else {
-
-          }
+          css.panel.height = $this.children('div').height();
+          css.slide.height = transparent ? css.panel.height : css.panel.height + tab.h;
         } else {
           // fixed height
           css.slide.height = slide.h + tab.h;
-          if (!transparent) {
-            css.panel.height = css.slide.height - tab.h - offset;
-          } else {
-            css.panel.height = css.slide.height;
-          }
+          css.panel.height = transparent ? css.slide.height : css.slide.height - tab.h - offset;
         }
 
         // panel positions
-        if (!transparent) {
-          css.panel.position = { top : tab.h, left : 0 };
-        } else {
-          css.panel.position = { top : 0, left : 0 };
-        }
-
+        css.panel.position = transparent ? { top : 0, left : 0 } : { top : tab.h, left : 0 };
         css.slide.position = { top : index * tab.h, left : 0 };
         css.slide.width = css.tab.width = css.panel.width = '100%';
 
@@ -315,6 +285,7 @@
         selected = slides.filter('.selected');
       }
 
+      // wait a tick to get calculated heights
       slides.each(function(index) {
         var $this = $(this),
             css = setup.getSlideCss.call($this, index, selected),
@@ -326,6 +297,7 @@
           .width(css.slide.width)
           .height(css.slide.height)
           .css(css.slide.position)
+          // slide name = div id + -slide- + index
           .attr('data-slide-name', elem[0].id + '-slide-' + (index + 1))
             .children('h2')
             .width(css.tab.width)
@@ -412,7 +384,7 @@
           down : function() {
             if (!orientation && core.currentSlide) methods.prev();
           },
-          threshold: { x: 100, y: 100 }
+          threshold: { x: 80, y: 80 }
         });
       }
 
@@ -420,10 +392,10 @@
       if (settings.pauseOnHover && settings.autoPlay) {
         elem
           .on('mouseover.accordionPro', function() {
-            core.playing && methods.stop();
+            if (!elem.hasClass('closed')) core.playing && methods.stop();
           })
           .on('mouseout.accordionPro', function() {
-            !core.playing && methods.play(core.currentSlide);
+            if (!elem.hasClass('closed')) !core.playing && methods.play(core.currentSlide);
           });
       }
 
@@ -535,6 +507,9 @@
 
         // trigger responsive reflow
         if (orientation && settings.responsive) core.scale();
+
+        // trigger autoplay
+        if (!settings.startClosed && settings.autoPlay) methods.play();
       }
     };
 
@@ -545,7 +520,7 @@
             height : (slide.l - 1) * tab.h + border + selected.height()
           }, settings.slideSpeed);
 
-        // consideration of border not required with height (jQ box model calc bug?)
+        // consideration of border not required with height
         elem.height((slide.l - 1) * tab.h + selected.height());
       }
     };
@@ -808,27 +783,30 @@
       // FOUC prevention
       elem.hide();
 
-      // setup dimensions, styles, slide positions and events
-      setup.styles();
-
-      // check images are loaded before setting up slide positions
-      elem.imagesLoaded(function() {
-        setup.dimensions();
-        setup.ie();
-        setup.slidePositions();
-        setup.events();
-        if (settings.startClosed || fitToContent) setup.startClosed();
-        elem.show(); // images loaded -> set plugin to visible
-      });
-
-      // check slide speed is not faster than cycle speed
-      if (settings.cycleSpeed < settings.slideSpeed) settings.cycleSpeed = settings.slideSpeed;
+      // fitToContent and scaleImages not compatible (?)
+      if (fitToContent) settings.scaleImages = false;
 
       // linkable and startClosed not compatible
       if (settings.linkable) settings.startClosed = false;
 
+      // check slide speed is not faster than cycle speed
+      if (settings.cycleSpeed < settings.slideSpeed) settings.cycleSpeed = settings.slideSpeed;
+
+      // setup dimensions, styles, slide positions and events
+      setup.styles();
+
+      // check images are loaded before setting up slide positions
+      imagesLoaded(elem, function() {
+        setup.dimensions();
+        setup.ie();
+        elem.show(); // images loaded -> set plugin to visible before slidepositions need setting
+        setup.slidePositions();
+        setup.events();
+        if (settings.startClosed) setup.startClosed();
+      });
+
       // init autoplay
-      if (settings.autoPlay) methods.play();
+      if (!settings.startClosed && settings.autoPlay) methods.play();
     };
 
     // init plugin
