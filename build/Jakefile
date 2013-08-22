@@ -2,6 +2,7 @@
 var fs = require('fs'),
     ncp = require('ncp').ncp,
     path = '/Volumes/Nikki/webserver/projects/Accordion-Pro/';
+console.log('build');
 
 desc('Copy source css to build folder');
 task('cssSource', { async : true }, function() {
