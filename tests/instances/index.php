@@ -15,8 +15,7 @@
         -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px }
   </style>
   <link rel="stylesheet" href="../../build/accordionpro_js/css/accordionpro.min.css">
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-  <script src="../../build/accordionpro_js/js/jquery.accordionpro.min.js"></script>
+
 </head>
 <body>
 
@@ -186,6 +185,9 @@
         </div>
     <?php } ?>
   </div>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <script src="../../build/accordionpro_js/js/jquery.accordionpro.min.js"></script>
 
 </body>
 </html>

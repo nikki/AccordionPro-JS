@@ -530,7 +530,8 @@
       var ieOl;
 
       // limit max scale to 1
-      scale = (Math.min(scale, 1)).toFixed(2);
+      // scale = ().toFixed(2);
+      scale = Math.min(scale, 1);
 
       // css3 scaling not supported in ie8
       if (!elem.hasClass('ie8')) {

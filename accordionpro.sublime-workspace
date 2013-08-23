@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"scale",
+				"scaleImages"
+			],
+			[
 				"backgroun",
 				"background-color"
 			],
@@ -510,17 +514,37 @@
 			[
 				"local",
 				"localStorage"
-			],
-			[
-				"grid",
-				"gridSize"
 			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"file": "accordionpro_js/js/jquery.accordionpro.js",
+			"settings":
+			{
+				"buffer_size": 28101,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "accordionpro_js/js/jquery.imagesloaded.min.js",
+			"settings":
+			{
+				"buffer_size": 6411,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "accordionpro_js/css/accordionpro.css",
+			"settings":
+			{
+				"buffer_size": 20569,
+				"line_ending": "Unix"
+			}
+		}
 	],
-	"build_system": "Accordion-Pro",
+	"build_system": "AccordionPro",
 	"command_palette":
 	{
 		"height": 47.0,
@@ -688,14 +712,27 @@
 	},
 	"file_history":
 	[
+		"/Volumes/Nikki/archive/js-games/games/brickout/desktop/inc/halloffame.php",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/index.html",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/tests/instances/index.php",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/tests/instances/vertical-fittocontent.php",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/css/accordionpro.css",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/js/jquery.imagesloaded.min.js",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/tests/instances/linkable-vertical-autoplay.php",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/tests/instances/linkable-autoplay.php",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/tests/instances/linkable-vertical.php",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/tests/instances/linkable.php",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/tests/instances/autoplay-startclosed-firstslide.php",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/tests/instances/autoplay-startclosed.php",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/tests/instances/autoplay-vertical-startclose.php",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/build/Jakefile",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/js/jquery.accordionpro.js",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro.sublime-project",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/marketing/responsive/index.html",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/marketing/responsive/css/style.css",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/build/accordionpro_js/js/jquery.accordionpro.js",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/marketing/index.html",
-		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/js/jquery.accordionpro.js",
 		"/Volumes/Nikki/webserver/projects/NickTheme/index.html",
-		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/css/accordionpro.css",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/index.html",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/inc/accordionpro_wp.class.php",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/js/admin.js",
@@ -774,6 +811,23 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"console.log",
+			"get",
+			"getCss",
+			"getCSS",
+			"setup.slidePositions",
+			"fitToContent",
+			"core.startClosed",
+			"fitToContent",
+			"core.fitToContent",
+			"fitToContent",
+			"scaleImagesToFit",
+			"data-slide-name",
+			"linkable",
+			"easing",
+			"pauseOnHover",
+			"autoplay",
+			"swipe",
 			"do_",
 			"elem.parent()",
 			"holder",
@@ -884,24 +938,7 @@
 			"init",
 			"updateSettings",
 			"save_settings",
-			"jQueryOptions",
-			"jQuery",
-			"options",
-			"get",
-			"get option",
-			"templ",
-			"shortcode",
-			"['ac",
-			"shortcode",
-			"load_styles",
-			"pre_get_posts",
-			"get_acc",
-			"enqueue",
-			"get_accordion",
-			"enqueue",
-			"class",
-			".acco",
-			"sanitize"
+			"jQueryOptions"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -909,6 +946,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"scaleImages",
 			"update_settings",
 			"updateSettings",
 			"public",
@@ -1035,8 +1073,7 @@
 			"item.ratings",
 			"Comment",
 			"'../img/spr_royalSlider.png'",
-			"/private/conf",
-			"/public"
+			"/private/conf"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -1047,8 +1084,223 @@
 	"groups":
 	[
 		{
+			"selected": 2,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "accordionpro_js/js/jquery.accordionpro.js",
+					"settings":
+					{
+						"buffer_size": 28101,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7746,
+								7746
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2488.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "accordionpro_js/js/jquery.imagesloaded.min.js",
+					"settings":
+					{
+						"buffer_size": 6411,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								102,
+								102
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "accordionpro_js/css/accordionpro.css",
+					"settings":
+					{
+						"buffer_size": 20569,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
