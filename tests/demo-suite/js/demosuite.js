@@ -1,5 +1,45 @@
 ;(function($) {
 
+/*
+    defaults = {
+      orientation : 'horizontal',             // 'horizontal' or 'vertical' accordion
+      startClosed : false,                    // start in a closed position
+      firstSlide : 1,                         // displays slide (n) on page load
+
+      theme : 'basic',                        // basic, dark, light, stitch or transparent
+      rounded : false,                        // square or rounded corners
+      rtl : false,                            // right to left layout
+      showSlideNumbers : true,                // display numbers on slides
+
+      responsive : true,                      // accordion will adapt itself to the page layout, based on width of parent element
+      scaleImages : true,                     // scales images to fit slide width and height
+      horizontalWidth : 900,                  // base width; fixed (px [integer]) - responsive scaling is relative to this value
+      horizontalHeight : 300,                 // base horizontal accordion height; fixed (px [integer]) - responsive scaling is relative to this value
+
+      verticalWidth : '100%',                 // fixed (px [integer]) or fluid (% [string])
+      verticalHeight : 500,                   // base vertical accordion height; fixed (px [integer])
+      verticalSlideHeight : 'fixed',          // vertical accordion slide heights can be 'fixed' or 'fitToContent'
+
+      activateOn : 'click',                   // click or mouseover
+      touchEnabled : true,                    // touch events?
+      onSlideOpen : function() {},            // callback on slide open
+      onSlideClose : function() {},           // callback on slide animation complete
+
+      autoPlay : false,                       // automatically cycle through slides
+      cycleSpeed : 6000,                      // time between slide cycles
+      slideSpeed : 800,                       // slide animation speed
+      easing : 'ease-in-out',                 // animation easing
+
+      pauseOnHover : true,                    // pause on hover
+      linkable : false                        // link slides via hash
+    };
+*/
+
+
+
+
+
+
   var demo = $('#demo'),
       selects = $('.options select'),
       easing = $('#easing'),
@@ -58,7 +98,7 @@
 
             $('.output textarea').text('$("#yourAccordion").accordionPro();');
           };
-
+/*
     // create easing select options from plugin
     for (easingFn in $.easing) {
       if (easingFn !== 'def') {
@@ -67,6 +107,7 @@
     }
 
     easing.find('option[value=swing]').attr('selected', true);
+*/
 
     // init accordion
     demo.accordionPro();

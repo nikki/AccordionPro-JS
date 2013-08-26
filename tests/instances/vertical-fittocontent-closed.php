@@ -10,61 +10,19 @@
     .wrapper { width: 100% }
     h1, dd { margin: 0 }
     dt { font-weight: bold }
-    figure { float: left; display: block; width: 100%; overflow: hidden; margin: 0 }
+    figure { display: block; width: 100%; margin: 0 }
     figcaption { padding: 10px 15px; position: absolute; bottom: 20px; right: 30px; z-index: 3; background: black; background: rgba(0,0,0,0.7); color: white;
         -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px }
   </style>
   <link rel="stylesheet" href="../../build/accordionpro_js/css/accordionpro.min.css">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script src="../../build/accordionpro_js/js/jquery.accordionpro.min.js"></script>
-
 </head>
 <body>
 
   <div class="wrapper">
 
-    <ul>
-      <li><a href="index.php">index</a></li>
-      <li><a href="vertical.php">index vertical</a></li>
-
-      <li><a href="startclosed.php">startclosed</a></li>
-      <li><a href="startclosed-vertical.php">startclosed vertical</a></li>
-
-      <li><a href="firstslide.php">firstslide</a></li>
-      <li><a href="firstslide-vertical.php">firstslide vertical</a></li>
-
-      <li><a href="rounded.php">rounded</a></li>
-      <li><a href="rounded-vertical.php">rounded vertical</a></li>
-
-      <li><a href="rtl.php">rtl</a></li>
-      <li><a href="rtl-vertical.php">rtl vertical</a></li>
-
-      <li><a href="rtl-startclosed.php">rtl startclosed</a></li>
-      <li><a href="rtl-vertical-startclosed.php">rtl vertical startclosed</a></li>
-
-      <li><a href="autoplay.php">autoplay</a></li>
-      <li><a href="autoplay-vertical.php">autoplay-vertical</a></li>
-
-      <li><a href="autoplay-startclosed-firstslide.php">autoplay startclosed firstslide</a></li>
-      <li><a href="autoplay-startclosed.php">autoplay startclosed</a></li>
-      <li><a href="autoplay-vertical-startclosed.php">autoplay vertical startclosed</a></li>
-
-      <li><a href="slidenumbers.php">disable slidenumbers</a></li>
-      <li><a href="slidenumbers-vertical.php">disable slidenumbers vertical</a></li>
-
-      <li><a href="linkable.php">linkable</a></li>
-      <li><a href="linkable-vertical.php">linkable vertical</a></li>
-      <li><a href="linkable-autoplay.php">linkable autoplay</a></li>
-      <li><a href="linkable-vertical-autoplay.php">linkable vertical autoplay</a></li>
-
-      <li><a href="vertical-fittocontent.php">vertical fittocontent</a></li>
-      <li><a href="vertical-fittocontent-closed.php">vertical fittocontent closed</a></li>
-    </ul>
-
-
-
-
-    <h1>Basic setup - horizontal accordion</h1>
+    <h1>Fit to content closed - vertical accordion</h1>
 
     <?php
 /*
@@ -105,24 +63,34 @@
       // have to wrap bools in string for js
       $jQueryOptions = array(
         'basic' => array(
-          'orientation' => 'horizontal',
-          'theme'       => 'basic'
+          'orientation' => 'vertical',
+          'theme'       => 'basic',
+          'verticalSlideHeight' => 'fitToContent',
+          'startClosed' => 'true'
         ),
         'dark' => array(
-          'orientation' => 'horizontal',
-          'theme'       => 'dark'
+          'orientation' => 'vertical',
+          'theme'       => 'dark',
+          'verticalSlideHeight' => 'fitToContent',
+          'startClosed' => 'true'
         ),
         'light' => array(
-          'orientation' => 'horizontal',
-          'theme'       => 'light'
+          'orientation' => 'vertical',
+          'theme'       => 'light',
+          'verticalSlideHeight' => 'fitToContent',
+          'startClosed' => 'true'
         ),
         'stitch' => array(
-          'orientation' => 'horizontal',
-          'theme'       => 'stitch'
+          'orientation' => 'vertical',
+          'theme'       => 'stitch',
+          'verticalSlideHeight' => 'fitToContent',
+          'startClosed' => 'true'
         ),
         'transparent' => array(
-          'orientation' => 'horizontal',
-          'theme'       => 'transparent'
+          'orientation' => 'vertical',
+          'theme'       => 'transparent',
+          'verticalSlideHeight' => 'fitToContent',
+          'startClosed' => 'true'
         )
       );
 
@@ -134,6 +102,7 @@
                     <h2><span>Slide One</span></h2>
                     <div>
                         <figure>
+                            <p>Some text goes in here. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, voluptate, itaque, dolorum, culpa perferendis atque non officia eum esse sequi nisi delectus sunt minima dolores laborum architecto expedita commodi similique!</p>
                             <img src="../../build/accordionpro_js/img-demo/1.jpg" alt="image" />
                             <figcaption class="ap-caption">Slide One</figcaption>
                         </figure>
@@ -143,8 +112,11 @@
                     <h2><span>Slide Two</span></h2>
                     <div>
                         <figure>
-                            <p>Some text goes in here.</p>
-                            <!-- <iframe width="715" height="320" src="http://www.youtube.com/embed/QH2-TGUlwu4" frameborder="0" allowfullscreen></iframe> -->
+                            <p>Some text goes in here. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, voluptate, itaque, dolorum, culpa perferendis atque non officia eum esse sequi nisi delectus sunt minima dolores laborum architecto expedita commodi similique!</p>
+                            <p>Some text goes in here. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, voluptate, itaque, dolorum, culpa perferendis atque non officia eum esse sequi nisi delectus sunt minima dolores laborum architecto expedita commodi similique!</p>
+                            <p>Some text goes in here. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, voluptate, itaque, dolorum, culpa perferendis atque non officia eum esse sequi nisi delectus sunt minima dolores laborum architecto expedita commodi similique!</p>
+                            <p>Some text goes in here. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, voluptate, itaque, dolorum, culpa perferendis atque non officia eum esse sequi nisi delectus sunt minima dolores laborum architecto expedita commodi similique!</p>
+                            <p>Some text goes in here. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, voluptate, itaque, dolorum, culpa perferendis atque non officia eum esse sequi nisi delectus sunt minima dolores laborum architecto expedita commodi similique!</p>
                             <figcaption class="ap-caption">Slide Two</figcaption>
                         </figure>
                     </div>
@@ -152,10 +124,8 @@
                 <li>
                     <h2><span>Slide Three</span></h2>
                     <div>
-                        <figure>
-                            <img src="../../build/accordionpro_js/img-demo/3.jpg" alt="image" />
-                            <figcaption class="ap-caption">Slide Three</figcaption>
-                        </figure>
+                      <img src="../../build/accordionpro_js/img-demo/3.jpg" alt="image" />
+                      <p>Some text goes in here. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, voluptate, itaque, dolorum, culpa perferendis atque non officia eum esse sequi nisi delectus sunt minima dolores laborum architecto expedita commodi similique!</p>
                     </div>
                 </li>
                 <li>
@@ -188,9 +158,6 @@
         </div>
     <?php } ?>
   </div>
-
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-  <script src="../../build/accordionpro_js/js/jquery.accordionpro.min.js"></script>
 
 </body>
 </html>
