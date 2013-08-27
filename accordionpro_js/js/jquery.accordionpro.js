@@ -175,6 +175,7 @@
         .addClass(settings.rounded && 'rounded')
         .addClass(settings.theme)
         .addClass(settings.rtl && 'rtl')
+        .addClass(settings.startClosed && 'closed')
         .addClass(!orientation && fitToContent && 'fitToContent')
         .addClass(settings.scaleImages && 'scaleImages');
 
@@ -323,13 +324,10 @@
       });
 
       // fit to content on init
-      if (fitToContent && !elem.hasClass('closed')) core.fitToContent(selected);
+      if (fitToContent) core.fitToContent(selected);
     };
 
     setup.startClosed = function() {
-      // add closed class here rather than in setup.styles
-      if (settings.startClosed) elem.addClass('closed');
-
       // start accordion in closed position
       if (orientation) {
         elem.css('width', (slide.l * tab.h) + (border / 2) + (padding * 2) - 1);
@@ -610,16 +608,6 @@
       // additional props of active slide
       active.next = active.slide.next();
       active.prev = active.slide.prev();
-
-      // update hash
-/*
-      if (settings.linkable && active.slide.attr('data-slide-name')) {
-        if (active.slide.attr('data-slide-name') !== window.location.hash.split('#')[1]) {
-          // exit early and try again
-          // !!! return window.location.hash = '#' + active.slide.attr('data-slide-name');
-        }
-      }
-*/
 
       // update core.previousSlide, core.currentSlide
       core.previousSlide = core.currentSlide;

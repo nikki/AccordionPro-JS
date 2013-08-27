@@ -86,7 +86,7 @@
 }
 
 /* vertical fitToContent */
-.accordionPro.vertical.fitToContent .slide > div { overflow: auto; height: auto }
+.accordionPro.vertical.fitToContent .slide > div { overflow: visible; height: auto }
 
 /*
 .accordionPro.responsive {

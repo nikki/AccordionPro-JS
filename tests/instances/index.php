@@ -189,8 +189,5 @@
     <?php } ?>
   </div>
 
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-  <script src="../../build/accordionpro_js/js/jquery.accordionpro.min.js"></script>
-
 </body>
 </html>
