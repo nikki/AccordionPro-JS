@@ -35,6 +35,7 @@ task('cssMin', function() {
   output += css.join('');
 
   // output
+  fs.writeFileSync(path + 'accordionpro_js/css/accordionpro.min.css', output);
   fs.writeFileSync(path + 'build/accordionpro_js/css/accordionpro.min.css', output);
 });
 
@@ -84,6 +85,7 @@ task('js', function() {
   });
 
   // output
+  fs.writeFileSync(path + 'accordionpro_js/js/jquery.accordionpro.min.js', output);
   fs.writeFileSync(path + 'build/accordionpro_js/js/jquery.accordionpro.js', concat);
   fs.writeFileSync(path + 'build/accordionpro_js/js/jquery.accordionpro.min.js', output);
 });

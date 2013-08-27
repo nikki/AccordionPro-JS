@@ -1,4 +1,8 @@
 /**
+ * Accordion Pro JS Dependencies
+ */
+
+/**
  * @name jQuery Swipe plugin (https://github.com/jgarber623/jquery-swipe)
  * @author Jason Garber
  * @copyright (cc) Jason Garber (http://sixtwothree.org and http://www.viget.com)
@@ -19,8 +23,7 @@
  */
 ;(function(a){a.fn.extend({defaultAnimate:a.fn.animate,animate:function(b,c,d,e){var f=c&&typeof c=="object"?jQuery.extend({},c):{complete:e||!e&&d||jQuery.isFunction(c)&&c,duration:c,easing:e&&d||d&&!jQuery.isFunction(d)&&d};return a(this).each(function(){var d=a(this),e,g;Modernizr.csstransitions&&(d.hasClass("accordionPro")||d.hasClass("slide"))?(e=f.easing||"ease-in-out",g=Modernizr.prefixed("transition").replace(/([A-Z])/g,function(a,b){return"-"+b.toLowerCase()}).replace(/^ms-/,"-ms-"),d.css(g,"all "+c/1e3+"s "+e).css(b),setTimeout(function(){d.css(g),a.isFunction(f.complete)&&f.complete()},c)):(f.easing="swing",d.defaultAnimate(b,f))})}})})(jQuery);
 
-
-/*!
+/**
  * imagesLoaded PACKAGED v3.0.4
  * JavaScript is all like "You images are done yet or what?"
  */

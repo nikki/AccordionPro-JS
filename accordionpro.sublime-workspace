@@ -519,6 +519,17 @@
 	},
 	"buffers":
 	[
+		{
+			"contents": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"utf-8\" />\n    <title>Accordion Pro JS Documentation</title>\n\n    <link rel=\"stylesheet\" href=\"../css/accordionpro.min.css\">\n    <link href=\"css/bootstrap.min.css\" rel=\"stylesheet\">\n    <link href=\"css/bootstrap-responsive.min.css\" rel=\"stylesheet\">\n\n</head>\n<body>\n\n<div class=\"container\">\n  Accordion Pro JS\n  A Responsive Accordion Plugin for jQuery\n  by Nicola Hibbert - http://nicolahibbert.com\n\n\n\n</div>\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nThank you for purchasing Accordion Pro JS!\n\nBefore we begin with the setup, I’d like to make one important point:\n\n\n\n\n\n\n\nAccordion Pro JS makes use of changes made in jQuery 1.8.3, and therefore requires this version or higher to function correctly.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nFolder Structure\n• Root\no /css\n• accordionpro.min.css\no /js\n• jquery.accordionpro.min.js\n\nDependencies\nTo implement the plugin, firstly, include the plugin’s CSS, minified JS, and jQuery dependency in the <head> of your HTML page, like so:\n\n<head>\n...\n<link rel=\"stylesheet\" href=\"css/accordionpro.min.css\">\n<script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js\"></script>\n<script src=\"js/jquery.accordionpro.min.js\"></script>\n</head>\n\nPlease note: the index.html file contained in the root folder has a variety of different plugin setups for you to use at your convenience.\n\n\nMarkup\nThe plugin markup is comprised of a <div>, with nested list elements for each of the slides.  Copy the following markup into your HTML page:\n\n<div>\n    <ol>\n        <li>\n            <h2><span>Slide One</span></h2>\n            <div>\n                <p class=\"ap-caption\"></p>\n            </div>\n        </li>\n        <li>\n            <h2><span>Slide Two</span></h2>\n            <div>\n                <p class=\"ap-caption\"></p>\n            </div>\n        </li>\n        <li>\n            <h2><span>Slide Three</span></h2>\n            <div>\n                <p class=\"ap-caption\"></p>\n            </div>\n        </li>\n        <li>\n            <h2><span>Slide Four</span></h2>\n            <div>\n                <p class=\"ap-caption\"></p>\n            </div>\n        </li>\n        <li>\n            <h2><span>Slide Five</span></h2>\n            <div>\n                <p class=\"ap-caption\"></p>\n            </div>\n        </li>\n    </ol>\n    <noscript>\n        <p>Please enable JavaScript to get the full experience.</p>\n    </noscript>\n</div>\n\nSlide titles and captions may be omitted if not required.\n\n\n\n\nOptions\nThe plugin has a multitude of options, so you can tailor the aesthetics and functionality to suit your needs.\n/* layout */\norientation : 'horizontal',             // 'horizontal' or 'vertical' accordion\nstartClosed : false,                    // start in a closed position\nfirstSlide : 1,                         // displays slide (n) on page load\n\n/* aesthetics */\ntheme : 'basic',                        // basic, dark, light, stitch or transparent\nrounded : false,                        // square or rounded corners\nrtl : false,                            // right to left layout\nshowSlideNumbers : true,                // display numbers on slides\n\n/* horizontal accordion options */\nresponsive : true,                      // accordion will adapt itself to the page layout, based on width of parent element\nscaleImages : true,                     // scales images to fit slide width and height\nhorizontalWidth : 900,                  // base width; fixed (px [integer]) - responsive scaling is relative to this value\nhorizontalHeight : 300,                 // base horizontal accordion height; fixed (px [integer]) - responsive scaling is relative to this value\n\n/* vertical accordion options */\nverticalWidth : '100%',                 // fixed (px [integer]) or fluid (% [string])\nverticalHeight : 500,                   // base vertical accordion height; fixed (px [integer])\nverticalSlideHeight : 'fixed',          // vertical accordion slide heights can be 'fixed' or 'fitToContent'\n\n/* events */\nactivateOn : 'click',                   // click or mouseover\ntouchEnabled : true,                    // touch events?\nonSlideOpen : function() {},            // callback on slide open\nonSlideClose : function() {},           // callback on slide animation complete\n\n/* animations */\nautoPlay : false,                       // automatically cycle through slides\ncycleSpeed : 6000,                      // time between slide cycles\nslideSpeed : 800,                       // slide animation speed\neasing : 'ease-in-out',                 // animation easing\n\n/* miscellaneous */\npauseOnHover : true,                    // pause on hover\nlinkable : false                        // link slides via hash\n\n\n\nMethods\n\nBrowser differences\nNot all of the CSS3 properties used to create Accordion Pro JS are supported in all browsers.  The appearance of accordions will be consistent in modern browsers (Chrome, Firefox, Safari), but where Internet Explorer is lacking the requisite CSS3 support, styles will degrade gracefully.  Hopefully the IE team will implement border-image some time soon. ☺\n\n\nThank you!\nI hope you have fun with your new plugin.  If you have any problems that aren’t covered by this document, then please don’t hesitate to get in touch.\n\n\n\n\n\n</body>\n</html>",
+			"file": "accordionpro_js/documentation/index.html",
+			"file_size": 5064,
+			"file_write_time": 1377610301000000,
+			"settings":
+			{
+				"buffer_size": 5267,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "AccordionPro",
 	"command_palette":
@@ -688,16 +699,19 @@
 	},
 	"file_history":
 	[
-		"/Volumes/Nikki/webserver/projects/Accordion-Pro/tests/instances/autoplay-startclosed-firstslide.php",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/tests/demo-suite/index.php",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/tests/instances/index.php",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/js/jquery.accordionpro.js",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/documentation/documentation.html",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/css/accordionpro.css",
+		"/Users/nikki/Library/Application Support/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/Users/nikki/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/tests/instances/autoplay-startclosed-firstslide.php",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/tests/demo-suite/index.html",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/tests/demo-suite/js/demosuite.js",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/tests/demo-suite/index2.html",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/tests/instances/vertical-fittocontent-closed.php",
-		"/Volumes/Nikki/webserver/projects/Accordion-Pro/tests/instances/index.php",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/js/jquery.imagesloaded.min.js",
-		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/css/accordionpro.css",
 		"/Volumes/Nikki/archive/js-games/games/brickout/desktop/inc/halloffame.php",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/index.html",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/tests/instances/vertical-fittocontent.php",
@@ -792,6 +806,23 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"bg_noise.png",
+			"bg_stitch.png",
+			"stitc",
+			"bg_stitch.png",
+			"noise",
+			"bg_noise",
+			"addClass('c",
+			"//",
+			"console",
+			"fitToContent",
+			"settings.startClosed",
+			"startclosed",
+			"settings.startClosed",
+			"closed",
+			"startClosed",
+			"label",
+			"h2",
 			"scaleImages",
 			"tab.h",
 			"header",
@@ -902,24 +933,7 @@
 			"style",
 			"disable auto",
 			"file",
-			"min.js",
-			"file",
-			"plugin",
-			"update_s",
-			"update_S",
-			"update",
-			"update_set",
-			"update_Se",
-			"update_settings",
-			"updateSettings",
-			"save_",
-			"private",
-			"public",
-			"upgrade",
-			"load_op",
-			"load",
-			"public",
-			"init_options"
+			"min.js"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -1065,8 +1079,81 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "accordionpro_js/documentation/index.html",
+					"settings":
+					{
+						"buffer_size": 5267,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								351,
+								367
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],

@@ -1,337 +1,344 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
-        <title>Accordion Pro - a responsive accordion plugin for jQuery</title>
-        <style>
-            /* css for this page */
-            body { font: 14px/24px 'Helvetica Neue', Arial, sans-serif; color: #333; margin: 30px 0 60px; background: #eee; height: 1000px }
-            body > h2 { margin: 30px 0 15px; text-shadow: 1px 1px 0 white; border-bottom: 2px solid #333; padding-bottom: 5px }
-            .wrapper { width: 90%; margin: 0 auto }
-            h1 { text-align: center; margin-bottom: 30px; text-shadow: 1px 1px 0 white }
-            strong + p { margin-top: 0 }
-            dt { font-weight: bold }
-            dd { margin: 0 }
-            figure { display: block; float: left; margin: 0 }
-            .accordion.stitch .slide div { background: #333 }
-            #two, #three, #four { display: none }
-        </style>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Accordion Pro JS Examples</title>
+    <link rel="stylesheet" href="css/accordionpro.min.css">
+    <link href="documentation/css/bootstrap.min.css" rel="stylesheet">
+    <link href="documentation/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <style>
+        body { background: #EEEEEE; padding-bottom: 60px }
+        pre { background: #FEFEFE; margin-bottom: 60px }
+        .container { max-width: 900px }
+        h1, .container > h2, h3 { text-shadow: 1px 1px 0 white }
+        h1 { font-size: 28px; margin: 30px 0 }
+        .container > h2, h3 { margin-top: 20px; font-size: 21px; border-bottom: 1px solid #333; box-shadow: 0 1px 0 white }
+        h3 { font-size: 16px; line-height: 28px }
+        .linkable, .links, .note { overflow: hidden; margin-top: 30px; margin-bottom: 0 }
+        .links { margin-top: 20px }
+        .links li { float: left; margin-right: 22px }
+        .links + h2 { clear: both }
+    </style>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="js/jquery.accordionpro.min.js"></script>
+</head>
+<body>
 
-        <!-- accordionPro css -->
-        <link href="css/accordionpro.css" rel="stylesheet" />
-        <!--<link href="../build/accordionpro_js/css/accordionpro.min.css" rel="stylesheet" />-->
+    <div class="container">
+        <h1>Accordion Pro JS Examples</h1>
 
-        <!-- jQuery -->
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-
-        <!-- accordionPro js -->
-        <script src="js/jquery.swipe.min.js"></script>
-        <script src="js/modernizr.custom.min.js"></script>
-        <script src="js/animate.js"></script>
-        <script src="js/jquery.imagesloaded.min.js"></script>
-        <script src="js/jquery.accordionpro.js"></script>
-        <!--<script src="../build/accordionpro_js/js/jquery.accordionpro.min.js"></script>-->
-
-        <!--[if lt IE 9]>
+        <h2>Stitch theme</h2>
+        <div id="one">
+            <ol>
+                <li>
+                    <h2><span>Slide One</span></h2>
+                    <div>
+                        <img src="img-demo/1.jpg" alt="image" />
+                        <p class="ap-caption">Slide One</p>
+                    </div>
+                </li>
+                <li>
+                    <h2><span>Slide Two</span></h2>
+                    <div>
+                        <img src="img-demo/2.jpg" alt="image" />
+                        <p class="ap-caption">Slide Two</p>
+                    </div>
+                </li>
+                <li>
+                    <h2><span>Slide Three</span></h2>
+                    <div>
+                        <img src="img-demo/3.jpg" alt="image" />
+                        <p class="ap-caption">Slide Three</p>
+                    </div>
+                </li>
+                <li>
+                    <h2><span>Slide Four</span></h2>
+                    <div>
+                        <img src="img-demo/4.jpg" alt="image" />
+                        <p class="ap-caption">Slide Four</p>
+                    </div>
+                </li>
+                <li>
+                    <h2><span>Slide Five</span></h2>
+                    <div>
+                        <img src="img-demo/5.jpg" alt="image" />
+                        <p class="ap-caption">Slide Five</p>
+                    </div>
+                </li>
+            </ol>
+            <noscript>
+                <p>Please enable JavaScript to get the full experience.</p>
+            </noscript>
             <script>
-                document.createElement('figure');
-                document.createElement('figcaption');
+                function callback() {
+                    $('#one').find('.ap-caption').each(function() {
+                        if (!$(this).parents('.slide').hasClass('selected')) {
+                            $(this).fadeOut();
+                        } else {
+                            if (!$(this).is(':visible')) $(this).fadeIn();
+                        }
+                    });
+                }
+
+                $('#one').accordionPro({
+                    autoPlay : true,
+                    onSlideOpen : callback,
+                    onSlideClose : callback,
+                    theme : 'stitch',
+                    rounded : true
+                }).find('.ap-caption:first').show();
             </script>
-        <![endif]-->
-    </head>
-    <body>
-
-        <div class="wrapper">
-
-            <div id="one">
-                <ol>
-                    <li>
-                        <h2><span>Slide One</span></h2>
-                        <div>
-                            <figure>
-                                <img src="img-demo/1.jpg" alt="image" />
-                                <figcaption class="ap-caption">Slide One</figcaption>
-                            </figure>
-                        </div>
-                    </li>
-                    <li>
-                        <h2><span>Slide Two</span></h2>
-                        <div>
-                            <p>Hello, I am some content!<br /><br /></p>
-                            <p>Please calculate my height!</p>
-                            <p>Hello, I am some content!<br /><br /></p>
-                            <p>Please calculate my height!</p>
-                             <figure>
-                                <!-- <img src="img-demo/2.jpg" alt="image" /> -->
-                                <figcaption class="ap-caption">Slide Two</figcaption>
-                            </figure>
-                        </div>
-                    </li>
-                    <li>
-                        <h2><span>Slide Three</span></h2>
-                        <div>
-                            <p>Hello, I am some content!<br /><br /></p>
-                            <p>Please calculate my height!</p>
-                            <p>Please calculate my height!</p>
-                            <figure>
-                                <!-- <img src="img-demo/3.jpg" alt="image" /> -->
-                                <figcaption class="ap-caption">Slide Three</figcaption>
-                            </figure>
-                        </div>
-                    </li>
-                    <li>
-                        <h2><span>Slide Four</span></h2>
-                        <div>
-                            <p>Hello, I am some content!<br /><br /></p>
-                            <p>Please calculate my height!</p>
-                            <figure>
-                                <!-- <img src="img-demo/4.jpg" width="768" alt="image" /> -->
-                                <figcaption class="ap-caption">Slide Four</figcaption>
-                            </figure>
-                        </div>
-                    </li>
-                    <li>
-                        <h2><span>Slide Five</span></h2>
-                        <div>
-                            <p>Hello, I am some content!<br /><br /></p>
-                            <p>Please calculate my height!</p>
-                            <p>Please calculate my height!</p>
-                            <figure>
-                                <!-- <img src="img-demo/5.jpg" alt="image" /> -->
-                                <figcaption class="ap-caption">Slide Five</figcaption>
-                            </figure>
-                        </div>
-                    </li>
-                    <li>
-                        <h2><span>Slide Six</span></h2>
-                        <div>
-                            <figure>
-                                <img src="img-demo/1.jpg" alt="image" />
-                                <figcaption class="ap-caption">Slide Six</figcaption>
-                            </figure>
-                        </div>
-                    </li>
-                </ol>
-                <noscript>
-                    <p>Please enable JavaScript to get the full experience.</p>
-                </noscript>
-            </div>
-
-            <br /><br />
-
-            <div id="two">
-                <ol>
-                    <li>
-                        <h2><span>Slide One</span></h2>
-                        <div>
-                            <h3>This is Slide One.</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                                magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                consequat. <a href="#">Link somewhere</a>
-                            </p>
-                        </div>
-                    </li>
-                    <li>
-                        <h2><span>Slide Two</span></h2>
-                        <div>
-                            <h3>This is Slide Two.</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                                magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi. <br /><a href="#">Link somewhere</a>
-                            </p>
-                        </div>
-                    </li>
-                    <li>
-                        <h2><span>Slide Three</span></h2>
-                        <div>
-                            <h3>This is Slide Three.</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                                magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                consequat. <a href="#">Link somewhere</a>
-                            </p>
-                        </div>
-                    </li>
-                    <li>
-                        <h2><span>Slide Four</span></h2>
-                        <div>
-                            <h3>This is Slide Four.</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                                magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi. <br /><a href="#">Link somewhere</a>
-                            </p>
-                        </div>
-                    </li>
-                    <li>
-                        <h2><span>Slide Five</span></h2>
-                        <div>
-                            <h3>This is Slide Five.</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                                magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                consequat. <a href="#">Link somewhere</a>
-                            </p>
-                        </div>
-                    </li>
-                </ol>
-                <noscript>
-                    <p>Please enable JavaScript to get the full experience.</p>
-                </noscript>
-            </div>
-
-            <br /><br />
-
-            <div id="three">
-                <ol>
-                    <li>
-                        <h2><span>Slide One</span></h2>
-                        <div>
-                            <a href="#three-slide-4">slide four</a>
-                            <!--<img src="img-demo/1.jpg" alt="image" />-->
-                        </div>
-                    </li>
-                    <li>
-                        <h2><span>Slide Two</span></h2>
-                        <div>
-                            <img src="img-demo/2.jpg" alt="image" />
-                        </div>
-                    </li>
-                    <li>
-                        <h2><span>Slide Three</span></h2>
-                        <div>
-                            <img src="img-demo/3.jpg" alt="image" />
-                        </div>
-                    </li>
-                    <li>
-                        <h2><span>Slide Four</span></h2>
-                        <div>
-                            <img src="img-demo/4.jpg" width="768" alt="image" />
-                        </div>
-                    </li>
-                </ol>
-                <noscript>
-                    <p>Please enable JavaScript to get the full experience.</p>
-                </noscript>
-            </div>
-
-            <br /><br />
-
-            <div id="four">
-                <ol>
-                    <li>
-                        <h2><span>Slide One</span></h2>
-                        <div>
-                            <img src="img-demo/1.jpg" alt="image" />
-                        </div>
-                    </li>
-                    <li>
-                        <h2><span>Slide Two</span></h2>
-                        <div>
-                            <img src="img-demo/2.jpg" alt="image" />
-                        </div>
-                    </li>
-                    <li>
-                        <h2><span>Slide Three</span></h2>
-                        <div>
-                            <img src="img-demo/3.jpg" alt="image" />
-                        </div>
-                    </li>
-                    <li>
-                        <h2><span>Slide Four</span></h2>
-                        <div>
-                            <img src="img-demo/4.jpg" width="768" alt="image" />
-                        </div>
-                    </li>
-                    <li>
-                        <h2><span>Slide Five</span></h2>
-                        <div>
-                            <img src="img-demo/5.jpg" alt="image" />
-                        </div>
-                    </li>
-                </ol>
-                <noscript>
-                    <p>Please enable JavaScript to get the full experience.</p>
-                </noscript>
-            </div>
-
         </div>
 
-        <!-- accordionPro demos, social & analytics -->
-        <script>
-            (function($, d) {
-                // please don't copy and paste this page
-                // it breaks my analytics!
+        <p class="note">
+            <b>Note:</b> in this example, a callback function is created to show and hide the captions when the slides open and close.  This is entirely optional.
+        </p>
 
-                // demos
-                $('#one').accordionPro({
-                    autoPlay : false,
-                    onSlideOpen : function() {
-                        // var slides = $('#one').find('.slide').children('div');
-                        // console.log(slides.index(this));
-                        $(this).find('figcaption').fadeIn();
-                    },
-                    onSlideClose : function() {
-                        $(this).find('figcaption').fadeOut();
-                    },
-                    rtl : true,
-                    theme : 'stitch',
-                    rounded : true,
-                    showSlideNumbers : true,
-                    verticalSlideHeight : 'fitToContent'
-                }).find('figcaption:first').show();
+        <h3>Code:</h3>
+        <pre>&lt;script&gt;<br/>    function callback() {<br/>        $('#one').find('.ap-caption').each(function() {<br/>            if (!$(this).parents('.slide').hasClass('selected')) {<br/>                $(this).fadeOut();<br/>            } else {<br/>                if (!$(this).is(':visible')) $(this).fadeIn();<br/>            }<br/>        });<br/>    }<br/><br/>    $('#one').accordionPro({<br/>        autoPlay : true,<br/>        onSlideOpen : callback,<br/>        onSlideClose : callback,<br/>        theme : 'stitch',<br/>        rounded : true<br/>    }).find('.ap-caption:first').show();<br/>&lt;/script&gt;</pre>
 
+        <h2>Transparent theme</h2>
+        <div id="two">
+            <ol>
+                <li>
+                    <h2><span>Slide One</span></h2>
+                    <div>
+                        <img src="img-demo/1.jpg" alt="image" />
+                        <p class="ap-caption">Slide One</p>
+                    </div>
+                </li>
+                <li>
+                    <h2><span>Slide Two</span></h2>
+                    <div>
+                        <img src="img-demo/2.jpg" alt="image" />
+                        <p class="ap-caption">Slide Two</p>
+                    </div>
+                </li>
+                <li>
+                    <h2><span>Slide Three</span></h2>
+                    <div>
+                        <img src="img-demo/3.jpg" alt="image" />
+                        <p class="ap-caption">Slide Three</p>
+                    </div>
+                </li>
+                <li>
+                    <h2><span>Slide Four</span></h2>
+                    <div>
+                        <img src="img-demo/4.jpg" alt="image" />
+                        <p class="ap-caption">Slide Four</p>
+                    </div>
+                </li>
+                <li>
+                    <h2><span>Slide Five</span></h2>
+                    <div>
+                        <img src="img-demo/5.jpg" alt="image" />
+                        <p class="ap-caption">Slide Five</p>
+                    </div>
+                </li>
+            </ol>
+            <noscript>
+                <p>Please enable JavaScript to get the full experience.</p>
+            </noscript>
+            <script>
                 $('#two').accordionPro({
-                    autoPlay : false,
-                    rtl : true
+                    theme : 'transparent',
+                    linkable : true
                 });
+            </script>
+        </div>
 
+        <p class="linkable">
+            <b>Note:</b> when the <b>linkable</b> option is set, you can link to slides by using #yourDivId-slide-1, #yourDivId-slide-2, etc. in the link's href attribute.
+        </p>
+
+        <ul class="links">
+            <li>Links:</li>
+            <li><a href="#two-slide-1">#two-slide-1</a></li>
+            <li><a href="#two-slide-2">#two-slide-2</a></li>
+            <li><a href="#two-slide-3">#two-slide-3</a></li>
+            <li><a href="#two-slide-4">#two-slide-4</a></li>
+            <li><a href="#two-slide-5">#two-slide-5</a></li>
+        </ul>
+
+        <h3>Code:</h3>
+        <pre>&lt;script&gt;<br/>    $('#two').accordionPro({<br/>        theme : 'transparent',<br/>        linkable : true<br/>    });<br/>&lt;/script&gt;</pre>
+
+        <h2>Dark theme</h2>
+        <div id="three">
+            <ol>
+                <li>
+                    <h2><span>Slide One</span></h2>
+                    <div>
+                        <img src="img-demo/1.jpg" alt="image" />
+                        <p class="ap-caption">Slide One</p>
+                    </div>
+                </li>
+                <li>
+                    <h2><span>Slide Two</span></h2>
+                    <div>
+                        <img src="img-demo/2.jpg" alt="image" />
+                        <p class="ap-caption">Slide Two</p>
+                    </div>
+                </li>
+                <li>
+                    <h2><span>Slide Three</span></h2>
+                    <div>
+                        <img src="img-demo/3.jpg" alt="image" />
+                        <p class="ap-caption">Slide Three</p>
+                    </div>
+                </li>
+                <li>
+                    <h2><span>Slide Four</span></h2>
+                    <div>
+                        <img src="img-demo/4.jpg" alt="image" />
+                        <p class="ap-caption">Slide Four</p>
+                    </div>
+                </li>
+                <li>
+                    <h2><span>Slide Five</span></h2>
+                    <div>
+                        <img src="img-demo/5.jpg" alt="image" />
+                        <p class="ap-caption">Slide Five</p>
+                    </div>
+                </li>
+            </ol>
+            <noscript>
+                <p>Please enable JavaScript to get the full experience.</p>
+            </noscript>
+            <script>
                 $('#three').accordionPro({
-                    autoPlay : false,
-                    linkable : true,
-                    closed : true,
-                    rtl : true,
+                    autoPlay : true,
+                    startClosed : true,
                     orientation : 'vertical',
                     theme : 'dark',
-                    rounded : true,
-                    showSlideNumbers : true,
-                    firstSlide : 2
+                    rounded : true
                 });
+            </script>
+        </div>
 
+        <p class="note">
+            <b>Note:</b> if you don't want images to be stretched to fit the slides as they are above, set the <b>scaleImages</b> option to <b>false</b>.
+        </p>
+
+        <h3>Code:</h3>
+        <pre>&lt;script&gt;<br/>    $('#three').accordionPro({<br/>        autoPlay : true,<br/>        startClosed : true,<br/>        orientation : 'vertical',<br/>        theme : 'dark',<br/>        rounded : true<br/>    });<br/>&lt;/script&gt;</pre>
+
+        <h2>Light theme</h2>
+        <div id="four">
+            <ol>
+                <li>
+                    <h2><span>Slide One</span></h2>
+                    <div>
+                        <img src="img-demo/1.jpg" alt="image" />
+                        <p class="ap-caption">Slide One</p>
+                    </div>
+                </li>
+                <li>
+                    <h2><span>Slide Two</span></h2>
+                    <div>
+                        <img src="img-demo/2.jpg" alt="image" />
+                        <p class="ap-caption">Slide Two</p>
+                    </div>
+                </li>
+                <li>
+                    <h2><span>Slide Three</span></h2>
+                    <div>
+                        <img src="img-demo/3.jpg" alt="image" />
+                        <p class="ap-caption">Slide Three</p>
+                    </div>
+                </li>
+                <li>
+                    <h2><span>Slide Four</span></h2>
+                    <div>
+                        <img src="img-demo/4.jpg" alt="image" />
+                        <p class="ap-caption">Slide Four</p>
+                    </div>
+                </li>
+                <li>
+                    <h2><span>Slide Five</span></h2>
+                    <div>
+                        <img src="img-demo/5.jpg" alt="image" />
+                        <p class="ap-caption">Slide Five</p>
+                    </div>
+                </li>
+            </ol>
+            <noscript>
+                <p>Please enable JavaScript to get the full experience.</p>
+            </noscript>
+            <script>
                 $('#four').accordionPro({
-                    autoPlay : false,
-                    easing : 'linear',
-                    theme : 'light',
-                    firstSlide : 3,
-                    activateOn: 'mouseover'
+                    startClosed : true,
+                    theme : 'light'
                 });
+            </script>
+        </div>
 
-                // social links
-                var js, id = 'facebook-jssdk';
+        <p class="note">
+            <b>Note:</b> by popular request, you can now start the plugin in a closed position!
+        </p>
 
-                if (d.getElementById(id)) return;
+        <h3>Code:</h3>
+        <pre>&lt;script&gt;<br/>    $('#four').accordionPro({<br/>        startClosed : true,<br/>        theme : 'light'<br/>    });<br/>&lt;/script&gt;</pre>
 
-                js = d.createElement('script');
-                js.id = id;
-                js.async = true;
-                js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
-                d.getElementsByTagName('head')[0].appendChild(js);
+        <h2>Basic theme</h2>
+        <div id="five">
+            <ol>
+                <li>
+                    <h2><span>Slide One</span></h2>
+                    <div>
+                        <img src="img-demo/1.jpg" alt="image" />
+                        <p class="ap-caption">Slide One</p>
+                    </div>
+                </li>
+                <li>
+                    <h2><span>Slide Two</span></h2>
+                    <div>
+                        <img src="img-demo/2.jpg" alt="image" />
+                        <p class="ap-caption">Slide Two</p>
+                    </div>
+                </li>
+                <li>
+                    <h2><span>Slide Three</span></h2>
+                    <div>
+                        <img src="img-demo/3.jpg" alt="image" />
+                        <p class="ap-caption">Slide Three</p>
+                    </div>
+                </li>
+                <li>
+                    <h2><span>Slide Four</span></h2>
+                    <div>
+                        <img src="img-demo/4.jpg" alt="image" />
+                        <p class="ap-caption">Slide Four</p>
+                    </div>
+                </li>
+                <li>
+                    <h2><span>Slide Five</span></h2>
+                    <div>
+                        <img src="img-demo/5.jpg" alt="image" />
+                        <p class="ap-caption">Slide Five</p>
+                    </div>
+                </li>
+            </ol>
+            <noscript>
+                <p>Please enable JavaScript to get the full experience.</p>
+            </noscript>
+            <script>
+                $('#five').accordionPro({
+                    theme : 'basic',
+                    rtl : true
+                });
+            </script>
+        </div>
 
-                // Load Plus One Button
-                jQuery.getScript('https://apis.google.com/js/plusone.js');
-                // Load Tweet Button Script
-                jQuery.getScript('https://platform.twitter.com/widgets.js');
-                // Load LinkedIn button
-                jQuery.getScript('https://platform.linkedin.com/in.js?v=2');
-            })(jQuery, document);
+        <p class="note">
+            <b>Note:</b> another oft-requested feature, right-to-left support, has also been implemented in this version.
+        </p>
 
-            // analytics
-            var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', 'UA-17442910-1']);
-            _gaq.push(['_trackPageview']);
+        <h3>Code:</h3>
+        <pre>&lt;script&gt;<br/>    $('#five').accordionPro({<br/>        theme : 'basic',<br/>        rtl : true<br/>    });<br/>&lt;/script&gt;</pre>
 
-            (function() {
-                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-            })();
-        </script>
+    </div>
 
-    </body>
+</body>
 </html>
