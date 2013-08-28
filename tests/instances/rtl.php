@@ -6,59 +6,62 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
   <style>
     html { overflow-y: scroll }
-    body { font: 14px/24px 'Helvetica Neue', Arial, sans-serif; color: #333; margin: 30px auto 60px; background: #eee }
-    .wrapper { width: 100% }
-    h1, dd { margin: 0 }
-    dt { font-weight: bold }
-    figure { display: block; width: 100%; height: 100%; margin: 0 }
-    figcaption { padding: 10px 15px; position: absolute; bottom: 20px; right: 30px; z-index: 3; background: black; background: rgba(0,0,0,0.7); color: white;
-        -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px }
+    body { font: 14px/24px 'Helvetica Neue', Arial, sans-serif; color: #333; margin: 30px auto 60px; background: #fff }
+    .wrapper { max-width: 900px; margin: 0 auto }
+    .wrapper > ul { margin: 0; padding: 0 }
+    .wrapper > ul > li { display: inline-block; padding-right: 12px; margin-right: 8px; border-right: 1px solid black; line-height: 12px; }
+    .wrapper > ul > li a { text-decoration: none }
+    .wrapper > ul > li a:hover { text-decoration: underline }
   </style>
-  <link rel="stylesheet" href="../../build/accordionpro_js/css/accordionpro.min.css">
+  <link rel="stylesheet" href="css/accordionpro.min.css">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-  <script src="../../build/accordionpro_js/js/jquery.accordionpro.min.js"></script>
+  <script src="js/modernizr.2.6.2.min.js"></script>
 </head>
 <body>
 
   <div class="wrapper">
 
+    <ul>
+      <li><a href="index.php">index</a></li>
+      <li><a href="vertical.php">index vertical</a></li>
+
+      <li><a href="startclosed.php">startclosed</a></li>
+      <li><a href="startclosed-vertical.php">startclosed vertical</a></li>
+
+      <li><a href="firstslide.php">firstslide</a></li>
+      <li><a href="firstslide-vertical.php">firstslide vertical</a></li>
+
+      <li><a href="rounded.php">rounded</a></li>
+      <li><a href="rounded-vertical.php">rounded vertical</a></li>
+
+      <li><a href="rtl.php">rtl</a></li>
+      <li><a href="rtl-vertical.php">rtl vertical</a></li>
+
+      <li><a href="rtl-startclosed.php">rtl startclosed</a></li>
+      <li><a href="rtl-vertical-startclosed.php">rtl vertical startclosed</a></li>
+
+      <li><a href="autoplay.php">autoplay</a></li>
+      <li><a href="autoplay-vertical.php">autoplay-vertical</a></li>
+
+      <li><a href="autoplay-startclosed-firstslide.php">autoplay startclosed firstslide</a></li>
+      <li><a href="autoplay-startclosed.php">autoplay startclosed</a></li>
+      <li><a href="autoplay-vertical-startclosed.php">autoplay vertical startclosed</a></li>
+
+      <li><a href="slidenumbers.php">disable slidenumbers</a></li>
+      <li><a href="slidenumbers-vertical.php">disable slidenumbers vertical</a></li>
+
+      <li><a href="linkable.php">linkable</a></li>
+      <li><a href="linkable-vertical.php">linkable vertical</a></li>
+      <li><a href="linkable-autoplay.php">linkable autoplay</a></li>
+      <li><a href="linkable-vertical-autoplay.php">linkable vertical autoplay</a></li>
+
+      <li><a href="vertical-fittocontent.php">vertical fittocontent</a></li>
+      <li><a href="vertical-fittocontent-closed.php">vertical fittocontent closed</a></li>
+    </ul>
+
     <h1>RTL - horizontal accordion</h1>
 
     <?php
-/*
-  orientation : 'horizontal',             // 'horizontal' or 'vertical' accordion
-  startClosed : false,                    // start in a closed position
-  firstSlide : 1,                         // displays slide (n) on page load
-
-  theme : 'basic',                        // basic, dark, light, stitch or transparent
-  rounded : false,                        // square or rounded corners
-  rtl : false,                            // right to left layout
-  showSlideNumbers : true,                // display numbers on slides
-
-  responsive : true,                      // accordion will adapt itself to the page layout, based on width of parent element
-  scaleImagesToFit : true,                // scales images to fit slide width and height
-  horizontalWidth : 900,                  // base width; fixed (px [integer]) - responsive scaling is relative to this value
-  horizontalHeight : 300,                 // base horizontal accordion height; fixed (px [integer]) - responsive scaling is relative to this value
-  minResponsiveWidth : 400,               // horizontal accordion will flip to vertical at (and below) this width
-  maxResponsiveWidth : 1020,              // accordion will not scale up beyond this width
-
-  verticalWidth : '100%',                 // fixed (px [integer]) or fluid (% [string])
-  verticalHeight : 500,                   // base vertical accordion height; fixed (px [integer])
-  verticalSlideHeight : 'fixed',          // vertical accordion slide heights can be 'fixed' or 'fitToContent'
-
-  activateOn : 'click',                   // click or mouseover
-  touchEnabled : true,                    // touch events?
-  onSlideOpen : function() {},            // callback on slide open
-  onSlideClose : function() {},           // callback on slide animation complete
-
-  autoPlay : false,                       // automatically cycle through slides
-  cycleSpeed : 6000,                      // time between slide cycles
-  slideSpeed : 800,                       // slide animation speed
-  easing : 'ease-in-out',                 // animation easing
-
-  pauseOnHover : true,                    // pause on hover
-  linkable : false                        // link slides via hash
-*/
 
       // have to wrap bools in string for js
       $jQueryOptions = array(
@@ -96,47 +99,36 @@
                 <li>
                     <h2><span>Slide One</span></h2>
                     <div>
-                        <figure>
-                            <img src="../../build/accordionpro_js/img-demo/1.jpg" alt="image" />
-                            <figcaption class="ap-caption">Slide One</figcaption>
-                        </figure>
+                        <img src="img-demo/1.jpg" alt="image" />
+                        <p class="ap-caption">Slide One</p>
                     </div>
                 </li>
                 <li>
                     <h2><span>Slide Two</span></h2>
                     <div>
-                        <figure>
-                            <p>Some text goes in here.</p>
-                            <!-- <iframe width="715" height="320" src="http://www.youtube.com/embed/QH2-TGUlwu4" frameborder="0" allowfullscreen></iframe> -->
-                            <figcaption class="ap-caption">Slide Two</figcaption>
-                        </figure>
+                        <img src="img-demo/2.jpg" alt="image" />
+                        <p class="ap-caption">Slide Two</p>
                     </div>
                 </li>
                 <li>
                     <h2><span>Slide Three</span></h2>
                     <div>
-                        <figure>
-                            <img src="../../build/accordionpro_js/img-demo/3.jpg" alt="image" />
-                            <figcaption class="ap-caption">Slide Three</figcaption>
-                        </figure>
+                        <img src="img-demo/3.jpg" alt="image" />
+                        <p class="ap-caption">Slide Three</p>
                     </div>
                 </li>
                 <li>
                     <h2><span>Slide Four</span></h2>
                     <div>
-                        <figure>
-                            <img src="../../build/accordionpro_js/img-demo/4.jpg" width="768" alt="image" />
-                            <figcaption class="ap-caption">Slide Four</figcaption>
-                        </figure>
+                        <img src="img-demo/4.jpg" width="768" alt="image" />
+                        <p class="ap-caption">Slide Four</p>
                     </div>
                 </li>
                 <li>
                     <h2><span>Slide Five</span></h2>
                     <div>
-                        <figure>
-                            <img src="../../build/accordionpro_js/img-demo/5.jpg" alt="image" />
-                            <figcaption class="ap-caption">Slide Five</figcaption>
-                        </figure>
+                        <img src="img-demo/5.jpg" alt="image" />
+                        <p class="ap-caption">Slide Five</p>
                     </div>
                 </li>
             </ol>
