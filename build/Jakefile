@@ -92,14 +92,19 @@ task('js', function() {
 
 desc('Copy JS build to WP Dev');
 task('copyJStoWP', ['cssSource', 'cssMin', 'js'], { async : true }, function() {
-  var jsSource = path + 'build/accordionpro_js',
-      jsDest = path + 'accordionpro_wp';
+  var jsSource = path + 'build/accordionpro_js/js',
+      jsDest = path + 'accordionpro_wp/js',
+      cssSource = path + 'build/accordionpro_js/css',
+      cssDest = path + 'accordionpro_wp/css';
 
   // copy js...
   ncp.limit = 16;
   ncp(jsSource, jsDest, function (err) {
-   if (err) return console.error(err);
-   complete();
+    if (err) return console.error(err);
+    ncp(cssSource, cssDest, function (err) {
+     if (err) return console.error(err);
+     complete();
+    });
   });
 });
 
