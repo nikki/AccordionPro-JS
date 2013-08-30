@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="css/accordionpro.min.css">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script src="js/modernizr.2.6.2.min.js"></script>
+  <script src="js/jquery.accordionpro.min.js"></script>
 </head>
 <body>
 

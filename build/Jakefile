@@ -131,14 +131,12 @@ task('testWP', ['buildWP'], { async : true }, function() {
 
 desc('Run all tasks');
 task('default', function() {
-  jake.Task['cssSource'].execute(); // execute -> run task without pre-reqs
-  jake.Task['cssMin'].execute();
-  jake.Task['js'].invoke();
-  jake.Task['copyJStoWP'].invoke();
+  // jake.Task['cssSource'].execute(); // execute -> run task without pre-reqs
+  // jake.Task['cssMin'].execute();
+  // jake.Task['js'].invoke();
+  // jake.Task['copyJStoWP'].invoke();
   // jake.Task['buildWP'].invoke();
 
   // all other tasks are pre-reqs to this one
-  // jake.Task['testWP'].execute(); // invoke -> run task & pre-reqs
-
-  console.log('Build completed.');
+  jake.Task['testWP'].invoke(); // invoke -> run task & pre-reqs
 });
