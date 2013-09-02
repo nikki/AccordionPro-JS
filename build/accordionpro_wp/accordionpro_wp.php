@@ -29,21 +29,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  * Prevents loading file directly
  */
 
-if (!class_exists('WP') || !is_admin()) {
+if (!class_exists('WP')) {
   header('Status: 403 Forbidden');
   header('HTTP/1.1 403 Forbidden');
   die();
 }
-
-/**
- * Set up localisation
- */
-
-/* // !!! Probable fix for RTL admin panel bug
-$locale = get_locale();
-if (empty($locale)) $locale = 'en_US';
-load_theme_textdomain('accordion_pro', dirname (__FILE__).'/locale/'.$locale.'.mo');
-*/
 
 /**
  * Define plugin version
@@ -74,7 +64,7 @@ function init_options() {
   $v = $accordion_pro->load_options();
 
   if ($v['version'] != '2.0.0') {
-    // run upgrade script
+    // run upgrade fn
     $accordion_pro->upgrade();
   }
 

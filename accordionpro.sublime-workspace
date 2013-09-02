@@ -519,30 +519,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "build/Jakefile",
-			"settings":
-			{
-				"buffer_size": 4256,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "accordionpro_wp/inc/accordionpro_wp.class.php",
-			"settings":
-			{
-				"buffer_size": 23066,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "accordionpro_wp/inc/admin/manage.inc.php",
-			"settings":
-			{
-				"buffer_size": 17396,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "AccordionPro",
 	"command_palette":
@@ -712,12 +688,16 @@
 	},
 	"file_history":
 	[
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/documentation/index.html",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/build/Jakefile",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/documentation/examples.html",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/inc/accordionpro_wp.class.php",
+		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/inc/admin/manage.inc.php",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/inc/admin/settings.inc.php",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/accordionpro_wp.php",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/uninstall.php",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/inc/admin/overview.inc.php",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/js/jquery.accordionpro.js",
-		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/inc/admin/manage.inc.php",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/tests/instances/autoplay-startclosed-firstslide.php",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/tests/instances/autoplay-startclosed.php",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/tests/instances/autoplay-vertical-startclosed.php",
@@ -750,7 +730,6 @@
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/js/jquery.swipe.min.js",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/js/animate.min.js",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/js/jquery.imagesloaded.min.js",
-		"/Volumes/Nikki/webserver/projects/Accordion-Pro/build/Jakefile",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/build/accordionpro_js/js/jquery.accordionpro.js",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/index.html",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/tests/demo-suite/index.php",
@@ -768,7 +747,6 @@
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/marketing/responsive/css/style.css",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/marketing/index.html",
 		"/Volumes/Nikki/webserver/projects/NickTheme/index.html",
-		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/inc/accordionpro_wp.class.php",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/js/admin.js",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/css/admin.css",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/css/accordionpro.min.css"
@@ -782,6 +760,7 @@
 		"height": 0.0,
 		"where_history":
 		[
+			"<open files>",
 			"",
 			"<open files>",
 			"",
@@ -847,6 +826,15 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"'",
+			"<b>",
+			"</b>",
+			"</i>",
+			"<i>",
+			"Accordion Pro JS",
+			"JS",
+			"Code:",
+			"../img-demo",
 			"Add",
 			"register_post",
 			"register",
@@ -965,16 +953,7 @@
 			"$default",
 			"vertical",
 			"%",
-			"span",
-			"px",
-			"animate",
-			"vertical.rtl .slide>h2 b ",
-			"execute",
-			"core.responsive",
-			"!!!",
-			"elem.parent()",
-			"responsive",
-			"100"
+			"span"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -982,6 +961,13 @@
 		"regex": false,
 		"replace_history":
 		[
+			"<strong>",
+			"</strong>",
+			"</em>",
+			"<em>",
+			"Accordion Pro WP",
+			"Options used:",
+			"img-demo",
 			"{ async : false }",
 			"  <script src=\"js/modernizr.2.6.2.min.js\"></script>\n  <script src=\"js/jquery.accordionpro.min.js\"></script>",
 			"<script src=\"js/modernizr.2.6.2.min.js\"></script>",
@@ -1102,14 +1088,7 @@
 			"running",
 			"gameOver",
 			"gameover",
-			"assets",
-			"width",
-			"height",
-			"c:2",
-			"{c:2}",
-			"{t:0}",
-			"",
-			"c:0"
+			"assets"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -1120,224 +1099,8 @@
 	"groups":
 	[
 		{
-			"selected": 2,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "build/Jakefile",
-					"settings":
-					{
-						"buffer_size": 4256,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4256,
-								4256
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
-							[
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close"
-							],
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 2147.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "accordionpro_wp/inc/accordionpro_wp.class.php",
-					"settings":
-					{
-						"buffer_size": 23066,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								174,
-								174
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
-							[
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close"
-							],
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 162.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "accordionpro_wp/inc/admin/manage.inc.php",
-					"settings":
-					{
-						"buffer_size": 17396,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								199,
-								199
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
-							[
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close"
-							],
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -1378,7 +1141,7 @@
 	},
 	"replace":
 	{
-		"height": 62.0
+		"height": 64.0
 	},
 	"save_all_on_build": true,
 	"select_file":

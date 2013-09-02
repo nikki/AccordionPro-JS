@@ -14,17 +14,20 @@
     <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
 
     <style>
-      #demo { text-align: center; margin: 0 auto }
+      #demo { margin: 0 auto }
       h1 {
         font-size: 24px;
         border-bottom: 2px solid #333333;
         margin: 30px 0 10px;
         text-shadow: 1px 1px 0 white;
       }
+      input[type=text] { height: auto }
       .container > p { font-size: 16px; line-height: 1.5em; margin-bottom: 30px; }
       .container h1 + p { margin-bottom: 15px }
       .row { margin-bottom: 5px }
       .help-inline { margin-left: 30px }
+      #linkable li { display: inline-block }
+      textarea { width: 60%; height: 200px; margin-bottom: 60px }
     </style>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
@@ -82,9 +85,9 @@
     Pro setup visually - any changes made will be reflected in the plugin instance above.</p>
   <p>As an added bonus, users of Accordion Pro JS can use the generated code output to instantiate the plugin on their own websites.</p>
 
-  <form action="#" class="form-inline">
+  <form class="form-inline" method="GET" name="demo">
 <?php
-    $options = array(
+    $defaults = array(
         'Layout' => array(
             'orientation' => array(
               'desc' => 'Create a <b>horizontal</b> or <b>vertical</b> accordion',
@@ -138,7 +141,7 @@
         'Vertical Accordion Options' => array(
             'verticalWidth' => array(
               'desc' => 'Base width; Fixed (px [integer]) or fluid (% [string])',
-              'value' => array('integer', 'percentage')
+              'value' => '100%'
             ),
             'verticalHeight' => array(
               'desc' => 'Base height; fixed (px [integer])',
@@ -174,7 +177,7 @@
             ),
             'easing' => array(
               'desc' => 'Set animation easing',
-              'value' => array('linear', 'ease', 'ease-in', 'ease-out', 'ease-in-out')
+              'value' => array('ease-in-out', 'linear', 'ease', 'ease-in', 'ease-out')
             )
         ),
         'Miscellaneous Options' => array(
@@ -189,10 +192,49 @@
         )
     );
 
-    foreach ($options as $section => $opt) {
+    // flatten top level of defaults so that structure is same as $_GET array
+    $flatten = array();
+    foreach ($defaults as $default => $value) {
+      foreach ($value as $key => $val) {
+        foreach ($val as $k => $v) {
+          if ($k === 'value') {
+            switch (gettype($v)) {
+              case 'array': // push non-dupes to new array
+                $flatten[$key] = $v[0];
+                break;
+              default:
+                $flatten[$key] = $v;
+                break;
+            }
+          }
+        }
+      }
+    }
+
+    // get $_GET if exists
+    if (isset($_GET['AP'])) {
+      // TODO: filter
+      $args = $_GET['AP'];
+
+      // all GET items are strings, so cast integers
+      foreach ($args as $key => $value) {
+        if (gettype($flatten[$key]) === 'boolean') {
+          $args[$key] = ($value === 'true') ? true : false;
+        }
+        if (gettype($flatten[$key]) === 'integer') {
+          $args[$key] = (int) $value;
+        }
+      }
+
+    } else {
+      // defaults
+      $args = $flatten;
+    }
+
+    foreach ($defaults as $section => $def) {
         echo "<fieldset class='control-group'>";
         echo "<legend>$section</legend>";
-        foreach ($opt as $key => $value) {
+        foreach ($def as $key => $value) {
             echo "<div class='row'>";
             echo "<label class='control-label span2' for='$key'>$key</label>";
             $value = array_reverse($value);
@@ -205,8 +247,8 @@
 
                 switch ($t) {
                   case 'boolean':
-                    echo "<select id='$key' name='$key'>";
-                    if ($v) {
+                    echo "<select id='$key' name='AP[$key]'>";
+                    if ($args[$key]) {
 echo <<<EOT
                         <option name="false" value="false">false</option>
                         <option name="true" value="true" selected="selected">true</option>
@@ -220,15 +262,15 @@ EOT;
                     echo "</select>";
                     break;
                   case 'integer':
-echo <<<EOT
-                      <input type="number" id="$key" name="$key" value="$v" />
-EOT;
+                  case 'string':
+                    echo "<input type='text' id='$key' name='AP[$key]' value='$args[$key]' />";
                     break;
                   case 'array':
-                    echo "<select id='$key' name='$key'>";
+                    echo "<select id='$key' name='AP[$key]'>";
                     foreach ($v as $a => $b) {
                       // if $_GET opt val...
-                      echo "<option name='$b' value='$b'>$b</option>";
+                      $selected = $b === $args[$key] ? 'selected=selected' : '';
+                      echo "<option name='$b' value='$b' autocomplete='off' $selected>$b</option>";
                     }
                     echo "</select>";
                   default:
@@ -241,31 +283,86 @@ EOT;
         echo "</fieldset>";
     }
 ?>
+    <input type="submit" class="btn btn-primary" value="Submit" />
   </form>
 
   <div id="linkable">
     <ul>
-      <li><a href="#demo-slide-1">one</a></li>
-      <li><a href="#demo-slide-2">two</a></li>
-      <li><a href="#demo-slide-3">three</a></li>
-      <li><a href="#demo-slide-4">four</a></li>
-      <li><a href="#demo-slide-5">five</a></li>
+      <li><a href="#demo-slide-1">#demo-slide-1</a></li>
+      <li><a href="#demo-slide-2">#demo-slide-2</a></li>
+      <li><a href="#demo-slide-3">#demo-slide-3</a></li>
+      <li><a href="#demo-slide-4">#demo-slide-4</a></li>
+      <li><a href="#demo-slide-5">#demo-slide-5</a></li>
     </ul>
   </div>
 
+<?php
+
+    // create js object from defaults or passed in options
+    // strip defaults if necessary
+    $output = array();
+
+    foreach ($args as $key => $value) {
+      switch (gettype($value)) {
+        case 'array': // push non-dupes to new array
+          if ($flatten[$key][0] !== $value[0]) {
+            $output[$key] = $value[0];
+          }
+          break;
+        case 'boolean': // dedupe, cast bool to str
+          if ($flatten[$key] !== $value) {
+            $output[$key] = ($value) ? 'true' : 'false';
+          }
+          break;
+        default:
+          if ($flatten[$key] !== $value) {
+            $output[$key] = $value;
+          }
+          break;
+      }
+    }
+
+    // if default settings, cast array to string
+    if (empty($output)) $output = null;
+
+    // echo "<pre>";
+    // print_r(json_encode($output));
+    // echo "</pre>";*/
+?>
+
   <div id="output">
-    <h2>Output<a href="#">toggle code view</a></h2>
-    <textarea>$("#demo").accordionPro();</textarea>
+    <h3>Output</h3>
+    <textarea></textarea>
   </div>
 
+  <script>
+    (function() {
+      var output = <?php echo json_encode($output); ?>;
+
+      // cast strings to bool
+      for (var i in output) {
+        if (output.hasOwnProperty(i)) {
+          if (output[i] === 'true') {
+            output[i] = true;
+          }
+
+          if (output[i] === 'false') {
+            output[i] = false;
+          }
+        }
+      }
+
+      // init demo
+      $('#demo').accordionPro(output);
+
+      // set textarea output
+      var stringify = JSON.stringify(output);
+      if (stringify === 'null') stringify = '';
+      $('textarea').html("$('#demo').accordionPro(" + stringify + ");");
+    })();
+  </script>
+
 </div>
-
-
-
-
-
-
-  <script src="js/demosuite.js"></script>
 
 </body>
 </html>

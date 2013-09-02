@@ -4,7 +4,7 @@
  * Prevents loading file directly
  */
 
-if (!class_exists('WP') || !is_admin()) {
+if (!class_exists('WP')) {
   header('Status: 403 Forbidden');
   header('HTTP/1.1 403 Forbidden');
   die();
@@ -67,15 +67,17 @@ class accordion_pro {
 
   public function __construct() {
     // Add the admin hooks/actions
-    add_action('admin_init', array($this, 'admin_init'));
-    add_action('admin_menu', array($this, 'admin_menu'));
-    add_action('wp_ajax_admin_slide_tmpl', array($this, 'admin_slide_tmpl'));
+    if (is_admin()) {
+      add_action('admin_init', array($this, 'admin_init'));
+      add_action('admin_menu', array($this, 'admin_menu'));
+      add_action('wp_ajax_admin_slide_tmpl', array($this, 'admin_slide_tmpl'));
+    }
 
-    // Ensure jQuery is loaded in the head of the page to prevent race condition
-    // add_action('wp_head', array($this, 'load_jquery'), 5);
+    // Load scripts
+    add_action('wp_enqueue_scripts', array($this, 'load_scripts'), 5);
 
     // Create dynamic stylesheet
-    add_action('the_posts', array($this, 'load_styles'));
+    add_action('the_posts', array($this, 'dynamic_styles'));
 
     // Add the shortcode
     add_shortcode('accordion_pro', array($this, 'get_accordion'));
@@ -421,12 +423,66 @@ class accordion_pro {
    */
 
   /**
-   * Ensure jQuery loaded head of page
+   * Load scripts
    */
 
-  public function load_jquery() {
+  public function load_scripts() {
+    // Load jQuery in head
     wp_enqueue_script('jquery');
+
+    // Register Accordion JS
+    wp_register_script('accordion_pro', WP_PLUGIN_URL . '/accordionpro_wp/js/jquery.accordionpro.min.js', array('jquery'), '2.0.0', false);
   }
+
+  /**
+   * Dynamic styles
+   */
+
+  public function dynamic_styles($posts) {
+    $ids = array();
+
+    // No posts?
+    if (empty($posts)) return;
+
+    // Get IDs of all accordions being rendered
+    foreach ($posts as $post) {
+      $ids[] = $this->search_for_shortcode($post->post_content);
+    }
+
+    // flatten array, convert to comma-separated string
+    $ids = implode('-', $this->flatten($ids, array()));
+
+    // load css
+    wp_enqueue_style('accordion_pro', WP_PLUGIN_URL . '/accordionpro_wp/css/accordionpro.css.php?ids=' . $ids);
+
+    // required
+    return $posts;
+  }
+
+  /**
+   * Recursively search post content for shortcode
+   */
+
+  public function search_for_shortcode($content, $ids = array()) {
+    // first occurence of shortcode
+    $start = strpos($content, '[accordion_pro');
+    $end = 0;
+
+    if ($start !== false) {
+      // first occurence of end bracket
+      $end = strpos($content, ']', $start);
+
+      // save id
+      $ids[] = filter_var(substr($content, $start, $end - $start), FILTER_SANITIZE_NUMBER_INT);
+
+      // truncate content
+      $content = substr($content, $end);
+      return $this->search_for_shortcode($content, $ids);
+    }
+
+    return $ids;
+  }
+
 
   /**
    * Call accordion based on ID
@@ -434,9 +490,6 @@ class accordion_pro {
 
   public function get_accordion($atts) {
     if (isset($atts) && is_array($atts)) {
-      // Register Accordion JS
-      wp_register_script('accordion_pro', WP_PLUGIN_URL . '/accordionpro_wp/js/jquery.accordionpro.min.js', array('jquery'));
-
       // load accordion js only into page with shortcode
       wp_enqueue_script('accordion_pro');
 
@@ -499,58 +552,6 @@ class accordion_pro {
     }
 
     return $accordion;
-  }
-
-  /**
-   * Dynamic styles
-   */
-
-  public function load_styles($posts) {
-    $ids = array();
-
-    // No posts?
-    if (empty($posts)) return;
-
-    // Get IDs of all accordions being rendered
-    foreach ($posts as $post) {
-      $ids[] = $this->search_for_shortcode($post->post_content);
-    }
-
-    // flatten array, convert to comma-separated string
-    $ids = implode('-', $this->flatten($ids));
-
-    // Register Accordion CSS
-    wp_register_style('accordion_pro', WP_PLUGIN_URL . '/accordionpro_wp/css/accordionpro.css.php');
-
-    // load css
-    wp_enqueue_style('accordion_pro', WP_PLUGIN_URL . '/accordionpro_wp/css/accordionpro.css.php?ids=' . $ids);
-
-    // required
-    return $posts;
-  }
-
-  /**
-   * Recursively search post content for shortcode
-   */
-
-  public function search_for_shortcode($content, $ids = array()) {
-    // first occurence of shortcode
-    $start = strpos($content, '[accordion_pro');
-    $end = 0;
-
-    if ($start !== false) {
-      // first occurence of end bracket
-      $end = strpos($content, ']', $start);
-
-      // save id
-      $ids[] = filter_var(substr($content, $start, $end - $start), FILTER_SANITIZE_NUMBER_INT);
-
-      // truncate content
-      $content = substr($content, $end);
-      return $this->search_for_shortcode($content, $ids);
-    }
-
-    return $ids;
   }
 
   /**
@@ -716,6 +717,10 @@ class accordion_pro {
     }
     echo '</div>';
   }
+
+  /**
+   * UTILITIES
+   */
 
   /**
    * Sanitize a string (alphanumeric plus dashes and underscore)
