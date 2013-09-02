@@ -164,7 +164,7 @@ jQuery(function($) {
       this.removeSlide();
       this.toggleSlide();
       this.toggleCaption();
-      this.switchOrientation();
+      // this.switchOrientation();
       this.switchEditor();
       this.addMedia();
       this.removeAccordion();

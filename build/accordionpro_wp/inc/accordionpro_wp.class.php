@@ -652,6 +652,7 @@ class accordion_pro {
    */
 
   public function showField($type, $field, $selectValues, $selected, $unit) {
+/*
     echo '<div class="' . $type . ' ' . $field['name'] . '">';
     echo '<label for="'.$field['name'].'" title="'.$field['alt'].'">'.$field['title'].'</label>';
 
@@ -716,6 +717,7 @@ class accordion_pro {
       echo '</select>';
     }
     echo '</div>';
+*/
   }
 
   /**
