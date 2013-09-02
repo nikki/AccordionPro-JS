@@ -23,10 +23,8 @@ if (!class_exists('WP')) {
 <?php $this->display_notices(); ?>
 
 <form method="post" action="?page=accordion_pro&mode=edit<?php if(isset($_GET['id'])) { echo '&id='.$this->sanitize($_GET['id']); } ?>">
-
 	<div class="ap-left">
 		<div class="ap-slides metabox-holder">
-
 			<?php
 
 			$settings = array(
@@ -221,43 +219,21 @@ if (!class_exists('WP')) {
         )
     );
 
-    // flatten top level of defaults so that structure is same as $_GET array
-    $flatten = array();
-    foreach ($defaults as $default => $value) {
-      foreach ($value as $key => $val) {
-        foreach ($val as $k => $v) {
-          if ($k === 'value') {
-            switch (gettype($v)) {
-              case 'array': // push non-dupes to new array
-                $flatten[$key] = $v[0];
-                break;
-              default:
-                $flatten[$key] = $v;
-                break;
-            }
-          }
-        }
-      }
-    }
-
-    // get $_GET if exists
-    if (isset($_GET['AP'])) {
-      // TODO: filter
-      $args = $_GET['AP'];
-
-      // all GET items are strings, so cast integers
+    // get existing
+    if (isset($accordion['jQuerySettings'])) {
+    	$args = $accordion['jQuerySettings'];
       foreach ($args as $key => $value) {
-        if (gettype($flatten[$key]) === 'boolean') {
+        if (gettype($this->jQueryOptions[$key]) === 'boolean') {
           $args[$key] = ($value === 'true') ? true : false;
         }
-        if (gettype($flatten[$key]) === 'integer') {
-          $args[$key] = (int) $value;
+        if (gettype($this->jQueryOptions[$key]) === 'integer') {
+          // $args[$key] = (int) $value;
         }
       }
 
     } else {
       // defaults
-      $args = $flatten;
+      $args = $this->jQueryOptions;
     }
 
     foreach ($defaults as $section => $def) {
@@ -272,7 +248,7 @@ if (!class_exists('WP')) {
 
                 switch ($t) {
                   case 'boolean':
-                    echo "<select id='$key' name='AP[$key]'>";
+                    echo "<select id='$key' name='$key'>";
                     if ($args[$key]) {
 echo <<<EOT
                         <option name="false" value="false">false</option>
@@ -288,10 +264,10 @@ EOT;
                     break;
                   case 'integer':
                   case 'string':
-                    echo "<input type='text' id='$key' name='AP[$key]' value='$args[$key]' />";
+                    echo "<input type='text' id='$key' name='$key' value='$args[$key]' />";
                     break;
                   case 'array':
-                    echo "<select id='$key' name='AP[$key]'>";
+                    echo "<select id='$key' name='$key'>";
                     foreach ($v as $a => $b) {
                       // if $_GET opt val...
                       $selected = $b === $args[$key] ? 'selected=selected' : '';
@@ -303,7 +279,7 @@ EOT;
                 }
         				echo "</div>";
               } else {
-              	echo "<p class='tooltip'>$k</p>";
+              	echo "<p class='tooltip'>$v</p>";
               }
             }
         }

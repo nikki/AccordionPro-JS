@@ -44,7 +44,7 @@ class accordion_pro {
     'scaleImages'               => true,
     'horizontalWidth'           => 900,
     'horizontalHeight'          => 300,
-    'verticalWidth'             => '100%', // !!! TODO: parse string for %
+    'verticalWidth'             => '100%',
     'verticalHeight'            => 500,
     'verticalSlideHeight'       => 'fixed',
     'activateOn'                => 'click',
@@ -378,19 +378,7 @@ class accordion_pro {
     foreach ($this->jQueryOptions as $key => $default) {
       $value = $accordion['jQuerySettings'][$key];
 
-      // skip this prop
-      if ($key === 'verticalWidthUnit') continue;
-
-      // parse verticalWidth for % or px
       if ($value !== $default) {
-        if ($key === 'verticalWidth') {
-          if ($accordion['jQuerySettings']['verticalWidthUnit'] === 'perc') {
-            $value = $value . '%';
-          } else if ($accordion['jQuerySettings']['verticalWidthUnit'] === 'px') {
-            $value = $value . 'px';
-          }
-        }
-
         // assign value
         if (is_bool($default) || is_numeric($default)) {
           $options[] = $key . ': ' . $this->sanitize($value);
