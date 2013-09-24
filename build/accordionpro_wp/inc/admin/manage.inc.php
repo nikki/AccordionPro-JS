@@ -285,9 +285,6 @@ EOT;
         }
         echo "</div>";
     }
-
-    print_r($args);
-
 ?>
 
 		</div><!-- /ap-options -->

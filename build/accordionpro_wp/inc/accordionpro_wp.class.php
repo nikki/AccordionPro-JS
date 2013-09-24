@@ -57,7 +57,8 @@ class accordion_pro {
     'easing'                    => 'ease-in-out',
     'pauseOnHover'              => true,
     'linkable'                  => false
-  );
+  ),
+  $css_ids = array();
 
   /**
    * INIT PLUGIN
@@ -78,14 +79,20 @@ class accordion_pro {
     // Load scripts
     add_action('wp_enqueue_scripts', array($this, 'load_scripts'), 5);
 
-    // Create dynamic stylesheet
-    add_action('the_posts', array($this, 'dynamic_styles'));
-
     // Add the shortcode
     add_shortcode('accordion_pro', array($this, 'get_accordion'));
 
     // Enable ability to execute shortcodes nested in slide content
     add_filter('the_content', 'do_shortcode');
+
+    // Enable ability to execute shortcodes within widgets
+    add_filter('widget_text', 'do_shortcode');
+
+    // Load dynamic styles
+    add_action('get_footer', array($this, 'dynamic_styles'));
+
+    // Clear dynamic css ids once page has finished loading
+    add_action('shutdown', array($this, 'clear_dynamic_css_ids'));
 
     // Add the custom post type
     register_post_type(
@@ -358,7 +365,7 @@ class accordion_pro {
     $allowedextratags = array_merge($extratags, $allowedposttags);
 
     // Generate the 'post_content', which is a cached version of the html
-    $accordion['post_content'] = '<div id="accordionPro'.$accordion['ID'].'"><ol>';
+    $accordion['post_content'] = '<div id="accordionPro'.$accordion['ID'].'" style="display:none!important"><ol>';
 
     // esc html on title
     // allow tags on caption
@@ -417,7 +424,7 @@ class accordion_pro {
 
     // save
     if (!empty($options)) $accordion['post_content'] .= implode(', ', $options);
-    $accordion['post_content'] .= ' }).show(); });'; // fixes FOUC
+    $accordion['post_content'] .= ' }); });'; // fixes FOUC
     $accordion['post_content'] .= '</script>';
 
     // insert post
@@ -453,25 +460,20 @@ class accordion_pro {
    * Dynamic styles
    */
 
-  public function dynamic_styles($posts) {
-    $ids = array();
-
-    // No posts?
-    if (empty($posts)) return;
-
-    // Get IDs of all accordions being rendered
-    foreach ($posts as $post) {
-      $ids[] = $this->search_for_shortcode($post->post_content);
-    }
-
+  public function dynamic_styles() {
     // flatten array, convert to comma-separated string
-    $ids = implode('-', $this->flatten($ids, array()));
+    $ids = implode('-', $this->flatten($this->css_ids, array()));
 
     // load css
     wp_enqueue_style('accordion_pro', WP_PLUGIN_URL . '/accordionpro_wp/css/accordionpro.css.php?ids=' . $ids);
+  }
 
-    // required
-    return $posts;
+  /**
+   * Clear list of css ids once page has finished loading
+   */
+
+  public function clear_dynamic_css_ids() {
+    $this->css_ids = array();
   }
 
   /**
@@ -510,6 +512,9 @@ class accordion_pro {
 
       // cached accordion html
       $accordion = $this->get_accordion_settings($atts['id']);
+
+      // save id for dynamic styles
+      array_push($this->css_ids, $atts['id']);
 
       // return accordion
       return do_shortcode($accordion['post_content']);
