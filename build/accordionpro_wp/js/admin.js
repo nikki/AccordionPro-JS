@@ -112,13 +112,13 @@ jQuery(function($) {
 
         if (val === 'horizontal') {
           // show horizontal options
-          $('#vertical-opts').slideUp(function() {
-            $('#horizontal-opts').slideDown();
+          $('#Vertical-Accordion-Options').slideUp(function() {
+            $('#Horizontal-Accordion-Options').slideDown();
           });
         } else {
           // show vertical options
-          $('#horizontal-opts').slideUp(function() {
-            $('#vertical-opts').slideDown();
+          $('#Horizontal-Accordion-Options').slideUp(function() {
+            $('#Vertical-Accordion-Options').slideDown();
           });
         }
       };
@@ -159,15 +159,24 @@ jQuery(function($) {
       });
     },
 
+    showTooltip : function() {
+      $('.ap-options label').hover(function() {
+        $(this).next().show();
+      }, function() {
+        $(this).next().hide();
+      });
+    },
+
     init : function() {
       this.addSlide();
       this.removeSlide();
       this.toggleSlide();
       this.toggleCaption();
-      // this.switchOrientation();
+      this.switchOrientation();
       this.switchEditor();
       this.addMedia();
       this.removeAccordion();
+      this.showTooltip();
     }
   };
 

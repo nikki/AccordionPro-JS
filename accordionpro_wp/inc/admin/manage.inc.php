@@ -35,7 +35,6 @@ if (!class_exists('WP')) {
 
 			if (!empty($accordion['acc_content']['content']) && is_array($accordion['acc_content']['content'])) {
 				foreach($accordion['acc_content']['content'] as $key => $content) {
-
 					?>
 						<div class="postbox ap-slide">
 							<div class="ap-toggle handlediv" title="Click to toggle"></div>
@@ -227,7 +226,7 @@ if (!class_exists('WP')) {
           $args[$key] = ($value === 'true') ? true : false;
         }
         if (gettype($this->jQueryOptions[$key]) === 'integer') {
-          // $args[$key] = (int) $value;
+          $args[$key] = (int) $value;
         }
       }
 
@@ -237,7 +236,8 @@ if (!class_exists('WP')) {
     }
 
     foreach ($defaults as $section => $def) {
-        echo "<div class='postbox'>";
+        $title = str_replace(' ', '-', $section);
+        echo "<div id='$title' class='postbox'>";
         echo "<h3>$section</h3>";
         foreach ($def as $key => $value) {
             echo "<div class='inside'>";

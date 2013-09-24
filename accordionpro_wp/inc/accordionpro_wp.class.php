@@ -49,6 +49,8 @@ class accordion_pro {
     'verticalSlideHeight'       => 'fixed',
     'activateOn'                => 'click',
     'touchEnabled'              => true,
+    'onSlideOpen'               => 'function() {}',
+    'onSlideClose'              => 'function() {}',
     'autoPlay'                  => false,
     'cycleSpeed'                => 6000,
     'slideSpeed'                => 800,
@@ -137,7 +139,20 @@ class accordion_pro {
    */
 
   public function upgrade() {
-    // echo 'upgrade';
+    // get existing accordions
+    $posts = get_posts(array(
+      'numberposts'     => -1, // Show all of them.
+      'offset'          => 0,
+      'orderby'         => 'post_date',
+      'order'           => 'asc',
+      'post_type'       => 'accordion',
+      'post_status'     => 'publish'
+    ));
+
+    // loop through each existing accordion and resave it to rewrite it's cache
+    foreach($posts as $post) {
+      $this->update_accordionCache($this->get_accordion_settings($post->ID, true));
+    }
   }
 
   /**
@@ -226,7 +241,7 @@ class accordion_pro {
         include('admin/manage.inc.php');
       } else {
         // If someone is adding/updating an accordion
-        if (isset($_GET['delete_accordion']) && check_admin_referer('delete')) {
+        if (isset($_GET['delete_accordion']) && check_admin_referer('delete', 'accordion_pro')) {
           $this->delete_accordion($clean['id']);
         }
 
@@ -234,13 +249,18 @@ class accordion_pro {
         include('admin/overview.inc.php');
       }
     } else if ($clean['page'] === 'accordion_pro_settings') {
-      // save settings
-      if (isset($_POST['save_settings']) && check_admin_referer('save_settings', 'accordion_pro')) {
-        $this->update_settings();
-      }
+      if ($clean['mode'] === 'delete_data') {
+        // delete data
+        include('admin/delete_data.inc.php');
+      } else {
+        // save settings
+        if (isset($_POST['save_settings']) && check_admin_referer('save_settings', 'accordion_pro')) {
+          $this->update_settings();
+        }
 
-      // inc setting page
-      include('admin/settings.inc.php');
+        // inc setting page
+        include('admin/settings.inc.php');
+      }
     }
 
     echo '</div>';
@@ -259,7 +279,6 @@ class accordion_pro {
 
     // inc slide template
     include('admin/template.inc.php');
-
     die();
   }
 
@@ -283,7 +302,7 @@ class accordion_pro {
     );
 
     // Check if we're updating or adding a new post
-    if ($clean['id']) {
+    if (isset($clean['id'])) {
       $post['ID'] = $clean['id'];
       unset($post['post_content']); // on slower systems, the accordion page may be blank for a few seconds while the cache updates.
       wp_insert_post($post);
@@ -294,8 +313,10 @@ class accordion_pro {
     }
 
     // Update jQ opts
-    foreach($this->jQueryOptions as $key=>$default) {
-      $this->update_post_meta($post['ID'], $key, $this->sanitize($_POST[$key]));
+    foreach($this->jQueryOptions as $key => $default) {
+      if ($key !== 'onSlideOpen' && $key !== 'onSlideClose') {
+        $this->update_post_meta($post['ID'], $key, $this->sanitize($_POST[$key]));
+      }
     }
 
     // The content title and content are arrays, so serialize them.
@@ -356,11 +377,16 @@ class accordion_pro {
         // slide content
         $accordion['post_content'] .= '</span></h2><div>' . wp_kses_post($content, $allowedextratags);
 
+        // caption callback
+        $callback =  "$('#accordionPro" . $accordion['ID'] . "').find('.ap-caption').each(function() {";
+        $callback .= "if (!$(this).parents('.slide').hasClass('selected')) { $(this).fadeOut();";
+        $callback .= "} else { if (!$(this).is(':visible')) $(this).fadeIn(); } });";
+        $accordion['jQuerySettings']['onSlideOpen'] = 'function() { ' . $callback . ' }';
+        $accordion['jQuerySettings']['onSlideClose'] = 'function() { ' . $callback . ' }';
+
         // caption
-        if ($accordion['acc_content']['content_caption_enabled'][$key]) {
+        if (isset($accordion['acc_content']['content_caption_enabled'][$key])) {
           $accordion['post_content'] .= '<div class="ap-caption ap-caption-'.$key.'">'.wp_kses_post($accordion['acc_content']['content_caption'][$key]).'</div>';
-          $jqueryOptions['onTriggerSlide'] = 'onTriggerSlide: function() { this.find(".ap-caption").fadeOut(); }';
-          $jqueryOptions['onSlideAnimComplete'] = 'onSlideAnimComplete: function() { this.find(".ap-caption").fadeIn(); }';
         }
 
         // end post content
@@ -377,13 +403,14 @@ class accordion_pro {
     // accordion user opts
     foreach ($this->jQueryOptions as $key => $default) {
       $value = $accordion['jQuerySettings'][$key];
-
       if ($value !== $default) {
-        // assign value
+        // bool or number
         if (is_bool($default) || is_numeric($default)) {
           $options[] = $key . ': ' . $this->sanitize($value);
-        } else {
+        } else if (strpos($default, 'function') === false) { // string, but not function
           $options[] = $key . ': \'' . addslashes($value) . '\'';
+        } else {
+          $options[] = $key . ':' . $value;
         }
       }
     }
@@ -492,7 +519,7 @@ class accordion_pro {
   }
 
   /**
-   * Fetchs accordion custom post
+   * Fetches accordion custom post
    */
 
   public function get_accordion_settings($id, $getPostMeta=false) {
@@ -586,7 +613,7 @@ class accordion_pro {
 
   public function update_settings() {
     foreach ($this->options as $key => $value) {
-      $data = $_POST[$key]; // !!!
+      $data = $_POST[$key]; // !!! TODO
 
       // only user-changable option now is for custom css, but sanitize fn is too greedy
       // $this->set_option($key, $this->sanitize($_POST[$key]));
@@ -636,79 +663,6 @@ class accordion_pro {
   }
 
   /**
-   * Generate select field
-   */
-
-  public function showField($type, $field, $selectValues, $selected, $unit) {
-/*
-    echo '<div class="' . $type . ' ' . $field['name'] . '">';
-    echo '<label for="'.$field['name'].'" title="'.$field['alt'].'">'.$field['title'].'</label>';
-
-    if ($type === 'input') {
-      // input
-      // echo '<div id="'.$field['name'].'_wrapper">';
-      echo '<input type="text" name="'.$field['name'].'" value="'.$selected.'" />';
-
-      // custom field measurement labels
-      switch ($field['name']) {
-        case 'verticalWidth':
-          // px or %
-          echo '<div>';
-
-          // pre-pop checked unit
-          echo '<label><input type="radio" name="verticalWidthUnit" value="perc" ';
-          if ($unit === 'perc') {
-            echo 'checked="checked" /> %</label>';
-          } else {
-            echo '/> %</label>';
-          }
-
-          echo '<label><input type="radio" name="verticalWidthUnit" value="px" ';
-          if ($unit === 'px') {
-            echo 'checked="checked" /> px</label>';
-          } else {
-            echo '/> px</label>';
-          }
-
-          echo '</div>';
-          break;
-        case 'horizontalWidth':
-        case 'horizontalHeight':
-        case 'minResponsiveWidth':
-        case 'maxResponsiveWidth':
-        case 'verticalHeight':
-          echo '<span> px</span>';
-          break;
-        case 'cycleSpeed':
-        case 'slideSpeed':
-          echo '<span> ms</span>';
-          break;
-        default:
-          echo '<span></span>';
-          break;
-      }
-    } else {
-      // select
-      echo '<select id="'.$field['name'].'" name="'.$field['name'].'">';
-      foreach ($selectValues as $value => $title) {
-        if ($selected == '') $selected = $value;
-        echo '<option value="'.$value.'" ';
-
-        // If the field is selected, select it and make custom not to be selected
-        if ($value == $selected) {
-          echo ' selected="selected" ';
-        }
-
-        if ($value === 'custom' && $showCustom) echo ' selected="selected" ';
-        echo '>'.$title.'</option>';
-      }
-      echo '</select>';
-    }
-    echo '</div>';
-*/
-  }
-
-  /**
    * UTILITIES
    */
 
@@ -717,7 +671,7 @@ class accordion_pro {
    */
 
   public function sanitize($val) {
-    return preg_replace('/[^a-zA-Z0-9-_]/', '', $val);
+    return preg_replace('/[^a-zA-Z0-9-_%]/', '', $val);
   }
 
   /**
@@ -725,8 +679,8 @@ class accordion_pro {
    */
 
   public function flatten($array, $return) {
-    for ($x = 0; $x <= count($array); $x++) {
-      if (is_array($array[$x])) {
+    for ($x = 0; $x < count($array); $x++) {
+      if (is_array($array) && is_array($array[$x])) {
         $return = $this->flatten($array[$x], $return);
       } else {
         if ($array[$x]) {

@@ -25,10 +25,10 @@ if (!class_exists('WP')) {
 	<?php wp_nonce_field('save_settings', 'accordion_pro'); ?>
 </form>
 
-<form method="post" action="?page=accordion_pro">
-  <h3><label for="uninstall"><?php _e('Uninstall Accordion Pro', 'accordion_pro'); ?></label></h3>
-	<p><?php _e('If you wish to remove all the data associated with this plugin, use the uninstall button below.', 'accordion_pro'); ?></p>
+<form method="post" action="?page=accordion_pro_settings&mode=delete_data">
+  <h3><label for="delete_data"><?php _e('Delete Accordion Pro Data', 'accordion_pro'); ?></label></h3>
+	<p><?php _e('If you wish to remove all the data associated with this plugin, use the button below.', 'accordion_pro'); ?></p>
 
-  <p class="submit"><input type="submit" name="uninstall" id="uninstall" class="button-primary" value="<?php _e('Uninstall', 'accordion_pro'); ?>"></p>
-	<?php wp_nonce_field('uninstall', 'accordion_pro'); ?>
+  <p class="submit"><input type="submit" name="delete_data" id="delete_data" class="button-primary" value="<?php _e('Delete Data', 'accordion_pro'); ?>"></p>
+	<?php wp_nonce_field('delete_data', 'accordion_pro'); ?>
 </form>

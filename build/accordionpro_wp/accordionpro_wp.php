@@ -55,10 +55,10 @@ global $accordion_pro;
 $accordion_pro = new accordion_pro();
 
 /**
- * Set options on init
+ * Activation hook
  */
 
-register_activation_hook (__FILE__, 'init_options');
+register_activation_hook(__FILE__, 'init_options');
 function init_options() {
   global $accordion_pro;
   $v = $accordion_pro->load_options();

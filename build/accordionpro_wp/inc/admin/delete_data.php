@@ -4,11 +4,19 @@
  * Prevents loading file directly
  */
 
-if (!defined('WP_UNINSTALL_PLUGIN')) {
-	header('Status: 403 Forbidden');
-	header('HTTP/1.1 403 Forbidden');
+if (!defined('WP')) {
+  header('Status: 403 Forbidden');
+  header('HTTP/1.1 403 Forbidden');
   die();
 }
+
+echo 'WP defined';
+
+/**
+ * Check referrer
+ */
+
+if (!is_admin() || !check_admin_referer('delete_data', 'accordion_pro')) die();
 
 /**
  * Remove all options
@@ -43,3 +51,7 @@ $posts = get_posts(array(
 foreach($posts as $post) {
   wp_delete_post($post->ID);
 }
+
+/**
+ * Redirect back to plugins folder
+ */

@@ -1,14 +1,10 @@
 <?php
 
 /**
- * Prevents loading file directly
+ * Check referrer
  */
 
-if (!defined('WP_UNINSTALL_PLUGIN')) {
-	header('Status: 403 Forbidden');
-	header('HTTP/1.1 403 Forbidden');
-  die();
-}
+if (!is_admin() || !check_admin_referer('delete_data', 'accordion_pro')) die();
 
 /**
  * Remove all options
@@ -43,3 +39,11 @@ $posts = get_posts(array(
 foreach($posts as $post) {
   wp_delete_post($post->ID);
 }
+?>
+
+<h2><?php _e('Settings', 'accordion_pro'); ?></h2>
+<?php
+  $this->notices[] = __('Data Deleted', 'accordion_pro');
+  $this->display_notices();
+?>
+<a href='<?php echo admin_url('?page=accordion_pro'); ?>'><?php _e('Back to Manage Accordions panel', 'accordion_pro'); ?></a>

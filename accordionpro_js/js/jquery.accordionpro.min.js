@@ -32,8 +32,7 @@
 /**
  * Project:    Accordion Pro JS - a responsive accordion plugin for jQuery
  * Author:     Nicola Hibbert
- * URL:        http://codecanyon.net/item/accordion-pro/1506395?ref=nicolahibbert
- * Demo:       http://accordionpro.nicolahibbert.com/
+ * URL:        http://codecanyon.net/item/accordion-pro-js-responsive-jquery-accordion/5480772?ref=nicolahibbert
  *
  * Version:    1.0
  * Copyright:  (c) 2010-2013 Nicola Hibbert

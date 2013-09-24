@@ -91,26 +91,34 @@ task('js', function() {
   fs.writeFileSync(path + 'build/accordionpro_js/js/jquery.accordionpro.min.js', output);
 });
 
-desc('Copy JS build to WP Dev');
+desc('Copy CSS to WP Dev');
+task('copyCSStoWP', function() {
+  var cssSource = path + 'build/accordionpro_js/css',
+      cssDest = path + 'accordionpro_wp/css';
+
+  // copy css...
+  ncp.limit = 16;
+  ncp(cssSource, cssDest, function (err) {
+    if (err) return console.error(err);
+    complete();
+  });
+});
+
+desc('Copy JS to WP Dev');
 task('copyJStoWP', function() {
   var jsSource = path + 'build/accordionpro_js/js',
-      jsDest = path + 'accordionpro_wp/js',
-      cssSource = path + 'build/accordionpro_js/css',
-      cssDest = path + 'accordionpro_wp/css';
+      jsDest = path + 'accordionpro_wp/js';
 
   // copy js...
   ncp.limit = 16;
   ncp(jsSource, jsDest, function (err) {
     if (err) return console.error(err);
-    ncp(cssSource, cssDest, function (err) {
-     if (err) return console.error(err);
-     complete();
-    });
+    complete();
   });
 });
 
 desc('Drop copy of WP plugin into build folder');
-task('buildWP', ['cssSource', 'cssMin', 'js', 'copyJStoWP'], function() {
+task('buildWP', function() {
   var ncp = require('ncp').ncp,
       source = path + '/accordionpro_wp',
       destination = path + '/build/accordionpro_wp';
@@ -123,7 +131,7 @@ task('buildWP', ['cssSource', 'cssMin', 'js', 'copyJStoWP'], function() {
 });
 
 desc('Drop copy of WP plugin into WP test install plugin folder');
-task('testWP', ['buildWP'], function() {
+task('testWP', function() {
   var ncp = require('ncp').ncp,
       source = path + 'accordionpro_wp',
       destination = '/Volumes/Nikki/webserver/websites/wordpress/wp-content/plugins/accordionpro_wp';
@@ -137,13 +145,7 @@ task('testWP', ['buildWP'], function() {
 
 desc('Run all tasks');
 task('default', function() {
-  // jake.Task['cssSource'].execute(); // execute -> run task without pre-reqs
-  // jake.Task['cssMin'].execute();
-  // jake.Task['js'].invoke();
-  // jake.Task['copyJStoWP'].invoke();
-  // jake.Task['buildWP'].invoke();
-  // jake.Task['testWP'].invoke(); // invoke -> run task & pre-reqs
-
+  // execute -> run task without pre-reqs, invoke -> run task & pre-reqs
   async.waterfall([
     function(cb) {
       // console.log('CSS compiled');
@@ -158,6 +160,11 @@ task('default', function() {
     function(cb) {
       // console.log('JS compiled');
       jake.Task['js'].execute();
+      cb(null);
+    },
+    function(cb) {
+      // console.log('CSS copied to WP build');
+      jake.Task['copyCSStoWP'].execute();
       cb(null);
     },
     function(cb) {

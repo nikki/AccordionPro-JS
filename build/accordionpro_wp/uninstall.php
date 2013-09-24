@@ -7,14 +7,8 @@
 if (!defined('WP_UNINSTALL_PLUGIN')) {
 	header('Status: 403 Forbidden');
 	header('HTTP/1.1 403 Forbidden');
-  exit;
+  die();
 }
-
-/**
- * Admin check
- */
-
-if (!is_admin()) return;
 
 /**
  * Remove all options
@@ -25,7 +19,8 @@ $options = array(
   'loadjQuery',
   'loadJS',
   'loadJSEasing',
-  'version'
+  'version',
+  'additional_css'
 );
 
 foreach($options as $key) {
