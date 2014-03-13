@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Get accordion IDs
  */
@@ -9,6 +8,7 @@ $ids = explode('-', $_GET['ids']);
 /**
  * Sanitize accordion IDs
  */
+
 function sanitize($val) {
   return preg_replace('/[^0-9_]/', '', $val);
 }
@@ -44,17 +44,4 @@ $additional = file_get_contents('additional.css');
  * Output
  */
 
-$copyright = <<<EOD
-@charset 'utf-8';
-/**
- * Project:    Accordion Pro JS - a responsive accordion plugin for jQuery
- * Author:     Nicola Hibbert
- * URL:        http://codecanyon.net/item/accordion-pro-js-responsive-jquery-accordion/5480772?ref=nicolahibbert
- *
- * Version:    1.0
- * Copyright:  (c) 2010-2013 Nicola Hibbert
- */
-
-EOD;
-
-echo $copyright, $output, $additional;
+echo $output, $additional;

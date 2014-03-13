@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Prevents loading file directly
  */
@@ -365,7 +364,7 @@ class accordion_pro {
     $allowedextratags = array_merge($extratags, $allowedposttags);
 
     // Generate the 'post_content', which is a cached version of the html
-    $accordion['post_content'] = '<div id="accordionPro'.$accordion['ID'].'" style="display:none!important"><ol>';
+    $accordion['post_content'] = '<div id="accordionPro'.$accordion['ID'].'" style="display:none"><ol>';
 
     // esc html on title
     // allow tags on caption

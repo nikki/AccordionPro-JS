@@ -818,7 +818,7 @@
       imagesLoaded(elem, function() {
         setup.dimensions();
         setup.ie();
-        elem.show(); // images loaded -> set plugin to visible before slidepositions need setting
+        elem.delay(500).css('display', 'block'); // images loaded -> set plugin to visible before slidepositions need setting
         setup.slidePositions();
         setup.events();
         if (settings.startClosed) setup.startClosed();
