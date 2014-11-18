@@ -4,15 +4,5 @@
     {
       "path": "/Volumes/files/webserver/projects/Accordion-Pro"
     }
-  ],
-  "build_systems":
-  [
-    {
-      "name": "AccordionPro",
-      "cmd": ["jake"],
-      "path" : "/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:/usr/local/n/current/bin:",
-      "working_dir": "${project_path}/build/",
-      "shell": true
-    }
   ]
 }

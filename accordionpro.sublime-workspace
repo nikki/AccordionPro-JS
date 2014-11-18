@@ -517,9 +517,6 @@
 			]
 		]
 	},
-	"buffers":
-	[
-	],
 	"build_system": "AccordionPro",
 	"command_palette":
 	{
@@ -675,7 +672,12 @@
 	},
 	"console":
 	{
-		"height": 247.0
+		"height": 247.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by);",
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
 	},
 	"distraction_free":
 	{
@@ -688,6 +690,18 @@
 	},
 	"file_history":
 	[
+		"/Volumes/files/webserver/projects/Accordion-Pro/js/lib/jquery.accordionpro.js",
+		"/Volumes/files/webserver/projects/Accordion-Pro/index.html",
+		"/Volumes/files/webserver/projects/Accordion-Pro/js/jquery.accordionpro.min.js",
+		"/Volumes/files/webserver/projects/Accordion-Pro/Gruntfile.js",
+		"/Volumes/files/webserver/projects/Accordion-Pro/.gitignore",
+		"/Volumes/files/webserver/projects/Accordion-Pro/package.json",
+		"/Volumes/files/webserver/projects/Accordion-Pro/accordionpro.sublime-project",
+		"/Volumes/files/webserver/projects/Accordion-Pro/js/jquery.accordionpro.js",
+		"/Volumes/files/webserver/projects/Accordion-Pro/css/scss/accordionpro.scss",
+		"/Volumes/files/webserver/projects/Accordion-Pro/css/accordionpro.css",
+		"/Volumes/files/webserver/projects/Accordion-Pro/.yo-rc.json",
+		"/Volumes/files/webserver/projects/Accordion-Pro/tests/demo-suite/index.html",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/inc/accordionpro_wp.class.php",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/css/accordionpro.css.php",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_js/js/jquery.accordionpro.js",
@@ -1105,14 +1119,6 @@
 		"whole_word": false,
 		"wrap": true
 	},
-	"groups":
-	[
-		{
-			"sheets":
-			[
-			]
-		}
-	],
 	"incremental_find":
 	{
 		"height": 34.0
@@ -1130,11 +1136,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.5,
 			1.0
 		],
 		"rows":
@@ -1147,6 +1160,10 @@
 	"output.exec":
 	{
 		"height": 216.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
 	},
 	"replace":
 	{
@@ -1185,10 +1202,24 @@
 		],
 		"width": 380.0
 	},
+	"select_symbol":
+	{
+		"height": 287.0,
+		"selected_items":
+		[
+		],
+		"width": 392.0
+	},
+	"settings":
+	{
+	},
 	"show_minimap": false,
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
 	"side_bar_width": 221.0,
-	"status_bar_visible": true
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
 }
