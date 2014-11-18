@@ -520,16 +520,56 @@
 	"build_system": "AccordionPro",
 	"command_palette":
 	{
-		"height": 47.0,
+		"height": 187.0,
 		"selected_items":
 		[
 			[
-				"disab",
-				"Package Control: Disable Package"
+				"prv",
+				"PackageResourceViewer: Open Resource"
 			],
 			[
 				"list",
 				"Package Control: List Packages"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"disabl",
+				"Package Control: Disable Package"
+			],
+			[
+				"upd",
+				"Package Control: Upgrade/Overwrite All Packages"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"remov",
+				"Package Control: Remove Package"
+			],
+			[
+				"list ",
+				"Package Control: List Packages"
+			],
+			[
+				"disable",
+				"Package Control: Disable Package"
+			],
+			[
+				"package",
+				"Package Control: Disable Package"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"disab",
+				"Package Control: Disable Package"
 			],
 			[
 				"disa",
@@ -552,20 +592,8 @@
 				"Package Control: Remove Package"
 			],
 			[
-				"install",
-				"Package Control: Install Package"
-			],
-			[
-				"remov",
-				"Package Control: Remove Package"
-			],
-			[
 				"instl",
 				"Package Control: Install Package"
-			],
-			[
-				"remove",
-				"Package Control: Remove Package"
 			],
 			[
 				"inst",
@@ -590,10 +618,6 @@
 			[
 				"prefix",
 				"Preferences: Prefixr Key Bindings – Default"
-			],
-			[
-				"instal",
-				"Package Control: Install Package"
 			],
 			[
 				"upda",
@@ -675,6 +699,7 @@
 		"height": 247.0,
 		"history":
 		[
+			"PackageResourceViewer",
 			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by);",
 			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
 		]
@@ -690,12 +715,15 @@
 	},
 	"file_history":
 	[
+		"/Users/nikki/Library/Application Support/Sublime Text 3/Packages/Jasmine JS/snippets/describe.sublime-snippet",
+		"/Users/nikki/Library/Application Support/Sublime Text 3/Packages/Jasmine JS/snippets/it.sublime-snippet",
+		"/Volumes/files/webserver/projects/Accordion-Pro/test/setup.js",
+		"/Volumes/files/webserver/projects/Accordion-Pro/package.json",
 		"/Volumes/files/webserver/projects/Accordion-Pro/js/lib/jquery.accordionpro.js",
 		"/Volumes/files/webserver/projects/Accordion-Pro/index.html",
 		"/Volumes/files/webserver/projects/Accordion-Pro/js/jquery.accordionpro.min.js",
 		"/Volumes/files/webserver/projects/Accordion-Pro/Gruntfile.js",
 		"/Volumes/files/webserver/projects/Accordion-Pro/.gitignore",
-		"/Volumes/files/webserver/projects/Accordion-Pro/package.json",
 		"/Volumes/files/webserver/projects/Accordion-Pro/accordionpro.sublime-project",
 		"/Volumes/files/webserver/projects/Accordion-Pro/js/jquery.accordionpro.js",
 		"/Volumes/files/webserver/projects/Accordion-Pro/css/scss/accordionpro.scss",
@@ -779,7 +807,7 @@
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 93.0,
 		"where_history":
 		[
 			"",

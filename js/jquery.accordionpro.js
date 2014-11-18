@@ -59,8 +59,6 @@
 ;(function($) {
 
   function AccordionPro(elem, options) {
-
-
     /**
      * Merge defaults with options in new settings object
      */
@@ -80,11 +78,85 @@
         padding = 0,
         border = 0,
         offset = 0,
-        orientation = settings.orientation === 'horizontal' ? 1 : 0,
+        horizontal = settings.orientation === 'horizontal' ? 1 : 0,
         easingFns = ['linear', 'ease', 'ease-in', 'ease-out', 'ease-in-out'],
         easing = $.inArray(settings.easing, easingFns) >= 0 ? settings.easing : defaults.easing,
-        fitToContent = !orientation && settings.verticalSlideHeight === 'fitToContent' ? true : false,
+        fitToContent = !horizontal && settings.verticalSlideHeight === 'fitToContent' ? true : false,
         transparent = (settings.theme === 'transparent');
+
+
+    /**
+     * Plugin setup
+     */
+
+    var setup = {
+      globalDimensions : function() {
+        elem
+          .outerWidth(horizontal ? settings.horizontalWidth : settings.verticalWidth)
+          .outerHeight(horizontal ? settings.horizontalHeight : settings.verticalHeight);
+      },
+
+      globalStyles : function() {
+        var classNames = 'accordionPro ';
+
+        // set horizontal classname
+        classNames += horizontal ? 'horizontal ' : 'vertical ';
+
+        // theme
+        classNames += settings.theme + ' ';
+
+        // rounded
+        classNames += settings.rounded ? 'rounded ' : '';
+
+        // rtl
+        classNames += settings.rtl ? 'rtl ' : '';
+
+        // start closed
+        classNames += settings.startClosed ? 'closed ' : '';
+
+        // fitToContent
+        classNames += (!horizontal && fitToContent) ? 'fitToContent ' : '';
+
+        // scale images
+        classNames += settings.scaleImages ? 'scaleImages ' : '';
+
+        // set classnames
+        elem.addClass(classNames);
+      },
+
+      slideDimensions : function() {
+
+      },
+
+      slidePositions : function() {
+
+      },
+
+      slideStyles : function() {
+
+      },
+
+      events : function() {
+
+      },
+
+      internetExploder : function() {
+
+      },
+
+      init : function() {
+        this.globalDimensions();
+        this.globalStyles();
+        this.slideDimensions();
+        this.slidePositions();
+        this.slideStyles();
+      }
+    };
+
+
+
+    setup.init();
+    return this.methods;
   }
 
 
@@ -133,39 +205,7 @@
   };
 
 
-  /**
-   * Plugin setup
-   */
 
-  AccordionPro.prototype.setup = {
-    globalStyles : function() {
-
-    },
-
-    globalDimensions : function() {
-
-    },
-
-    slideStyles : function() {
-
-    },
-
-    slideDimensions : function() {
-
-    },
-
-    slidePositions : function() {
-
-    },
-
-    events : function() {
-
-    },
-
-    internetExploder : function() {
-
-    }
-  };
 
 
   /**
@@ -182,7 +222,7 @@
    */
 
   AccordionPro.prototype.methods = {
-    play : function() {
+    play : function(index) {
 
     },
 
@@ -199,7 +239,12 @@
     },
 
     destroy : function() {
-
+      // remove generated styles, classes, data, events
+      this
+        .off('.accordionPro')
+        .removeData('accordionPro')
+        .removeAttr('style')
+        .removeClass();
     }
   };
 

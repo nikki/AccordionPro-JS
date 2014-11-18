@@ -1,9 +1,7 @@
 module.exports = function (grunt) {
   'use strict';
-    // Project configuration
-    grunt.initConfig({
-      pkg: grunt.file.readJSON('package.json'),
 
+    grunt.initConfig({
       banner: '/*!\n' +
               ' * Project:    Accordion Pro JS - a responsive accordion plugin for jQuery\n' +
               ' * Author:     Nicola Hibbert\n' +
@@ -51,17 +49,6 @@ module.exports = function (grunt) {
           }
         }
       },
-
-  test: {
-    src: 'scripts/*.js',
-    options: {
-      vendor: [
-        'bower_components/jquery/dist/jquery.js',
-        'bower_components/jasmine-jquery/lib/jasmine-jquery.js'
-      ],
-      specs: 'test/*.spec.js'
-    }
-  }
 
       jasmine: {
         src: 'js/jquery.accordionpro.js',

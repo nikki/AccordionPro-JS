@@ -92,9 +92,10 @@
         this.slideDimensions();
         this.slidePositions();
         this.slideStyles();
-
       }
     };
+
+
 
     setup.init();
     return this.methods;
@@ -180,7 +181,12 @@
     },
 
     destroy : function() {
-
+      // remove generated styles, classes, data, events
+      this
+        .off('.accordionPro')
+        .removeData('accordionPro')
+        .removeAttr('style')
+        .removeClass();
     }
   };
 

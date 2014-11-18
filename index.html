@@ -8,18 +8,12 @@
     <link rel="stylesheet" href="css/accordionpro.css">
 
     <!-- JS -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="js/lib/jquery.accordionpro.js"></script>
 
     <script>
     $(function() {
-      var accordion = $('#accordion').accordionPro({
-        orientation : 'vertical',
-        theme : 'stitch',
-        verticalSlideHeight : 'fitToContent',
-        rtl : true,
-        scaleImages : false
-      });
+      var elem = $('#accordion').accordionPro();
     });
     </script>
 
