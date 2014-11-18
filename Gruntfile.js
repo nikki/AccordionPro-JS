@@ -41,7 +41,7 @@ module.exports = function (grunt) {
         dist: {
           options: {
             banner: '<%= banner %>',
-            style: 'compressed'
+            style: 'expanded'
           },
 
           files: {
@@ -81,6 +81,11 @@ module.exports = function (grunt) {
 
         scripts: {
           files: ['js/*.js', 'js/lib/*.js']
+        },
+
+        jasmine: {
+          files: ['test/**/*.js'],
+          tasks: ['test']
         }
       }
     });
@@ -94,6 +99,6 @@ module.exports = function (grunt) {
 
     // Default task
     grunt.registerTask('default', ['concat', 'uglify', 'sass']);
-    grunt.registerTask('test', ['jasmine']);
+    grunt.registerTask('test', ['concat', 'jasmine']);
   };
 
