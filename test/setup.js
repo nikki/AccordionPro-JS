@@ -1,4 +1,4 @@
-jasmine.getFixtures().fixturesPath = 'test/';
+jasmine.getFixtures().fixturesPath = 'test/fixtures/';
 jasmine.getStyleFixtures().fixturesPath = './';
 
 describe('Setup', function() {
@@ -6,7 +6,7 @@ describe('Setup', function() {
 
   beforeEach(function() {
     loadStyleFixtures('css/accordionpro.css');
-    loadFixtures('fixture.html');
+    loadFixtures('default.html');
     elem = $('#accordion');
   });
 
@@ -41,7 +41,7 @@ describe('Setup', function() {
       expect(elem).toHaveClass('rounded');
     });
 
-    it('should gruhave the class "rtl"', function() {
+    it('should have the class "rtl"', function() {
       elem.accordionPro({ rtl : true });
       expect(elem).toHaveClass('rtl');
     });

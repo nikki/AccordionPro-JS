@@ -715,6 +715,8 @@
 	},
 	"file_history":
 	[
+		"/Volumes/files/webserver/projects/Accordion-Pro/js/jquery.accordionpro.js",
+		"/Volumes/files/webserver/projects/Accordion-Pro/Gruntfile.js",
 		"/Users/nikki/Library/Application Support/Sublime Text 3/Packages/Jasmine JS/snippets/describe.sublime-snippet",
 		"/Users/nikki/Library/Application Support/Sublime Text 3/Packages/Jasmine JS/snippets/it.sublime-snippet",
 		"/Volumes/files/webserver/projects/Accordion-Pro/test/setup.js",
@@ -722,10 +724,8 @@
 		"/Volumes/files/webserver/projects/Accordion-Pro/js/lib/jquery.accordionpro.js",
 		"/Volumes/files/webserver/projects/Accordion-Pro/index.html",
 		"/Volumes/files/webserver/projects/Accordion-Pro/js/jquery.accordionpro.min.js",
-		"/Volumes/files/webserver/projects/Accordion-Pro/Gruntfile.js",
 		"/Volumes/files/webserver/projects/Accordion-Pro/.gitignore",
 		"/Volumes/files/webserver/projects/Accordion-Pro/accordionpro.sublime-project",
-		"/Volumes/files/webserver/projects/Accordion-Pro/js/jquery.accordionpro.js",
 		"/Volumes/files/webserver/projects/Accordion-Pro/css/scss/accordionpro.scss",
 		"/Volumes/files/webserver/projects/Accordion-Pro/css/accordionpro.css",
 		"/Volumes/files/webserver/projects/Accordion-Pro/.yo-rc.json",
@@ -803,7 +803,7 @@
 	],
 	"find":
 	{
-		"height": 39.0
+		"height": 35.0
 	},
 	"find_in_files":
 	{
@@ -877,6 +877,27 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"panelH",
+			"Global",
+			"Tab",
+			"Panel",
+			"Styles",
+			"calc",
+			"$this",
+			"children",
+			" class=\"slide\"",
+			"function",
+			"slidePositions",
+			"slideDimensions",
+			"slideStyles",
+			"globalDimensions",
+			"globalStyles",
+			"function",
+			"$this",
+			"css",
+			"selected",
+			"index",
+			"selected",
 			"resize",
 			"FOUC",
 			"delay",
@@ -983,28 +1004,7 @@
 			"'",
 			"<b>",
 			"</b>",
-			"</i>",
-			"<i>",
-			"Accordion Pro JS",
-			"JS",
-			"Code:",
-			"../img-demo",
-			"Add",
-			"register_post",
-			"register",
-			"enqueue",
-			"admin_init",
-			"enqueue",
-			"register",
-			"admin_init",
-			"enqueue",
-			"{ async : true }",
-			"  <script src=\"js/modernizr.2.6.2.min.js\"></script>",
-			"<script src=\"js/jquery.accordionpro.min.js\"></script>",
-			"            <ol>\n                <li>\n                    <h2><span>Slide One</span></h2>\n                    <div>\n                        <img src=\"../../build/accordionpro_js/img-demo/1.jpg\" alt=\"image\" />\n                        <p class=\"ap-caption\">Slide One</p>\n                    </div>\n                </li>\n                <li>\n                    <h2><span>Slide Two</span></h2>\n                    <div>\n                        <img src=\"../../build/accordionpro_js/img-demo/2.jpg\" alt=\"image\" />\n                        <p class=\"ap-caption\">Slide Two</p>\n                    </div>\n                </li>\n                <li>\n                    <h2><span>Slide Three</span></h2>\n                    <div>\n                        <img src=\"../../build/accordionpro_js/img-demo/3.jpg\" alt=\"image\" />\n                        <p class=\"ap-caption\">Slide Three</p>\n                    </div>\n                </li>\n                <li>\n                    <h2><span>Slide Four</span></h2>\n                    <div>\n                        <img src=\"../../build/accordionpro_js/img-demo/4.jpg\" width=\"768\" alt=\"image\" />\n                        <p class=\"ap-caption\">Slide Four</p>\n                    </div>\n                </li>\n                <li>\n                    <h2><span>Slide Five</span></h2>\n                    <div>\n                        <img src=\"../../build/accordionpro_js/img-demo/5.jpg\" alt=\"image\" />\n                        <p class=\"ap-caption\">Slide Five</p>\n                    </div>\n                </li>\n            </ol>",
-			"../../build/accordionpro_js/",
-			"  <link rel=\"stylesheet\" href=\"../../build/accordionpro_js/css/accordionpro.min.css\">\n  <script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js\"></script>\n  <script src=\"../../build/accordionpro_js/js/jquery.accordionpro.min.js\"></script>",
-			"    .wrapper { max-width: 900px; margin: 0 auto }"
+			"</i>"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -1175,7 +1175,7 @@
 		"cols":
 		[
 			0.0,
-			0.5,
+			0.613950301648,
 			1.0
 		],
 		"rows":

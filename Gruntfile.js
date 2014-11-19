@@ -12,14 +12,23 @@ module.exports = function (grunt) {
               ' */\n',
 
       concat: {
-        options: {
-          banner: '<%= banner %>\n'
+        banner: {
+          options: {
+            banner: '<%= banner %>'
+          },
+          files: [
+            { src: 'js/lib/jquery.accordionpro.js', dest: 'js/jquery.accordionpro.js' }
+          ]
         },
 
-        dist: {
+        build: {
+          options: {
+            separator: '\n\n',
+          },
           src: [
-            'js/lib/animate.js',
-            'js/lib/jquery.accordionpro.js'
+            'js/vendor/imagesloaded.js',
+            'js/vendor/animate.js',
+            'js/jquery.accordionpro.js'
           ],
           dest: 'js/jquery.accordionpro.js'
         }
@@ -27,26 +36,22 @@ module.exports = function (grunt) {
 
       uglify: {
         options: {
-          // banner: '<%= banner %>\n',
           preserveComments: 'some'
         },
-
-        dist: {
-          src: '<%= concat.dist.dest %>',
-          dest: 'js/jquery.accordionpro.min.js'
+        build: {
+          files: {
+            'js/jquery.accordionpro.min.js' : 'js/jquery.accordionpro.js'
+          }
         }
       },
 
       sass: {
-        dist: {
-          options: {
-            banner: '<%= banner %>',
-            style: 'expanded'
-          },
-
-          files: {
-            'css/accordionpro.css': 'css/scss/accordionpro.scss'
-          }
+        options: {
+          banner: '<%= banner %>',
+          style: 'expanded'
+        },
+        files: {
+          'css/accordionpro.css' : 'css/scss/accordionpro.scss'
         }
       },
 
@@ -72,7 +77,7 @@ module.exports = function (grunt) {
 
         scss: {
           files: ['css/scss/*.scss'],
-          tasks: ['sass:dist']
+          tasks: ['sass']
         },
 
         images: {
@@ -80,7 +85,8 @@ module.exports = function (grunt) {
         },
 
         scripts: {
-          files: ['js/*.js', 'js/lib/*.js']
+          files: ['js/lib/*.js'],
+          tasks: ['default']
         },
 
         jasmine: {
@@ -98,7 +104,8 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-sass');
 
     // Default task
-    grunt.registerTask('default', ['concat', 'uglify', 'sass']);
-    grunt.registerTask('test', ['concat', 'jasmine']);
+    grunt.registerTask('default', ['sass', 'concat', 'uglify']);
+    grunt.registerTask('test', ['default', 'jasmine']);
+
   };
 

@@ -17,7 +17,7 @@
         slides = elem.children('ol').children('li'),
         slide = { w : 0, h : 0, l : 0 },
         tabs = slides.children(':first-child'),
-        tab = { w : 0, h : settings.tabWidth },
+        tab = { w : 0, h : settings.tabSize, f : settings.tabFontSize, r : settings.tabTextOrientation },
         panels = tabs.next(),
         padding = 0,
         border = 0,
@@ -31,21 +31,6 @@
     /**
      * Plugin setup
      */
-
-
-      // // setup dimensions, styles, slide positions and events
-      // setup.styles();
-
-      // // check images are loaded before setting up slide positions
-      // imagesLoaded(elem, function() {
-      //   setup.dimensions();
-      //   setup.ie();
-      //   elem.delay(500).css('display', 'block'); // !!! images loaded -> set plugin to visible before slidepositions need setting
-      //   setup.slidePositions();
-      //   setup.events();
-      //   if (settings.startClosed) setup.startClosed();
-      // });
-
 
     var setup = {
 
@@ -61,6 +46,12 @@
 
         // theme
         classNames += settings.theme + ' ';
+
+        // colour scheme
+
+
+        // colour style
+
 
         // rounded
         classNames += settings.rounded ? 'rounded ' : '';
@@ -84,7 +75,9 @@
       setSlideClasses : function() {
         // add slide number to each slide
         slides.each(function(index) {
-          $(this).addClass('slide slide-' + index);
+          $(this)
+            .addClass('slide slide-' + (index + 1))
+            .attr('data-slide-name', elem[0].id + '-slide-' + (index + 1));
         });
       },
 
@@ -137,7 +130,8 @@
           }
         } else {
           if (fitToContent) {
-            calc.height = transparent ? panelH : panelH + tab.h;
+            console.log(panelH);
+            calc.height = transparent ? panelH : panelH + tab.h; // variable height
           } else {
             calc.height = slide.h + tab.h; // fixed height
           }
@@ -163,6 +157,9 @@
       setSlidesDimensions : function() {
         var _this = this;
 
+        // cache slide length
+        slide.l = slides.length;
+
         // calculate global slide dimensions
         if (horizontal) {
           slide.w = parent.w - slide.l * tab.h;
@@ -175,7 +172,7 @@
         // set dimensions of each slide
         slides.each(function(index) {
           var $this = $(this),
-              panelH = $this.children(':last-child').height(),
+              panelH = $this.children('div').height(),
               calc = _this.calcSlideDimensions(index, panelH);
 
           _this.setSlideDimensions.call($this, calc);
@@ -185,7 +182,10 @@
       setTabDimensions : function() {
         this
           .width(tab.w)
-          .height(tab.h);
+          .height(tab.h)
+          .css('font-size', tab.f + 'px');
+
+        // !!! text orientation?
       },
 
       setTabsDimensions : function() {
@@ -200,7 +200,7 @@
         });
       },
 
-      calcPanelDimensions : function(index) {
+      calcPanelDimensions : function(index, panelH) {
         var calc = {
           width : 0,
           height : 0,
@@ -210,24 +210,21 @@
         if (horizontal) {
           calc.width = transparent ? slide.w + tab.h : slide.w - offset;
           calc.height = slide.h;
-          calc.position = { left : transparent ? 0 : tab.h, top : 0 };
+          calc.position = { left : (transparent ? 0 : tab.h), top : 0 };
 
           if (settings.rtl) {
-            calc.position = transparent ? { left : 'auto', right : 0 - offset, top : 0 } : { left : 'auto', right : tab.h - offset, top : 0 };
+            calc.position = { left : 'auto', right : (transparent ? 0 - offset : tab.h - offset), top : 0 };
           }
         } else {
           if (fitToContent) {
-            calc.height = $this.children('div').height();
-
+            calc.height = 'auto';
           } else {
-            // fixed height
-            css.panel.height = transparent ? css.slide.height : css.slide.height - tab.h - offset;
+            calc.height = transparent ? slide.h : slide.h - tab.h - offset;
           }
 
           // panel positions
-          css.panel.position = transparent ? { top : 0, left : 0 } : { top : tab.h, left : 0 };
-
-
+          calc.width = '100%';
+          calc.position = { top : (transparent ? 0 : tab.h), left : 0 };
         }
 
         return {
@@ -303,18 +300,23 @@
 
 
       init : function() {
+        var _this = this;
+
+        this.setPluginDimensions();
         this.setPluginClasses();
         this.setSlideClasses();
 
-        this.setPluginDimensions();
-        this.calcBoxDimensions();
+        // check images are loaded before setting up slide positions
+        imagesLoaded(elem, function() {
+          _this.calcBoxDimensions();
+          _this.setSlidesDimensions();
+          _this.setTabsDimensions();
+          _this.setPanelsDimensions();
 
-        this.setSlidesDimensions();
-        this.setTabsDimensions();
-        // this.setPanelsDimensions();
-        // this.setSelectedSlideDimensions();
-        // this.internetExploder();
-        // this.events();
+          // _this.setSelectedSlideDimensions();
+          // _this.internetExploder();
+          // _this.events();
+        });
       }
     };
 
@@ -335,8 +337,11 @@
     firstSlide : 1,                         // displays slide (n) on page load
 
     /* tabs */
-    tabWidth : 48,                          // set tab width
-    showSlideNumbers : true,                // display numbers on slides
+    tabSize : 48,                           // set tab size
+    tabFontSize : 36,                       // set tab font size
+    tabIcon : 'number',                     // set tab icon -> number, chevron, disc, square
+    tabTextOrientation : 'horizontal',      // set text orientation -> horizontal, vertical
+    // showSlideNumbers : true,             // display numbers on slides
 
     /* aesthetics */
     theme : 'basic',                        // basic, dark, light, stitch or transparent
