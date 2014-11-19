@@ -1033,6 +1033,28 @@ function makeArray( obj ) {
         });
       },
 
+      setTabClasses : function() {
+        var classNames = '';
+
+        // tab icon
+        classNames += settings.tabIcon;
+
+        // alternate text orientation
+        if (settings.tabTextOrientation !== 'horizontal') {
+          classNames += ' alt-text-orientation';
+        }
+
+        // set classnames
+        tabs.addClass(classNames);
+
+        // tabs.each(function(index) {
+        //   $(this)
+        //     .addClass(settings.tabIcon)
+        // });
+
+
+      },
+
 
       /**
        * Set dimensions
@@ -1043,6 +1065,10 @@ function makeArray( obj ) {
         elem
           .outerWidth(horizontal ? settings.horizontalWidth : settings.verticalWidth)
           .outerHeight(horizontal ? settings.horizontalHeight : settings.verticalHeight);
+      },
+
+      setPluginVisible : function() {
+        elem.css('visibility', 'visible');
       },
 
       calcBoxDimensions : function() {
@@ -1135,7 +1161,10 @@ function makeArray( obj ) {
         this
           .width(tab.w)
           .height(tab.h)
-          .css('font-size', tab.f + 'px');
+          .css({
+            'font-size' : tab.f + 'px',
+            'line-height' : tab.h + 'px'
+          });
 
         // !!! text orientation?
       },
@@ -1248,15 +1277,14 @@ function makeArray( obj ) {
 
       },
 
-
-
-
       init : function() {
         var _this = this;
 
+        // set plugin dimensions, plugin and slide classes
         this.setPluginDimensions();
         this.setPluginClasses();
         this.setSlideClasses();
+        this.setTabClasses();
 
         // check images are loaded before setting up slide positions
         imagesLoaded(elem, function() {
@@ -1264,9 +1292,9 @@ function makeArray( obj ) {
           _this.setSlidesDimensions();
           _this.setTabsDimensions();
           _this.setPanelsDimensions();
-
           // _this.setSelectedSlideDimensions();
           // _this.internetExploder();
+          _this.setPluginVisible();
           // _this.events();
         });
       }
@@ -1290,7 +1318,7 @@ function makeArray( obj ) {
 
     /* tabs */
     tabSize : 48,                           // set tab size
-    tabFontSize : 36,                       // set tab font size
+    tabFontSize : 28,                       // set tab font size
     tabIcon : 'number',                     // set tab icon -> number, chevron, disc, square
     tabTextOrientation : 'horizontal',      // set text orientation -> horizontal, vertical
     // showSlideNumbers : true,             // display numbers on slides

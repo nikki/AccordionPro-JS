@@ -46,12 +46,14 @@ module.exports = function (grunt) {
       },
 
       sass: {
-        options: {
-          banner: '<%= banner %>',
-          style: 'expanded'
-        },
-        files: {
-          'css/accordionpro.css' : 'css/scss/accordionpro.scss'
+        build: {
+          options: {
+            banner: '<%= banner %>',
+            style: 'expanded'
+          },
+          files: {
+            'css/accordionpro.css' : 'css/scss/accordionpro.scss'
+          }
         }
       },
 

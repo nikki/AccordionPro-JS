@@ -1,20 +1,27 @@
 /****************************************** CORE */
 .accordionPro {
+
+    /**
+     * Main container, ol
+     */
+
     text-align: left;
     font-size: 16px;
     line-height: 24px;
-    font: 'Helvetica Neue', Verdana, Arial, sans-serif;
     -webkit-transform-origin: left top;
     -moz-transform-origin: left top;
     -ms-transform-origin: left top;
     -o-transform-origin: left top;
     transform-origin: left top;
     -webkit-text-size-adjust: 100%;
+    visibility: hidden;
+    counter-reset: number;
 
     &, & * {
         margin: 0;
         padding: 0;
         border: 0;
+        font-family: Arial, Verdana, sans-serif;
         vertical-align: baseline;
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
@@ -30,6 +37,11 @@
       padding: 0;
       list-style: none;
     }
+
+
+    /**
+     * Slides
+     */
 
     &, & .slide {
         -webkit-tap-highlight-color: transparent;
@@ -52,6 +64,11 @@
         height: 100%;
         overflow: hidden;
 
+
+        /**
+         * Tabs
+         */
+
         > :first-child {
             -webkit-backface-visibility: hidden; /* fixes chrome bug */
             color: black;
@@ -63,20 +80,71 @@
             position: absolute;
             top: 0;
             left: 0;
-            background: red;
+            text-indent: 58px;
+
+            &:hover {
+                cursor: pointer;
+            }
+
+
+            /**
+             * Text orientation
+             */
+
+            &.alt-text-orientation {
+
+                /*writing-mode: tb-rl;*/
+            }
+
+
+            /**
+             * Tab Icons
+             */
 
             &:after {
                 content: '';
-                height: 90%;
+                width: 48px;
+                height: 100%;
                 display: block;
                 -webkit-user-select: none;
                 -khtml-user-select: none;
                 -moz-user-select: none;
                 -ms-user-select: none;
                 user-select: none;
+                position: absolute;
+                background: red;
+                top: 0;
+                left: 0;
+                text-align: center;
+                text-indent: 0;
+            }
 
+            &.number:after {
+                counter-increment: number;
+                content: counter(number);
+            }
+
+            &.chevron:after {
+                content: '\203A';
+            }
+
+            &.chevron:hover:after {
+                content: '\02C2';
+            }
+
+            &.disc:after {
+                content: '\2022';
+            }
+
+            &.square:after {
+                content: '\25AA';
             }
         }
+
+
+        /**
+         * Panels
+         */
 
         > div {
             width: 100%;
@@ -87,6 +155,40 @@
             background: white;
         }
     }
+}
+
+/*
+
+.accordionPro .slide > h2 b {  }
+.accordionPro .ap-caption { padding: 10px 15px; position: absolute; bottom: 20px; right: 30px; background: black;
+    background: rgba(0,0,0,0.7); color: white; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; display: none }
+.accordionPro noscript p { padding: 10px; margin: 0; background: white }
+*/
+
+
+/*********************************** ORIENTATION */
+/************************************ Horizontal */
+.accordionPro.horizontal {
+
+    /**
+     * Core
+     */
+
+    .slide > :first-child {
+        -webkit-transform: translateX(-100%) rotate(-90deg) translateZ(0);
+        -webkit-transform-origin: right top;
+        -moz-transform: translateX(-100%) rotate(-90deg) translateZ(0);
+        -moz-transform-origin: right top;
+        -o-transform: translateX(-100%) rotate(-90deg);
+        -o-transform-origin: right top;
+        transform: translateX(-100%) rotate(-90deg) translateZ(0);
+        transform-origin: right top;
+    }
+
+}
+
+/************************************** Vertical */
+.accordionPro.vertical {
 
     /**
      * fitToContent
@@ -99,42 +201,105 @@
             }
         }
     }
+}
+
+/**************************************** THEMES */
+/***************************************** Basic */
+.accordionPro.basic {
+
+}
+
+/****************************************** Dark */
+.accordionPro.dark {
+
+}
+
+/***************************************** Light */
+.accordionPro.light {
+
+}
+
+/**************************************** Stitch */
+.accordionPro.stitch {
+
+}
+
+/*********************************** Transparent */
+.accordionPro.transparent {
+
+}
+
+/******************************** COLOUR SCHEMES */
+/* !!! Colour schemes only work with basic theme */
+.accordionPro.basic {
+
+/***************************************** White */
+    &.white {
+
+
+    }
+
+/**************************************** Silver */
+
+
+/****************************************** Grey */
+
+
+/************************************** Charcoal */
+
+
+/***************************************** Black */
+
+
+/****************************************** Pink */
+
+
+/******************************************* Red */
+
+
+/**************************************** Orange */
+
+
+/**************************************** Yellow */
+
+
+/***************************************** Green */
+
+
+/****************************************** Teal */
+
+
+/************************************ Light Blue */
+
+
+/****************************************** Blue */
+
+
+/************************************* Dark Blue */
+
 
 }
 
 
 
+/*************************************** OPTIONS */
+/*************************************** Rounded */
+
+
+/******************************************** IE */
 
 
 
 
-/*
 
-.accordionPro .slide > h2 b { display: inline-block; position: absolute }
-.accordionPro .slide > h2:hover { cursor: pointer }
-.accordionPro .ap-caption { padding: 10px 15px; position: absolute; bottom: 20px; right: 30px; background: black;
-    background: rgba(0,0,0,0.7); color: white; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; display: none }
-.accordionPro noscript p { padding: 10px; margin: 0; background: white }
-*/
+
+
 
 /*
 
 color schemes:
 
-white
-silver
-grey
-charcoal
-black
-pink
-red
-orange
-yellow
-green
-teal
-light blue
-blue
-dark blue
+
 
 color styles:
 
