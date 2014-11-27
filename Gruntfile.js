@@ -49,7 +49,7 @@ module.exports = function (grunt) {
         build: {
           options: {
             banner: '<%= banner %>',
-            style: 'expanded'
+            style: 'compressed'
           },
           files: {
             'css/accordionpro.css' : 'css/scss/accordionpro.scss'
@@ -71,6 +71,7 @@ module.exports = function (grunt) {
       watch: {
         options: {
           livereload: true,
+          spawn: false
         },
 
         html: {

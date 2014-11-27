@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"text",
+				"textOrientation"
+			],
+			[
 				"cs",
 				"css_ids"
 			],
@@ -288,10 +292,6 @@
 				"explosionFrames"
 			],
 			[
-				"text",
-				"textFrames"
-			],
-			[
 				"frame",
 				"frameWidth"
 			],
@@ -524,16 +524,16 @@
 		"selected_items":
 		[
 			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
 				"prv",
 				"PackageResourceViewer: Open Resource"
 			],
 			[
 				"list",
 				"Package Control: List Packages"
-			],
-			[
-				"install",
-				"Package Control: Install Package"
 			],
 			[
 				"disabl",
@@ -692,7 +692,7 @@
 				"Snippet: function …"
 			]
 		],
-		"width": 449.0
+		"width": 467.0
 	},
 	"console":
 	{
@@ -715,12 +715,17 @@
 	},
 	"file_history":
 	[
-		"/Volumes/files/webserver/projects/Accordion-Pro/_old/accordionpro_js/js/jquery.accordionpro.js",
 		"/Volumes/files/webserver/projects/Accordion-Pro/index.html",
-		"/Volumes/files/webserver/projects/Accordion-Pro/Gruntfile.js",
-		"/Volumes/files/webserver/projects/Accordion-Pro/css/scss/accordionpro.scss",
+		"/Volumes/files/webserver/projects/Accordion-Pro/_old/accordionpro_js/js/jquery.accordionpro.js",
+		"/Volumes/files/webserver/projects/Accordion-Pro/test/setup.js",
+		"/Volumes/files/webserver/projects/Accordion-Pro/_assets/marketing/button-tracking.js",
 		"/Volumes/files/webserver/projects/Accordion-Pro/js/lib/jquery.accordionpro.js",
+		"/Volumes/files/webserver/projects/Accordion-Pro/css/scss/accordionpro.scss",
 		"/Volumes/files/webserver/projects/Accordion-Pro/js/vendor/imagesloaded.js",
+		"/Volumes/files/webserver/projects/Accordion-Pro/test/options.js",
+		"/Volumes/files/webserver/projects/Accordion-Pro/css/accordionpro.css",
+		"/Volumes/files/webserver/projects/Accordion-Pro/test/fixtures/default.html",
+		"/Volumes/files/webserver/projects/Accordion-Pro/Gruntfile.js",
 		"/Volumes/files/webserver/projects/Accordion-Pro/js/jquery.accordionpro.js",
 		"/Volumes/files/webserver/projects/Accordion-Pro/js/build/jquery.accordionpro.min.js",
 		"/Volumes/files/webserver/projects/Accordion-Pro/js/build/jquery.accordionpro.js",
@@ -730,14 +735,11 @@
 		"/Volumes/files/webserver/projects/Accordion-Pro/js/build/jquery.min.js",
 		"/Volumes/files/webserver/projects/Accordion-Pro/js/build/js/lib/jquery.accordionpro.js",
 		"/Volumes/files/webserver/projects/Accordion-Pro/test/fixtures/options.html",
-		"/Volumes/files/webserver/projects/Accordion-Pro/test/options.js",
-		"/Volumes/files/webserver/projects/Accordion-Pro/test/setup.js",
 		"/Users/nikki/Library/Application Support/Sublime Text 3/Packages/Jasmine JS/snippets/describe.sublime-snippet",
 		"/Users/nikki/Library/Application Support/Sublime Text 3/Packages/Jasmine JS/snippets/it.sublime-snippet",
 		"/Volumes/files/webserver/projects/Accordion-Pro/package.json",
 		"/Volumes/files/webserver/projects/Accordion-Pro/.gitignore",
 		"/Volumes/files/webserver/projects/Accordion-Pro/accordionpro.sublime-project",
-		"/Volumes/files/webserver/projects/Accordion-Pro/css/accordionpro.css",
 		"/Volumes/files/webserver/projects/Accordion-Pro/.yo-rc.json",
 		"/Volumes/files/webserver/projects/Accordion-Pro/tests/demo-suite/index.html",
 		"/Volumes/Nikki/webserver/projects/Accordion-Pro/accordionpro_wp/inc/accordionpro_wp.class.php",
@@ -887,6 +889,40 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			" :",
+			"jpg",
+			"#",
+			"slide-name",
+			"icon",
+			"customIcons",
+			"chev",
+			"h2",
+			"&.scheme",
+			"light",
+			"0",
+			"scaleImages",
+			"firstSlide",
+			"tab",
+			"first",
+			"elem",
+			"chevron",
+			"iconType",
+			"padding",
+			"startClosed",
+			"window",
+			"console",
+			"log",
+			"<img",
+			"width=\"720\" height=\"320\" ",
+			"<img",
+			"console",
+			"toBe",
+			"n(':eq(0)'",
+			"eq(0)",
+			"':",
+			":s",
+			"* :",
+			"setGlobalClasses",
 			"this",
 			"jquery",
 			"build/",
@@ -980,41 +1016,7 @@
 			"DDD",
 			"async",
 			"AP[$key]",
-			"content_caption",
-			"flatten",
-			"print_r",
-			"echo",
-			"print_r",
-			"print_R",
-			"$jQueryOptions ",
-			"$jQueryOptions",
-			"save",
-			"save_settings",
-			"save",
-			"$_GET",
-			"save_ac",
-			"submit",
-			"update_accordion",
-			"fieldset",
-			"showField",
-			"Options",
-			"selected",
-			"$v",
-			"a",
-			"defaults",
-			"one",
-			"true",
-			"options",
-			"\"",
-			"name=",
-			"type=",
-			"load_scripts",
-			"load_Scripts",
-			"load_jquery",
-			"load_styles",
-			"jqery",
-			"load_jquery",
-			"get_accordion"
+			"content_caption"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -1185,7 +1187,7 @@
 		"cols":
 		[
 			0.0,
-			0.535685053708,
+			0.602187867864,
 			1.0
 		],
 		"rows":

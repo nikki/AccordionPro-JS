@@ -4,7 +4,6 @@
  * MIT License
  */
 
-
 /*!
  * EventEmitter v4.2.6 - git.io/ee
  * Oliver Caldwell

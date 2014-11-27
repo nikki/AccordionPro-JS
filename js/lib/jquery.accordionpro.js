@@ -6,7 +6,7 @@
      * Merge defaults with options in new settings object
      */
 
-    var settings = $.extend({}, this.defaults, options);
+    var settings = $.extend(true, {}, this.defaults, options);
 
 
     /**
@@ -17,7 +17,7 @@
         slides = elem.children('ol').children('li'),
         slide = { w : 0, h : 0, l : 0 },
         tabs = slides.children(':first-child'),
-        tab = { w : 0, h : settings.tabSize, f : settings.tabFontSize, r : settings.tabTextOrientation },
+        tab = { w : 0, h : settings.tab.size },
         panels = tabs.next(),
         padding = 0,
         border = 0,
@@ -35,23 +35,20 @@
     var setup = {
 
       /**
-       * Set classes
+       * Set plugin classes
        */
 
       setPluginClasses : function() {
         var classNames = 'accordionPro ';
 
-        // set horizontal classname
+        // set orientation classname
         classNames += horizontal ? 'horizontal ' : 'vertical ';
 
         // theme
         classNames += settings.theme + ' ';
 
-        // colour scheme
-
-
-        // colour style
-
+        // colour scheme and style
+        classNames += settings.colour.scheme ? ('scheme-' + settings.colour.scheme + ' ' + 'style-' + settings.colour.style + ' ') : '';
 
         // rounded
         classNames += settings.rounded ? 'rounded ' : '';
@@ -65,15 +62,22 @@
         // fitToContent
         classNames += (!horizontal && fitToContent) ? 'fitToContent ' : '';
 
+        // scrollable
+        classNames += settings.panel.scrollable ? 'scrollable ' : '';
+
         // scale images
-        classNames += settings.scaleImages ? 'scaleImages ' : '';
+        classNames += settings.panel.scaleImages ? 'scaleImages ' : '';
 
         // set classnames
         elem.addClass(classNames);
       },
 
+
+      /**
+       * Add slide number and data to each slide
+       */
+
       setSlideClasses : function() {
-        // add slide number to each slide
         slides.each(function(index) {
           $(this)
             .addClass('slide slide-' + (index + 1))
@@ -81,43 +85,43 @@
         });
       },
 
+
+      /**
+       * Add classes to tabs for styling
+       */
+
       setTabClasses : function() {
         var classNames = '';
 
         // tab icon
-        classNames += settings.tabIcon;
+        if (settings.tab.icon !== 'none') {
+          classNames += settings.tab.icon;
+        }
 
         // alternate text orientation
-        if (settings.tabTextOrientation !== 'horizontal') {
+        if (settings.tab.textOrientation !== 'normal') {
           classNames += ' alt-text-orientation';
         }
 
         // set classnames
         tabs.addClass(classNames);
-
-        // tabs.each(function(index) {
-        //   $(this)
-        //     .addClass(settings.tabIcon)
-        // });
-
-
       },
 
 
       /**
-       * Set dimensions
+       * Set plugin width and height
        */
 
       setPluginDimensions : function() {
-        // set plugin height and width
         elem
           .outerWidth(horizontal ? settings.horizontalWidth : settings.verticalWidth)
           .outerHeight(horizontal ? settings.horizontalHeight : settings.verticalHeight);
       },
 
-      setPluginVisible : function() {
-        elem.css('visibility', 'visible');
-      },
+
+      /**
+       * Calculate border, padding, etc
+       */
 
       calcBoxDimensions : function() {
         var firstPanel = slides.eq(0).children('div');
@@ -136,10 +140,19 @@
           parseInt(firstPanel.css('marginBottom'), 10) || 0;
 
         // calculate padding
-        padding = parseInt(elem.css('padding' + horizontal ? 'Left' : 'Top'), 10) + parseInt(elem.css('padding' + horizontal ? 'Right' : 'Bottom'), 10);
+        if (horizontal) {
+          padding = parseInt(elem.css('paddingLeft'), 10) + parseInt(elem.css('paddingRight'), 10);
+        } else {
+          padding = parseInt(elem.css('paddingTop'), 10) + parseInt(elem.css('paddingBottom'), 10);
+        }
       },
 
-      calcSlideDimensions : function(index, panelH) {
+
+      /**
+       * Calculate slide widths, heights, positions
+       */
+
+      calcSlideDimensions : function(index, panelH, selected) {
         var calc = {
           width : 0,
           height : 0,
@@ -154,16 +167,31 @@
           if (settings.rtl) {
             calc.position = { left : 'auto', right : index * tab.h, top : 0 };
           }
+
+          // compensate for selected slide (position)
+          if (selected && index > slides.index(selected)) {
+            calc.position[settings.rtl ? 'right' : 'left'] += slide.w;
+          }
         } else {
+          // variable height or flexible (fitToContent) height
           if (fitToContent) {
-            console.log(panelH);
             calc.height = transparent ? panelH : panelH + tab.h; // variable height
           } else {
             calc.height = slide.h + tab.h; // fixed height
           }
 
+          // width and default position
           calc.width = '100%';
           calc.position = { top : index * tab.h, left : 0 };
+
+          // compensate for selected slide (position)
+          if (selected && index > slides.index(selected)) {
+            if (fitToContent) {
+              calc.position.top += selected.height() - tab.h;
+            } else {
+              calc.position.top += slide.h;
+            }
+          }
         }
 
         return {
@@ -173,6 +201,11 @@
         }
       },
 
+
+      /**
+       * Set individual slide widths, heights, positions
+       */
+
       setSlideDimensions : function(calc) {
         this
           .width(calc.width)
@@ -180,8 +213,13 @@
           .css(calc.position);
       },
 
+
+      /**
+       * Set all slide widths, heights, positions
+       */
+
       setSlidesDimensions : function() {
-        var _this = this;
+        var _this = this, selected;
 
         // cache slide length
         slide.l = slides.length;
@@ -195,30 +233,45 @@
           slide.h = parent.h - slide.l * tab.h;
         }
 
+        // set selected slide class if startClosed option is not enabled
+        if (!settings.startClosed) {
+          selected = slides.eq(settings.tab.selected - 1).addClass('selected');
+        }
+
         // set dimensions of each slide
         slides.each(function(index) {
           var $this = $(this),
               panelH = $this.children('div').height(),
-              calc = _this.calcSlideDimensions(index, panelH);
+              calc = _this.calcSlideDimensions(index, panelH, selected);
 
           _this.setSlideDimensions.call($this, calc);
         });
       },
+
+
+      /**
+       * Set individual tab widths, heights, positions
+       */
 
       setTabDimensions : function() {
         this
           .width(tab.w)
           .height(tab.h)
           .css({
-            'font-size' : tab.f + 'px',
-            'line-height' : tab.h + 'px'
+            'font-size' : settings.tab.fontSize + 'px',
+            'line-height' : tab.h + 'px',
+            'font-family' : settings.tab.font
           });
-
-        // !!! text orientation?
       },
 
+
+      /**
+       * Set all tab widths, heights, positions
+       */
+
       setTabsDimensions : function() {
-        var _this = this;
+        var _this = this,
+            $first = tabs.first();
 
         // calculate global tab dimensions
         tab.w = horizontal ? slide.h : '100%';
@@ -228,6 +281,11 @@
           _this.setTabDimensions.call($(this));
         });
       },
+
+
+      /**
+       * Calculate panel widths, heights, positions
+       */
 
       calcPanelDimensions : function(index, panelH) {
         var calc = {
@@ -246,9 +304,9 @@
           }
         } else {
           if (fitToContent) {
-            calc.height = 'auto';
+            calc.height = 'auto'; // panelH?
           } else {
-            calc.height = transparent ? slide.h : slide.h - tab.h - offset;
+            calc.height = transparent ? (slide.h + tab.h) : slide.h - offset;
           }
 
           // panel positions
@@ -263,12 +321,22 @@
         }
       },
 
+
+      /**
+       * Set individual panel widths, heights, positions
+       */
+
       setPanelDimensions : function(calc) {
         this
           .width(calc.width)
           .height(calc.height)
           .css(calc.position);
       },
+
+
+      /**
+       * Set all panel widths, heights, positions
+       */
 
       setPanelsDimensions : function() {
         var _this = this;
@@ -279,16 +347,57 @@
         });
       },
 
-      setSelectedSlideDimensions : function() {
-        var selected = slides.filter('.selected');
 
-        // if no selected slide, set first slide as selected if
-        // startClosed option not enabled
-        if (!selected.length && !settings.startClosed) {
-          slides.eq(settings.firstSlide - 1).addClass('selected');
-          selected = slides.filter('.selected');
+      /**
+       * Set custom tab images
+       */
+
+      setCustomTabImages : function() {
+        var imgs = [],
+            sheet = document.styleSheets[0];
+
+        if (settings.tab.icon !== 'custom') return;
+        if (!settings.tab.customIcons.length) return;
+
+        // short ref to image array
+        imgs = settings.tab.customIcons;
+
+        // create styles for icons
+        tabs.each(function(index) {
+          if (sheet && sheet.insertRule) {
+            sheet.insertRule('.accordionPro .slide-' + (index + 1) + ' > :first-child:after { background-image: url(' + imgs[index % imgs.length] + ') }', sheet.cssRules.length);
+          }
+        });
+      },
+
+
+      /**
+       * Set plugin width and height when closed on init
+       */
+
+      setClosedPluginDimensions : function() {
+        if (!settings.startClosed) return;
+
+        if (horizontal) {
+          elem.css('width', (slide.l * tab.h) + (border / 2) + (padding * 2) - 1);
+        } else {
+          elem.css('height', slide.l * tab.h + border);
         }
       },
+
+
+      /**
+       * Show plugin
+       */
+
+      setPluginVisible : function() {
+        elem.css('visibility', 'visible');
+      },
+
+
+      /**
+       * Additional fixes for Internet Explo(d|r)er
+       */
 
       internetExploder : function() {
         var ua = navigator.userAgent,
@@ -321,9 +430,10 @@
         }
       },
 
-      events : function() {
 
-      },
+      /**
+       * Initialise plugin setup
+       */
 
       init : function() {
         var _this = this;
@@ -334,22 +444,58 @@
         this.setSlideClasses();
         this.setTabClasses();
 
-        // check images are loaded before setting up slide positions
-        imagesLoaded(elem, function() {
+        // !!! FOR TESTING
           _this.calcBoxDimensions();
           _this.setSlidesDimensions();
           _this.setTabsDimensions();
           _this.setPanelsDimensions();
-          // _this.setSelectedSlideDimensions();
-          // _this.internetExploder();
+          _this.setCustomTabImages();
+          _this.setClosedPluginDimensions();
           _this.setPluginVisible();
-          // _this.events();
+          // _this.internetExploder();
+
+
+        // check images are loaded before setting up slide positions
+        imagesLoaded(elem, function() {
+
         });
       }
     };
 
 
+    /**
+     * Plugin events
+     */
+
+    var events = {
+      click : function() { // +touchstart
+
+      },
+
+      mouseover : function() {
+
+      },
+
+      mouseout : function() {
+
+      },
+
+      hashchange : function() {
+
+      },
+
+      orientationchange : function() {
+
+      },
+
+      init : function() {
+
+      }
+    };
+
+
     setup.init();
+    events.init();
     return this.methods;
   }
 
@@ -362,23 +508,18 @@
     /* layout */
     orientation : 'horizontal',             // 'horizontal' or 'vertical' accordion
     startClosed : false,                    // start in a closed position
-    firstSlide : 1,                         // displays slide (n) on page load
-
-    /* tabs */
-    tabSize : 48,                           // set tab size
-    tabFontSize : 28,                       // set tab font size
-    tabIcon : 'number',                     // set tab icon -> number, chevron, disc, square
-    tabTextOrientation : 'horizontal',      // set text orientation -> horizontal, vertical
-    // showSlideNumbers : true,             // display numbers on slides
 
     /* aesthetics */
-    theme : 'basic',                        // basic, dark, light, stitch or transparent
+    theme : 'basic',                        // basic, bordered, stitch or transparent
+    colour : {
+      scheme : null,                        // colour scheme, none set by default
+      style : 'flat'                        // choose from 'flat' or 'gradient'
+    },
     rounded : false,                        // square or rounded corners
     rtl : false,                            // right to left layout
 
     /* horizontal accordion options */
     responsive : true,                      // accordion will adapt itself to the page layout, based on width of parent element
-    scaleImages : true,                     // scales images to fit slide width and height
     horizontalWidth : 900,                  // base width; fixed (px [integer]) - responsive scaling is relative to this value
     horizontalHeight : 300,                 // base horizontal accordion height; fixed (px [integer]) - responsive scaling is relative to this value
 
@@ -386,6 +527,23 @@
     verticalWidth : '100%',                 // fixed (px [integer]) or fluid (% [string])
     verticalHeight : 500,                   // base vertical accordion height; fixed (px [integer])
     verticalSlideHeight : 'fixed',          // vertical accordion slide heights can be 'fixed' or 'fitToContent'
+
+    /* tabs */
+    tab : {
+      size : 48,                            // set tab size
+      fontSize : 16,                        // set tab font size
+      font : 'Arial',                       // set tab font family
+      icon : 'none',                        // set tab icon -> none, number, chevron, disc, square, custom
+      customIcons : [],                     // set a custom image for each icon
+      textOrientation : 'normal',           // set text orientation -> normal, vertical
+      selected : 1                          // displays slide (n) on page load
+    },
+
+    /* panels */
+    panel : {
+      scrollable : false,
+      scaleImages : false                   // scales images to fit slide width and height
+    },
 
     /* events */
     activateOn : 'click',                   // click or mouseover
@@ -402,9 +560,6 @@
     pauseOnHover : true,                    // pause on hover
     linkable : false                        // link slides via hash
   };
-
-
-
 
 
   /**

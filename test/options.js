@@ -12,12 +12,24 @@ describe('Options', function() {
 
 
   /**
-   * Init plugin with options
+   * Init plugin
    */
 
-  describe('Init plugin with options', function() {
+  describe('Init plugin', function() {
+    it('should have data', function() {
+      elem.accordionPro();
+      expect(elem).toHaveData('accordionPro');
+    });
+
+    // async!
+    // it('should have imagesLoaded flag', function() {
+    //   elem.accordionPro();
+    //   expect(elem).toHaveData('accordionPro');
+    // });
+
+
     it('should init plugin with data-options', function() {
-      expect(elem).toHaveClass('accordionPro');
+      // expect(elem).toHaveClass('accordionPro');
     });
 
     it('should have scrollable panels', function() {
@@ -37,6 +49,7 @@ describe('Options', function() {
     });
 
 
+    // check selected slide
 
 
   });

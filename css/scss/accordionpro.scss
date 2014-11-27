@@ -1,4 +1,30 @@
-/****************************************** CORE */
+$white: #ffffff;
+$silver: #c9d1d6;
+$grey: #919898;
+$charcoal: #333333;
+$black: #000000;
+$pink: #cc6699;
+$red: #cf091c;
+$orange: #ff7700;
+$yellow: #edbe00;
+$green: #2ecc71;
+$teal: #16a085;
+$light-blue: #87cefa;
+$blue: #286edb;
+$dark-blue: #103978;
+
+@mixin gradient($from, $to) {
+  background-color: $to;
+  background-image: -webkit-gradient(linear, left top, right top, from($from), to($to));
+  background-image: -webkit-linear-gradient(left, $from, $to);
+  background-image: -moz-linear-gradient(left, $from, $to);
+  background-image: -ms-linear-gradient(left, $from, $to);
+  background-image: -o-linear-gradient(left, $from, $to);
+  background-image: linear-gradient(left, $from, $to);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,StartColorStr='#{$from}', EndColorStr='#{$to}');
+}
+
+/*********************************** CORE PLUGIN */
 .accordionPro {
 
     /**
@@ -71,7 +97,8 @@
 
         > :first-child {
             -webkit-backface-visibility: hidden; /* fixes chrome bug */
-            color: black;
+            color: $white;
+            text-shadow: 0 -1px 0 $charcoal;
             font-size: 16px;
             font-weight: normal;
             line-height: 24px;
@@ -80,7 +107,9 @@
             position: absolute;
             top: 0;
             left: 0;
-            text-indent: 58px;
+            text-align: right;
+            direction: rtl;
+            text-indent: 24px;
 
             &:hover {
                 cursor: pointer;
@@ -88,17 +117,7 @@
 
 
             /**
-             * Text orientation
-             */
-
-            &.alt-text-orientation {
-
-                /*writing-mode: tb-rl;*/
-            }
-
-
-            /**
-             * Tab Icons
+             * Tab icons
              */
 
             &:after {
@@ -112,32 +131,10 @@
                 -ms-user-select: none;
                 user-select: none;
                 position: absolute;
-                background: red;
                 top: 0;
                 left: 0;
                 text-align: center;
                 text-indent: 0;
-            }
-
-            &.number:after {
-                counter-increment: number;
-                content: counter(number);
-            }
-
-            &.chevron:after {
-                content: '\203A';
-            }
-
-            &.chevron:hover:after {
-                content: '\02C2';
-            }
-
-            &.disc:after {
-                content: '\2022';
-            }
-
-            &.square:after {
-                content: '\25AA';
             }
         }
 
@@ -184,7 +181,6 @@
         transform: translateX(-100%) rotate(-90deg) translateZ(0);
         transform-origin: right top;
     }
-
 }
 
 /************************************** Vertical */
@@ -203,19 +199,102 @@
     }
 }
 
+/*************************************** OPTIONS */
+/****************************************** Tabs */
+.accordionPro {
+    .slide > :first-child {
+
+        /**
+         * Text orientation
+         */
+
+        &.alt-text-orientation {
+
+            /*writing-mode: tb-rl;*/
+        }
+
+
+        /**
+         * Custom tab icons
+         */
+
+        &.number:after {
+            counter-increment: number;
+            content: counter(number);
+            transform: rotate(90deg);
+        }
+
+        &.disc:after {
+            content: '\2022';
+        }
+
+        &.square:after {
+            content: '\25AA';
+        }
+
+        &.chevron:after {
+            content: '\203A';
+        }
+
+        &.chevron:hover:after {
+            /* css rotate ? */
+        }
+
+        &.custom:after {
+            transform: rotate(90deg);
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+    }
+}
+
+/************************************ Scrollable */
+.accordionPro.scrollable {
+    .slide > div {
+        overflow-y: scroll;
+    }
+
+    ::-webkit-scrollbar {
+        -webkit-appearance: none;
+        background: #666;
+        width: 7px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: black;
+        -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+    }
+}
+
+/********************************** Scale Images */
+.accordionPro.scaleImages {
+    .slide > div img { width: 100%; height: 100% }
+}
+
+/*************************************** Rounded */
+.accordionPro.rounded {
+    &.scrollable {
+        ::-webkit-scrollbar-thumb {
+            border-radius: 4px;
+        }
+    }
+}
+
 /**************************************** THEMES */
 /***************************************** Basic */
 .accordionPro.basic {
+    .slide {
+        background: #333;
+
+        > :first-child {
+            background: #333;
+            color: white;
+        }
+    }
 
 }
 
-/****************************************** Dark */
-.accordionPro.dark {
-
-}
-
-/***************************************** Light */
-.accordionPro.light {
+/************************************** Bordered */
+.accordionPro.bordered {
 
 }
 
@@ -230,83 +309,280 @@
 }
 
 /******************************** COLOUR SCHEMES */
-/* !!! Colour schemes only work with basic theme */
-.accordionPro.basic {
-
 /***************************************** White */
-    &.white {
-
-
+.accordionPro.scheme-white {
+    &.style-flat {
+        .slide > :first-child {
+             background-color: darken($white, 6%);
+        }
     }
 
-/**************************************** Silver */
+    &.style-gradient {
+        .slide > :first-child {
+            @include gradient($white, darken($white, 6%));
+        }
+    }
 
+    .slide > :first-child {
+        color: $grey;
+        text-shadow: 0 -1px 0 $white;
+    }
 
-/****************************************** Grey */
-
-
-/************************************** Charcoal */
-
-
-/***************************************** Black */
-
-
-/****************************************** Pink */
-
-
-/******************************************* Red */
-
-
-/**************************************** Orange */
-
-
-/**************************************** Yellow */
-
-
-/***************************************** Green */
-
-
-/****************************************** Teal */
-
-
-/************************************ Light Blue */
-
-
-/****************************************** Blue */
-
-
-/************************************* Dark Blue */
-
-
+    .slide.selected > :first-child {
+        background: $white;
+    }
 }
 
+/**************************************** Silver */
+.accordionPro.scheme-silver {
+    &.style-flat {
+        .slide > :first-child {
+             background-color: darken($silver, 6%);
+        }
+    }
 
+    &.style-gradient {
+        .slide > :first-child {
+            @include gradient($silver, darken($silver, 6%));
+        }
+    }
 
-/*************************************** OPTIONS */
-/*************************************** Rounded */
+    .slide > :first-child {
+        color: $charcoal;
+        text-shadow: 0 -1px 0 $white;
+    }
 
+    .slide.selected > :first-child {
+        background: $silver;
+    }
+}
+
+/****************************************** Grey */
+.accordionPro.scheme-grey {
+    &.style-flat {
+        .slide > :first-child {
+             background-color: darken($grey, 6%);
+        }
+    }
+
+    &.style-gradient {
+        .slide > :first-child {
+            @include gradient($grey, darken($grey, 6%));
+        }
+    }
+
+    .slide.selected > :first-child {
+        background: $grey;
+    }
+}
+
+/************************************** Charcoal */
+.accordionPro.scheme-charcoal {
+    &.style-flat {
+        .slide > :first-child {
+             background-color: darken($charcoal, 6%);
+        }
+    }
+
+    &.style-gradient {
+        .slide > :first-child {
+            @include gradient($charcoal, darken($charcoal, 6%));
+        }
+    }
+
+    .slide.selected > :first-child {
+        background: $charcoal;
+    }
+}
+
+/***************************************** Black */
+.accordionPro.scheme-black {
+    &.style-flat {
+        .slide > :first-child {
+           background-color: $black;
+        }
+    }
+
+    &.style-gradient {
+        .slide > :first-child {
+            @include gradient($black, lighten($black, 6%));
+        }
+    }
+
+    .slide.selected > :first-child {
+        background: lighten($black, 6%);
+    }
+}
+
+/****************************************** Pink */
+.accordionPro.scheme-pink {
+    &.style-flat {
+        .slide > :first-child {
+             background-color: darken($pink, 6%);
+        }
+    }
+
+    &.style-gradient {
+        .slide > :first-child {
+            @include gradient($pink, darken($pink, 6%));
+        }
+    }
+
+    .slide.selected > :first-child {
+        background: $pink;
+    }
+}
+
+/******************************************* Red */
+.accordionPro.scheme-red {
+    &.style-flat {
+        .slide > :first-child {
+             background-color: darken($red, 6%);
+        }
+    }
+
+    &.style-gradient {
+        .slide > :first-child {
+            @include gradient($red, darken($red, 6%));
+        }
+    }
+
+    .slide.selected > :first-child {
+        background: $red;
+    }
+}
+
+/**************************************** Orange */
+.accordionPro.scheme-orange {
+    &.style-flat {
+        .slide > :first-child {
+             background-color: darken($orange, 3%);
+        }
+    }
+
+    &.style-gradient {
+        .slide > :first-child {
+            @include gradient($orange, darken($orange, 3%));
+        }
+    }
+
+    .slide.selected > :first-child {
+        background: $orange;
+    }
+}
+
+/**************************************** Yellow */
+.accordionPro.scheme-yellow {
+    &.style-flat {
+        .slide > :first-child {
+             background-color: darken($yellow, 3%);
+        }
+    }
+
+    &.style-gradient {
+        .slide > :first-child {
+            @include gradient($yellow, darken($yellow, 3%));
+        }
+    }
+
+    .slide.selected > :first-child {
+        background: $yellow;
+    }
+}
+
+/***************************************** Green */
+.accordionPro.scheme-green {
+    &.style-flat {
+        .slide > :first-child {
+             background-color: darken($green, 6%);
+        }
+    }
+
+    &.style-gradient {
+        .slide > :first-child {
+            @include gradient($green, darken($green, 6%));
+        }
+    }
+
+    .slide.selected > :first-child {
+        background: $green;
+    }
+}
+
+/****************************************** Teal */
+.accordionPro.scheme-teal {
+    &.style-flat {
+        .slide > :first-child {
+             background-color: darken($teal, 6%);
+        }
+    }
+
+    &.style-gradient {
+        .slide > :first-child {
+            @include gradient($teal, darken($teal, 6%));
+        }
+    }
+
+    .slide.selected > :first-child {
+        background: $teal;
+    }
+}
+
+/************************************ Light Blue */
+.accordionPro.scheme-light-blue {
+    &.style-flat {
+        .slide > :first-child {
+             background-color: darken($light-blue, 6%);
+        }
+    }
+
+    &.style-gradient {
+        .slide > :first-child {
+            @include gradient($light-blue, darken($light-blue, 6%));
+        }
+    }
+
+    .slide.selected > :first-child {
+        background: $light-blue;
+    }
+}
+
+/****************************************** Blue */
+.accordionPro.scheme-blue {
+    &.style-flat {
+        .slide > :first-child {
+             background-color: darken($blue, 6%);
+        }
+    }
+
+    &.style-gradient {
+        .slide > :first-child {
+            @include gradient($blue, darken($blue, 6%));
+        }
+    }
+
+    .slide.selected > :first-child {
+        background: $blue;
+    }
+}
+
+/************************************* Dark Blue */
+.accordionPro.scheme-dark-blue {
+    &.style-flat {
+        .slide > :first-child {
+             background-color: darken($dark-blue, 6%);
+        }
+    }
+
+    &.style-gradient {
+        .slide > :first-child {
+            @include gradient($dark-blue, darken($dark-blue, 6%));
+        }
+    }
+
+    .slide.selected > :first-child {
+        background: $dark-blue;
+    }
+}
 
 /******************************************** IE */
-
-
-
-
-
-
-
-
-/*
-
-color schemes:
-
-
-
-color styles:
-
-flat
-gradient
-
-
-
-
- */
