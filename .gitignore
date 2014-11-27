@@ -3,3 +3,6 @@
 .grunt
 node_modules
 bower_components
+_SpecRunner.html
+*.sublime-project
+*.sublime-workspace
