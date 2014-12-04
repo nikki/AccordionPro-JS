@@ -27,6 +27,7 @@ module.exports = function (grunt) {
           },
           src: [
             'js/vendor/imagesloaded.js',
+            'js/vendor/transitiontest.js',
             'js/vendor/animate.js',
             'js/jquery.accordionpro.js'
           ],

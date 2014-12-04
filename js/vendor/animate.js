@@ -17,13 +17,13 @@
         var $this = $(this), easing, prefix;
 
           // check if transitions supported; only animate parent accordion element or slide list items
-          if (Modernizr.csstransitions && ($this.hasClass('accordionPro') || $this.hasClass('slide'))) {
+          if (supportsTransitions() && ($this.hasClass('accordionPro') || $this.hasClass('slide'))) {
 
             // set default css easing function
             easing = options.easing || 'ease-in-out';
 
             // get prefix
-            prefix = (Modernizr.prefixed('transition').replace(/([A-Z])/g, function(str,m1){ return '-' + m1.toLowerCase(); }).replace(/^ms-/,'-ms-'));
+            prefix = (getPrefixed('transition').replace(/([A-Z])/g, function(str,m1){ return '-' + m1.toLowerCase(); }).replace(/^ms-/,'-ms-'));
 
             // animate with css transitions
             $this.css(prefix, 'all ' + speed / 1000 + 's ' + easing).css(props);

@@ -110,6 +110,12 @@ $dark-blue: #103978;
             text-align: right;
             direction: rtl;
             text-indent: 24px;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+
 
             &:hover {
                 cursor: pointer;
@@ -185,6 +191,15 @@ $dark-blue: #103978;
 
 /************************************** Vertical */
 .accordionPro.vertical {
+
+    /**
+     * Custom tab icons
+     */
+
+    .slide > :first-child.custom:after {
+        transform: rotate(0deg);
+    }
+
 
     /**
      * fitToContent

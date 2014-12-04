@@ -892,6 +892,38 @@ function makeArray( obj ) {
 });
 
 /*!
+ * Test for CSS3 Transitions
+ * http://stackoverflow.com/questions/7264899/detect-css-transitions-using-javascript-and-without-modernizr
+ */
+
+function supportsTransitions() {
+    var b = document.body || document.documentElement,
+        s = b.style,
+        p = 'transition';
+
+    if (typeof s[p] == 'string') { return true; }
+
+    // Tests for vendor specific prop
+    var v = ['Moz', 'webkit', 'Webkit', 'Khtml', 'O', 'ms'];
+    p = p.charAt(0).toUpperCase() + p.substr(1);
+
+    for (var i=0; i<v.length; i++) {
+        if (typeof s[v[i] + p] == 'string') { return true; }
+    }
+
+    return false;
+}
+
+function getPrefixed(prop){
+    var i, s = document.createElement('p').style, v = ['ms','O','Moz','Webkit'];
+    if( s[prop] == '' ) return prop;
+    prop = prop.charAt(0).toUpperCase() + prop.slice(1);
+    for( i = v.length; i--; )
+        if( s[v[i] + prop] == '' )
+            return (v[i] + prop);
+}
+
+/*!
  * jQuery Animate -> CSS3 Transitions
  * http://addyosmani.com/blog/css3transitions-jquery/
  */
@@ -910,13 +942,13 @@ function makeArray( obj ) {
         var $this = $(this), easing, prefix;
 
           // check if transitions supported; only animate parent accordion element or slide list items
-          if (Modernizr.csstransitions && ($this.hasClass('accordionPro') || $this.hasClass('slide'))) {
+          if (supportsTransitions() && ($this.hasClass('accordionPro') || $this.hasClass('slide'))) {
 
             // set default css easing function
             easing = options.easing || 'ease-in-out';
 
             // get prefix
-            prefix = (Modernizr.prefixed('transition').replace(/([A-Z])/g, function(str,m1){ return '-' + m1.toLowerCase(); }).replace(/^ms-/,'-ms-'));
+            prefix = (getPrefixed('transition').replace(/([A-Z])/g, function(str,m1){ return '-' + m1.toLowerCase(); }).replace(/^ms-/,'-ms-'));
 
             // animate with css transitions
             $this.css(prefix, 'all ' + speed / 1000 + 's ' + easing).css(props);
@@ -964,7 +996,8 @@ function makeArray( obj ) {
      * "Globals"
      */
 
-    var parent = { w : 0, h : 0 },
+    var $window = $(window),
+        parent = { w : 0, h : 0 },
         slides = elem.children('ol').children('li'),
         slide = { w : 0, h : 0, l : 0 },
         tabs = slides.children(':first-child'),
@@ -976,11 +1009,12 @@ function makeArray( obj ) {
         horizontal = settings.orientation === 'horizontal' ? 1 : 0,
         easing = 'ease-in-out',
         fitToContent = !horizontal && settings.verticalSlideHeight === 'fitToContent' ? true : false,
-        transparent = (settings.theme === 'transparent');
+        transparent = (settings.theme === 'transparent'),
+        touch = !!('ontouchstart' in window);
 
 
     /**
-     * Plugin setup
+     * SETUP PLUGIN
      */
 
     var setup = {
@@ -1323,6 +1357,28 @@ function makeArray( obj ) {
 
 
       /**
+       * Set custom tab colours
+       */
+
+      setCustomTabColours : function() {
+        var colours = [],
+            sheet = document.styleSheets[0];
+
+        if (!settings.tab.customColours.length) return;
+
+        // short ref to colours array
+        colours = settings.tab.customColours;
+
+        // create styles for custom colours (so no need to remove style attr on destroy())
+        tabs.each(function(index) {
+          if (sheet && sheet.insertRule) {
+            sheet.insertRule('.accordionPro .slide-' + (index + 1) + ' > :first-child { background: ' + colours[index] + ' !important }', sheet.cssRules.length);
+          }
+        });
+      },
+
+
+      /**
        * Set plugin width and height when closed on init
        */
 
@@ -1383,7 +1439,7 @@ function makeArray( obj ) {
 
 
       /**
-       * Initialise plugin setup
+       * Init plugin setup
        */
 
       init : function() {
@@ -1394,13 +1450,15 @@ function makeArray( obj ) {
         this.setPluginClasses();
         this.setSlideClasses();
         this.setTabClasses();
+        this.setCustomTabImages();
+        this.setCustomTabColours();
 
         // !!! FOR TESTING
           _this.calcBoxDimensions();
           _this.setSlidesDimensions();
           _this.setTabsDimensions();
           _this.setPanelsDimensions();
-          _this.setCustomTabImages();
+
           _this.setClosedPluginDimensions();
           _this.setPluginVisible();
           // _this.internetExploder();
@@ -1415,27 +1473,321 @@ function makeArray( obj ) {
 
 
     /**
-     * Plugin events
+     * BIND EVENTS
      */
 
     var events = {
-      click : function() { // +touchstart
 
+      /**
+       * Bind click and touchstart
+       */
+
+      click : function() { // +touchstart
+        if (settings.activateOn === 'click') {
+          // trigger animation cycle
+          tabs.on('click.accordionPro touchstart.accordionPro', core.trigger);
+
+          if (settings.startClosed) {
+            tabs.on('click.accordionPro.closed touchstart.accordionPro.closed', core.triggerFromClosed);
+          }
+        }
       },
+
+
+      /**
+       * Bind mouseover
+       */
 
       mouseover : function() {
+        if (settings.activateOn === 'mouseover') {
+          // trigger animation cycle
+          tabs.on('click.accordionPro touchstart.accordionPro mouseover.accordionPro', core.trigger);
 
+          // fire start closed event once
+          if (settings.startClosed) {
+            tabs.on('click.accordionPro.closed touchstart.accordionPro.closed mouseover.accordionPro.closed', core.triggerFromClosed);
+          }
+        }
       },
 
-      mouseout : function() {
 
+      /**
+       * Pause on hover
+       */
+
+      hover : function() {
+        if (settings.pauseOnHover && settings.autoPlay) {
+          elem
+            .on('mouseover.accordionPro', function() {
+              if (!elem.hasClass('closed')) {
+                core.isPlaying && methods.stop();
+              }
+            })
+            .on('mouseout.accordionPro', function() {
+              if (!elem.hasClass('closed')) {
+                !core.isPlaying && methods.play(core.currentSlide);
+              }
+            });
+        }
       },
+
+
+      /**
+       * Bind swipe for touch enabled devices
+       */
+
+      swipe : function() {
+        var startPos = {
+              x : 0,
+              y : 0
+            };
+
+
+        /**
+         * Helper -> get position of client touch
+         */
+
+        function getTouchPos(e, maxTouches) {
+          var x, y;
+
+          if (touch && e.touches) {
+            if (e.touches.length > maxTouches) return;
+            x = e[maxTouches ? 'touches' : 'changedTouches'][0].clientX;
+            y = e[maxTouches ? 'touches' : 'changedTouches'][0].clientY;
+          } else {
+            x = e.clientX;
+            y = e.clientY;
+          }
+
+          return { x : x, y : y };
+        }
+
+
+        /**
+         * Trigger swipe on touch enabled devices
+         */
+
+        if (touch) {
+          // unbind existing events
+          tabs.off('.accordionPro');
+
+          // bind swipe events
+          slides.on({
+            touchstart : function(e) {
+              startPos = getTouchPos(e.originalEvent, 1);
+            },
+
+            touchend : function(e) {
+              var endPos = getTouchPos(e.originalEvent, 0);
+
+              // calculate swipe direction
+              var dx = endPos.x - startPos.x,
+                  absDx = Math.abs(dx),
+                  dy = endPos.y - startPos.y,
+                  absDy = Math.abs(dy);
+
+              // trigger slide
+              core.triggerDirection(absDx > absDy ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up'));
+            }
+          })
+        }
+      },
+
+
+      /**
+       * Bind hashchange
+       */
 
       hashchange : function() {
+        if (settings.linkable) {
+          $window.on('load.accordionPro hashchange.accordionPro', core.triggerLink);
+        }
+      },
+
+
+      /**
+       * Bind resize and orientationchange
+       */
+
+      resize : function() { // +orientationchange
+        var timer = 0;
+
+        if (horizontal && settings.responsive) {
+          $window.on('load.accordionPro resize.accordionPro orientationchange.accordionPro', function() {
+            // approximates onresizeend
+            clearTimeout(timer);
+
+            // trigger scaling
+            timer = setTimeout(function() {
+              core.scalePlugin();
+            }, 200);
+          });
+        }
+      },
+
+
+      /**
+       * Init event binds
+       */
+
+      init : function() {
+        for (var i in this) {
+          if (this.hasOwnProperty(i)) {
+            if (i !== 'init') this[i]();
+          }
+        }
+      }
+    };
+
+
+    /**
+     * PLUGIN CORE
+     */
+
+    var core = {
+      isPlaying : false,
+
+      // counter for autoPlay (zero index firstSlide on init)
+      currentSlide : settings.tab.selected - 1,
+
+      // previous slide
+      previousSlide : null,
+
+
+      /**
+       * Animate single slide
+       */
+
+      // !!! need to pass fitToContent height in
+      animateSlide : function(props) {
+        // don't animate first slide
+        if (typeof props.index === 'number' && !props.index) return;
+
+        // set animate position for single selected slide
+        if (props.position) {
+          props[props.position] = (props.index * tab.h) + (props.side ? 0 : slide[horizontal ? 'w' : 'h']);
+        }
+
+        // animate slide
+        this
+          .stop(true)
+          .animate(
+            props,
+            settings.slideSpeed
+          )
+      },
+
+
+      /**
+       * Animate group of slides
+       */
+
+      animateSlides : function(props) {
+        var index = props.index,
+            position = props.position,
+            side = props.side,
+            expr = '';
+
+        // build expression
+        expr += side ? ':lt(' : ':gt(';
+        expr += side ? index + 1 : index;
+        expr += ')';
+
+        // animate slides
+        slides
+          .filter(expr)
+          .each(function() {
+            var $this = $(this),
+                index = slides.index($this),
+                props = {};
+
+            // side 0 = left/top, side 1 = bottom/right
+            props[position] = (index * tab.h) + (side ? 0 : slide[horizontal ? 'w' : 'h']);
+
+            // animate single slide
+            core.animateSlide.call($this, props);
+          });
+
+        // set selected slide
+        core.setSelectedSlide.call(this);
+      },
+
+      trigger : function(e) {
+        var $slide = $(this).parent(),
+            props = {
+              index : slides.index($slide),
+              position : horizontal ? 'left' : 'top',
+              selected : $slide.hasClass('selected')
+            };
+
+        // side 0 = left/top, side 1 = bottom/right
+        props.side = +$slide.position()[props.position] > props.index * tab.h;
+
+        // animate single (currently selected) slide, or animate a group of slides
+        core['animateSlide' + (props.selected ? '' : 's')].call($slide, props);
+      },
+
+      setSelectedSlide : function() {
+        // remove selected class
+        slides.removeClass('selected');
+
+        // add selected class to selected slide
+        this.addClass('selected');
+      },
+
+      triggerFromClosed : function() {
 
       },
 
-      orientationchange : function() {
+      triggerLink : function(e) {
+/*
+        var url = slides.filter(function() {
+          return $(this).attr('data-slide-name') === window.location.hash.split('#')[1];
+        });
+
+        // if slide name exists, trigger slide
+        if (url.length) core.animationCycle.call(url.children('h2')[0], e);
+*/
+      },
+
+      triggerDirection : function(dir) {
+        console.log(dir);
+
+/*
+
+        slides.swipe({
+          left : function() {
+            if (orientation) {
+              if (settings.rtl) {
+                // don't select previous slide if current slide is index zero
+                if (core.currentSlide) methods.prev();
+              } else {
+                methods.next();
+              }
+            }
+          },
+          right : function() {
+            if (orientation) {
+              if (settings.rtl) {
+                methods.next();
+              } else {
+                if (core.currentSlide) methods.prev();
+              }
+            }
+          },
+          up : function() {
+            if (!orientation) methods.next();
+          },
+          down : function() {
+            if (!orientation && core.currentSlide) methods.prev();
+          },
+          threshold: { x: 80, y: 80 }
+        });
+ */
+
+      },
+
+      scalePlugin : function() {
 
       },
 
@@ -1445,14 +1797,26 @@ function makeArray( obj ) {
     };
 
 
+    /**
+     * Init plugin
+     */
+
     setup.init();
     events.init();
+    core.init();
+
+
+    /**
+     * Return methods
+     */
+
+    this.methods._settings = settings;
     return this.methods;
   }
 
 
   /**
-   * Plugin defaults
+   * PLUGIN DEFAULTS
    */
 
   AccordionPro.prototype.defaults = {
@@ -1486,19 +1850,19 @@ function makeArray( obj ) {
       font : 'Arial',                       // set tab font family
       icon : 'none',                        // set tab icon -> none, number, chevron, disc, square, custom
       customIcons : [],                     // set a custom image for each icon
+      customColours : [],                   // set a custom colour for each tab
       textOrientation : 'normal',           // set text orientation -> normal, vertical
       selected : 1                          // displays slide (n) on page load
     },
 
     /* panels */
     panel : {
-      scrollable : false,
+      scrollable : false,                   // trigger scrollbar on vertical overflow
       scaleImages : false                   // scales images to fit slide width and height
     },
 
     /* events */
     activateOn : 'click',                   // click or mouseover
-    touchEnabled : true,                    // touch events?
     onSlideOpen : function() {},            // callback on slide open
     onSlideClose : function() {},           // callback on slide animation complete
 
@@ -1514,16 +1878,7 @@ function makeArray( obj ) {
 
 
   /**
-   * Core scale and animation methods
-   */
-
-  AccordionPro.prototype.core = {
-
-  };
-
-
-  /**
-   * Public methods for triggering animation events
+   * PUBLIC METHODS
    */
 
   AccordionPro.prototype.methods = {
@@ -1555,7 +1910,7 @@ function makeArray( obj ) {
 
 
   /**
-   * Add plugin to $.fn
+   * ADD PLUGIN TO $.fn
    */
 
   $.fn.accordionPro = function(method) {

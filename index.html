@@ -12,29 +12,37 @@
     <script src="js/jquery.accordionpro.js"></script>
 
     <script>
-    $(function() {
-      var elem = $('#accordion').accordionPro({
-        theme : 'bordered',
-        colour : {
-          scheme : 'white',
-          style : 'gradient'
-        },
-        tab : {
-          icon : 'custom',
-          customIcons : [
-            '../img-demo/user.png',
-            '../img-demo/chat.png',
-            '../img-demo/letter.png',
-            '../img-demo/search.png',
-            '../img-demo/leaf.png'
-          ],
-          selected : 3
-        },
-        panel : {
-          scrollable : true
-        }
+      $(function() {
+        var elem = $('#accordion').accordionPro({
+          orientation : 'vertical',
+          theme : 'bordered',
+          colour : {
+            scheme : 'teal',
+            style : 'gradient'
+          },
+          tab : {
+            icon : 'custom',
+            customIcons : [
+              '../img-demo/user.png',
+              '../img-demo/chat.png',
+              '../img-demo/letter.png',
+              '../img-demo/search.png',
+              '../img-demo/leaf.png'
+            ],/*
+            customColours : [
+              '#FFFF00',
+              'red',
+              'yellow',
+              '#006CE1',
+              'rgba(50, 65, 85, 0.8)'
+            ],*/
+            selected : 2
+          },
+          panel : {
+            scrollable : false
+          }
+        });
       });
-    });
     </script>
 
 

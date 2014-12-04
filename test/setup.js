@@ -35,7 +35,7 @@ describe('Setup', function() {
     });
 
     // another theme
-    it('shiuld have the class "bordered"', function() {
+    it('should have the class "bordered"', function() {
       elem.accordionPro({ theme : 'bordered' });
       expect(elem).toHaveClass('bordered');
     });
@@ -283,6 +283,27 @@ describe('Setup', function() {
     it('should use a different image for each tab', function() {
 
     });
+  });
+*/
+
+
+  /**
+   * setCustomTabColours
+   */
+
+/*
+  // !!!
+  describe('setCustomTabColours', function() {
+    it('should have a yellow bg colour', function() {
+      var bg;
+
+      elem.accordionPro({ customColours : ['#FFFF00'] });
+      bg = $('#accordion').find('.slide:eq(0)').children(':first-child').css('background');
+
+      console.log(bg);
+      expect(bg).toHaveText(/rgb(255, 255, 0)/g);
+
+     });
   });
 */
 
