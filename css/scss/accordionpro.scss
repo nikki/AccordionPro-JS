@@ -69,7 +69,7 @@ $dark-blue: #103978;
      * Slides
      */
 
-    &, & .slide {
+    &, & .slide, &.slide > * {
         -webkit-tap-highlight-color: transparent;
         -webkit-backface-visibility: hidden;
         -moz-backface-visibility: hidden;
@@ -178,26 +178,35 @@ $dark-blue: #103978;
      */
 
     .slide > :first-child {
-        -webkit-transform: translateX(-100%) rotate(-90deg) translateZ(0);
+        -webkit-transform: translateX(-100%) rotate(-90deg);
         -webkit-transform-origin: right top;
-        -moz-transform: translateX(-100%) rotate(-90deg) translateZ(0);
+        -moz-transform: translateX(-100%) rotate(-90deg);
         -moz-transform-origin: right top;
         -o-transform: translateX(-100%) rotate(-90deg);
         -o-transform-origin: right top;
-        transform: translateX(-100%) rotate(-90deg) translateZ(0);
+        transform: translateX(-100%) rotate(-90deg);
         transform-origin: right top;
     }
 }
 
 /************************************** Vertical */
 .accordionPro.vertical {
+    .slide {
+        left: auto !important;
 
-    /**
-     * Custom tab icons
-     */
+        > :first-child {
+            text-align: left;
+            direction: ltr;
 
-    .slide > :first-child.custom:after {
-        transform: rotate(0deg);
+            &:after {
+                left: auto;
+                right: 0;
+                -webkit-transform: rotate(0deg) !important;
+                -moz-transform: rotate(0deg) !important;
+                -o-transform: rotate(0deg) !important;
+                transform: rotate(0deg) !important;
+            }
+        }
     }
 
 
@@ -263,28 +272,6 @@ $dark-blue: #103978;
     }
 }
 
-/************************************ Scrollable */
-.accordionPro.scrollable {
-    .slide > div {
-        overflow-y: scroll;
-    }
-
-    ::-webkit-scrollbar {
-        -webkit-appearance: none;
-        background: #666;
-        width: 7px;
-    }
-    ::-webkit-scrollbar-thumb {
-        background: black;
-        -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
-    }
-}
-
-/********************************** Scale Images */
-.accordionPro.scaleImages {
-    .slide > div img { width: 100%; height: 100% }
-}
-
 /*************************************** Rounded */
 .accordionPro.rounded {
     &.scrollable {
@@ -292,6 +279,78 @@ $dark-blue: #103978;
             border-radius: 4px;
         }
     }
+}
+
+/******************************************* RTL */
+.accordionPro.rtl {
+    text-align: right;
+
+    .slide {
+        > div {
+            direction: rtl;
+        }
+    }
+
+    &.horizontal {
+        .slide {
+            left: auto !important;
+
+            > :first-child {
+                -webkit-transform: translateX(100%) rotate(90deg);
+                -webkit-transform-origin: left top;
+                -moz-transform: translateX(100%) rotate(90deg);
+                -moz-transform-origin: left top;
+                -o-transform: translateX(100%) rotate(90deg);
+                -o-transform-origin: left top;
+                transform: translateX(100%) rotate(90deg);
+                transform-origin: left top;
+                left: auto;
+                right: 0;
+                text-align: left;
+                direction: ltr;
+
+                &:after {
+                    left: auto;
+                    right: 0;
+                    -webkit-transform: rotate(-90deg);
+                    -moz-transform: rotate(-90deg);
+                    -o-transform: rotate(-90deg);
+                    transform: rotate(-90deg);
+                }
+            }
+        }
+    }
+
+    &.vertical {
+        .slide {
+            > :first-child {
+                text-align: right;
+                direction: rtl;
+
+                &:after {
+                    right: auto;
+                    left: 0;
+                }
+            }
+        }
+    }
+}
+
+/************************************ Scrollable */
+.accordionPro.scrollable {
+    .slide > div {
+        overflow-y: auto;
+    }
+
+    ::-webkit-scrollbar {
+        -webkit-appearance: none;
+        width: 7px;
+    }
+}
+
+/********************************** Scale Images */
+.accordionPro.scaleImages {
+    .slide > div img { width: 100%; height: 100%; float: left }
 }
 
 /**************************************** THEMES */
@@ -305,12 +364,30 @@ $dark-blue: #103978;
             color: white;
         }
     }
-
 }
 
 /************************************** Bordered */
 .accordionPro.bordered {
+    border-style: solid;
+    border-width: 9px;
 
+    &.horizontal {
+        padding: 5px 0 5px 5px;
+
+        &.rtl {
+            padding: 5px 5px 5px 0;
+        }
+    }
+
+    &.vertical {
+        padding: 5px 5px 0 5px;
+    }
+
+    .slide {
+        > :first-child {
+
+        }
+    }
 }
 
 /**************************************** Stitch */
@@ -535,6 +612,50 @@ $dark-blue: #103978;
     &.style-gradient {
         .slide > :first-child {
             @include gradient($teal, darken($teal, 6%));
+        }
+    }
+
+    &.scrollable {
+        ::-webkit-scrollbar {
+            background: #666;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: black;
+            -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+        }
+    }
+
+    &.bordered {
+        border-color: $teal;
+        background: darken($teal, 9%);
+        -webkit-box-shadow: 0 -1px 0 darken($teal, 9%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+        -moz-box-shadow: 0 -1px 0 darken($teal, 9%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+        -ms-box-shadow: 0 -1px 0 darken($teal, 9%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+        -o-box-shadow: 0 -1px 0 darken($teal, 9%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 -1px 0 darken($teal, 9%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+    }
+
+    &.bordered.horizontal {
+        .slide {
+            > :first-child {
+                -webkit-box-shadow: 0 -5px 0 darken($teal, 9%) inset, 0 -6px 0 darken($teal, 12%) inset, 1px 0 0 darken($teal, 12%) inset;
+                -moz-box-shadow: 0 -5px 0 darken($teal, 9%) inset, 0 -6px 0 darken($teal, 12%) inset, 1px 0 0 darken($teal, 12%) inset;
+                -ms-box-shadow: 0 -5px 0 darken($teal, 9%) inset, 0 -6px 0 darken($teal, 12%) inset, 1px 0 0 darken($teal, 12%) inset;
+                -o-box-shadow: 0 -5px 0 darken($teal, 9%) inset, 0 -6px 0 darken($teal, 12%) inset, 1px 0 0 darken($teal, 12%) inset;
+                box-shadow: 0 -5px 0 darken($teal, 9%) inset, 0 -6px 0 darken($teal, 12%) inset, 1px 0 0 darken($teal, 12%) inset;
+            }
+        }
+    }
+
+    &.bordered.vertical {
+        .slide {
+            > :first-child {
+                -webkit-box-shadow: 0 -5px 0 darken($teal, 9%) inset, 0 -6px 0 darken($teal, 12%) inset, 1px 0 0 darken($teal, 12%) inset;
+                -moz-box-shadow: 0 -5px 0 darken($teal, 9%) inset, 0 -6px 0 darken($teal, 12%) inset, 1px 0 0 darken($teal, 12%) inset;
+                -ms-box-shadow: 0 -5px 0 darken($teal, 9%) inset, 0 -6px 0 darken($teal, 12%) inset, 1px 0 0 darken($teal, 12%) inset;
+                -o-box-shadow: 0 -5px 0 darken($teal, 9%) inset, 0 -6px 0 darken($teal, 12%) inset, 1px 0 0 darken($teal, 12%) inset;
+                box-shadow: 0 -5px 0 darken($teal, 9%) inset, 0 -6px 0 darken($teal, 12%) inset, 1px 0 0 darken($teal, 12%) inset;
+            }
         }
     }
 

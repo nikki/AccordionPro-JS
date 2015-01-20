@@ -1150,7 +1150,7 @@ function getPrefixed(prop){
           calc.position = { left : index * tab.h, top : 0 };
 
           if (settings.rtl) {
-            calc.position = { left : 'auto', right : index * tab.h, top : 0 };
+            calc.position = { right : index * tab.h, top : 0 };
           }
 
           // compensate for selected slide (position)
@@ -1244,7 +1244,7 @@ function getPrefixed(prop){
           .height(tab.h)
           .css({
             'font-size' : settings.tab.fontSize + 'px',
-            'line-height' : tab.h + 'px',
+            'line-height' : (tab.h - padding) + 'px',
             'font-family' : settings.tab.font
           });
       },
@@ -1256,7 +1256,8 @@ function getPrefixed(prop){
 
       setTabsDimensions : function() {
         var _this = this,
-            $first = tabs.first();
+            $first = tabs.first(),
+            sheet = document.styleSheets[0];
 
         // calculate global tab dimensions
         tab.w = horizontal ? slide.h : '100%';
@@ -1265,6 +1266,11 @@ function getPrefixed(prop){
         tabs.each(function(index) {
           _this.setTabDimensions.call($(this));
         });
+
+        // adjust line-height on :after
+        if (padding && sheet && sheet.insertRule) {
+          sheet.insertRule('.accordionPro .slide > :first-child:after { left: ' + padding + 'px; height: ' + (tab.h - padding) + 'px }', sheet.cssRules.length);
+        }
       },
 
 
@@ -1280,18 +1286,18 @@ function getPrefixed(prop){
         };
 
         if (horizontal) {
-          calc.width = transparent ? slide.w + tab.h : slide.w - offset;
+          calc.width = transparent ? slide.w + tab.h : slide.w - offset - padding;
           calc.height = slide.h;
           calc.position = { left : (transparent ? 0 : tab.h), top : 0 };
 
           if (settings.rtl) {
-            calc.position = { left : 'auto', right : (transparent ? 0 - offset : tab.h - offset), top : 0 };
+            calc.position = { right : (transparent ? 0 - offset : tab.h - offset), top : 0 };
           }
         } else {
           if (fitToContent) {
             calc.height = 'auto'; // panelH?
           } else {
-            calc.height = transparent ? (slide.h + tab.h) : slide.h - offset;
+            calc.height = transparent ? (slide.h + tab.h) : slide.h - offset - padding;
           }
 
           // panel positions
@@ -1384,7 +1390,7 @@ function getPrefixed(prop){
 
       setClosedPluginDimensions : function() {
         if (!settings.startClosed) return;
-
+// console.log((slide.l * tab.h) + (border / 2) + (padding * 3) - 1);
         if (horizontal) {
           elem.css('width', (slide.l * tab.h) + (border / 2) + (padding * 2) - 1);
         } else {
@@ -1664,7 +1670,7 @@ function getPrefixed(prop){
         if (typeof props.index === 'number' && !props.index) return;
 
         // set animate position for single selected slide
-        if (props.position) {
+        if (props.selected) {
           props[props.position] = (props.index * tab.h) + (props.side ? 0 : slide[horizontal ? 'w' : 'h']);
         }
 
@@ -1673,7 +1679,13 @@ function getPrefixed(prop){
           .stop(true)
           .animate(
             props,
-            settings.slideSpeed
+            settings.slideSpeed,
+            function() {
+              // set selected slide if single
+              if (props.selected) {
+                core.setSelectedSlide.call(slides.eq(props.index - 1 ));
+              }
+            }
           )
       },
 
@@ -1716,12 +1728,12 @@ function getPrefixed(prop){
         var $slide = $(this).parent(),
             props = {
               index : slides.index($slide),
-              position : horizontal ? 'left' : 'top',
+              position : horizontal ? (settings.rtl ? 'right' : 'left') : 'top',
               selected : $slide.hasClass('selected')
             };
 
-        // side 0 = left/top, side 1 = bottom/right
-        props.side = +$slide.position()[props.position] > props.index * tab.h;
+        // side 0 = left/top, side 1 = bottom/right (flipped for rtl)
+        props.side = parseInt($slide.css(props.position), 10) > props.index * tab.h;
 
         // animate single (currently selected) slide, or animate a group of slides
         core['animateSlide' + (props.selected ? '' : 's')].call($slide, props);

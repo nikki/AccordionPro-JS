@@ -14,6 +14,8 @@
     <script>
       $(function() {
         var elem = $('#accordion').accordionPro({
+          activateOn : 'click',
+          rtl: true,
           orientation : 'vertical',
           theme : 'bordered',
           colour : {
@@ -28,18 +30,19 @@
               '../img-demo/letter.png',
               '../img-demo/search.png',
               '../img-demo/leaf.png'
-            ],/*
+            ]/*,
             customColours : [
               '#FFFF00',
               'red',
               'yellow',
               '#006CE1',
               'rgba(50, 65, 85, 0.8)'
-            ],*/
+            ]*/,
             selected : 2
           },
           panel : {
-            scrollable : false
+            scrollable : true,
+            scaleImages : true
           }
         });
       });
