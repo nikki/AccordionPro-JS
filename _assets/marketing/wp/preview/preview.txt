@@ -1,9 +1,0 @@
-1_stitch.jpg			Preview of 'stitch' theme
-2_editor.jpg			Preview of Content Editor (text/html entry)
-3_editor.jpg			Preview of Content Editor (image entry)
-4_editor.jpg			Preview of Content Editor (video entry)
-5_manager.jpg			Preview of Accordion Management screen
-6_dark.jpg			Preview of 'dark' theme
-7_light.jpg			Preview of 'light' theme
-8_basic.jpg			Preview of 'basic' theme
-9_mobile.jpg     Preview of 'light' theme on a smartphone
