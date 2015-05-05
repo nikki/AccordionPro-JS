@@ -1,11 +1,9 @@
-# CHANGELOG
+**CHANGELOG**
 
-## Accordion Pro JS v.2
-
-### 5/5/15
+**5/5/15**
 Moved APWP to it's own repo
 
-### 2014
+**2014**
 Colour schemes
 Colour styles
 
