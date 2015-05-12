@@ -1,0 +1,129 @@
+/*************************************** OPTIONS */
+/****************************************** Tabs */
+.accordionPro {
+    .slide > :first-child {
+
+        /**
+         * Text orientation
+         */
+
+        &.alt-text-orientation {
+
+            /*writing-mode: tb-rl;*/
+        }
+
+
+        /**
+         * Custom tab icons
+         */
+
+        &.number:after {
+            counter-increment: number;
+            content: counter(number);
+            transform: rotate(90deg);
+        }
+
+        &.disc:after {
+            content: '\2022';
+        }
+
+        &.square:after {
+            content: '\25AA';
+        }
+
+        &.chevron:after {
+            content: '\203A';
+        }
+
+        &.chevron:hover:after {
+            /* css rotate ? */
+        }
+
+        &.custom:after {
+            transform: rotate(90deg);
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+    }
+}
+
+/*************************************** Rounded */
+.accordionPro.rounded {
+    &.scrollable {
+        ::-webkit-scrollbar-thumb {
+            border-radius: 4px;
+        }
+    }
+}
+
+/******************************************* RTL */
+.accordionPro.rtl {
+    text-align: right;
+
+    .slide {
+        > div {
+            direction: rtl;
+        }
+    }
+
+    &.horizontal {
+        .slide {
+            left: auto !important;
+
+            > :first-child {
+                -webkit-transform: translateX(100%) rotate(90deg);
+                -webkit-transform-origin: left top;
+                -moz-transform: translateX(100%) rotate(90deg);
+                -moz-transform-origin: left top;
+                -o-transform: translateX(100%) rotate(90deg);
+                -o-transform-origin: left top;
+                transform: translateX(100%) rotate(90deg);
+                transform-origin: left top;
+                left: auto;
+                right: 0;
+                text-align: left;
+                direction: ltr;
+
+                &:after {
+                    left: auto;
+                    right: 0;
+                    -webkit-transform: rotate(-90deg);
+                    -moz-transform: rotate(-90deg);
+                    -o-transform: rotate(-90deg);
+                    transform: rotate(-90deg);
+                }
+            }
+        }
+    }
+
+    &.vertical {
+        .slide {
+            > :first-child {
+                text-align: right;
+                direction: rtl;
+
+                &:after {
+                    right: auto;
+                    left: 0;
+                }
+            }
+        }
+    }
+}
+
+/************************************ Scrollable */
+.accordionPro.scrollable {
+    .slide > div {
+        overflow-y: auto;
+    }
+
+    ::-webkit-scrollbar {
+        -webkit-appearance: none;
+        width: 7px;
+    }
+}
+
+/********************************** Scale Images */
+.accordionPro.scaleImages {
+    .slide > div img { width: 100%; height: 100%; float: left }
+}

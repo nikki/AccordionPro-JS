@@ -53,7 +53,7 @@ module.exports = function (grunt) {
             style: 'compressed'
           },
           files: {
-            'css/accordionpro.css' : 'css/scss/accordionpro.scss'
+            'css/accordionpro.min.css' : 'css/scss/accordionpro.scss'
           }
         }
       },

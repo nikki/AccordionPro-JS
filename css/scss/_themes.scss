@@ -1,0 +1,46 @@
+/**************************************** THEMES */
+/***************************************** Basic */
+.accordionPro.basic {
+    .slide {
+        background: #333;
+
+        > :first-child {
+            background: #333;
+            color: white;
+        }
+    }
+}
+
+/************************************** Bordered */
+.accordionPro.bordered {
+    border-style: solid;
+    border-width: 9px;
+
+    &.horizontal {
+        padding: 5px 0 5px 5px;
+
+        &.rtl {
+            padding: 5px 5px 5px 0;
+        }
+    }
+
+    &.vertical {
+        padding: 5px 5px 0 5px;
+    }
+
+    .slide {
+        > :first-child {
+
+        }
+    }
+}
+
+/**************************************** Stitch */
+.accordionPro.stitch {
+
+}
+
+/*********************************** Transparent */
+.accordionPro.transparent {
+
+}

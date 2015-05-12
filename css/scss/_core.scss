@@ -1,0 +1,143 @@
+/*********************************** CORE PLUGIN */
+.accordionPro {
+
+    /**
+     * Main container, ol
+     */
+
+    text-align: left;
+    font-size: 16px;
+    line-height: 24px;
+    -webkit-transform-origin: left top;
+    -moz-transform-origin: left top;
+    -ms-transform-origin: left top;
+    -o-transform-origin: left top;
+    transform-origin: left top;
+    -webkit-text-size-adjust: 100%;
+    visibility: hidden;
+    counter-reset: number;
+
+    &, & * {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-family: Arial, Verdana, sans-serif;
+        vertical-align: baseline;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+
+    > ol {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+
+    /**
+     * Slides
+     */
+
+    &, & .slide, &.slide > * {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-backface-visibility: hidden;
+        -moz-backface-visibility: hidden;
+        -ms-backface-visibility: hidden;
+        -o-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+    }
+
+    .slide {
+        list-style: none;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+
+
+        /**
+         * Tabs
+         */
+
+        > :first-child {
+            -webkit-backface-visibility: hidden; /* fixes chrome bug */
+            color: $white;
+            text-shadow: 0 -1px 0 $charcoal;
+            font-size: 16px;
+            font-weight: normal;
+            line-height: 24px;
+            margin: 0;
+            z-index: 100;
+            position: absolute;
+            top: 0;
+            left: 0;
+            text-align: right;
+            direction: rtl;
+            text-indent: 24px;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+
+
+            &:hover {
+                cursor: pointer;
+            }
+
+
+            /**
+             * Tab icons
+             */
+
+            &:after {
+                content: '';
+                width: 48px;
+                height: 100%;
+                display: block;
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                position: absolute;
+                top: 0;
+                left: 0;
+                text-align: center;
+                text-indent: 0;
+            }
+        }
+
+
+        /**
+         * Panels
+         */
+
+        > div {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            overflow: hidden;
+            background: $white;
+        }
+    }
+}
+
+/*
+
+.accordionPro .slide > h2 b {  }
+.accordionPro .ap-caption { padding: 10px 15px; position: absolute; bottom: 20px; right: 30px; background: black;
+    background: rgba(0,0,0,0.7); color: white; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; display: none }
+.accordionPro noscript p { padding: 10px; margin: 0; background: white }
+*/

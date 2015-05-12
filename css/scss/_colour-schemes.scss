@@ -1,0 +1,352 @@
+$schemes: ($white),
+          ($silver),
+          ($grey),
+          ($charcoal),
+          ($black),
+          ($pink),
+          ($red),
+          ($orange),
+          ($yellow),
+          ($green),
+          ($teal),
+          ($light-blue),
+          ($blue),
+          ($dark-blue);
+
+@each $colour in $schemes {
+    body {
+        background: $colour;
+    }
+}
+
+@mixin gradient($from, $to) {
+  background-color: $to;
+  background-image: -webkit-gradient(linear, left top, right top, from($from), to($to));
+  background-image: -webkit-linear-gradient(left, $from, $to);
+  background-image: -moz-linear-gradient(left, $from, $to);
+  background-image: -ms-linear-gradient(left, $from, $to);
+  background-image: -o-linear-gradient(left, $from, $to);
+  background-image: linear-gradient(left, $from, $to);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,StartColorStr='#{$from}', EndColorStr='#{$to}');
+}
+
+/******************************** COLOUR SCHEMES */
+/***************************************** White */
+.accordionPro.scheme-white {
+    &.style-flat {
+        .slide > :first-child {
+             background-color: darken($white, 6%);
+        }
+    }
+
+    &.style-gradient {
+        .slide > :first-child {
+            @include gradient($white, darken($white, 6%));
+        }
+    }
+
+    .slide > :first-child {
+        color: $grey;
+        text-shadow: 0 -1px 0 $white;
+    }
+
+    .slide.selected > :first-child {
+        background: $white;
+    }
+}
+
+/**************************************** Silver */
+.accordionPro.scheme-silver {
+    &.style-flat {
+        .slide > :first-child {
+             background-color: darken($silver, 6%);
+        }
+    }
+
+    &.style-gradient {
+        .slide > :first-child {
+            @include gradient($silver, darken($silver, 6%));
+        }
+    }
+
+    .slide > :first-child {
+        color: $charcoal;
+        text-shadow: 0 -1px 0 $white;
+    }
+
+    .slide.selected > :first-child {
+        background: $silver;
+    }
+}
+
+/****************************************** Grey */
+.accordionPro.scheme-grey {
+    &.style-flat {
+        .slide > :first-child {
+             background-color: darken($grey, 6%);
+        }
+    }
+
+    &.style-gradient {
+        .slide > :first-child {
+            @include gradient($grey, darken($grey, 6%));
+        }
+    }
+
+    .slide.selected > :first-child {
+        background: $grey;
+    }
+}
+
+/************************************** Charcoal */
+.accordionPro.scheme-charcoal {
+    &.style-flat {
+        .slide > :first-child {
+             background-color: darken($charcoal, 6%);
+        }
+    }
+
+    &.style-gradient {
+        .slide > :first-child {
+            @include gradient($charcoal, darken($charcoal, 6%));
+        }
+    }
+
+    .slide.selected > :first-child {
+        background: $charcoal;
+    }
+}
+
+/***************************************** Black */
+.accordionPro.scheme-black {
+    &.style-flat {
+        .slide > :first-child {
+           background-color: $black;
+        }
+    }
+
+    &.style-gradient {
+        .slide > :first-child {
+            @include gradient($black, lighten($black, 6%));
+        }
+    }
+
+    .slide.selected > :first-child {
+        background: lighten($black, 6%);
+    }
+}
+
+/****************************************** Pink */
+.accordionPro.scheme-pink {
+    &.style-flat {
+        .slide > :first-child {
+             background-color: darken($pink, 6%);
+        }
+    }
+
+    &.style-gradient {
+        .slide > :first-child {
+            @include gradient($pink, darken($pink, 6%));
+        }
+    }
+
+    .slide.selected > :first-child {
+        background: $pink;
+    }
+}
+
+/******************************************* Red */
+.accordionPro.scheme-red {
+    &.style-flat {
+        .slide > :first-child {
+             background-color: darken($red, 6%);
+        }
+    }
+
+    &.style-gradient {
+        .slide > :first-child {
+            @include gradient($red, darken($red, 6%));
+        }
+    }
+
+    .slide.selected > :first-child {
+        background: $red;
+    }
+}
+
+/**************************************** Orange */
+.accordionPro.scheme-orange {
+    &.style-flat {
+        .slide > :first-child {
+             background-color: darken($orange, 3%);
+        }
+    }
+
+    &.style-gradient {
+        .slide > :first-child {
+            @include gradient($orange, darken($orange, 3%));
+        }
+    }
+
+    .slide.selected > :first-child {
+        background: $orange;
+    }
+}
+
+/**************************************** Yellow */
+.accordionPro.scheme-yellow {
+    &.style-flat {
+        .slide > :first-child {
+             background-color: darken($yellow, 3%);
+        }
+    }
+
+    &.style-gradient {
+        .slide > :first-child {
+            @include gradient($yellow, darken($yellow, 3%));
+        }
+    }
+
+    .slide.selected > :first-child {
+        background: $yellow;
+    }
+}
+
+/***************************************** Green */
+.accordionPro.scheme-green {
+    &.style-flat {
+        .slide > :first-child {
+             background-color: darken($green, 6%);
+        }
+    }
+
+    &.style-gradient {
+        .slide > :first-child {
+            @include gradient($green, darken($green, 6%));
+        }
+    }
+
+    .slide.selected > :first-child {
+        background: $green;
+    }
+}
+
+/****************************************** Teal */
+.accordionPro.scheme-teal {
+    &.style-flat {
+        .slide > :first-child {
+             background-color: darken($teal, 6%);
+        }
+    }
+
+    &.style-gradient {
+        .slide > :first-child {
+            @include gradient($teal, darken($teal, 6%));
+        }
+    }
+
+    &.scrollable {
+        ::-webkit-scrollbar {
+            background: #666;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: black;
+            -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+        }
+    }
+
+    &.bordered {
+        border-color: $teal;
+        background: darken($teal, 9%);
+        -webkit-box-shadow: 0 -1px 0 darken($teal, 9%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+        -moz-box-shadow: 0 -1px 0 darken($teal, 9%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+        -ms-box-shadow: 0 -1px 0 darken($teal, 9%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+        -o-box-shadow: 0 -1px 0 darken($teal, 9%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 -1px 0 darken($teal, 9%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+    }
+
+    &.bordered.horizontal {
+        .slide {
+            > :first-child {
+                -webkit-box-shadow: 0 -5px 0 darken($teal, 9%) inset, 0 -6px 0 darken($teal, 12%) inset, 1px 0 0 darken($teal, 12%) inset;
+                -moz-box-shadow: 0 -5px 0 darken($teal, 9%) inset, 0 -6px 0 darken($teal, 12%) inset, 1px 0 0 darken($teal, 12%) inset;
+                -ms-box-shadow: 0 -5px 0 darken($teal, 9%) inset, 0 -6px 0 darken($teal, 12%) inset, 1px 0 0 darken($teal, 12%) inset;
+                -o-box-shadow: 0 -5px 0 darken($teal, 9%) inset, 0 -6px 0 darken($teal, 12%) inset, 1px 0 0 darken($teal, 12%) inset;
+                box-shadow: 0 -5px 0 darken($teal, 9%) inset, 0 -6px 0 darken($teal, 12%) inset, 1px 0 0 darken($teal, 12%) inset;
+            }
+        }
+    }
+
+    &.bordered.vertical {
+        .slide {
+            > :first-child {
+                -webkit-box-shadow: 0 -5px 0 darken($teal, 9%) inset, 0 -6px 0 darken($teal, 12%) inset, 1px 0 0 darken($teal, 12%) inset;
+                -moz-box-shadow: 0 -5px 0 darken($teal, 9%) inset, 0 -6px 0 darken($teal, 12%) inset, 1px 0 0 darken($teal, 12%) inset;
+                -ms-box-shadow: 0 -5px 0 darken($teal, 9%) inset, 0 -6px 0 darken($teal, 12%) inset, 1px 0 0 darken($teal, 12%) inset;
+                -o-box-shadow: 0 -5px 0 darken($teal, 9%) inset, 0 -6px 0 darken($teal, 12%) inset, 1px 0 0 darken($teal, 12%) inset;
+                box-shadow: 0 -5px 0 darken($teal, 9%) inset, 0 -6px 0 darken($teal, 12%) inset, 1px 0 0 darken($teal, 12%) inset;
+            }
+        }
+    }
+
+    .slide.selected > :first-child {
+        background: $teal;
+    }
+}
+
+/************************************ Light Blue */
+.accordionPro.scheme-light-blue {
+    &.style-flat {
+        .slide > :first-child {
+             background-color: darken($light-blue, 6%);
+        }
+    }
+
+    &.style-gradient {
+        .slide > :first-child {
+            @include gradient($light-blue, darken($light-blue, 6%));
+        }
+    }
+
+    .slide.selected > :first-child {
+        background: $light-blue;
+    }
+}
+
+/****************************************** Blue */
+.accordionPro.scheme-blue {
+    &.style-flat {
+        .slide > :first-child {
+             background-color: darken($blue, 6%);
+        }
+    }
+
+    &.style-gradient {
+        .slide > :first-child {
+            @include gradient($blue, darken($blue, 6%));
+        }
+    }
+
+    .slide.selected > :first-child {
+        background: $blue;
+    }
+}
+
+/************************************* Dark Blue */
+.accordionPro.scheme-dark-blue {
+    &.style-flat {
+        .slide > :first-child {
+             background-color: darken($dark-blue, 6%);
+        }
+    }
+
+    &.style-gradient {
+        .slide > :first-child {
+            @include gradient($dark-blue, darken($dark-blue, 6%));
+        }
+    }
+
+    .slide.selected > :first-child {
+        background: $dark-blue;
+    }
+}

@@ -1,0 +1,53 @@
+/*********************************** ORIENTATION */
+/************************************ Horizontal */
+.accordionPro.horizontal {
+
+    /**
+     * Core
+     */
+
+    .slide > :first-child {
+        -webkit-transform: translateX(-100%) rotate(-90deg);
+        -webkit-transform-origin: right top;
+        -moz-transform: translateX(-100%) rotate(-90deg);
+        -moz-transform-origin: right top;
+        -o-transform: translateX(-100%) rotate(-90deg);
+        -o-transform-origin: right top;
+        transform: translateX(-100%) rotate(-90deg);
+        transform-origin: right top;
+    }
+}
+
+/************************************** Vertical */
+.accordionPro.vertical {
+    .slide {
+        left: auto !important;
+
+        > :first-child {
+            text-align: left;
+            direction: ltr;
+
+            &:after {
+                left: auto;
+                right: 0;
+                -webkit-transform: rotate(0deg) !important;
+                -moz-transform: rotate(0deg) !important;
+                -o-transform: rotate(0deg) !important;
+                transform: rotate(0deg) !important;
+            }
+        }
+    }
+
+
+    /**
+     * fitToContent
+     */
+
+    &.fitToContent {
+        .slide {
+            > div {
+                height: auto;
+            }
+        }
+    }
+}

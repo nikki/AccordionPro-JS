@@ -976,10 +976,10 @@ function getPrefixed(prop){
 /*!
  * Project:    Accordion Pro JS - a responsive accordion plugin for jQuery
  * Author:     Nicola Hibbert
- * URL:        http://codecanyon.net/item/accordion-pro-js-responsive-jquery-accordion/5480772?ref=StitchUI
+ * URL:        http://stitchui.com/accordion-pro-js/
  *
  * Version:    2.0
- * Copyright:  (c) 2010-2015 Nicola Hibbert
+ * Copyright:  (c) 2010-2015 Stitch UI
  */
 ;(function($) {
 
@@ -1018,6 +1018,32 @@ function getPrefixed(prop){
      */
 
     var setup = {
+
+      /**
+       * Backwards compatibility
+       */
+
+      backwardsCompatibility: function() {
+
+        // theme
+        if (settings.theme === 'dark') {
+          settings.theme = 'bordered';
+          settings.colour = {
+            scheme : 'charcoal',
+            style : 'gradient'
+          };
+        }
+
+        if (settings.theme === 'light') {
+          settings.theme = 'bordered';
+          settings.colour = {
+            scheme : 'white',
+            style : 'gradient'
+          };
+        }
+
+      },
+
 
       /**
        * Set plugin classes
@@ -1452,6 +1478,7 @@ function getPrefixed(prop){
         var _this = this;
 
         // set plugin dimensions, plugin and slide classes
+        this.backwardsCompatibility();
         this.setPluginDimensions();
         this.setPluginClasses();
         this.setSlideClasses();

@@ -37,6 +37,32 @@
     var setup = {
 
       /**
+       * Backwards compatibility
+       */
+
+      backwardsCompatibility: function() {
+
+        // theme
+        if (settings.theme === 'dark') {
+          settings.theme = 'bordered';
+          settings.colour = {
+            scheme : 'charcoal',
+            style : 'gradient'
+          };
+        }
+
+        if (settings.theme === 'light') {
+          settings.theme = 'bordered';
+          settings.colour = {
+            scheme : 'white',
+            style : 'gradient'
+          };
+        }
+
+      },
+
+
+      /**
        * Set plugin classes
        */
 
@@ -469,6 +495,7 @@
         var _this = this;
 
         // set plugin dimensions, plugin and slide classes
+        this.backwardsCompatibility();
         this.setPluginDimensions();
         this.setPluginClasses();
         this.setSlideClasses();
