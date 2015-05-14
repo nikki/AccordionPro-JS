@@ -1,0 +1,976 @@
+/*!
+ * Project:    Accordion Pro JS - a responsive accordion plugin for jQuery
+ * Author:     Nicola Hibbert
+ * URL:        http://stitchui.com/accordion-pro-js/
+ *
+ * Version:    2.0
+ * Copyright:  (c) 2010-2015 Stitch UI
+ */
+
+/*********************************** CORE PLUGIN */
+.accordionPro {
+  /**
+   * Main container, ol
+   */
+  text-align: left;
+  font-size: 16px;
+  line-height: 24px;
+  -webkit-transform-origin: left top;
+  -moz-transform-origin: left top;
+  -ms-transform-origin: left top;
+  -o-transform-origin: left top;
+  transform-origin: left top;
+  -webkit-text-size-adjust: 100%;
+  visibility: hidden;
+  counter-reset: number;
+  /**
+   * Slides
+   */
+}
+.accordionPro, .accordionPro * {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-family: Arial, Verdana, sans-serif;
+  vertical-align: baseline;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.accordionPro > ol {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.accordionPro, .accordionPro .slide, .accordionPro.slide > * {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+.accordionPro .slide {
+  list-style: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  /**
+   * Tabs
+   */
+  /**
+   * Panels
+   */
+}
+.accordionPro .slide > :first-child {
+  -webkit-backface-visibility: hidden;
+  /* fixes chrome bug */
+  color: #ffffff;
+  text-shadow: 0 -1px 0 #333333;
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 24px;
+  margin: 0;
+  z-index: 100;
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: right;
+  direction: rtl;
+  text-indent: 24px;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /**
+   * Tab icons
+   */
+}
+.accordionPro .slide > :first-child:hover {
+  cursor: pointer;
+}
+.accordionPro .slide > :first-child:after {
+  content: '';
+  width: 48px;
+  height: 100%;
+  display: block;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: center;
+  text-indent: 0;
+}
+.accordionPro .slide > div {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+/*
+
+.accordionPro .slide > h2 b {  }
+.accordionPro .ap-caption { padding: 10px 15px; position: absolute; bottom: 20px; right: 30px; background: black;
+    background: rgba(0,0,0,0.7); color: white; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; display: none }
+.accordionPro noscript p { padding: 10px; margin: 0; background: white }
+*/
+/*********************************** ORIENTATION */
+/************************************ Horizontal */
+.accordionPro.horizontal {
+  /**
+   * Core
+   */
+}
+.accordionPro.horizontal .slide > :first-child {
+  -webkit-transform: translateX(-100%) rotate(-90deg);
+  -webkit-transform-origin: right top;
+  -moz-transform: translateX(-100%) rotate(-90deg);
+  -moz-transform-origin: right top;
+  -o-transform: translateX(-100%) rotate(-90deg);
+  -o-transform-origin: right top;
+  transform: translateX(-100%) rotate(-90deg);
+  transform-origin: right top;
+}
+
+/************************************** Vertical */
+.accordionPro.vertical {
+  /**
+   * fitToContent
+   */
+}
+.accordionPro.vertical .slide {
+  left: auto !important;
+}
+.accordionPro.vertical .slide > :first-child {
+  text-align: left;
+  direction: ltr;
+}
+.accordionPro.vertical .slide > :first-child:after {
+  left: auto;
+  right: 0;
+  -webkit-transform: rotate(0deg) !important;
+  -moz-transform: rotate(0deg) !important;
+  -o-transform: rotate(0deg) !important;
+  transform: rotate(0deg) !important;
+}
+.accordionPro.vertical.fitToContent .slide > div {
+  height: auto;
+}
+
+/*************************************** OPTIONS */
+/****************************************** Tabs */
+.accordionPro .slide > :first-child {
+  /**
+   * Text orientation
+   */
+  /**
+   * Custom tab icons
+   */
+}
+.accordionPro .slide > :first-child.alt-text-orientation {
+  /*writing-mode: tb-rl;*/
+}
+.accordionPro .slide > :first-child.number:after {
+  counter-increment: number;
+  content: counter(number);
+  transform: rotate(90deg);
+}
+.accordionPro .slide > :first-child.disc:after {
+  content: '\2022';
+}
+.accordionPro .slide > :first-child.square:after {
+  content: '\25AA';
+}
+.accordionPro .slide > :first-child.chevron:after {
+  content: '\203A';
+}
+.accordionPro .slide > :first-child.chevron:hover:after {
+  /* css rotate ? */
+}
+.accordionPro .slide > :first-child.custom:after {
+  transform: rotate(90deg);
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/*************************************** Rounded */
+.accordionPro.rounded.scrollable ::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+}
+
+/******************************************* RTL */
+.accordionPro.rtl {
+  text-align: right;
+}
+.accordionPro.rtl .slide > div {
+  direction: rtl;
+}
+.accordionPro.rtl.horizontal .slide {
+  left: auto !important;
+}
+.accordionPro.rtl.horizontal .slide > :first-child {
+  -webkit-transform: translateX(100%) rotate(90deg);
+  -webkit-transform-origin: left top;
+  -moz-transform: translateX(100%) rotate(90deg);
+  -moz-transform-origin: left top;
+  -o-transform: translateX(100%) rotate(90deg);
+  -o-transform-origin: left top;
+  transform: translateX(100%) rotate(90deg);
+  transform-origin: left top;
+  left: auto;
+  right: 0;
+  text-align: left;
+  direction: ltr;
+}
+.accordionPro.rtl.horizontal .slide > :first-child:after {
+  left: auto;
+  right: 0;
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+}
+.accordionPro.rtl.vertical .slide > :first-child {
+  text-align: right;
+  direction: rtl;
+}
+.accordionPro.rtl.vertical .slide > :first-child:after {
+  right: auto;
+  left: 0;
+}
+
+/************************************ Scrollable */
+.accordionPro.scrollable .slide > div {
+  overflow-y: auto;
+}
+.accordionPro.scrollable ::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+}
+
+/********************************** Scale Images */
+.accordionPro.scaleImages .slide > div img {
+  width: 100%;
+  height: 100%;
+  float: left;
+}
+
+/**************************************** THEMES */
+/***************************************** Basic */
+.accordionPro.basic .slide {
+  background: #333;
+}
+.accordionPro.basic .slide > :first-child {
+  background: #333;
+  color: white;
+}
+
+/************************************** Bordered */
+.accordionPro.bordered {
+  border-style: solid;
+  border-width: 9px;
+}
+.accordionPro.bordered.horizontal {
+  padding: 5px 0 5px 5px;
+}
+.accordionPro.bordered.horizontal.rtl {
+  padding: 5px 5px 5px 0;
+}
+.accordionPro.bordered.vertical {
+  padding: 5px 5px 0 5px;
+}
+
+/**************************************** Stitch */
+/*********************************** Transparent */
+/******************************** COLOUR SCHEMES */
+/****************************************** white */
+.accordionPro.scheme-white.style-flat .slide > :first-child {
+  background-color: #f0f0f0;
+}
+.accordionPro.scheme-white.style-gradient .slide > :first-child {
+  background-color: #f0f0f0;
+  background-image: -webkit-gradient(linear, left top, right top, from(#ffffff), to(#f0f0f0));
+  background-image: -webkit-linear-gradient(left, #ffffff, #f0f0f0);
+  background-image: -moz-linear-gradient(left, #ffffff, #f0f0f0);
+  background-image: -ms-linear-gradient(left, #ffffff, #f0f0f0);
+  background-image: -o-linear-gradient(left, #ffffff, #f0f0f0);
+  background-image: linear-gradient(left, #ffffff, #f0f0f0);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,StartColorStr='#ffffff', EndColorStr='#f0f0f0');
+}
+.accordionPro.scheme-white.scrollable ::-webkit-scrollbar {
+  background: #666;
+}
+.accordionPro.scheme-white.scrollable ::-webkit-scrollbar-thumb {
+  background: black;
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
+.accordionPro.scheme-white.bordered {
+  border-color: #ffffff;
+  background: #e8e8e8;
+  -webkit-box-shadow: 0 -1px 0 #e8e8e8 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 -1px 0 #e8e8e8 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -ms-box-shadow: 0 -1px 0 #e8e8e8 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -o-box-shadow: 0 -1px 0 #e8e8e8 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 -1px 0 #e8e8e8 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+.accordionPro.scheme-white.bordered.horizontal .slide > :first-child {
+  -webkit-box-shadow: 0 -5px 0 #e8e8e8 inset, 0 -6px 0 #e0e0e0 inset, 1px 0 0 #e0e0e0 inset;
+  -moz-box-shadow: 0 -5px 0 #e8e8e8 inset, 0 -6px 0 #e0e0e0 inset, 1px 0 0 #e0e0e0 inset;
+  -ms-box-shadow: 0 -5px 0 #e8e8e8 inset, 0 -6px 0 #e0e0e0 inset, 1px 0 0 #e0e0e0 inset;
+  -o-box-shadow: 0 -5px 0 #e8e8e8 inset, 0 -6px 0 #e0e0e0 inset, 1px 0 0 #e0e0e0 inset;
+  box-shadow: 0 -5px 0 #e8e8e8 inset, 0 -6px 0 #e0e0e0 inset, 1px 0 0 #e0e0e0 inset;
+}
+.accordionPro.scheme-white.bordered.vertical .slide > :first-child {
+  -webkit-box-shadow: 0 -5px 0 #e8e8e8 inset, 0 -6px 0 #e0e0e0 inset, 1px 0 0 #e0e0e0 inset;
+  -moz-box-shadow: 0 -5px 0 #e8e8e8 inset, 0 -6px 0 #e0e0e0 inset, 1px 0 0 #e0e0e0 inset;
+  -ms-box-shadow: 0 -5px 0 #e8e8e8 inset, 0 -6px 0 #e0e0e0 inset, 1px 0 0 #e0e0e0 inset;
+  -o-box-shadow: 0 -5px 0 #e8e8e8 inset, 0 -6px 0 #e0e0e0 inset, 1px 0 0 #e0e0e0 inset;
+  box-shadow: 0 -5px 0 #e8e8e8 inset, 0 -6px 0 #e0e0e0 inset, 1px 0 0 #e0e0e0 inset;
+}
+.accordionPro.scheme-white .slide.selected > :first-child {
+  background: #ffffff;
+}
+
+/****************************************** silver */
+.accordionPro.scheme-silver.style-flat .slide > :first-child {
+  background-color: #b8c2c9;
+}
+.accordionPro.scheme-silver.style-gradient .slide > :first-child {
+  background-color: #b8c2c9;
+  background-image: -webkit-gradient(linear, left top, right top, from(#c9d1d6), to(#b8c2c9));
+  background-image: -webkit-linear-gradient(left, #c9d1d6, #b8c2c9);
+  background-image: -moz-linear-gradient(left, #c9d1d6, #b8c2c9);
+  background-image: -ms-linear-gradient(left, #c9d1d6, #b8c2c9);
+  background-image: -o-linear-gradient(left, #c9d1d6, #b8c2c9);
+  background-image: linear-gradient(left, #c9d1d6, #b8c2c9);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,StartColorStr='#c9d1d6', EndColorStr='#b8c2c9');
+}
+.accordionPro.scheme-silver.scrollable ::-webkit-scrollbar {
+  background: #666;
+}
+.accordionPro.scheme-silver.scrollable ::-webkit-scrollbar-thumb {
+  background: black;
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
+.accordionPro.scheme-silver.bordered {
+  border-color: #c9d1d6;
+  background: #afbbc2;
+  -webkit-box-shadow: 0 -1px 0 #afbbc2 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 -1px 0 #afbbc2 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -ms-box-shadow: 0 -1px 0 #afbbc2 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -o-box-shadow: 0 -1px 0 #afbbc2 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 -1px 0 #afbbc2 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+.accordionPro.scheme-silver.bordered.horizontal .slide > :first-child {
+  -webkit-box-shadow: 0 -5px 0 #afbbc2 inset, 0 -6px 0 #a6b3bc inset, 1px 0 0 #a6b3bc inset;
+  -moz-box-shadow: 0 -5px 0 #afbbc2 inset, 0 -6px 0 #a6b3bc inset, 1px 0 0 #a6b3bc inset;
+  -ms-box-shadow: 0 -5px 0 #afbbc2 inset, 0 -6px 0 #a6b3bc inset, 1px 0 0 #a6b3bc inset;
+  -o-box-shadow: 0 -5px 0 #afbbc2 inset, 0 -6px 0 #a6b3bc inset, 1px 0 0 #a6b3bc inset;
+  box-shadow: 0 -5px 0 #afbbc2 inset, 0 -6px 0 #a6b3bc inset, 1px 0 0 #a6b3bc inset;
+}
+.accordionPro.scheme-silver.bordered.vertical .slide > :first-child {
+  -webkit-box-shadow: 0 -5px 0 #afbbc2 inset, 0 -6px 0 #a6b3bc inset, 1px 0 0 #a6b3bc inset;
+  -moz-box-shadow: 0 -5px 0 #afbbc2 inset, 0 -6px 0 #a6b3bc inset, 1px 0 0 #a6b3bc inset;
+  -ms-box-shadow: 0 -5px 0 #afbbc2 inset, 0 -6px 0 #a6b3bc inset, 1px 0 0 #a6b3bc inset;
+  -o-box-shadow: 0 -5px 0 #afbbc2 inset, 0 -6px 0 #a6b3bc inset, 1px 0 0 #a6b3bc inset;
+  box-shadow: 0 -5px 0 #afbbc2 inset, 0 -6px 0 #a6b3bc inset, 1px 0 0 #a6b3bc inset;
+}
+.accordionPro.scheme-silver .slide.selected > :first-child {
+  background: #c9d1d6;
+}
+
+/****************************************** grey */
+.accordionPro.scheme-grey.style-flat .slide > :first-child {
+  background-color: #818989;
+}
+.accordionPro.scheme-grey.style-gradient .slide > :first-child {
+  background-color: #818989;
+  background-image: -webkit-gradient(linear, left top, right top, from(#919898), to(#818989));
+  background-image: -webkit-linear-gradient(left, #919898, #818989);
+  background-image: -moz-linear-gradient(left, #919898, #818989);
+  background-image: -ms-linear-gradient(left, #919898, #818989);
+  background-image: -o-linear-gradient(left, #919898, #818989);
+  background-image: linear-gradient(left, #919898, #818989);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,StartColorStr='#919898', EndColorStr='#818989');
+}
+.accordionPro.scheme-grey.scrollable ::-webkit-scrollbar {
+  background: #666;
+}
+.accordionPro.scheme-grey.scrollable ::-webkit-scrollbar-thumb {
+  background: black;
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
+.accordionPro.scheme-grey.bordered {
+  border-color: #919898;
+  background: #798282;
+  -webkit-box-shadow: 0 -1px 0 #798282 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 -1px 0 #798282 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -ms-box-shadow: 0 -1px 0 #798282 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -o-box-shadow: 0 -1px 0 #798282 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 -1px 0 #798282 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+.accordionPro.scheme-grey.bordered.horizontal .slide > :first-child {
+  -webkit-box-shadow: 0 -5px 0 #798282 inset, 0 -6px 0 #727a7a inset, 1px 0 0 #727a7a inset;
+  -moz-box-shadow: 0 -5px 0 #798282 inset, 0 -6px 0 #727a7a inset, 1px 0 0 #727a7a inset;
+  -ms-box-shadow: 0 -5px 0 #798282 inset, 0 -6px 0 #727a7a inset, 1px 0 0 #727a7a inset;
+  -o-box-shadow: 0 -5px 0 #798282 inset, 0 -6px 0 #727a7a inset, 1px 0 0 #727a7a inset;
+  box-shadow: 0 -5px 0 #798282 inset, 0 -6px 0 #727a7a inset, 1px 0 0 #727a7a inset;
+}
+.accordionPro.scheme-grey.bordered.vertical .slide > :first-child {
+  -webkit-box-shadow: 0 -5px 0 #798282 inset, 0 -6px 0 #727a7a inset, 1px 0 0 #727a7a inset;
+  -moz-box-shadow: 0 -5px 0 #798282 inset, 0 -6px 0 #727a7a inset, 1px 0 0 #727a7a inset;
+  -ms-box-shadow: 0 -5px 0 #798282 inset, 0 -6px 0 #727a7a inset, 1px 0 0 #727a7a inset;
+  -o-box-shadow: 0 -5px 0 #798282 inset, 0 -6px 0 #727a7a inset, 1px 0 0 #727a7a inset;
+  box-shadow: 0 -5px 0 #798282 inset, 0 -6px 0 #727a7a inset, 1px 0 0 #727a7a inset;
+}
+.accordionPro.scheme-grey .slide.selected > :first-child {
+  background: #919898;
+}
+
+/****************************************** charcoal */
+.accordionPro.scheme-charcoal.style-flat .slide > :first-child {
+  background-color: #242424;
+}
+.accordionPro.scheme-charcoal.style-gradient .slide > :first-child {
+  background-color: #242424;
+  background-image: -webkit-gradient(linear, left top, right top, from(#333333), to(#242424));
+  background-image: -webkit-linear-gradient(left, #333333, #242424);
+  background-image: -moz-linear-gradient(left, #333333, #242424);
+  background-image: -ms-linear-gradient(left, #333333, #242424);
+  background-image: -o-linear-gradient(left, #333333, #242424);
+  background-image: linear-gradient(left, #333333, #242424);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,StartColorStr='#333333', EndColorStr='#242424');
+}
+.accordionPro.scheme-charcoal.scrollable ::-webkit-scrollbar {
+  background: #666;
+}
+.accordionPro.scheme-charcoal.scrollable ::-webkit-scrollbar-thumb {
+  background: black;
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
+.accordionPro.scheme-charcoal.bordered {
+  border-color: #333333;
+  background: #1c1c1c;
+  -webkit-box-shadow: 0 -1px 0 #1c1c1c inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 -1px 0 #1c1c1c inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -ms-box-shadow: 0 -1px 0 #1c1c1c inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -o-box-shadow: 0 -1px 0 #1c1c1c inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 -1px 0 #1c1c1c inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+.accordionPro.scheme-charcoal.bordered.horizontal .slide > :first-child {
+  -webkit-box-shadow: 0 -5px 0 #1c1c1c inset, 0 -6px 0 #141414 inset, 1px 0 0 #141414 inset;
+  -moz-box-shadow: 0 -5px 0 #1c1c1c inset, 0 -6px 0 #141414 inset, 1px 0 0 #141414 inset;
+  -ms-box-shadow: 0 -5px 0 #1c1c1c inset, 0 -6px 0 #141414 inset, 1px 0 0 #141414 inset;
+  -o-box-shadow: 0 -5px 0 #1c1c1c inset, 0 -6px 0 #141414 inset, 1px 0 0 #141414 inset;
+  box-shadow: 0 -5px 0 #1c1c1c inset, 0 -6px 0 #141414 inset, 1px 0 0 #141414 inset;
+}
+.accordionPro.scheme-charcoal.bordered.vertical .slide > :first-child {
+  -webkit-box-shadow: 0 -5px 0 #1c1c1c inset, 0 -6px 0 #141414 inset, 1px 0 0 #141414 inset;
+  -moz-box-shadow: 0 -5px 0 #1c1c1c inset, 0 -6px 0 #141414 inset, 1px 0 0 #141414 inset;
+  -ms-box-shadow: 0 -5px 0 #1c1c1c inset, 0 -6px 0 #141414 inset, 1px 0 0 #141414 inset;
+  -o-box-shadow: 0 -5px 0 #1c1c1c inset, 0 -6px 0 #141414 inset, 1px 0 0 #141414 inset;
+  box-shadow: 0 -5px 0 #1c1c1c inset, 0 -6px 0 #141414 inset, 1px 0 0 #141414 inset;
+}
+.accordionPro.scheme-charcoal .slide.selected > :first-child {
+  background: #333333;
+}
+
+/****************************************** black */
+.accordionPro.scheme-black.style-flat .slide > :first-child {
+  background-color: black;
+}
+.accordionPro.scheme-black.style-gradient .slide > :first-child {
+  background-color: black;
+  background-image: -webkit-gradient(linear, left top, right top, from(#000000), to(black));
+  background-image: -webkit-linear-gradient(left, #000000, black);
+  background-image: -moz-linear-gradient(left, #000000, black);
+  background-image: -ms-linear-gradient(left, #000000, black);
+  background-image: -o-linear-gradient(left, #000000, black);
+  background-image: linear-gradient(left, #000000, black);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,StartColorStr='#000000', EndColorStr='black');
+}
+.accordionPro.scheme-black.scrollable ::-webkit-scrollbar {
+  background: #666;
+}
+.accordionPro.scheme-black.scrollable ::-webkit-scrollbar-thumb {
+  background: black;
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
+.accordionPro.scheme-black.bordered {
+  border-color: #000000;
+  background: black;
+  -webkit-box-shadow: 0 -1px 0 black inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 -1px 0 black inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -ms-box-shadow: 0 -1px 0 black inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -o-box-shadow: 0 -1px 0 black inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 -1px 0 black inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+.accordionPro.scheme-black.bordered.horizontal .slide > :first-child {
+  -webkit-box-shadow: 0 -5px 0 black inset, 0 -6px 0 black inset, 1px 0 0 black inset;
+  -moz-box-shadow: 0 -5px 0 black inset, 0 -6px 0 black inset, 1px 0 0 black inset;
+  -ms-box-shadow: 0 -5px 0 black inset, 0 -6px 0 black inset, 1px 0 0 black inset;
+  -o-box-shadow: 0 -5px 0 black inset, 0 -6px 0 black inset, 1px 0 0 black inset;
+  box-shadow: 0 -5px 0 black inset, 0 -6px 0 black inset, 1px 0 0 black inset;
+}
+.accordionPro.scheme-black.bordered.vertical .slide > :first-child {
+  -webkit-box-shadow: 0 -5px 0 black inset, 0 -6px 0 black inset, 1px 0 0 black inset;
+  -moz-box-shadow: 0 -5px 0 black inset, 0 -6px 0 black inset, 1px 0 0 black inset;
+  -ms-box-shadow: 0 -5px 0 black inset, 0 -6px 0 black inset, 1px 0 0 black inset;
+  -o-box-shadow: 0 -5px 0 black inset, 0 -6px 0 black inset, 1px 0 0 black inset;
+  box-shadow: 0 -5px 0 black inset, 0 -6px 0 black inset, 1px 0 0 black inset;
+}
+.accordionPro.scheme-black .slide.selected > :first-child {
+  background: #000000;
+}
+
+/****************************************** pink */
+.accordionPro.scheme-pink.style-flat .slide > :first-child {
+  background-color: #c44f8a;
+}
+.accordionPro.scheme-pink.style-gradient .slide > :first-child {
+  background-color: #c44f8a;
+  background-image: -webkit-gradient(linear, left top, right top, from(#cc6699), to(#c44f8a));
+  background-image: -webkit-linear-gradient(left, #cc6699, #c44f8a);
+  background-image: -moz-linear-gradient(left, #cc6699, #c44f8a);
+  background-image: -ms-linear-gradient(left, #cc6699, #c44f8a);
+  background-image: -o-linear-gradient(left, #cc6699, #c44f8a);
+  background-image: linear-gradient(left, #cc6699, #c44f8a);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,StartColorStr='#cc6699', EndColorStr='#c44f8a');
+}
+.accordionPro.scheme-pink.scrollable ::-webkit-scrollbar {
+  background: #666;
+}
+.accordionPro.scheme-pink.scrollable ::-webkit-scrollbar-thumb {
+  background: black;
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
+.accordionPro.scheme-pink.bordered {
+  border-color: #cc6699;
+  background: #c14482;
+  -webkit-box-shadow: 0 -1px 0 #c14482 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 -1px 0 #c14482 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -ms-box-shadow: 0 -1px 0 #c14482 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -o-box-shadow: 0 -1px 0 #c14482 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 -1px 0 #c14482 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+.accordionPro.scheme-pink.bordered.horizontal .slide > :first-child {
+  -webkit-box-shadow: 0 -5px 0 #c14482 inset, 0 -6px 0 #b83d7a inset, 1px 0 0 #b83d7a inset;
+  -moz-box-shadow: 0 -5px 0 #c14482 inset, 0 -6px 0 #b83d7a inset, 1px 0 0 #b83d7a inset;
+  -ms-box-shadow: 0 -5px 0 #c14482 inset, 0 -6px 0 #b83d7a inset, 1px 0 0 #b83d7a inset;
+  -o-box-shadow: 0 -5px 0 #c14482 inset, 0 -6px 0 #b83d7a inset, 1px 0 0 #b83d7a inset;
+  box-shadow: 0 -5px 0 #c14482 inset, 0 -6px 0 #b83d7a inset, 1px 0 0 #b83d7a inset;
+}
+.accordionPro.scheme-pink.bordered.vertical .slide > :first-child {
+  -webkit-box-shadow: 0 -5px 0 #c14482 inset, 0 -6px 0 #b83d7a inset, 1px 0 0 #b83d7a inset;
+  -moz-box-shadow: 0 -5px 0 #c14482 inset, 0 -6px 0 #b83d7a inset, 1px 0 0 #b83d7a inset;
+  -ms-box-shadow: 0 -5px 0 #c14482 inset, 0 -6px 0 #b83d7a inset, 1px 0 0 #b83d7a inset;
+  -o-box-shadow: 0 -5px 0 #c14482 inset, 0 -6px 0 #b83d7a inset, 1px 0 0 #b83d7a inset;
+  box-shadow: 0 -5px 0 #c14482 inset, 0 -6px 0 #b83d7a inset, 1px 0 0 #b83d7a inset;
+}
+.accordionPro.scheme-pink .slide.selected > :first-child {
+  background: #cc6699;
+}
+
+/****************************************** red */
+.accordionPro.scheme-red.style-flat .slide > :first-child {
+  background-color: #b20818;
+}
+.accordionPro.scheme-red.style-gradient .slide > :first-child {
+  background-color: #b20818;
+  background-image: -webkit-gradient(linear, left top, right top, from(#cf091c), to(#b20818));
+  background-image: -webkit-linear-gradient(left, #cf091c, #b20818);
+  background-image: -moz-linear-gradient(left, #cf091c, #b20818);
+  background-image: -ms-linear-gradient(left, #cf091c, #b20818);
+  background-image: -o-linear-gradient(left, #cf091c, #b20818);
+  background-image: linear-gradient(left, #cf091c, #b20818);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,StartColorStr='#cf091c', EndColorStr='#b20818');
+}
+.accordionPro.scheme-red.scrollable ::-webkit-scrollbar {
+  background: #666;
+}
+.accordionPro.scheme-red.scrollable ::-webkit-scrollbar-thumb {
+  background: black;
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
+.accordionPro.scheme-red.bordered {
+  border-color: #cf091c;
+  background: #a30716;
+  -webkit-box-shadow: 0 -1px 0 #a30716 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 -1px 0 #a30716 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -ms-box-shadow: 0 -1px 0 #a30716 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -o-box-shadow: 0 -1px 0 #a30716 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 -1px 0 #a30716 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+.accordionPro.scheme-red.bordered.horizontal .slide > :first-child {
+  -webkit-box-shadow: 0 -5px 0 #a30716 inset, 0 -6px 0 #940614 inset, 1px 0 0 #940614 inset;
+  -moz-box-shadow: 0 -5px 0 #a30716 inset, 0 -6px 0 #940614 inset, 1px 0 0 #940614 inset;
+  -ms-box-shadow: 0 -5px 0 #a30716 inset, 0 -6px 0 #940614 inset, 1px 0 0 #940614 inset;
+  -o-box-shadow: 0 -5px 0 #a30716 inset, 0 -6px 0 #940614 inset, 1px 0 0 #940614 inset;
+  box-shadow: 0 -5px 0 #a30716 inset, 0 -6px 0 #940614 inset, 1px 0 0 #940614 inset;
+}
+.accordionPro.scheme-red.bordered.vertical .slide > :first-child {
+  -webkit-box-shadow: 0 -5px 0 #a30716 inset, 0 -6px 0 #940614 inset, 1px 0 0 #940614 inset;
+  -moz-box-shadow: 0 -5px 0 #a30716 inset, 0 -6px 0 #940614 inset, 1px 0 0 #940614 inset;
+  -ms-box-shadow: 0 -5px 0 #a30716 inset, 0 -6px 0 #940614 inset, 1px 0 0 #940614 inset;
+  -o-box-shadow: 0 -5px 0 #a30716 inset, 0 -6px 0 #940614 inset, 1px 0 0 #940614 inset;
+  box-shadow: 0 -5px 0 #a30716 inset, 0 -6px 0 #940614 inset, 1px 0 0 #940614 inset;
+}
+.accordionPro.scheme-red .slide.selected > :first-child {
+  background: #cf091c;
+}
+
+/****************************************** orange */
+.accordionPro.scheme-orange.style-flat .slide > :first-child {
+  background-color: #e06900;
+}
+.accordionPro.scheme-orange.style-gradient .slide > :first-child {
+  background-color: #e06900;
+  background-image: -webkit-gradient(linear, left top, right top, from(#ff7700), to(#e06900));
+  background-image: -webkit-linear-gradient(left, #ff7700, #e06900);
+  background-image: -moz-linear-gradient(left, #ff7700, #e06900);
+  background-image: -ms-linear-gradient(left, #ff7700, #e06900);
+  background-image: -o-linear-gradient(left, #ff7700, #e06900);
+  background-image: linear-gradient(left, #ff7700, #e06900);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,StartColorStr='#ff7700', EndColorStr='#e06900');
+}
+.accordionPro.scheme-orange.scrollable ::-webkit-scrollbar {
+  background: #666;
+}
+.accordionPro.scheme-orange.scrollable ::-webkit-scrollbar-thumb {
+  background: black;
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
+.accordionPro.scheme-orange.bordered {
+  border-color: #ff7700;
+  background: #d16200;
+  -webkit-box-shadow: 0 -1px 0 #d16200 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 -1px 0 #d16200 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -ms-box-shadow: 0 -1px 0 #d16200 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -o-box-shadow: 0 -1px 0 #d16200 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 -1px 0 #d16200 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+.accordionPro.scheme-orange.bordered.horizontal .slide > :first-child {
+  -webkit-box-shadow: 0 -5px 0 #d16200 inset, 0 -6px 0 #c25a00 inset, 1px 0 0 #c25a00 inset;
+  -moz-box-shadow: 0 -5px 0 #d16200 inset, 0 -6px 0 #c25a00 inset, 1px 0 0 #c25a00 inset;
+  -ms-box-shadow: 0 -5px 0 #d16200 inset, 0 -6px 0 #c25a00 inset, 1px 0 0 #c25a00 inset;
+  -o-box-shadow: 0 -5px 0 #d16200 inset, 0 -6px 0 #c25a00 inset, 1px 0 0 #c25a00 inset;
+  box-shadow: 0 -5px 0 #d16200 inset, 0 -6px 0 #c25a00 inset, 1px 0 0 #c25a00 inset;
+}
+.accordionPro.scheme-orange.bordered.vertical .slide > :first-child {
+  -webkit-box-shadow: 0 -5px 0 #d16200 inset, 0 -6px 0 #c25a00 inset, 1px 0 0 #c25a00 inset;
+  -moz-box-shadow: 0 -5px 0 #d16200 inset, 0 -6px 0 #c25a00 inset, 1px 0 0 #c25a00 inset;
+  -ms-box-shadow: 0 -5px 0 #d16200 inset, 0 -6px 0 #c25a00 inset, 1px 0 0 #c25a00 inset;
+  -o-box-shadow: 0 -5px 0 #d16200 inset, 0 -6px 0 #c25a00 inset, 1px 0 0 #c25a00 inset;
+  box-shadow: 0 -5px 0 #d16200 inset, 0 -6px 0 #c25a00 inset, 1px 0 0 #c25a00 inset;
+}
+.accordionPro.scheme-orange .slide.selected > :first-child {
+  background: #ff7700;
+}
+
+/****************************************** yellow */
+.accordionPro.scheme-yellow.style-flat .slide > :first-child {
+  background-color: #cea500;
+}
+.accordionPro.scheme-yellow.style-gradient .slide > :first-child {
+  background-color: #cea500;
+  background-image: -webkit-gradient(linear, left top, right top, from(#edbe00), to(#cea500));
+  background-image: -webkit-linear-gradient(left, #edbe00, #cea500);
+  background-image: -moz-linear-gradient(left, #edbe00, #cea500);
+  background-image: -ms-linear-gradient(left, #edbe00, #cea500);
+  background-image: -o-linear-gradient(left, #edbe00, #cea500);
+  background-image: linear-gradient(left, #edbe00, #cea500);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,StartColorStr='#edbe00', EndColorStr='#cea500');
+}
+.accordionPro.scheme-yellow.scrollable ::-webkit-scrollbar {
+  background: #666;
+}
+.accordionPro.scheme-yellow.scrollable ::-webkit-scrollbar-thumb {
+  background: black;
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
+.accordionPro.scheme-yellow.bordered {
+  border-color: #edbe00;
+  background: #bf9900;
+  -webkit-box-shadow: 0 -1px 0 #bf9900 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 -1px 0 #bf9900 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -ms-box-shadow: 0 -1px 0 #bf9900 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -o-box-shadow: 0 -1px 0 #bf9900 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 -1px 0 #bf9900 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+.accordionPro.scheme-yellow.bordered.horizontal .slide > :first-child {
+  -webkit-box-shadow: 0 -5px 0 #bf9900 inset, 0 -6px 0 #b08d00 inset, 1px 0 0 #b08d00 inset;
+  -moz-box-shadow: 0 -5px 0 #bf9900 inset, 0 -6px 0 #b08d00 inset, 1px 0 0 #b08d00 inset;
+  -ms-box-shadow: 0 -5px 0 #bf9900 inset, 0 -6px 0 #b08d00 inset, 1px 0 0 #b08d00 inset;
+  -o-box-shadow: 0 -5px 0 #bf9900 inset, 0 -6px 0 #b08d00 inset, 1px 0 0 #b08d00 inset;
+  box-shadow: 0 -5px 0 #bf9900 inset, 0 -6px 0 #b08d00 inset, 1px 0 0 #b08d00 inset;
+}
+.accordionPro.scheme-yellow.bordered.vertical .slide > :first-child {
+  -webkit-box-shadow: 0 -5px 0 #bf9900 inset, 0 -6px 0 #b08d00 inset, 1px 0 0 #b08d00 inset;
+  -moz-box-shadow: 0 -5px 0 #bf9900 inset, 0 -6px 0 #b08d00 inset, 1px 0 0 #b08d00 inset;
+  -ms-box-shadow: 0 -5px 0 #bf9900 inset, 0 -6px 0 #b08d00 inset, 1px 0 0 #b08d00 inset;
+  -o-box-shadow: 0 -5px 0 #bf9900 inset, 0 -6px 0 #b08d00 inset, 1px 0 0 #b08d00 inset;
+  box-shadow: 0 -5px 0 #bf9900 inset, 0 -6px 0 #b08d00 inset, 1px 0 0 #b08d00 inset;
+}
+.accordionPro.scheme-yellow .slide.selected > :first-child {
+  background: #edbe00;
+}
+
+/****************************************** green */
+.accordionPro.scheme-green.style-flat .slide > :first-child {
+  background-color: #28b363;
+}
+.accordionPro.scheme-green.style-gradient .slide > :first-child {
+  background-color: #28b363;
+  background-image: -webkit-gradient(linear, left top, right top, from(#2ecc71), to(#28b363));
+  background-image: -webkit-linear-gradient(left, #2ecc71, #28b363);
+  background-image: -moz-linear-gradient(left, #2ecc71, #28b363);
+  background-image: -ms-linear-gradient(left, #2ecc71, #28b363);
+  background-image: -o-linear-gradient(left, #2ecc71, #28b363);
+  background-image: linear-gradient(left, #2ecc71, #28b363);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,StartColorStr='#2ecc71', EndColorStr='#28b363');
+}
+.accordionPro.scheme-green.scrollable ::-webkit-scrollbar {
+  background: #666;
+}
+.accordionPro.scheme-green.scrollable ::-webkit-scrollbar-thumb {
+  background: black;
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
+.accordionPro.scheme-green.bordered {
+  border-color: #2ecc71;
+  background: #26a75c;
+  -webkit-box-shadow: 0 -1px 0 #26a75c inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 -1px 0 #26a75c inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -ms-box-shadow: 0 -1px 0 #26a75c inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -o-box-shadow: 0 -1px 0 #26a75c inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 -1px 0 #26a75c inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+.accordionPro.scheme-green.bordered.horizontal .slide > :first-child {
+  -webkit-box-shadow: 0 -5px 0 #26a75c inset, 0 -6px 0 #239a55 inset, 1px 0 0 #239a55 inset;
+  -moz-box-shadow: 0 -5px 0 #26a75c inset, 0 -6px 0 #239a55 inset, 1px 0 0 #239a55 inset;
+  -ms-box-shadow: 0 -5px 0 #26a75c inset, 0 -6px 0 #239a55 inset, 1px 0 0 #239a55 inset;
+  -o-box-shadow: 0 -5px 0 #26a75c inset, 0 -6px 0 #239a55 inset, 1px 0 0 #239a55 inset;
+  box-shadow: 0 -5px 0 #26a75c inset, 0 -6px 0 #239a55 inset, 1px 0 0 #239a55 inset;
+}
+.accordionPro.scheme-green.bordered.vertical .slide > :first-child {
+  -webkit-box-shadow: 0 -5px 0 #26a75c inset, 0 -6px 0 #239a55 inset, 1px 0 0 #239a55 inset;
+  -moz-box-shadow: 0 -5px 0 #26a75c inset, 0 -6px 0 #239a55 inset, 1px 0 0 #239a55 inset;
+  -ms-box-shadow: 0 -5px 0 #26a75c inset, 0 -6px 0 #239a55 inset, 1px 0 0 #239a55 inset;
+  -o-box-shadow: 0 -5px 0 #26a75c inset, 0 -6px 0 #239a55 inset, 1px 0 0 #239a55 inset;
+  box-shadow: 0 -5px 0 #26a75c inset, 0 -6px 0 #239a55 inset, 1px 0 0 #239a55 inset;
+}
+.accordionPro.scheme-green .slide.selected > :first-child {
+  background: #2ecc71;
+}
+
+/****************************************** teal */
+.accordionPro.scheme-teal.style-flat .slide > :first-child {
+  background-color: #12856f;
+}
+.accordionPro.scheme-teal.style-gradient .slide > :first-child {
+  background-color: #12856f;
+  background-image: -webkit-gradient(linear, left top, right top, from(#16a085), to(#12856f));
+  background-image: -webkit-linear-gradient(left, #16a085, #12856f);
+  background-image: -moz-linear-gradient(left, #16a085, #12856f);
+  background-image: -ms-linear-gradient(left, #16a085, #12856f);
+  background-image: -o-linear-gradient(left, #16a085, #12856f);
+  background-image: linear-gradient(left, #16a085, #12856f);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,StartColorStr='#16a085', EndColorStr='#12856f');
+}
+.accordionPro.scheme-teal.scrollable ::-webkit-scrollbar {
+  background: #666;
+}
+.accordionPro.scheme-teal.scrollable ::-webkit-scrollbar-thumb {
+  background: black;
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
+.accordionPro.scheme-teal.bordered {
+  border-color: #16a085;
+  background: #107863;
+  -webkit-box-shadow: 0 -1px 0 #107863 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 -1px 0 #107863 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -ms-box-shadow: 0 -1px 0 #107863 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -o-box-shadow: 0 -1px 0 #107863 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 -1px 0 #107863 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+.accordionPro.scheme-teal.bordered.horizontal .slide > :first-child {
+  -webkit-box-shadow: 0 -5px 0 #107863 inset, 0 -6px 0 #0f6a58 inset, 1px 0 0 #0f6a58 inset;
+  -moz-box-shadow: 0 -5px 0 #107863 inset, 0 -6px 0 #0f6a58 inset, 1px 0 0 #0f6a58 inset;
+  -ms-box-shadow: 0 -5px 0 #107863 inset, 0 -6px 0 #0f6a58 inset, 1px 0 0 #0f6a58 inset;
+  -o-box-shadow: 0 -5px 0 #107863 inset, 0 -6px 0 #0f6a58 inset, 1px 0 0 #0f6a58 inset;
+  box-shadow: 0 -5px 0 #107863 inset, 0 -6px 0 #0f6a58 inset, 1px 0 0 #0f6a58 inset;
+}
+.accordionPro.scheme-teal.bordered.vertical .slide > :first-child {
+  -webkit-box-shadow: 0 -5px 0 #107863 inset, 0 -6px 0 #0f6a58 inset, 1px 0 0 #0f6a58 inset;
+  -moz-box-shadow: 0 -5px 0 #107863 inset, 0 -6px 0 #0f6a58 inset, 1px 0 0 #0f6a58 inset;
+  -ms-box-shadow: 0 -5px 0 #107863 inset, 0 -6px 0 #0f6a58 inset, 1px 0 0 #0f6a58 inset;
+  -o-box-shadow: 0 -5px 0 #107863 inset, 0 -6px 0 #0f6a58 inset, 1px 0 0 #0f6a58 inset;
+  box-shadow: 0 -5px 0 #107863 inset, 0 -6px 0 #0f6a58 inset, 1px 0 0 #0f6a58 inset;
+}
+.accordionPro.scheme-teal .slide.selected > :first-child {
+  background: #16a085;
+}
+
+/****************************************** light-blue */
+.accordionPro.scheme-light-blue.style-flat .slide > :first-child {
+  background-color: #6ac2f9;
+}
+.accordionPro.scheme-light-blue.style-gradient .slide > :first-child {
+  background-color: #6ac2f9;
+  background-image: -webkit-gradient(linear, left top, right top, from(#87cefa), to(#6ac2f9));
+  background-image: -webkit-linear-gradient(left, #87cefa, #6ac2f9);
+  background-image: -moz-linear-gradient(left, #87cefa, #6ac2f9);
+  background-image: -ms-linear-gradient(left, #87cefa, #6ac2f9);
+  background-image: -o-linear-gradient(left, #87cefa, #6ac2f9);
+  background-image: linear-gradient(left, #87cefa, #6ac2f9);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,StartColorStr='#87cefa', EndColorStr='#6ac2f9');
+}
+.accordionPro.scheme-light-blue.scrollable ::-webkit-scrollbar {
+  background: #666;
+}
+.accordionPro.scheme-light-blue.scrollable ::-webkit-scrollbar-thumb {
+  background: black;
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
+.accordionPro.scheme-light-blue.bordered {
+  border-color: #87cefa;
+  background: #5bbcf8;
+  -webkit-box-shadow: 0 -1px 0 #5bbcf8 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 -1px 0 #5bbcf8 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -ms-box-shadow: 0 -1px 0 #5bbcf8 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -o-box-shadow: 0 -1px 0 #5bbcf8 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 -1px 0 #5bbcf8 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+.accordionPro.scheme-light-blue.bordered.horizontal .slide > :first-child {
+  -webkit-box-shadow: 0 -5px 0 #5bbcf8 inset, 0 -6px 0 #4cb6f8 inset, 1px 0 0 #4cb6f8 inset;
+  -moz-box-shadow: 0 -5px 0 #5bbcf8 inset, 0 -6px 0 #4cb6f8 inset, 1px 0 0 #4cb6f8 inset;
+  -ms-box-shadow: 0 -5px 0 #5bbcf8 inset, 0 -6px 0 #4cb6f8 inset, 1px 0 0 #4cb6f8 inset;
+  -o-box-shadow: 0 -5px 0 #5bbcf8 inset, 0 -6px 0 #4cb6f8 inset, 1px 0 0 #4cb6f8 inset;
+  box-shadow: 0 -5px 0 #5bbcf8 inset, 0 -6px 0 #4cb6f8 inset, 1px 0 0 #4cb6f8 inset;
+}
+.accordionPro.scheme-light-blue.bordered.vertical .slide > :first-child {
+  -webkit-box-shadow: 0 -5px 0 #5bbcf8 inset, 0 -6px 0 #4cb6f8 inset, 1px 0 0 #4cb6f8 inset;
+  -moz-box-shadow: 0 -5px 0 #5bbcf8 inset, 0 -6px 0 #4cb6f8 inset, 1px 0 0 #4cb6f8 inset;
+  -ms-box-shadow: 0 -5px 0 #5bbcf8 inset, 0 -6px 0 #4cb6f8 inset, 1px 0 0 #4cb6f8 inset;
+  -o-box-shadow: 0 -5px 0 #5bbcf8 inset, 0 -6px 0 #4cb6f8 inset, 1px 0 0 #4cb6f8 inset;
+  box-shadow: 0 -5px 0 #5bbcf8 inset, 0 -6px 0 #4cb6f8 inset, 1px 0 0 #4cb6f8 inset;
+}
+.accordionPro.scheme-light-blue .slide.selected > :first-child {
+  background: #87cefa;
+}
+
+/****************************************** blue */
+.accordionPro.scheme-blue.style-flat .slide > :first-child {
+  background-color: #2160c4;
+}
+.accordionPro.scheme-blue.style-gradient .slide > :first-child {
+  background-color: #2160c4;
+  background-image: -webkit-gradient(linear, left top, right top, from(#286edb), to(#2160c4));
+  background-image: -webkit-linear-gradient(left, #286edb, #2160c4);
+  background-image: -moz-linear-gradient(left, #286edb, #2160c4);
+  background-image: -ms-linear-gradient(left, #286edb, #2160c4);
+  background-image: -o-linear-gradient(left, #286edb, #2160c4);
+  background-image: linear-gradient(left, #286edb, #2160c4);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,StartColorStr='#286edb', EndColorStr='#2160c4');
+}
+.accordionPro.scheme-blue.scrollable ::-webkit-scrollbar {
+  background: #666;
+}
+.accordionPro.scheme-blue.scrollable ::-webkit-scrollbar-thumb {
+  background: black;
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
+.accordionPro.scheme-blue.bordered {
+  border-color: #286edb;
+  background: #1f5ab7;
+  -webkit-box-shadow: 0 -1px 0 #1f5ab7 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 -1px 0 #1f5ab7 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -ms-box-shadow: 0 -1px 0 #1f5ab7 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -o-box-shadow: 0 -1px 0 #1f5ab7 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 -1px 0 #1f5ab7 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+.accordionPro.scheme-blue.bordered.horizontal .slide > :first-child {
+  -webkit-box-shadow: 0 -5px 0 #1f5ab7 inset, 0 -6px 0 #1c54a9 inset, 1px 0 0 #1c54a9 inset;
+  -moz-box-shadow: 0 -5px 0 #1f5ab7 inset, 0 -6px 0 #1c54a9 inset, 1px 0 0 #1c54a9 inset;
+  -ms-box-shadow: 0 -5px 0 #1f5ab7 inset, 0 -6px 0 #1c54a9 inset, 1px 0 0 #1c54a9 inset;
+  -o-box-shadow: 0 -5px 0 #1f5ab7 inset, 0 -6px 0 #1c54a9 inset, 1px 0 0 #1c54a9 inset;
+  box-shadow: 0 -5px 0 #1f5ab7 inset, 0 -6px 0 #1c54a9 inset, 1px 0 0 #1c54a9 inset;
+}
+.accordionPro.scheme-blue.bordered.vertical .slide > :first-child {
+  -webkit-box-shadow: 0 -5px 0 #1f5ab7 inset, 0 -6px 0 #1c54a9 inset, 1px 0 0 #1c54a9 inset;
+  -moz-box-shadow: 0 -5px 0 #1f5ab7 inset, 0 -6px 0 #1c54a9 inset, 1px 0 0 #1c54a9 inset;
+  -ms-box-shadow: 0 -5px 0 #1f5ab7 inset, 0 -6px 0 #1c54a9 inset, 1px 0 0 #1c54a9 inset;
+  -o-box-shadow: 0 -5px 0 #1f5ab7 inset, 0 -6px 0 #1c54a9 inset, 1px 0 0 #1c54a9 inset;
+  box-shadow: 0 -5px 0 #1f5ab7 inset, 0 -6px 0 #1c54a9 inset, 1px 0 0 #1c54a9 inset;
+}
+.accordionPro.scheme-blue .slide.selected > :first-child {
+  background: #286edb;
+}
+
+/****************************************** dark-blue */
+.accordionPro.scheme-dark-blue.style-flat .slide > :first-child {
+  background-color: #0c2c5d;
+}
+.accordionPro.scheme-dark-blue.style-gradient .slide > :first-child {
+  background-color: #0c2c5d;
+  background-image: -webkit-gradient(linear, left top, right top, from(#103978), to(#0c2c5d));
+  background-image: -webkit-linear-gradient(left, #103978, #0c2c5d);
+  background-image: -moz-linear-gradient(left, #103978, #0c2c5d);
+  background-image: -ms-linear-gradient(left, #103978, #0c2c5d);
+  background-image: -o-linear-gradient(left, #103978, #0c2c5d);
+  background-image: linear-gradient(left, #103978, #0c2c5d);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,StartColorStr='#103978', EndColorStr='#0c2c5d');
+}
+.accordionPro.scheme-dark-blue.scrollable ::-webkit-scrollbar {
+  background: #666;
+}
+.accordionPro.scheme-dark-blue.scrollable ::-webkit-scrollbar-thumb {
+  background: black;
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
+}
+.accordionPro.scheme-dark-blue.bordered {
+  border-color: #103978;
+  background: #0b2650;
+  -webkit-box-shadow: 0 -1px 0 #0b2650 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0 -1px 0 #0b2650 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -ms-box-shadow: 0 -1px 0 #0b2650 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  -o-box-shadow: 0 -1px 0 #0b2650 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 -1px 0 #0b2650 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+.accordionPro.scheme-dark-blue.bordered.horizontal .slide > :first-child {
+  -webkit-box-shadow: 0 -5px 0 #0b2650 inset, 0 -6px 0 #091f42 inset, 1px 0 0 #091f42 inset;
+  -moz-box-shadow: 0 -5px 0 #0b2650 inset, 0 -6px 0 #091f42 inset, 1px 0 0 #091f42 inset;
+  -ms-box-shadow: 0 -5px 0 #0b2650 inset, 0 -6px 0 #091f42 inset, 1px 0 0 #091f42 inset;
+  -o-box-shadow: 0 -5px 0 #0b2650 inset, 0 -6px 0 #091f42 inset, 1px 0 0 #091f42 inset;
+  box-shadow: 0 -5px 0 #0b2650 inset, 0 -6px 0 #091f42 inset, 1px 0 0 #091f42 inset;
+}
+.accordionPro.scheme-dark-blue.bordered.vertical .slide > :first-child {
+  -webkit-box-shadow: 0 -5px 0 #0b2650 inset, 0 -6px 0 #091f42 inset, 1px 0 0 #091f42 inset;
+  -moz-box-shadow: 0 -5px 0 #0b2650 inset, 0 -6px 0 #091f42 inset, 1px 0 0 #091f42 inset;
+  -ms-box-shadow: 0 -5px 0 #0b2650 inset, 0 -6px 0 #091f42 inset, 1px 0 0 #091f42 inset;
+  -o-box-shadow: 0 -5px 0 #0b2650 inset, 0 -6px 0 #091f42 inset, 1px 0 0 #091f42 inset;
+  box-shadow: 0 -5px 0 #0b2650 inset, 0 -6px 0 #091f42 inset, 1px 0 0 #091f42 inset;
+}
+.accordionPro.scheme-dark-blue .slide.selected > :first-child {
+  background: #103978;
+}
+
+/******************************************** IE */
