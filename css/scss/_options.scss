@@ -41,6 +41,7 @@
 
         &.custom:after {
             transform: rotate(90deg);
+            // image-rendering: pixelated;
             background-repeat: no-repeat;
             background-position: center center;
         }

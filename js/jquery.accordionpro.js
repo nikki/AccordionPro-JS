@@ -974,12 +974,13 @@ function getPrefixed(prop){
 })(jQuery);
 
 /*!
- * Project:    Accordion Pro JS - a responsive accordion plugin for jQuery
- * Author:     Nicola Hibbert
- * URL:        http://stitchui.com/accordion-pro-js/
+ * Plugin Name:    Accordion Pro JS - a responsive accordion plugin for jQuery
+ * Plugin URI:     http://stitchui.com/accordion-pro-js/
+ * Version:        2.0.0
+ * Author:         Nicola Hibbert
+ * Author URI:     http://stitchui.com
  *
- * Version:    2.0
- * Copyright:  (c) 2010-2015 Stitch UI
+ * Copyright:      (c) 2011-2015 Stitch UI
  */
 ;(function($) {
 

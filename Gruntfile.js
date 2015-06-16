@@ -3,12 +3,13 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
       banner: '/*!\n' +
-              ' * Project:    Accordion Pro JS - a responsive accordion plugin for jQuery\n' +
-              ' * Author:     Nicola Hibbert\n' +
-              ' * URL:        http://stitchui.com/accordion-pro-js/\n' +
+              ' * Plugin Name:    Accordion Pro JS - a responsive accordion plugin for jQuery\n' +
+              ' * Plugin URI:     http://stitchui.com/accordion-pro-js/\n' +
+              ' * Version:        2.0.0\n' +
+              ' * Author:         Nicola Hibbert\n' +
+              ' * Author URI:     http://stitchui.com\n' +
               ' *\n' +
-              ' * Version:    2.0\n' +
-              ' * Copyright:  (c) 2010-2015 Stitch UI\n' +
+              ' * Copyright:      (c) 2011-2015 Stitch UI\n' +
               ' */\n',
 
       concat: {

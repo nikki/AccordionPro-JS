@@ -13,15 +13,15 @@ $colours: (
     "white": #ffffff,
     "silver": #c9d1d6,
     "grey": #919898,
-    "charcoal": #333333,
+    "charcoal": #353535,
     "black": #000000,
-    "pink": #cc6699,
-    "red": #cf091c,
-    "orange": #ff7700,
+    "pink": #ca6d8c,
+    "red": #cd1f2f,
+    "orange": #da7613,
     "yellow": #edbe00,
-    "green": #2ecc71,
+    "green": #1D8435,
     "teal": #16a085,
-    "light-blue": #87cefa,
+    "light-blue": #59b5ed,
     "blue": #286edb,
     "dark-blue": #103978
 );
@@ -49,44 +49,50 @@ $schemes: (
     .accordionPro.scheme-#{$name} {
         &.style-flat {
             .slide > :first-child {
-                 background-color: darken(map-get($colours, $name), 6%);
+                 background-color: darken(map-get($colours, $name), 3%);
             }
         }
 
         &.style-gradient {
             .slide > :first-child {
-                @include gradient(map-get($colours, $name), darken(map-get($colours, $name), 6%));
+                @include gradient(darken(map-get($colours, $name), 3%), lighten(map-get($colours, $name), 3%));
+            }
+        }
+
+        &.style-flat, &.style-gradient {
+            .slide.selected > :first-child {
+               background: lighten(map-get($colours, $name), 3%);
             }
         }
 
         &.scrollable {
             ::-webkit-scrollbar {
-                background: #666;
+                background: darken(map-get($colours, $name), 24%);
             }
             ::-webkit-scrollbar-thumb {
-                background: black;
+                background: darken(map-get($colours, $name), 36%);
                 -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
             }
         }
 
         &.bordered {
-            border-color: map-get($colours, $name);
+            border-color: darken(map-get($colours, $name), 3%);
             background: darken(map-get($colours, $name), 9%);
-            -webkit-box-shadow: 0 -1px 0 darken(map-get($colours, $name), 9%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
-            -moz-box-shadow: 0 -1px 0 darken(map-get($colours, $name), 9%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
-            -ms-box-shadow: 0 -1px 0 darken(map-get($colours, $name), 9%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
-            -o-box-shadow: 0 -1px 0 darken(map-get($colours, $name), 9%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
-            box-shadow: 0 -1px 0 darken(map-get($colours, $name), 9%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+            -webkit-box-shadow: 0 -1px 0 lighten(map-get($colours, $name), 9%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+            -moz-box-shadow: 0 -1px 0 lighten(map-get($colours, $name), 9%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+            -ms-box-shadow: 0 -1px 0 lighten(map-get($colours, $name), 9%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+            -o-box-shadow: 0 -1px 0 lighten(map-get($colours, $name), 9%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 -1px 0 lighten(map-get($colours, $name), 9%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
         }
 
         &.bordered.horizontal {
             .slide {
                 > :first-child {
-                    -webkit-box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 12%) inset, 1px 0 0 darken(map-get($colours, $name), 12%) inset;
-                    -moz-box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 12%) inset, 1px 0 0 darken(map-get($colours, $name), 12%) inset;
-                    -ms-box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 12%) inset, 1px 0 0 darken(map-get($colours, $name), 12%) inset;
-                    -o-box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 12%) inset, 1px 0 0 darken(map-get($colours, $name), 12%) inset;
-                    box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 12%) inset, 1px 0 0 darken(map-get($colours, $name), 12%) inset;
+                    -webkit-box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 15%) inset, 1px 0 0 darken(map-get($colours, $name), 15%) inset;
+                    -moz-box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 15%) inset, 1px 0 0 darken(map-get($colours, $name), 15%) inset;
+                    -ms-box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 15%) inset, 1px 0 0 darken(map-get($colours, $name), 15%) inset;
+                    -o-box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 15%) inset, 1px 0 0 darken(map-get($colours, $name), 15%) inset;
+                    box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 15%) inset, 1px 0 0 darken(map-get($colours, $name), 15%) inset;
                 }
             }
         }
@@ -94,17 +100,111 @@ $schemes: (
         &.bordered.vertical {
             .slide {
                 > :first-child {
-                    -webkit-box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 12%) inset, 1px 0 0 darken(map-get($colours, $name), 12%) inset;
-                    -moz-box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 12%) inset, 1px 0 0 darken(map-get($colours, $name), 12%) inset;
-                    -ms-box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 12%) inset, 1px 0 0 darken(map-get($colours, $name), 12%) inset;
-                    -o-box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 12%) inset, 1px 0 0 darken(map-get($colours, $name), 12%) inset;
-                    box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 12%) inset, 1px 0 0 darken(map-get($colours, $name), 12%) inset;
+                    -webkit-box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 15%) inset, 1px 0 0 darken(map-get($colours, $name), 15%) inset;
+                    -moz-box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 15%) inset, 1px 0 0 darken(map-get($colours, $name), 15%) inset;
+                    -ms-box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 15%) inset, 1px 0 0 darken(map-get($colours, $name), 15%) inset;
+                    -o-box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 15%) inset, 1px 0 0 darken(map-get($colours, $name), 15%) inset;
+                    box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 15%) inset, 1px 0 0 darken(map-get($colours, $name), 15%) inset;
                 }
             }
         }
+    }
+}
+
+/************************** COLOUR SCHEME TWEAKS */
+/***************************************** White */
+.accordionPro.scheme-white {
+    &.style-flat {
+        .slide > :first-child {
+             background-color: darken($white, 9%);
+        }
+    }
+
+    &.style-gradient {
+        .slide > :first-child {
+            @include gradient(darken($white, 9%), $white);
+        }
+    }
+
+    &.style-flat, &.style-gradient {
+        .slide > :first-child {
+            color: darken($white, 52%);
+            text-shadow: 0 -1px 0 $white;
+        }
+    }
+
+    &.scrollable {
+        ::-webkit-scrollbar {
+            background: darken($white, 36%);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: darken($white, 48%);
+            -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+        }
+    }
+
+    &.bordered {
+        background: darken($white, 24%);
+        -webkit-box-shadow: 0 -1px 0 lighten($white, 24%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+        -moz-box-shadow: 0 -1px 0 lighten($white, 24%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+        -ms-box-shadow: 0 -1px 0 lighten($white, 24%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+        -o-box-shadow: 0 -1px 0 lighten($white, 24%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 -1px 0 lighten($white, 24%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
+    }
+
+    &.bordered.horizontal {
+        .slide {
+            > :first-child {
+                -webkit-box-shadow: 0 -5px 0 darken($white, 24%) inset, 0 -6px 0 darken($white, 32%) inset, 1px 0 0 darken($white, 32%) inset;
+                -moz-box-shadow: 0 -5px 0 darken($white, 24%) inset, 0 -6px 0 darken($white, 32%) inset, 1px 0 0 darken($white, 32%) inset;
+                -ms-box-shadow: 0 -5px 0 darken($white, 24%) inset, 0 -6px 0 darken($white, 32%) inset, 1px 0 0 darken($white, 32%) inset;
+                -o-box-shadow: 0 -5px 0 darken($white, 24%) inset, 0 -6px 0 darken($white, 32%) inset, 1px 0 0 darken($white, 32%) inset;
+                box-shadow: 0 -5px 0 darken($white, 24%) inset, 0 -6px 0 darken($white, 32%) inset, 1px 0 0 darken($white, 32%) inset;
+            }
+        }
+    }
+
+    &.bordered.vertical {
+        .slide {
+            > :first-child {
+                -webkit-box-shadow: 0 -5px 0 darken($white, 24%) inset, 0 -6px 0 darken($white, 32%) inset, 1px 0 0 darken($white, 32%) inset;
+                -moz-box-shadow: 0 -5px 0 darken($white, 24%) inset, 0 -6px 0 darken($white, 32%) inset, 1px 0 0 darken($white, 32%) inset;
+                -ms-box-shadow: 0 -5px 0 darken($white, 24%) inset, 0 -6px 0 darken($white, 32%) inset, 1px 0 0 darken($white, 32%) inset;
+                -o-box-shadow: 0 -5px 0 darken($white, 24%) inset, 0 -6px 0 darken($white, 32%) inset, 1px 0 0 darken($white, 32%) inset;
+                box-shadow: 0 -5px 0 darken($white, 24%) inset, 0 -6px 0 darken($white, 32%) inset, 1px 0 0 darken($white, 32%) inset;
+            }
+        }
+    }
+}
+
+/**************************************** Silver */
+.accordionPro.scheme-silver {
+    &.style-flat, &.style-gradient {
+        .slide > :first-child {
+            color: darken($silver, 52%);
+            text-shadow: 0 -1px 0 $white;
+        }
 
         .slide.selected > :first-child {
-            background: map-get($colours, $name);
+            background: lighten($silver, 6%);
+        }
+    }
+}
+
+/****************************************** Grey */
+.accordionPro.scheme-grey {
+    &.style-flat, &.style-gradient {
+        .slide.selected > :first-child {
+            background: lighten($grey, 6%);
+        }
+    }
+}
+
+/************************************** Charcoal */
+.accordionPro.scheme-charcoal {
+    &.style-flat, &.style-gradient {
+        .slide.selected > :first-child {
+            background: lighten($charcoal, 9%);
         }
     }
 }
