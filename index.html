@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/accordionpro.min.css">
     <style>
       body {
-        background: #1F232C;
+        background: #F3F1EC;
       }
     </style>
 
@@ -41,27 +41,28 @@ $dark-blue: #103978;
           activateOn : 'click',
           rtl: false,
           orientation : 'horizontal',
-          theme : 'bordered',
+          theme : 'stitch',
           colour : {
-            scheme : 'teal',
+            scheme : 'dark-blue',
             style : 'gradient'
           },
+          rounded: true,
           tab : {
-            icon : 'chevron',
+            icon : 'number',
             customIcons : [
               '../img-demo/user.png',
               '../img-demo/chat.png',
               '../img-demo/letter.png',
               '../img-demo/search.png',
               '../img-demo/leaf.png'
-            ]/*,
-            customColours : [
-              '#FFFF00',
-              'red',
-              'yellow',
-              '#006CE1',
-              'rgba(50, 65, 85, 0.8)'
-            ]*/,
+            ],
+            customColours : [/*
+              '#c25252',
+              '#ca9859',
+              '#96ba5f',
+              '#59abb7',
+              '#bb6098'
+            */],
             selected : 1
           },
           panel : {

@@ -50,9 +50,55 @@
 
 /*************************************** Rounded */
 .accordionPro.rounded {
+    & {
+        border-radius: 6px;
+    }
+
     &.scrollable {
         ::-webkit-scrollbar-thumb {
             border-radius: 4px;
+        }
+    }
+
+    &.basic {
+        .slide {
+            &:first-child {
+                border-radius: 6px 0 0 6px;
+            }
+
+            &:last-child {
+                > :first-child {
+                    border-radius: 0 0 6px 6px;
+                }
+
+                &.selected > :first-child {
+                    border-radius: 0;
+                }
+
+                > :last-child {
+                    border-radius: 0 6px 6px 0;
+                }
+            }
+        }
+    }
+
+    &.bordered {
+        border-radius: 15px;
+
+        .slide {
+            > * {
+                border-radius: 6px;
+            }
+        }
+    }
+
+    &.stitch {
+        border-radius: 11px;
+
+        .slide {
+            > * {
+                border-radius: 6px;
+            }
         }
     }
 }
