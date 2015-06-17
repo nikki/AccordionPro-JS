@@ -1855,7 +1855,7 @@ function getPrefixed(prop){
   }
 
 
-  /**
+ /**
    * PLUGIN DEFAULTS
    */
 

@@ -18,7 +18,18 @@ module.exports = function (grunt) {
             banner: '<%= banner %>'
           },
           files: [
-            { src: 'js/lib/jquery.accordionpro.js', dest: 'js/jquery.accordionpro.js' }
+            { src:
+              [
+                'js/lib/start.js',
+                'js/lib/setup.js',
+                'js/lib/events.js',
+                'js/lib/core.js',
+                'js/lib/defaults.js',
+                'js/lib/methods.js',
+                'js/lib/init.js',
+                'js/lib/end.js'
+              ],
+              dest: 'js/accordionpro.js' }
           ]
         },
 
@@ -30,7 +41,7 @@ module.exports = function (grunt) {
             'js/vendor/imagesloaded.js',
             'js/vendor/transitiontest.js',
             'js/vendor/animate.js',
-            'js/jquery.accordionpro.js'
+            'js/accordionpro.js'
           ],
           dest: 'js/jquery.accordionpro.js'
         }
