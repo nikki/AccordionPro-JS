@@ -46,12 +46,12 @@
           elem
             .on('mouseover.accordionPro', function() {
               if (!elem.hasClass('closed')) {
-                core.isPlaying && methods.stop();
+                core.timer && methods.stop();
               }
             })
             .on('mouseout.accordionPro', function() {
               if (!elem.hasClass('closed')) {
-                !core.isPlaying && methods.play(core.currentSlide);
+                !core.timer && methods.play(core.currentSlide);
               }
             });
         }
@@ -67,7 +67,6 @@
               x : 0,
               y : 0
             };
-
 
         /**
          * Helper -> get position of client touch

@@ -18,7 +18,7 @@
       },
 
       stop : function() {
-        clearTimeout(core.timer);
+        clearInterval(core.timer);
         core.timer = 0;
       },
 

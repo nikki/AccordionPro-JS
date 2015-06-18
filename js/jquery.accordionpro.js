@@ -1568,12 +1568,12 @@ function getPrefixed(prop){
           elem
             .on('mouseover.accordionPro', function() {
               if (!elem.hasClass('closed')) {
-                core.isPlaying && methods.stop();
+                core.timer && methods.stop();
               }
             })
             .on('mouseout.accordionPro', function() {
               if (!elem.hasClass('closed')) {
-                !core.isPlaying && methods.play(core.currentSlide);
+                !core.timer && methods.play(core.currentSlide);
               }
             });
         }
@@ -1589,7 +1589,6 @@ function getPrefixed(prop){
               x : 0,
               y : 0
             };
-
 
         /**
          * Helper -> get position of client touch
@@ -1713,6 +1712,15 @@ function getPrefixed(prop){
 
 
       /**
+       *
+       */
+
+      fitToContent : function() {
+
+      },
+
+
+      /**
        * Animate single slide
        */
 
@@ -1776,6 +1784,11 @@ function getPrefixed(prop){
         core.setSelectedSlide.call(this);
       },
 
+
+      /**
+       * Trigger slide animation
+       */
+
       trigger : function(e) {
         var $slide = $(this).parent(),
             props = {
@@ -1791,6 +1804,11 @@ function getPrefixed(prop){
         core['animateSlide' + (props.selected ? '' : 's')].call($slide, props);
       },
 
+
+      /**
+       * Set currently selected slide class, update core.currentSlide
+       */
+
       setSelectedSlide : function() {
         // remove selected class
         slides.removeClass('selected');
@@ -1802,19 +1820,27 @@ function getPrefixed(prop){
         core.currentSlide = slides.index(this);
       },
 
-      triggerFromClosed : function() {
 
+      /**
+       * Should this be here? Not setup + event?
+       */
+
+      triggerFromClosed : function() {
+        // start closed
       },
 
+
+      /**
+       * Trigger slide animation from a link
+       */
+
       triggerLink : function(e) {
-/*
-        var url = slides.filter(function() {
+        var slide = slides.filter(function() {
           return $(this).attr('data-slide-name') === window.location.hash.split('#')[1];
         });
 
         // if slide name exists, trigger slide
-        if (url.length) core.animationCycle.call(url.children('h2')[0], e);
-*/
+        if (slide) methods.trigger(slides.index(slide));
       },
 
       triggerDirection : function(dir) {
@@ -1855,7 +1881,23 @@ function getPrefixed(prop){
       },
 
       scalePlugin : function() {
+        // var scale = Math.min(elem.parent().outerWidth(true) / settings.horizontalWidth); // linear scale
+        // var ieOl;
 
+        // // limit max scale to 1
+        // // scale = ().toFixed(2);
+        // scale = Math.min(scale, 1);
+
+        // // css3 scaling not supported in ie8
+        // if (!elem.hasClass('ie8')) {
+        //   elem.css(Modernizr.prefixed('transform'), 'scale(' + scale + ')');
+
+        //   if (orientation) { // horizontal?
+        //     elem.css('margin-bottom', -(settings.horizontalHeight - (settings.horizontalHeight * scale)).toFixed(2));
+        //   }
+        // } else {
+        //   elem.css('zoom', scale);
+        // }
       },
 
       init : function() {
@@ -1886,7 +1928,7 @@ function getPrefixed(prop){
       },
 
       stop : function() {
-        clearTimeout(core.timer);
+        clearInterval(core.timer);
         core.timer = 0;
       },
 

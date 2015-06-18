@@ -23,6 +23,15 @@
 
 
       /**
+       *
+       */
+
+      fitToContent : function() {
+
+      },
+
+
+      /**
        * Animate single slide
        */
 
@@ -86,6 +95,11 @@
         core.setSelectedSlide.call(this);
       },
 
+
+      /**
+       * Trigger slide animation
+       */
+
       trigger : function(e) {
         var $slide = $(this).parent(),
             props = {
@@ -101,6 +115,11 @@
         core['animateSlide' + (props.selected ? '' : 's')].call($slide, props);
       },
 
+
+      /**
+       * Set currently selected slide class, update core.currentSlide
+       */
+
       setSelectedSlide : function() {
         // remove selected class
         slides.removeClass('selected');
@@ -112,19 +131,27 @@
         core.currentSlide = slides.index(this);
       },
 
-      triggerFromClosed : function() {
 
+      /**
+       * Should this be here? Not setup + event?
+       */
+
+      triggerFromClosed : function() {
+        // start closed
       },
 
+
+      /**
+       * Trigger slide animation from a link
+       */
+
       triggerLink : function(e) {
-/*
-        var url = slides.filter(function() {
+        var slide = slides.filter(function() {
           return $(this).attr('data-slide-name') === window.location.hash.split('#')[1];
         });
 
         // if slide name exists, trigger slide
-        if (url.length) core.animationCycle.call(url.children('h2')[0], e);
-*/
+        if (slide) methods.trigger(slides.index(slide));
       },
 
       triggerDirection : function(dir) {
@@ -165,7 +192,23 @@
       },
 
       scalePlugin : function() {
+        // var scale = Math.min(elem.parent().outerWidth(true) / settings.horizontalWidth); // linear scale
+        // var ieOl;
 
+        // // limit max scale to 1
+        // // scale = ().toFixed(2);
+        // scale = Math.min(scale, 1);
+
+        // // css3 scaling not supported in ie8
+        // if (!elem.hasClass('ie8')) {
+        //   elem.css(Modernizr.prefixed('transform'), 'scale(' + scale + ')');
+
+        //   if (orientation) { // horizontal?
+        //     elem.css('margin-bottom', -(settings.horizontalHeight - (settings.horizontalHeight * scale)).toFixed(2));
+        //   }
+        // } else {
+        //   elem.css('zoom', scale);
+        // }
       },
 
       init : function() {
