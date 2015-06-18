@@ -456,9 +456,9 @@
 
       setClosedPluginDimensions : function() {
         if (!settings.startClosed) return;
-// console.log((slide.l * tab.h) + (border / 2) + (padding * 3) - 1);
+
         if (horizontal) {
-          elem.css('width', (slide.l * tab.h) + (border / 2) + (padding * 2) - 1);
+          elem.css('width', (slide.l * tab.h) + border - padding);
         } else {
           elem.css('height', slide.l * tab.h + border);
         }
@@ -718,13 +718,23 @@
      */
 
     var core = {
+      // interval counter
+      timer : 0,
+
+      // animation flag
       isPlaying : false,
 
-      // counter for autoPlay (zero index firstSlide on init)
+      // counter for autoPlay
       currentSlide : settings.tab.selected - 1,
 
       // previous slide
       previousSlide : null,
+
+      // next slide index
+      nextSlide : function() {
+        core.currentSlide++;
+        return core.currentSlide % slide.l;
+      },
 
 
       /**
@@ -812,6 +822,9 @@
 
         // add selected class to selected slide
         this.addClass('selected');
+
+        // update currentSlide ref
+        core.currentSlide = slides.index(this);
       },
 
       triggerFromClosed : function() {
@@ -871,7 +884,69 @@
       },
 
       init : function() {
+        // init autoplay
+        // if (!settings.startClosed && settings.autoPlay) methods.play();
+        if (settings.autoPlay) methods.play();
+      }
+    };
 
+
+    /**
+     * PUBLIC METHODS
+     */
+
+    var methods = {
+      trigger : function(index) {
+        tabs.eq(index).trigger('click.accordionPro');
+      },
+
+      play : function(index) {
+        var next;
+        if (core.timer) return;
+
+        // start autoplay
+        core.timer = setInterval(function() {
+          methods.trigger(core.nextSlide());
+        }, settings.cycleSpeed);
+      },
+
+      stop : function() {
+        clearTimeout(core.timer);
+        core.timer = 0;
+      },
+
+      next : function() {
+        methods.trigger(core.nextSlide());
+      },
+
+      prev : function() {
+        methods.trigger(core.currentSlide - 1);
+      },
+
+      destroy : function() {
+        // stop autoplay
+        methods.stop();
+
+        // remove hashchange and resize events bound to window
+        $(window).off('.accordionPro');
+
+        // remove generated styles, classes, data, events
+        this
+          .off('.accordionPro')
+          .removeData('accordionPro')
+          .removeAttr('style')
+          .removeClass();
+
+        slides
+          .removeClass()
+          .removeAttr('style')
+          .removeAttr('data-slide-name')
+          .children()
+          .removeAttr('style');
+
+        tabs
+          .off('.accordionPro')
+          .removeClass();
       }
     };
 
@@ -889,8 +964,8 @@
      * Return methods
      */
 
-    this.methods._settings = settings;
-    return this.methods;
+    methods._settings = settings;
+    return methods;
   }
 
 
@@ -957,42 +1032,10 @@
 
 
   /**
-   * PUBLIC METHODS
-   */
-
-  AccordionPro.prototype.methods = {
-    play : function(index) {
-
-    },
-
-    stop : function() {
-
-    },
-
-    next : function() {
-
-    },
-
-    prev : function() {
-
-    },
-
-    destroy : function() {
-      // remove generated styles, classes, data, events
-      this
-        .off('.accordionPro')
-        .removeData('accordionPro')
-        .removeAttr('style')
-        .removeClass();
-    }
-  };
-
-
-  /**
    * ADD PLUGIN TO $.fn
    */
 
-  $.fn.accordionPro = function(method) {
+  $.fn.accordionPro = function(method, param) {
     var elem = this,
         instance = elem.data('accordionPro');
 
@@ -1008,8 +1051,11 @@
 
     // otherwise, call method on current instance
     } else if (typeof method === 'string' && instance[method]) {
+      // zero-based index for trigger method
+      if (method === 'trigger' && typeof param === 'number') param -= 1;
+
       // chainable methods
-      instance[method].call(elem);
+      instance[method].call(elem, param);
       return elem;
     }
   };

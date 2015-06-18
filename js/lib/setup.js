@@ -414,9 +414,9 @@
 
       setClosedPluginDimensions : function() {
         if (!settings.startClosed) return;
-// console.log((slide.l * tab.h) + (border / 2) + (padding * 3) - 1);
+
         if (horizontal) {
-          elem.css('width', (slide.l * tab.h) + (border / 2) + (padding * 2) - 1);
+          elem.css('width', (slide.l * tab.h) + border - padding);
         } else {
           elem.css('height', slide.l * tab.h + border);
         }

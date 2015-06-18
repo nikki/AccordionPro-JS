@@ -21,11 +21,12 @@ module.exports = function (grunt) {
             { src:
               [
                 'js/lib/start.js',
+                'js/lib/globals.js',
                 'js/lib/setup.js',
                 'js/lib/events.js',
                 'js/lib/core.js',
-                'js/lib/defaults.js',
                 'js/lib/methods.js',
+                'js/lib/defaults.js',
                 'js/lib/init.js',
                 'js/lib/end.js'
               ],

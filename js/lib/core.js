@@ -3,13 +3,23 @@
      */
 
     var core = {
+      // interval counter
+      timer : 0,
+
+      // animation flag
       isPlaying : false,
 
-      // counter for autoPlay (zero index firstSlide on init)
+      // counter for autoPlay
       currentSlide : settings.tab.selected - 1,
 
       // previous slide
       previousSlide : null,
+
+      // next slide index
+      nextSlide : function() {
+        core.currentSlide++;
+        return core.currentSlide % slide.l;
+      },
 
 
       /**
@@ -97,6 +107,9 @@
 
         // add selected class to selected slide
         this.addClass('selected');
+
+        // update currentSlide ref
+        core.currentSlide = slides.index(this);
       },
 
       triggerFromClosed : function() {
@@ -156,25 +169,9 @@
       },
 
       init : function() {
-
+        // init autoplay
+        // if (!settings.startClosed && settings.autoPlay) methods.play();
+        if (settings.autoPlay) methods.play();
       }
     };
-
-
-    /**
-     * Init plugin
-     */
-
-    setup.init();
-    events.init();
-    core.init();
-
-
-    /**
-     * Return methods
-     */
-
-    this.methods._settings = settings;
-    return this.methods;
-  }
 

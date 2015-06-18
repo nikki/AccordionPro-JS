@@ -41,14 +41,18 @@ $dark-blue: #103978;
           activateOn : 'click',
           rtl: false,
           orientation : 'horizontal',
-          theme : 'stitch',
+          autoPlay: true,
+          theme : 'basic',
+          rtl : false,
+          startClosed: false,
           colour : {
             scheme : 'dark-blue',
-            style : 'gradient'
+            style : 'flat'
           },
           rounded: true,
           tab : {
-            icon : 'number',
+            size : 48,
+            icon : 'custom',
             customIcons : [
               '../img-demo/user.png',
               '../img-demo/chat.png',
@@ -56,13 +60,13 @@ $dark-blue: #103978;
               '../img-demo/search.png',
               '../img-demo/leaf.png'
             ],
-            customColours : [/*
+            customColours : [
               '#c25252',
               '#ca9859',
               '#96ba5f',
               '#59abb7',
               '#bb6098'
-            */],
+            ],
             selected : 1
           },
           panel : {
@@ -70,6 +74,9 @@ $dark-blue: #103978;
             scaleImages : true
           }
         });
+
+        elem.accordionPro('destroy')
+
       });
     </script>
 
