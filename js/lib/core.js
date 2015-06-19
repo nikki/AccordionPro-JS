@@ -146,12 +146,12 @@
        */
 
       triggerLink : function(e) {
-        var slide = slides.filter(function() {
+        var name = slides.filter(function() {
           return $(this).attr('data-slide-name') === window.location.hash.split('#')[1];
         });
 
         // if slide name exists, trigger slide
-        if (slide) methods.trigger(slides.index(slide));
+        if (name && name.length) methods.trigger(slides.index(name));
       },
 
       triggerDirection : function(dir) {
