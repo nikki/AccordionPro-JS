@@ -49,11 +49,6 @@
 }
 .accordionPro, .accordionPro .slide, .accordionPro.slide > * {
   -webkit-tap-highlight-color: transparent;
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-  -ms-backface-visibility: hidden;
-  -o-backface-visibility: hidden;
-  backface-visibility: hidden;
 }
 .accordionPro .slide {
   list-style: none;
