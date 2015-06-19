@@ -321,7 +321,8 @@
       setTabsDimensions : function() {
         var _this = this,
             $first = tabs.first(),
-            sheet = document.styleSheets[0];
+            sheet = document.styleSheets[0],
+            calc;
 
         // calculate global tab dimensions
         tab.w = horizontal ? slide.h : elem.width();
@@ -333,7 +334,9 @@
 
         // adjust line-height on :after
         if (padding && sheet && sheet.insertRule) {
-          sheet.insertRule('.accordionPro .slide > :first-child:after { left: ' + padding + 'px; height: ' + (tab.h - (tabBorder ? (tabBorder + padding) : padding)) + 'px }', sheet.cssRules.length);
+          calc = (tab.h - (tabBorder ? (tabBorder + padding) : padding));
+          calc += (calc % 2) ? 0.5 : 0;
+          sheet.insertRule('.accordionPro .slide > :first-child:after { left: ' + padding + 'px; height: ' + calc + 'px }', sheet.cssRules.length);
         }
       },
 
@@ -408,48 +411,21 @@
        */
 
       setCustomTabImages : function() {
-        var icons = settings.tab.customIcons,
-            imgs = [],
-            sheet = document.styleSheets[0],
-            length = 0;
+        var imgs = [],
+            sheet = document.styleSheets[0];
 
         if (settings.tab.icon !== 'custom') return;
-        length = icons.length;
-        if (!length) return;
+        if (!settings.tab.customIcons.length) return;
 
         // short ref to image array
-        $.each(icons, function(index, icon) {
-          var i = new Image();
+        imgs = settings.tab.customIcons;
 
-          imgs[index] = {
-            src : icons[index],
-            width : null
-          };
-
-          // // preload image to find it's width
-          // i.src = imgs[index].src;
-
-          // // console.log(image);
-          // i.onload = function() {
-          //   imgs[index].width = this.width;
-          //   length--;
-
-          //   if (!length) callback();
-          // }
-        });
-
-callback();
         // create styles for icons
-        function callback() {
-          tabs.each(function(index) {
-            if (sheet && sheet.insertRule) {
-              sheet.insertRule('.accordionPro .slide-' + (index + 1) + ' > :first-child:after { background-image: url(../' + imgs[index % imgs.length].src + ') }', sheet.cssRules.length);
-
-              // fix for blurry icons in webkit
-              // sheet.insertRule('.accordionPro .slide > :first-child:after { -webkit-transform-origin: ' + (50 + (0.5 / imgs[index % imgs.length].width * 100)) + '% 50% }', sheet.cssRules.length);
-            }
-          });
-        }
+        tabs.each(function(index) {
+          if (sheet && sheet.insertRule) {
+            sheet.insertRule('.accordionPro .slide-' + (index + 1) + ' > :first-child:after { background-image: url(' + imgs[index % imgs.length] + ') }', sheet.cssRules.length);
+          }
+        });
       },
 
 
