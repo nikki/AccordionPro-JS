@@ -22,11 +22,22 @@
         core.timer = 0;
       },
 
+      pause : function() {
+        methods.stop();
+
+        // pause for 2x cycleSpeed
+        setTimeout(function() {
+          if (settings.autoPlay) methods.play();
+        }, settings.cycleSpeed);
+      },
+
       next : function() {
+        methods.pause();
         methods.trigger(core.nextSlide());
       },
 
       prev : function() {
+        methods.pause();
         methods.trigger(core.currentSlide - 1);
       },
 

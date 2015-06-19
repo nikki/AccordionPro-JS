@@ -366,21 +366,48 @@
        */
 
       setCustomTabImages : function() {
-        var imgs = [],
-            sheet = document.styleSheets[0];
+        var icons = settings.tab.customIcons,
+            imgs = [],
+            sheet = document.styleSheets[0],
+            length = 0;
 
         if (settings.tab.icon !== 'custom') return;
-        if (!settings.tab.customIcons.length) return;
+        length = icons.length;
+        if (!length) return;
 
         // short ref to image array
-        imgs = settings.tab.customIcons;
+        $.each(icons, function(index, icon) {
+          var i = new Image();
 
-        // create styles for icons
-        tabs.each(function(index) {
-          if (sheet && sheet.insertRule) {
-            sheet.insertRule('.accordionPro .slide-' + (index + 1) + ' > :first-child:after { background-image: url(' + imgs[index % imgs.length] + ') }', sheet.cssRules.length);
-          }
+          imgs[index] = {
+            src : icons[index],
+            width : null
+          };
+
+          // // preload image to find it's width
+          // i.src = imgs[index].src;
+
+          // // console.log(image);
+          // i.onload = function() {
+          //   imgs[index].width = this.width;
+          //   length--;
+
+          //   if (!length) callback();
+          // }
         });
+
+callback();
+        // create styles for icons
+        function callback() {
+          tabs.each(function(index) {
+            if (sheet && sheet.insertRule) {
+              sheet.insertRule('.accordionPro .slide-' + (index + 1) + ' > :first-child:after { background-image: url(../' + imgs[index % imgs.length].src + ') }', sheet.cssRules.length);
+
+              // fix for blurry icons in webkit
+              // sheet.insertRule('.accordionPro .slide > :first-child:after { -webkit-transform-origin: ' + (50 + (0.5 / imgs[index % imgs.length].width * 100)) + '% 50% }', sheet.cssRules.length);
+            }
+          });
+        }
       },
 
 

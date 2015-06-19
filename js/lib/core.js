@@ -151,7 +151,10 @@
         });
 
         // if slide name exists, trigger slide
-        if (name && name.length) methods.trigger(slides.index(name));
+        if (name && name.length) {
+          methods.trigger(slides.index(name));
+          methods.pause();
+        }
       },
 
       triggerDirection : function(dir) {
@@ -192,23 +195,24 @@
       },
 
       scalePlugin : function() {
-        // var scale = Math.min(elem.parent().outerWidth(true) / settings.horizontalWidth); // linear scale
-        // var ieOl;
+        var scale = Math.min(elem.parent().outerWidth() / settings.horizontalWidth), // linear scale
+            prefixes = ['Webkit', 'Moz', 'Ms', 'O', ''];
 
-        // // limit max scale to 1
-        // // scale = ().toFixed(2);
-        // scale = Math.min(scale, 1);
+        // limit max scale to 1
+        scale = +(Math.min(scale, 1).toFixed(2));
 
-        // // css3 scaling not supported in ie8
-        // if (!elem.hasClass('ie8')) {
-        //   elem.css(Modernizr.prefixed('transform'), 'scale(' + scale + ')');
+        // css3 scaling not supported in ie8
+        if (!elem.hasClass('ie8')) {
+          $.each(prefixes, function(index, prefix) {
+            elem.css((prefix + 'Transform'), 'scale(' + scale + ')');
+          });
 
-        //   if (orientation) { // horizontal?
-        //     elem.css('margin-bottom', -(settings.horizontalHeight - (settings.horizontalHeight * scale)).toFixed(2));
-        //   }
-        // } else {
-        //   elem.css('zoom', scale);
-        // }
+          if (horizontal) {
+            elem.css('margin-bottom', -(settings.horizontalHeight - (settings.horizontalHeight * scale)).toFixed(2));
+          }
+        } else {
+          elem.css('zoom', scale);
+        }
       },
 
       init : function() {

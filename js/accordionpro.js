@@ -408,21 +408,48 @@
        */
 
       setCustomTabImages : function() {
-        var imgs = [],
-            sheet = document.styleSheets[0];
+        var icons = settings.tab.customIcons,
+            imgs = [],
+            sheet = document.styleSheets[0],
+            length = 0;
 
         if (settings.tab.icon !== 'custom') return;
-        if (!settings.tab.customIcons.length) return;
+        length = icons.length;
+        if (!length) return;
 
         // short ref to image array
-        imgs = settings.tab.customIcons;
+        $.each(icons, function(index, icon) {
+          var i = new Image();
 
-        // create styles for icons
-        tabs.each(function(index) {
-          if (sheet && sheet.insertRule) {
-            sheet.insertRule('.accordionPro .slide-' + (index + 1) + ' > :first-child:after { background-image: url(' + imgs[index % imgs.length] + ') }', sheet.cssRules.length);
-          }
+          imgs[index] = {
+            src : icons[index],
+            width : null
+          };
+
+          // // preload image to find it's width
+          // i.src = imgs[index].src;
+
+          // // console.log(image);
+          // i.onload = function() {
+          //   imgs[index].width = this.width;
+          //   length--;
+
+          //   if (!length) callback();
+          // }
         });
+
+callback();
+        // create styles for icons
+        function callback() {
+          tabs.each(function(index) {
+            if (sheet && sheet.insertRule) {
+              sheet.insertRule('.accordionPro .slide-' + (index + 1) + ' > :first-child:after { background-image: url(../' + imgs[index % imgs.length].src + ') }', sheet.cssRules.length);
+
+              // fix for blurry icons in webkit
+              // sheet.insertRule('.accordionPro .slide > :first-child:after { -webkit-transform-origin: ' + (50 + (0.5 / imgs[index % imgs.length].width * 100)) + '% 50% }', sheet.cssRules.length);
+            }
+          });
+        }
       },
 
 
@@ -865,7 +892,10 @@
         });
 
         // if slide name exists, trigger slide
-        if (name && name.length) methods.trigger(slides.index(name));
+        if (name && name.length) {
+          methods.trigger(slides.index(name));
+          methods.pause();
+        }
       },
 
       triggerDirection : function(dir) {
@@ -906,23 +936,24 @@
       },
 
       scalePlugin : function() {
-        // var scale = Math.min(elem.parent().outerWidth(true) / settings.horizontalWidth); // linear scale
-        // var ieOl;
+        var scale = Math.min(elem.parent().outerWidth() / settings.horizontalWidth), // linear scale
+            prefixes = ['Webkit', 'Moz', 'Ms', 'O', ''];
 
-        // // limit max scale to 1
-        // // scale = ().toFixed(2);
-        // scale = Math.min(scale, 1);
+        // limit max scale to 1
+        scale = +(Math.min(scale, 1).toFixed(2));
 
-        // // css3 scaling not supported in ie8
-        // if (!elem.hasClass('ie8')) {
-        //   elem.css(Modernizr.prefixed('transform'), 'scale(' + scale + ')');
+        // css3 scaling not supported in ie8
+        if (!elem.hasClass('ie8')) {
+          $.each(prefixes, function(index, prefix) {
+            elem.css((prefix + 'Transform'), 'scale(' + scale + ')');
+          });
 
-        //   if (orientation) { // horizontal?
-        //     elem.css('margin-bottom', -(settings.horizontalHeight - (settings.horizontalHeight * scale)).toFixed(2));
-        //   }
-        // } else {
-        //   elem.css('zoom', scale);
-        // }
+          if (horizontal) {
+            elem.css('margin-bottom', -(settings.horizontalHeight - (settings.horizontalHeight * scale)).toFixed(2));
+          }
+        } else {
+          elem.css('zoom', scale);
+        }
       },
 
       init : function() {
@@ -957,11 +988,22 @@
         core.timer = 0;
       },
 
+      pause : function() {
+        methods.stop();
+
+        // pause for 2x cycleSpeed
+        setTimeout(function() {
+          if (settings.autoPlay) methods.play();
+        }, settings.cycleSpeed);
+      },
+
       next : function() {
+        methods.pause();
         methods.trigger(core.nextSlide());
       },
 
       prev : function() {
+        methods.pause();
         methods.trigger(core.currentSlide - 1);
       },
 
