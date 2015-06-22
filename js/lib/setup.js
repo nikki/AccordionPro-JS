@@ -264,11 +264,6 @@
             'line-height' : (tab.h - (tabBorder ? (tabBorder + padding) : padding)) + 'px',
             'font-family' : settings.tab.font
           });
-
-        // fixes for stitch
-        if (settings.theme === 'stitch') {
-          this.width(this.width() - tabBorder)
-        }
       },
 
 
@@ -283,7 +278,7 @@
             calc;
 
         // calculate global tab dimensions
-        tab.w = horizontal ? slide.h : elem.width();
+        tab.w = horizontal ? slide.h : '100%';
 
         // set dimensions of each tab
         tabs.each(function(index) {

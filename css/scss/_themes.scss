@@ -79,6 +79,12 @@
         }
     }
 
+    &.vertical {
+        .slide > :first-child {
+            width: 100% !important;
+        }
+    }
+
     &.rtl .slide.selected > :first-child:before {
         right: auto;
         left: 38px;
