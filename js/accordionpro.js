@@ -219,7 +219,7 @@
         } else {
           // variable height or flexible (fitToContent) height
           if (fitToContent) {
-            calc.height = transparent ? panelH : panelH + tab.h; // variable height
+            calc.height = transparent ? panelH : panelH + tab.h + padding; // variable height
           } else {
             calc.height = slide.h + tab.h; // fixed height
           }
@@ -306,6 +306,11 @@
             'line-height' : (tab.h - (tabBorder ? (tabBorder + padding) : padding)) + 'px',
             'font-family' : settings.tab.font
           });
+
+        // fixes for stitch
+        if (settings.theme === 'stitch' && horizontal) {
+          this.width(this.width() - tabBorder);
+        }
       },
 
 
@@ -340,7 +345,7 @@
        * Calculate panel widths, heights, positions
        */
 
-      calcPanelDimensions : function(index, panelH) {
+      calcPanelDimensions : function(index) {
         var calc = {
           width : 0,
           height : 0,
@@ -357,7 +362,7 @@
           }
         } else {
           if (fitToContent) {
-            calc.height = 'auto'; // panelH?
+            calc.height = slides.eq(index).children('div').height();
           } else {
             calc.height = transparent ? (slide.h + tab.h) : slide.h - offset - padding;
           }
@@ -469,6 +474,10 @@
 
       setPluginVisible : function() {
         elem.css('visibility', 'visible');
+
+        setTimeout(function() {
+          elem.css('transition', 'all ' + settings.slideSpeed + 'ms ease-in-out');
+        }, 100);
       },
 
 
@@ -524,7 +533,8 @@
         this.setCustomTabImages();
         this.setCustomTabColours();
 
-        // !!! FOR TESTING
+        // check images are loaded before setting up slide positions
+        imagesLoaded(elem, function() {
           _this.calcBoxDimensions();
           _this.setSlidesDimensions();
           _this.setTabsDimensions();
@@ -534,10 +544,14 @@
           _this.setPluginVisible();
           // _this.internetExploder();
 
+          // init autoPlay
+          if (!settings.startClosed && settings.autoPlay) methods.play();
 
-        // check images are loaded before setting up slide positions
-        imagesLoaded(elem, function() {
+          // init fitToContent
+          if (!settings.startClosed && fitToContent) core.fitToContent();
 
+          // fitToContent and scaleImages not compatible
+          // if (fitToContent) settings.scaleImages = false;
         });
       }
     };
@@ -682,6 +696,9 @@
       resize : function() { // +orientationchange
         var timer = 0;
 
+        // set initial scale (before 200ms timeout)
+        core.scalePlugin();
+
         if (horizontal && settings.responsive) {
           $window.on('load.accordionPro resize.accordionPro orientationchange.accordionPro', function() {
             // approximates onresizeend
@@ -735,38 +752,22 @@
 
 
       /**
-       *
-       */
-
-      fitToContent : function() {
-
-      },
-
-
-      /**
        * Animate single slide
        */
 
-      // !!! need to pass fitToContent height in
       animateSlide : function(props) {
-        // don't animate first slide
-        if (typeof props.index === 'number' && !props.index) return;
+        var _this = this;
 
-        // set animate position for single selected slide
-        if (props.selected) {
-          props[props.position] = (props.index * tab.h) + (props.side ? 0 : slide[horizontal ? 'w' : 'h']);
-        }
-
-        // animate slide
+        // animate single slide
         this
           .stop(true)
           .animate(
             props,
             settings.slideSpeed,
             function() {
-              // set selected slide if single
-              if (props.selected) {
-                core.setSelectedSlide.call(slides.eq(props.index - 1 ));
+              // set selected slide if clicked 'self'
+              if (_this.hasClass('selected') && !props.side) {
+                core.setSelectedSlide.call(_this.prev());
               }
             }
           )
@@ -778,10 +779,16 @@
        */
 
       animateSlides : function(props) {
-        var index = props.index,
+        var _this = this,
+            index = props.index,
+            triggerHeight = slides.eq(index).height() - tab.h,
             position = props.position,
             side = props.side,
-            expr = '';
+            expr = '',
+            pos = 0;
+
+        // side 0 = left/top, side 1 = bottom/right
+        pos = side ? 0 : fitToContent ? triggerHeight : slide[horizontal ? 'w' : 'h'];
 
         // build expression
         expr += side ? ':lt(' : ':gt(';
@@ -794,10 +801,12 @@
           .each(function() {
             var $this = $(this),
                 index = slides.index($this),
-                props = {};
+                props = {
+                  side : side
+                };
 
-            // side 0 = left/top, side 1 = bottom/right
-            props[position] = (index * tab.h) + (side ? 0 : slide[horizontal ? 'w' : 'h']);
+            // set position
+            props[position] = (index * tab.h) + pos;
 
             // animate single slide
             core.animateSlide.call($this, props);
@@ -817,14 +826,29 @@
             props = {
               index : slides.index($slide),
               position : horizontal ? (settings.rtl ? 'right' : 'left') : 'top',
-              selected : $slide.hasClass('selected')
+              self : false
             };
 
         // side 0 = left/top, side 1 = bottom/right (flipped for rtl)
         props.side = parseInt($slide.css(props.position), 10) > props.index * tab.h;
 
-        // animate single (currently selected) slide, or animate a group of slides
-        core['animateSlide' + (props.selected ? '' : 's')].call($slide, props);
+        // if slide already selected, push to other side of expr
+        if ($slide.hasClass('selected') && !props.side) {
+          props.self = true;
+          props.index -= 1;
+        };
+
+        // animate slides
+        core.animateSlides.call($slide, props);
+
+        // animate both sides for vertical fitToContent
+        if (fitToContent) {
+          props.side = !props.side;
+          core.animateSlides.call($slide, props);
+
+          // fit accordion dimensions to content
+          core.fitToContent(props.self);
+        }
       },
 
 
@@ -845,11 +869,39 @@
 
 
       /**
-       * Should this be here? Not setup + event?
+       * Fit the accordion to the content height (vertical fitToContent option)
        */
 
-      triggerFromClosed : function() {
-        // start closed
+      fitToContent : function(selected) {
+        var $slide = slides.eq(core.currentSlide - (selected ? 1 : 0));
+
+        // ignore 'self' click on first slide
+        if (selected && !core.currentSlide) return;
+
+        // set height
+        elem.height(((slide.l - 1) * tab.h) + $slide.height());
+      },
+
+
+      /**
+       * Activate closed accordion
+       */
+
+      triggerFromClosed : function(e) {
+        if (fitToContent) {
+          core.fitToContent();
+        } else {
+          setup.setPluginDimensions();
+        }
+
+        // remove closed class
+        elem.removeClass('closed');
+
+        // unbind event
+        tabs.off('click.accordionPro.closed touchstart.accordionPro.closed mouseover.accordionPro.closed');
+
+        // trigger autoplay
+        if (settings.autoPlay) methods.play();
       },
 
 
@@ -910,6 +962,9 @@
         var scale = Math.min(elem.parent().outerWidth() / settings.horizontalWidth), // linear scale
             prefixes = ['Webkit', 'Moz', 'Ms', 'O', ''];
 
+        // only scale horizontal accordions
+        if (!horizontal) return;
+
         // limit max scale to 1
         scale = +(Math.min(scale, 1).toFixed(2));
 
@@ -925,12 +980,6 @@
         } else {
           elem.css('zoom', scale);
         }
-      },
-
-      init : function() {
-        // init autoplay
-        // if (!settings.startClosed && settings.autoPlay) methods.play();
-        if (settings.autoPlay) methods.play();
       }
     };
 
@@ -962,7 +1011,7 @@
       pause : function() {
         methods.stop();
 
-        // pause for 2x cycleSpeed
+        // pause
         setTimeout(function() {
           if (settings.autoPlay) methods.play();
         }, settings.cycleSpeed);
@@ -1012,7 +1061,6 @@
 
     setup.init();
     events.init();
-    core.init();
 
 
     /**

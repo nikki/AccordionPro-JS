@@ -25,7 +25,7 @@
       pause : function() {
         methods.stop();
 
-        // pause for 2x cycleSpeed
+        // pause
         setTimeout(function() {
           if (settings.autoPlay) methods.play();
         }, settings.cycleSpeed);
@@ -75,7 +75,6 @@
 
     setup.init();
     events.init();
-    core.init();
 
 
     /**

@@ -177,7 +177,7 @@
         } else {
           // variable height or flexible (fitToContent) height
           if (fitToContent) {
-            calc.height = transparent ? panelH : panelH + tab.h; // variable height
+            calc.height = transparent ? panelH : panelH + tab.h + padding; // variable height
           } else {
             calc.height = slide.h + tab.h; // fixed height
           }
@@ -264,6 +264,11 @@
             'line-height' : (tab.h - (tabBorder ? (tabBorder + padding) : padding)) + 'px',
             'font-family' : settings.tab.font
           });
+
+        // fixes for stitch
+        if (settings.theme === 'stitch' && horizontal) {
+          this.width(this.width() - tabBorder);
+        }
       },
 
 
@@ -298,7 +303,7 @@
        * Calculate panel widths, heights, positions
        */
 
-      calcPanelDimensions : function(index, panelH) {
+      calcPanelDimensions : function(index) {
         var calc = {
           width : 0,
           height : 0,
@@ -315,7 +320,7 @@
           }
         } else {
           if (fitToContent) {
-            calc.height = 'auto'; // panelH?
+            calc.height = slides.eq(index).children('div').height();
           } else {
             calc.height = transparent ? (slide.h + tab.h) : slide.h - offset - padding;
           }
@@ -427,6 +432,10 @@
 
       setPluginVisible : function() {
         elem.css('visibility', 'visible');
+
+        setTimeout(function() {
+          elem.css('transition', 'all ' + settings.slideSpeed + 'ms ease-in-out');
+        }, 100);
       },
 
 
@@ -482,7 +491,8 @@
         this.setCustomTabImages();
         this.setCustomTabColours();
 
-        // !!! FOR TESTING
+        // check images are loaded before setting up slide positions
+        imagesLoaded(elem, function() {
           _this.calcBoxDimensions();
           _this.setSlidesDimensions();
           _this.setTabsDimensions();
@@ -492,10 +502,14 @@
           _this.setPluginVisible();
           // _this.internetExploder();
 
+          // init autoPlay
+          if (!settings.startClosed && settings.autoPlay) methods.play();
 
-        // check images are loaded before setting up slide positions
-        imagesLoaded(elem, function() {
+          // init fitToContent
+          if (!settings.startClosed && fitToContent) core.fitToContent();
 
+          // fitToContent and scaleImages not compatible
+          // if (fitToContent) settings.scaleImages = false;
         });
       }
     };

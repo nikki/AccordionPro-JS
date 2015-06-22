@@ -137,6 +137,9 @@
       resize : function() { // +orientationchange
         var timer = 0;
 
+        // set initial scale (before 200ms timeout)
+        core.scalePlugin();
+
         if (horizontal && settings.responsive) {
           $window.on('load.accordionPro resize.accordionPro orientationchange.accordionPro', function() {
             // approximates onresizeend
