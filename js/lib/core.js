@@ -13,12 +13,28 @@
       currentSlide : settings.tab.selected - 1,
 
       // previous slide
-      previousSlide : null,
+      previousSlide : -1,
 
-      // next slide index
+
+      /**
+       * Set next slide ref
+       */
+
       nextSlide : function() {
-        core.currentSlide++;
-        return core.currentSlide % slide.l;
+        return ++core.currentSlide % slide.l;
+      },
+
+
+      /**
+       * Update slide counters
+       */
+
+      updateSlideRefs : function() {
+        // update previousSlide ref
+        core.previousSlide = slides.index(slides.filter('.selected'));
+
+        // update currentSlide ref
+        core.currentSlide = tabs.index(this);
       },
 
 
@@ -39,6 +55,11 @@
               // set selected slide if clicked 'self'
               if (_this.hasClass('selected') && !props.side) {
                 core.setSelectedSlide.call(_this.prev());
+
+                // !!! problem here is that the slide callbacks
+                // are being triggered before this animation callback
+                // is fired, so the reference to core.currentSlide
+                // is out of date
               }
             }
           )
@@ -92,7 +113,7 @@
        * Trigger slide animation
        */
 
-      trigger : function(e) {
+      trigger : function() {
         var $slide = $(this).parent(),
             props = {
               index : slides.index($slide),
@@ -124,7 +145,7 @@
 
 
       /**
-       * Set currently selected slide class, update core.currentSlide
+       * Set currently selected slide class, update slide refs, trigger callbacks
        */
 
       setSelectedSlide : function() {
@@ -133,9 +154,19 @@
 
         // add selected class to selected slide
         this.addClass('selected');
+      },
 
-        // update currentSlide ref
-        core.currentSlide = slides.index(this);
+
+      /**
+       *
+       */
+
+      triggerCallbacks : function() {
+        // trigger onSlideOpen callback
+        settings.onSlideOpen.call(slides.eq(core.currentSlide).children('div'));
+
+        // trigger onSlideClose callback
+        settings.onSlideClose.call(slides.eq(core.previousSlide).children('div'));
       },
 
 
@@ -193,13 +224,9 @@
       },
 
       triggerDirection : function(dir) {
-        console.log(dir);
-
-/*
-
-        slides.swipe({
-          left : function() {
-            if (orientation) {
+        switch (dir) {
+          case 'left':
+            if (horizontal) {
               if (settings.rtl) {
                 // don't select previous slide if current slide is index zero
                 if (core.currentSlide) methods.prev();
@@ -207,26 +234,33 @@
                 methods.next();
               }
             }
-          },
-          right : function() {
-            if (orientation) {
+
+            break;
+          case 'right':
+            if (horizontal) {
               if (settings.rtl) {
                 methods.next();
               } else {
                 if (core.currentSlide) methods.prev();
               }
             }
-          },
-          up : function() {
-            if (!orientation) methods.next();
-          },
-          down : function() {
-            if (!orientation && core.currentSlide) methods.prev();
-          },
-          threshold: { x: 80, y: 80 }
-        });
- */
 
+            break;
+          case 'up':
+            if (!horizontal) {
+              methods.next();
+            }
+
+            break;
+          case 'down':
+            if (!horizontal && core.currentSlide) {
+              methods.prev();
+            }
+
+            break;
+          default:
+            break;
+        }
       },
 
       scalePlugin : function() {

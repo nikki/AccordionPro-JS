@@ -8,9 +8,9 @@
     startClosed : false,                    // start in a closed position
 
     /* aesthetics */
-    theme : 'basic',                        // basic, bordered, stitch or transparent
+    theme : 'basic',                        // 'basic', 'bordered', 'stitch' or 'transparent'
     colour : {
-      scheme : null,                        // colour scheme, none set by default
+      scheme : 'charcoal',                  // colour scheme, 'charcoal' set by default
       style : 'flat'                        // choose from 'flat' or 'gradient'
     },
     rounded : false,                        // square or rounded corners
@@ -34,7 +34,6 @@
       icon : 'none',                        // set tab icon -> none, number, chevron, disc, square, custom
       customIcons : [],                     // set a custom image for each icon
       customColours : [],                   // set a custom colour for each tab
-      textOrientation : 'normal',           // set text orientation -> normal, vertical
       selected : 1                          // displays slide (n) on page load
     },
 

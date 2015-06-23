@@ -507,9 +507,6 @@
 
           // init fitToContent
           if (!settings.startClosed && fitToContent) core.fitToContent();
-
-          // fitToContent and scaleImages not compatible
-          // if (fitToContent) settings.scaleImages = false;
         });
       }
     };

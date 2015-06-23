@@ -549,9 +549,6 @@
 
           // init fitToContent
           if (!settings.startClosed && fitToContent) core.fitToContent();
-
-          // fitToContent and scaleImages not compatible
-          // if (fitToContent) settings.scaleImages = false;
         });
       }
     };
@@ -564,13 +561,13 @@
     var events = {
 
       /**
-       * Bind click and touchstart
+       * Bind click
        */
 
       click : function() { // +touchstart
         if (settings.activateOn === 'click') {
           // trigger animation cycle
-          tabs.on('click.accordionPro touchstart.accordionPro', core.trigger);
+          tabs.on('click.accordionPro touchstart.accordionPro', methods.trigger);
 
           if (settings.startClosed) {
             tabs.on('click.accordionPro.closed touchstart.accordionPro.closed', core.triggerFromClosed);
@@ -586,11 +583,11 @@
       mouseover : function() {
         if (settings.activateOn === 'mouseover') {
           // trigger animation cycle
-          tabs.on('click.accordionPro touchstart.accordionPro mouseover.accordionPro', core.trigger);
+          tabs.on('mouseover.accordionPro', methods.trigger);
 
           // fire start closed event once
           if (settings.startClosed) {
-            tabs.on('click.accordionPro.closed touchstart.accordionPro.closed mouseover.accordionPro.closed', core.triggerFromClosed);
+            tabs.on('mouseover.accordionPro.closed', core.triggerFromClosed);
           }
         }
       },
@@ -601,7 +598,7 @@
        */
 
       hover : function() {
-        if (settings.pauseOnHover && settings.autoPlay) {
+        if (settings.pauseOnHover && settings.autoPlay && !touch) {
           elem
             .on('mouseover.accordionPro', function() {
               if (!elem.hasClass('closed')) {
@@ -610,7 +607,7 @@
             })
             .on('mouseout.accordionPro', function() {
               if (!elem.hasClass('closed')) {
-                !core.timer && methods.play(core.currentSlide);
+                !core.timer && methods.play();
               }
             });
         }
@@ -622,7 +619,8 @@
        */
 
       swipe : function() {
-        var startPos = {
+        var tap = false,
+            startPos = {
               x : 0,
               y : 0
             };
@@ -653,12 +651,23 @@
 
         if (touch) {
           // unbind existing events
-          tabs.off('.accordionPro');
+          tabs.off('click.accordionPro mouseover.accordionPro');
+
+          // scrollable panels aren't compatible with swipe events
+          if (settings.panel.scrollable) return;
 
           // bind swipe events
           slides.on({
             touchstart : function(e) {
+              if (e.originalEvent.target.nodeName === 'H3') {
+                tap = true;
+              }
+// console.log(e);
               startPos = getTouchPos(e.originalEvent, 1);
+            },
+
+            touchmove : function(e) {
+              e.preventDefault();
             },
 
             touchend : function(e) {
@@ -670,10 +679,11 @@
                   dy = endPos.y - startPos.y,
                   absDy = Math.abs(dy);
 
-              // trigger slide
-              core.triggerDirection(absDx > absDy ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up'));
+              // trigger slide (if the tab wasn't tapped)
+              if (!tap) core.triggerDirection(absDx > absDy ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up'));
+              tap = false;
             }
-          })
+          });
         }
       },
 
@@ -742,12 +752,28 @@
       currentSlide : settings.tab.selected - 1,
 
       // previous slide
-      previousSlide : null,
+      previousSlide : -1,
 
-      // next slide index
+
+      /**
+       * Set next slide ref
+       */
+
       nextSlide : function() {
-        core.currentSlide++;
-        return core.currentSlide % slide.l;
+        return ++core.currentSlide % slide.l;
+      },
+
+
+      /**
+       * Update slide counters
+       */
+
+      updateSlideRefs : function() {
+        // update previousSlide ref
+        core.previousSlide = slides.index(slides.filter('.selected'));
+
+        // update currentSlide ref
+        core.currentSlide = tabs.index(this);
       },
 
 
@@ -768,6 +794,11 @@
               // set selected slide if clicked 'self'
               if (_this.hasClass('selected') && !props.side) {
                 core.setSelectedSlide.call(_this.prev());
+
+                // !!! problem here is that the slide callbacks
+                // are being triggered before this animation callback
+                // is fired, so the reference to core.currentSlide
+                // is out of date
               }
             }
           )
@@ -821,7 +852,7 @@
        * Trigger slide animation
        */
 
-      trigger : function(e) {
+      trigger : function() {
         var $slide = $(this).parent(),
             props = {
               index : slides.index($slide),
@@ -853,7 +884,7 @@
 
 
       /**
-       * Set currently selected slide class, update core.currentSlide
+       * Set currently selected slide class, update slide refs, trigger callbacks
        */
 
       setSelectedSlide : function() {
@@ -862,9 +893,19 @@
 
         // add selected class to selected slide
         this.addClass('selected');
+      },
 
-        // update currentSlide ref
-        core.currentSlide = slides.index(this);
+
+      /**
+       *
+       */
+
+      triggerCallbacks : function() {
+        // trigger onSlideOpen callback
+        settings.onSlideOpen.call(slides.eq(core.currentSlide).children('div'));
+
+        // trigger onSlideClose callback
+        settings.onSlideClose.call(slides.eq(core.previousSlide).children('div'));
       },
 
 
@@ -922,13 +963,9 @@
       },
 
       triggerDirection : function(dir) {
-        console.log(dir);
-
-/*
-
-        slides.swipe({
-          left : function() {
-            if (orientation) {
+        switch (dir) {
+          case 'left':
+            if (horizontal) {
               if (settings.rtl) {
                 // don't select previous slide if current slide is index zero
                 if (core.currentSlide) methods.prev();
@@ -936,26 +973,33 @@
                 methods.next();
               }
             }
-          },
-          right : function() {
-            if (orientation) {
+
+            break;
+          case 'right':
+            if (horizontal) {
               if (settings.rtl) {
                 methods.next();
               } else {
                 if (core.currentSlide) methods.prev();
               }
             }
-          },
-          up : function() {
-            if (!orientation) methods.next();
-          },
-          down : function() {
-            if (!orientation && core.currentSlide) methods.prev();
-          },
-          threshold: { x: 80, y: 80 }
-        });
- */
 
+            break;
+          case 'up':
+            if (!horizontal) {
+              methods.next();
+            }
+
+            break;
+          case 'down':
+            if (!horizontal && core.currentSlide) {
+              methods.prev();
+            }
+
+            break;
+          default:
+            break;
+        }
       },
 
       scalePlugin : function() {
@@ -989,12 +1033,16 @@
      */
 
     var methods = {
-      trigger : function(index) {
-        tabs.eq(index).trigger('click.accordionPro');
+      trigger : function(e) {
+        var _this = (typeof e === 'number') ? tabs.eq(e)[0] : this;
+
+        core.updateSlideRefs.call(_this);
+        core.trigger.call(_this, e);
+        core.triggerCallbacks();
+        if (touch && settings.autoPlay) methods.pause();
       },
 
-      play : function(index) {
-        var next;
+      play : function() {
         if (core.timer) return;
 
         // start autoplay
@@ -1012,9 +1060,7 @@
         methods.stop();
 
         // pause
-        setTimeout(function() {
-          if (settings.autoPlay) methods.play();
-        }, settings.cycleSpeed);
+        if (settings.autoPlay) methods.play();
       },
 
       next : function() {
@@ -1082,9 +1128,9 @@
     startClosed : false,                    // start in a closed position
 
     /* aesthetics */
-    theme : 'basic',                        // basic, bordered, stitch or transparent
+    theme : 'basic',                        // 'basic', 'bordered', 'stitch' or 'transparent'
     colour : {
-      scheme : null,                        // colour scheme, none set by default
+      scheme : 'charcoal',                  // colour scheme, 'charcoal' set by default
       style : 'flat'                        // choose from 'flat' or 'gradient'
     },
     rounded : false,                        // square or rounded corners
@@ -1108,7 +1154,6 @@
       icon : 'none',                        // set tab icon -> none, number, chevron, disc, square, custom
       customIcons : [],                     // set a custom image for each icon
       customColours : [],                   // set a custom colour for each tab
-      textOrientation : 'normal',           // set text orientation -> normal, vertical
       selected : 1                          // displays slide (n) on page load
     },
 

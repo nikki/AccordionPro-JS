@@ -5,13 +5,13 @@
     var events = {
 
       /**
-       * Bind click and touchstart
+       * Bind click
        */
 
       click : function() { // +touchstart
         if (settings.activateOn === 'click') {
           // trigger animation cycle
-          tabs.on('click.accordionPro touchstart.accordionPro', core.trigger);
+          tabs.on('click.accordionPro touchstart.accordionPro', methods.trigger);
 
           if (settings.startClosed) {
             tabs.on('click.accordionPro.closed touchstart.accordionPro.closed', core.triggerFromClosed);
@@ -27,11 +27,11 @@
       mouseover : function() {
         if (settings.activateOn === 'mouseover') {
           // trigger animation cycle
-          tabs.on('click.accordionPro touchstart.accordionPro mouseover.accordionPro', core.trigger);
+          tabs.on('mouseover.accordionPro', methods.trigger);
 
           // fire start closed event once
           if (settings.startClosed) {
-            tabs.on('click.accordionPro.closed touchstart.accordionPro.closed mouseover.accordionPro.closed', core.triggerFromClosed);
+            tabs.on('mouseover.accordionPro.closed', core.triggerFromClosed);
           }
         }
       },
@@ -42,7 +42,7 @@
        */
 
       hover : function() {
-        if (settings.pauseOnHover && settings.autoPlay) {
+        if (settings.pauseOnHover && settings.autoPlay && !touch) {
           elem
             .on('mouseover.accordionPro', function() {
               if (!elem.hasClass('closed')) {
@@ -51,7 +51,7 @@
             })
             .on('mouseout.accordionPro', function() {
               if (!elem.hasClass('closed')) {
-                !core.timer && methods.play(core.currentSlide);
+                !core.timer && methods.play();
               }
             });
         }
@@ -63,7 +63,8 @@
        */
 
       swipe : function() {
-        var startPos = {
+        var tap = false,
+            startPos = {
               x : 0,
               y : 0
             };
@@ -94,12 +95,23 @@
 
         if (touch) {
           // unbind existing events
-          tabs.off('.accordionPro');
+          tabs.off('click.accordionPro mouseover.accordionPro');
+
+          // scrollable panels aren't compatible with swipe events
+          if (settings.panel.scrollable) return;
 
           // bind swipe events
           slides.on({
             touchstart : function(e) {
+              if (e.originalEvent.target.nodeName === 'H3') {
+                tap = true;
+              }
+// console.log(e);
               startPos = getTouchPos(e.originalEvent, 1);
+            },
+
+            touchmove : function(e) {
+              e.preventDefault();
             },
 
             touchend : function(e) {
@@ -111,10 +123,11 @@
                   dy = endPos.y - startPos.y,
                   absDy = Math.abs(dy);
 
-              // trigger slide
-              core.triggerDirection(absDx > absDy ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up'));
+              // trigger slide (if the tab wasn't tapped)
+              if (!tap) core.triggerDirection(absDx > absDy ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up'));
+              tap = false;
             }
-          })
+          });
         }
       },
 

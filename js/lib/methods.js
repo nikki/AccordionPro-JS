@@ -3,12 +3,16 @@
      */
 
     var methods = {
-      trigger : function(index) {
-        tabs.eq(index).trigger('click.accordionPro');
+      trigger : function(e) {
+        var _this = (typeof e === 'number') ? tabs.eq(e)[0] : this;
+
+        core.updateSlideRefs.call(_this);
+        core.trigger.call(_this, e);
+        core.triggerCallbacks();
+        if (touch && settings.autoPlay) methods.pause();
       },
 
-      play : function(index) {
-        var next;
+      play : function() {
         if (core.timer) return;
 
         // start autoplay
@@ -26,9 +30,7 @@
         methods.stop();
 
         // pause
-        setTimeout(function() {
-          if (settings.autoPlay) methods.play();
-        }, settings.cycleSpeed);
+        if (settings.autoPlay) methods.play();
       },
 
       next : function() {
