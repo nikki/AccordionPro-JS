@@ -41,22 +41,23 @@ $dark-blue: #103978;
       $(function() {
         var elem = $('#accordion').accordionPro({
           // activateOn : 'mouseover',
-          // orientation : 'vertical',
+          orientation : 'vertical',
           verticalWidth: '100%',
-          autoPlay: true,
+          // autoPlay: true,
           theme : 'basic',
           // startClosed: true,
           colour : {
             scheme : 'teal',
             style : 'flat'
           },
+          // rtl: true,
           // cycleSpeed : 3000,
           rounded: true,
           tab : {
             // size : 36,                            // set tab size
             // fontSize : 12,                        // set tab font size
             font : 'Helvetica Neue',                       // set tab font family
-            icon : 'custom',                        // set tab icon -> none, number, chevron, disc, square, custom
+            icon : 'chevron',                        // set tab icon -> none, number, chevron, disc, square, custom
             customIcons : [
               '../img-demo/user.png',
               '../img-demo/chat.png',

@@ -27,6 +27,12 @@
   /**
    * Slides
    */
+  /**
+   * Caption
+   */
+  /**
+   * No Script
+   */
 }
 .accordionPro, .accordionPro * {
   margin: 0;
@@ -51,11 +57,11 @@
 }
 .accordionPro, .accordionPro .slide, .accordionPro.slide > * {
   -webkit-tap-highlight-color: transparent;
-  -webkit-transform: translate3d(0, 0, 0);
-  -moz-transform: translate3d(0, 0, 0);
-  -ms-transform: translate3d(0, 0, 0);
-  -o-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
 }
 .accordionPro .slide {
   list-style: none;
@@ -108,7 +114,7 @@
   user-select: none;
   position: absolute;
   top: 0;
-  left: 0;
+  left: 5px;
   text-align: center;
   text-indent: 0;
 }
@@ -120,14 +126,25 @@
   overflow: hidden;
   background: #ffffff;
 }
+.accordionPro .ap-caption {
+  padding: 10px 15px;
+  position: absolute;
+  bottom: 20px;
+  right: 30px;
+  background: black;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  display: none;
+}
+.accordionPro noscript p {
+  padding: 10px;
+  margin: 0;
+  background: white;
+}
 
-/*
-
-.accordionPro .slide > h2 b {  }
-.accordionPro .ap-caption { padding: 10px 15px; position: absolute; bottom: 20px; right: 30px; background: black;
-    background: rgba(0,0,0,0.7); color: white; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; display: none }
-.accordionPro noscript p { padding: 10px; margin: 0; background: white }
-*/
 /*********************************** ORIENTATION */
 /************************************ Horizontal */
 .accordionPro.horizontal {
@@ -161,11 +178,19 @@
 }
 .accordionPro.vertical .slide > :first-child:after {
   left: auto;
-  right: 0;
+  right: 5px;
+}
+.accordionPro.vertical .slide > :first-child.custom:after {
   -webkit-transform: rotate(0deg) !important;
   -moz-transform: rotate(0deg) !important;
   -o-transform: rotate(0deg) !important;
   transform: rotate(0deg) !important;
+}
+.accordionPro.vertical .slide.selected > :first-child.chevron:after {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
 }
 .accordionPro.vertical.fitToContent .slide > div {
   height: auto;
@@ -175,14 +200,8 @@
 /****************************************** Tabs */
 .accordionPro .slide > :first-child {
   /**
-   * Text orientation
+   * Tab icons
    */
-  /**
-   * Custom tab icons
-   */
-}
-.accordionPro .slide > :first-child.alt-text-orientation {
-  /*writing-mode: tb-rl;*/
 }
 .accordionPro .slide > :first-child.number:after {
   counter-increment: number;
@@ -193,16 +212,20 @@
   transform: rotate(90deg);
 }
 .accordionPro .slide > :first-child.disc:after {
+  font-size: 1.4em;
   content: '\2022';
 }
 .accordionPro .slide > :first-child.square:after {
+  font-size: 1.4em;
   content: '\25AA';
 }
 .accordionPro .slide > :first-child.chevron:after {
+  font-size: 1.4em;
   content: '\203A';
-}
-.accordionPro .slide > :first-child.chevron:hover:after {
-  /* css rotate ? */
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 .accordionPro .slide > :first-child.custom:after {
   -webkit-transform: rotate(90deg);
@@ -211,6 +234,12 @@
   transform: rotate(90deg);
   background-repeat: no-repeat;
   background-position: center center;
+}
+.accordionPro .slide.selected > :first-child.chevron:after {
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  transform: rotate(-90deg);
 }
 
 /*************************************** Rounded */
@@ -264,11 +293,19 @@
 }
 .accordionPro.rtl.horizontal .slide > :first-child:after {
   left: auto;
-  right: 0;
-  -webkit-transform: rotate(-90deg);
-  -moz-transform: rotate(-90deg);
-  -o-transform: rotate(-90deg);
-  transform: rotate(-90deg);
+  right: 5px;
+}
+.accordionPro.rtl.horizontal .slide > :first-child.custom:after {
+  -webkit-transform: rotate(-90deg) !important;
+  -moz-transform: rotate(-90deg) !important;
+  -o-transform: rotate(-90deg) !important;
+  transform: rotate(-90deg) !important;
+}
+.accordionPro.rtl.horizontal .slide.selected > :first-child.chevron:after {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
 }
 .accordionPro.rtl.vertical .slide > :first-child {
   text-align: right;
@@ -276,7 +313,13 @@
 }
 .accordionPro.rtl.vertical .slide > :first-child:after {
   right: auto;
-  left: 0;
+  left: 5px;
+}
+.accordionPro.rtl.vertical .slide.selected > :first-child.chevron:after {
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  transform: rotate(-90deg);
 }
 
 /************************************ Scrollable */
@@ -412,7 +455,7 @@
   background: #c2c2c2;
 }
 .accordionPro.scheme-white.scrollable ::-webkit-scrollbar-thumb {
-  background: #a3a3a3;
+  background: #ffffff;
   -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
 .accordionPro.scheme-white.bordered, .accordionPro.scheme-white.stitch {
@@ -483,7 +526,7 @@
   background: #8396a1;
 }
 .accordionPro.scheme-silver.scrollable ::-webkit-scrollbar-thumb {
-  background: #647784;
+  background: #c9d1d6;
   -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
 .accordionPro.scheme-silver.bordered, .accordionPro.scheme-silver.stitch {
@@ -554,7 +597,7 @@
   background: #545a5a;
 }
 .accordionPro.scheme-grey.scrollable ::-webkit-scrollbar-thumb {
-  background: #373b3b;
+  background: #919898;
   -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
 .accordionPro.scheme-grey.bordered, .accordionPro.scheme-grey.stitch {
@@ -625,7 +668,7 @@
   background: #121212;
 }
 .accordionPro.scheme-charcoal.scrollable ::-webkit-scrollbar-thumb {
-  background: black;
+  background: #4F4F4F;
   -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
 .accordionPro.scheme-charcoal.bordered, .accordionPro.scheme-charcoal.stitch {
@@ -665,77 +708,6 @@
   background-color: rgba(79, 79, 79, 0.75) !important;
 }
 
-/****************************************** black */
-.accordionPro.scheme-black.style-flat .slide > :first-child {
-  background-color: black;
-}
-.accordionPro.scheme-black.style-gradient.horizontal .slide > :first-child {
-  background-color: #080808;
-  background-image: -webkit-gradient(linear, left top, right top, from(black), to(#080808));
-  background-image: -webkit-linear-gradient(left, black, #080808);
-  background-image: -moz-linear-gradient(left, black, #080808);
-  background-image: -ms-linear-gradient(left, black, #080808);
-  background-image: -o-linear-gradient(left, black, #080808);
-  background-image: linear-gradient(left, black, #080808);
-  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=1,StartColorStr='black', EndColorStr='#080808');
-}
-.accordionPro.scheme-black.style-gradient.vertical .slide > :first-child {
-  background-color: black;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#080808), to(black));
-  background-image: -webkit-linear-gradient(top, #080808, black);
-  background-image: -moz-linear-gradient(top, #080808, black);
-  background-image: -ms-linear-gradient(top, #080808, black);
-  background-image: -o-linear-gradient(top, #080808, black);
-  background-image: linear-gradient(top, #080808, black);
-  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#080808', EndColorStr='black');
-}
-.accordionPro.scheme-black.style-flat .slide.selected > :first-child, .accordionPro.scheme-black.style-gradient .slide.selected > :first-child {
-  background-color: #080808;
-}
-.accordionPro.scheme-black.scrollable ::-webkit-scrollbar {
-  background: black;
-}
-.accordionPro.scheme-black.scrollable ::-webkit-scrollbar-thumb {
-  background: black;
-  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
-}
-.accordionPro.scheme-black.bordered, .accordionPro.scheme-black.stitch {
-  border-color: black;
-  background-color: black;
-  -webkit-box-shadow: 0 -1px 0 #171717 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: 0 -1px 0 #171717 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
-  -ms-box-shadow: 0 -1px 0 #171717 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
-  -o-box-shadow: 0 -1px 0 #171717 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
-  box-shadow: 0 -1px 0 #171717 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
-}
-.accordionPro.scheme-black.bordered .slide, .accordionPro.scheme-black.stitch .slide {
-  background-color: black;
-}
-.accordionPro.scheme-black.bordered.horizontal .slide > :first-child {
-  -webkit-box-shadow: 0 -5px 0 black inset, 0 -6px 0 black inset, 1px 0 0 black inset;
-  -moz-box-shadow: 0 -5px 0 black inset, 0 -6px 0 black inset, 1px 0 0 black inset;
-  -ms-box-shadow: 0 -5px 0 black inset, 0 -6px 0 black inset, 1px 0 0 black inset;
-  -o-box-shadow: 0 -5px 0 black inset, 0 -6px 0 black inset, 1px 0 0 black inset;
-  box-shadow: 0 -5px 0 black inset, 0 -6px 0 black inset, 1px 0 0 black inset;
-}
-.accordionPro.scheme-black.bordered.vertical .slide > :first-child {
-  -webkit-box-shadow: 0 -5px 0 black inset, 0 -6px 0 black inset, 1px 0 0 black inset;
-  -moz-box-shadow: 0 -5px 0 black inset, 0 -6px 0 black inset, 1px 0 0 black inset;
-  -ms-box-shadow: 0 -5px 0 black inset, 0 -6px 0 black inset, 1px 0 0 black inset;
-  -o-box-shadow: 0 -5px 0 black inset, 0 -6px 0 black inset, 1px 0 0 black inset;
-  box-shadow: 0 -5px 0 black inset, 0 -6px 0 black inset, 1px 0 0 black inset;
-}
-.accordionPro.scheme-black.stitch {
-  background-color: black;
-  box-shadow: 0 -1px 0 black inset, 0 5px 15px rgba(0, 0, 0, 0.4);
-}
-.accordionPro.scheme-black.stitch .slide > :first-child:before {
-  background-color: #080808;
-}
-.accordionPro.scheme-black.transparent .slide > :first-child:hover {
-  background-color: rgba(0, 0, 0, 0.75) !important;
-}
-
 /****************************************** pink */
 .accordionPro.scheme-pink.style-flat .slide > :first-child {
   background-color: #c66283;
@@ -767,7 +739,7 @@
   background: #8a3250;
 }
 .accordionPro.scheme-pink.scrollable ::-webkit-scrollbar-thumb {
-  background: #5d2236;
+  background: #ca6d8c;
   -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
 .accordionPro.scheme-pink.bordered, .accordionPro.scheme-pink.stitch {
@@ -838,7 +810,7 @@
   background: #630f17;
 }
 .accordionPro.scheme-red.scrollable ::-webkit-scrollbar-thumb {
-  background: #2e070a;
+  background: #cd1f2f;
   -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
 .accordionPro.scheme-red.bordered, .accordionPro.scheme-red.stitch {
@@ -909,7 +881,7 @@
   background: #693909;
 }
 .accordionPro.scheme-orange.scrollable ::-webkit-scrollbar-thumb {
-  background: #311b04;
+  background: #da7613;
   -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
 .accordionPro.scheme-orange.bordered, .accordionPro.scheme-orange.stitch {
@@ -980,7 +952,7 @@
   background: #735c00;
 }
 .accordionPro.scheme-yellow.scrollable ::-webkit-scrollbar-thumb {
-  background: #352b00;
+  background: #edbe00;
   -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
 .accordionPro.scheme-yellow.bordered, .accordionPro.scheme-yellow.stitch {
@@ -1051,7 +1023,7 @@
   background: #07200d;
 }
 .accordionPro.scheme-green.scrollable ::-webkit-scrollbar-thumb {
-  background: black;
+  background: #1D8435;
   -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
 .accordionPro.scheme-green.bordered, .accordionPro.scheme-green.stitch {
@@ -1122,7 +1094,7 @@
   background: #07342c;
 }
 .accordionPro.scheme-teal.scrollable ::-webkit-scrollbar-thumb {
-  background: black;
+  background: #16a085;
   -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
 .accordionPro.scheme-teal.bordered, .accordionPro.scheme-teal.stitch {
@@ -1193,7 +1165,7 @@
   background: #147ab8;
 }
 .accordionPro.scheme-light-blue.scrollable ::-webkit-scrollbar-thumb {
-  background: #0e5580;
+  background: #59b5ed;
   -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
 .accordionPro.scheme-light-blue.bordered, .accordionPro.scheme-light-blue.stitch {
@@ -1264,7 +1236,7 @@
   background: #143a75;
 }
 .accordionPro.scheme-blue.scrollable ::-webkit-scrollbar-thumb {
-  background: #0b2041;
+  background: #286edb;
   -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
 .accordionPro.scheme-blue.bordered, .accordionPro.scheme-blue.stitch {
@@ -1335,7 +1307,7 @@
   background: #02060c;
 }
 .accordionPro.scheme-dark-blue.scrollable ::-webkit-scrollbar-thumb {
-  background: black;
+  background: #103978;
   -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
 .accordionPro.scheme-dark-blue.bordered, .accordionPro.scheme-dark-blue.stitch {

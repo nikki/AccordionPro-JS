@@ -4,17 +4,7 @@
     .slide > :first-child {
 
         /**
-         * Text orientation
-         */
-
-        &.alt-text-orientation {
-
-            /*writing-mode: tb-rl;*/
-        }
-
-
-        /**
-         * Custom tab icons
+         * Tab icons
          */
 
         &.number:after {
@@ -27,19 +17,22 @@
         }
 
         &.disc:after {
+            font-size: 1.4em;
             content: '\2022';
         }
 
         &.square:after {
+            font-size: 1.4em;
             content: '\25AA';
         }
 
         &.chevron:after {
+            font-size: 1.4em;
             content: '\203A';
-        }
-
-        &.chevron:hover:after {
-            /* css rotate ? */
+            -webkit-transform: rotate(180deg);
+            -moz-transform: rotate(180deg);
+            -o-transform: rotate(180deg);
+            transform: rotate(180deg);
         }
 
         &.custom:after {
@@ -49,6 +42,15 @@
             transform: rotate(90deg);
             background-repeat: no-repeat;
             background-position: center center;
+        }
+    }
+
+    .slide.selected {
+        > :first-child.chevron:after {
+            -webkit-transform: rotate(-90deg);
+            -moz-transform: rotate(-90deg);
+            -o-transform: rotate(-90deg);
+            transform: rotate(-90deg);
         }
     }
 }
@@ -121,12 +123,24 @@
 
                 &:after {
                     left: auto;
-                    right: 0;
-                    -webkit-transform: rotate(-90deg);
-                    -moz-transform: rotate(-90deg);
-                    -o-transform: rotate(-90deg);
-                    transform: rotate(-90deg);
+                    right: 5px;
                 }
+
+                &.custom:after {
+                    -webkit-transform: rotate(-90deg) !important;
+                    -moz-transform: rotate(-90deg) !important;
+                    -o-transform: rotate(-90deg) !important;
+                    transform: rotate(-90deg) !important;
+                }
+            }
+        }
+
+        .slide.selected {
+            > :first-child.chevron:after {
+                -webkit-transform: rotate(90deg);
+                -moz-transform: rotate(90deg);
+                -o-transform: rotate(90deg);
+                transform: rotate(90deg);
             }
         }
     }
@@ -139,8 +153,17 @@
 
                 &:after {
                     right: auto;
-                    left: 0;
+                    left: 5px;
                 }
+            }
+        }
+
+        .slide.selected {
+            > :first-child.chevron:after {
+                -webkit-transform: rotate(-90deg);
+                -moz-transform: rotate(-90deg);
+                -o-transform: rotate(-90deg);
+                transform: rotate(-90deg);
             }
         }
     }

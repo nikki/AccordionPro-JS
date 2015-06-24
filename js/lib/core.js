@@ -196,7 +196,13 @@
        */
 
       triggerLink : function(e) {
-        var name = slides.filter(function() {
+        var name;
+
+        // still closed?
+        if (elem.hasClass('closed')) return;
+
+        // link refers to a slide?
+        name = slides.filter(function() {
           return $(this).attr('data-slide-name') === window.location.hash.split('#')[1];
         });
 
@@ -248,7 +254,7 @@
       },
 
       scalePlugin : function() {
-        var scale = Math.min(elem.parent().outerWidth() / settings.horizontalWidth), // linear scale
+        var scale = Math.min(elem.parent().width() / settings.horizontalWidth), // linear scale
             prefixes = ['Webkit', 'Moz', 'Ms', 'O', ''];
 
         // only scale horizontal accordions

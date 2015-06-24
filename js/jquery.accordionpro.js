@@ -1026,6 +1026,13 @@ function getPrefixed(prop){
        */
 
       backwardsCompatibility: function() {
+        // remove span from old versions
+        tabs.each(function() {
+          var $this = $(this);
+          if ($this.children().length) {
+            $this.text($this.children().text());
+          }
+        });
 
         // theme
         if (settings.theme === 'dark') {
@@ -1932,7 +1939,13 @@ function getPrefixed(prop){
        */
 
       triggerLink : function(e) {
-        var name = slides.filter(function() {
+        var name;
+
+        // still closed?
+        if (elem.hasClass('closed')) return;
+
+        // link refers to a slide?
+        name = slides.filter(function() {
           return $(this).attr('data-slide-name') === window.location.hash.split('#')[1];
         });
 
@@ -1984,7 +1997,7 @@ function getPrefixed(prop){
       },
 
       scalePlugin : function() {
-        var scale = Math.min(elem.parent().outerWidth() / settings.horizontalWidth), // linear scale
+        var scale = Math.min(elem.parent().width() / settings.horizontalWidth), // linear scale
             prefixes = ['Webkit', 'Moz', 'Ms', 'O', ''];
 
         // only scale horizontal accordions
@@ -2110,7 +2123,7 @@ function getPrefixed(prop){
     /* aesthetics */
     theme : 'basic',                        // 'basic', 'bordered', 'stitch' or 'transparent'
     colour : {
-      scheme : 'charcoal',                  // colour scheme, 'charcoal' set by default
+      scheme : 'charcoal',                  // colour scheme, 'charcoal' set by default; choose from 'charcoal', 'white', 'silver', 'grey', 'pink', 'red', 'orange', 'yellow', 'green', 'teal', 'light-blue', 'blue', and 'dark-blue'
       style : 'flat'                        // choose from 'flat' or 'gradient'
     },
     rounded : false,                        // square or rounded corners
@@ -2131,7 +2144,7 @@ function getPrefixed(prop){
       size : 48,                            // set tab size
       fontSize : 16,                        // set tab font size
       font : 'Arial',                       // set tab font family
-      icon : 'none',                        // set tab icon -> none, number, chevron, disc, square, custom
+      icon : 'number',                      // set tab icon -> 'number', 'chevron', 'disc', 'square', 'custom', or 'none'
       customIcons : [],                     // set a custom image for each icon
       customColours : [],                   // set a custom colour for each tab
       selected : 1                          // displays slide (n) on page load
@@ -2140,7 +2153,7 @@ function getPrefixed(prop){
     /* panels */
     panel : {
       scrollable : false,                   // trigger scrollbar on vertical overflow
-      scaleImages : false                   // scales images to fit slide width and height
+      scaleImages : true                    // scales images to fit slide width and height
     },
 
     /* events */

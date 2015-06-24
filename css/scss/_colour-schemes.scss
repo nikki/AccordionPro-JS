@@ -25,7 +25,6 @@ $colours: (
     "silver": #c9d1d6,
     "grey": #919898,
     "charcoal": #4F4F4F,
-    "black": #000000,
     "pink": #ca6d8c,
     "red": #cd1f2f,
     "orange": #da7613,
@@ -42,7 +41,6 @@ $schemes: (
     "silver",
     "grey",
     "charcoal",
-    "black",
     "pink",
     "red",
     "orange",
@@ -89,7 +87,7 @@ $schemes: (
                 background: darken(map-get($colours, $name), 24%);
             }
             ::-webkit-scrollbar-thumb {
-                background: darken(map-get($colours, $name), 36%);
+                background: map-get($colours, $name);
                 -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
             }
         }

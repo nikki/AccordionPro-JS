@@ -29,12 +29,24 @@
 
             &:after {
                 left: auto;
-                right: 0;
+                right: 5px;
+            }
+
+            &.custom:after {
                 -webkit-transform: rotate(0deg) !important;
                 -moz-transform: rotate(0deg) !important;
                 -o-transform: rotate(0deg) !important;
                 transform: rotate(0deg) !important;
             }
+        }
+    }
+
+    .slide.selected {
+        > :first-child.chevron:after {
+            -webkit-transform: rotate(90deg);
+            -moz-transform: rotate(90deg);
+            -o-transform: rotate(90deg);
+            transform: rotate(90deg);
         }
     }
 

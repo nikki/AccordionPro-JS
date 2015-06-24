@@ -9,6 +9,13 @@
        */
 
       backwardsCompatibility: function() {
+        // remove span from old versions
+        tabs.each(function() {
+          var $this = $(this);
+          if ($this.children().length) {
+            $this.text($this.children().text());
+          }
+        });
 
         // theme
         if (settings.theme === 'dark') {
