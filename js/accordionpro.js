@@ -544,11 +544,15 @@
           _this.setPluginVisible();
           // _this.internetExploder();
 
+
           // init autoPlay
           if (!settings.startClosed && settings.autoPlay) methods.play();
 
           // init fitToContent
           if (!settings.startClosed && fitToContent) core.fitToContent();
+
+          // trigger callbacks for first slide
+          core.triggerCallbacks();
         });
       }
     };
@@ -564,7 +568,7 @@
        * Bind click
        */
 
-      click : function() { // +touchstart
+      click : function() {
         if (settings.activateOn === 'click') {
           // trigger animation cycle
           tabs.on('click.accordionPro touchstart.accordionPro', methods.trigger);
@@ -583,31 +587,49 @@
       mouseover : function() {
         if (settings.activateOn === 'mouseover') {
           // trigger animation cycle
-          tabs.on('mouseover.accordionPro', methods.trigger);
+          tabs.on('mouseover.accordionPro touchstart.accordionPro', methods.trigger);
 
           // fire start closed event once
           if (settings.startClosed) {
-            tabs.on('mouseover.accordionPro.closed', core.triggerFromClosed);
+            tabs.on('mouseover.accordionPro.closed touchstart.accordionPro.closed', core.triggerFromClosed);
           }
         }
       },
 
 
       /**
-       * Pause on hover
+       * Pause autoPlay on hover
        */
 
       hover : function() {
         if (settings.pauseOnHover && settings.autoPlay && !touch) {
           elem
-            .on('mouseover.accordionPro', function() {
-              if (!elem.hasClass('closed')) {
-                core.timer && methods.stop();
+            .on({
+              'mouseover.accordionPro' : function() {
+                if (!elem.hasClass('closed')) {
+                  core.timer && methods.stop();
+                }
+              },
+              'mouseout.accordionPro' : function() {
+                if (!elem.hasClass('closed')) {
+                  !core.timer && methods.play();
+                }
               }
-            })
-            .on('mouseout.accordionPro', function() {
-              if (!elem.hasClass('closed')) {
-                !core.timer && methods.play();
+            });
+        }
+      },
+
+
+      /**
+       * Pause autoPlay on touch interaction
+       */
+
+      touch : function() {
+        if (settings.autoPlay && touch) {
+          elem
+            .on({
+              'touchmove.accordionPro' : function() {
+                core.timer && methods.pause();
               }
             });
         }
@@ -658,19 +680,19 @@
 
           // bind swipe events
           slides.on({
-            touchstart : function(e) {
+            'touchstart.accordionPro' : function(e) {
               if (e.originalEvent.target.nodeName === 'H3') {
                 tap = true;
               }
-// console.log(e);
+
               startPos = getTouchPos(e.originalEvent, 1);
             },
 
-            touchmove : function(e) {
+            'touchmove.accordionPro' : function(e) {
               e.preventDefault();
             },
 
-            touchend : function(e) {
+            'touchend.accordionPro' : function(e) {
               var endPos = getTouchPos(e.originalEvent, 0);
 
               // calculate swipe direction
@@ -760,7 +782,8 @@
        */
 
       nextSlide : function() {
-        return ++core.currentSlide % slide.l;
+        var t = core.currentSlide;
+        return ++t % slide.l;
       },
 
 
@@ -769,11 +792,8 @@
        */
 
       updateSlideRefs : function() {
-        // update previousSlide ref
-        core.previousSlide = slides.index(slides.filter('.selected'));
-
-        // update currentSlide ref
-        core.currentSlide = tabs.index(this);
+        core.previousSlide = core.currentSlide;
+        core.currentSlide = slides.index(this);
       },
 
 
@@ -782,25 +802,12 @@
        */
 
       animateSlide : function(props) {
-        var _this = this;
-
         // animate single slide
         this
           .stop(true)
           .animate(
             props,
-            settings.slideSpeed,
-            function() {
-              // set selected slide if clicked 'self'
-              if (_this.hasClass('selected') && !props.side) {
-                core.setSelectedSlide.call(_this.prev());
-
-                // !!! problem here is that the slide callbacks
-                // are being triggered before this animation callback
-                // is fired, so the reference to core.currentSlide
-                // is out of date
-              }
-            }
+            settings.slideSpeed
           )
       },
 
@@ -809,42 +816,36 @@
        * Animate group of slides
        */
 
-      animateSlides : function(props) {
-        var _this = this,
-            index = props.index,
-            triggerHeight = slides.eq(index).height() - tab.h,
-            position = props.position,
-            side = props.side,
+      animateSlides : function(p) {
+        var triggerHeight = slides.eq(p.index).height() - tab.h,
             expr = '',
             pos = 0;
 
         // side 0 = left/top, side 1 = bottom/right
-        pos = side ? 0 : fitToContent ? triggerHeight : slide[horizontal ? 'w' : 'h'];
+        pos = p.side ? 0 : fitToContent ? triggerHeight : slide[horizontal ? 'w' : 'h'];
 
         // build expression
-        expr += side ? ':lt(' : ':gt(';
-        expr += side ? index + 1 : index;
+        expr += p.side ? ':lt(' : ':gt(';
+        expr += p.side ? p.index + 1 : p.index;
         expr += ')';
 
         // animate slides
         slides
           .filter(expr)
           .each(function() {
-            var $this = $(this),
-                index = slides.index($this),
-                props = {
-                  side : side
-                };
+            var $this = $(this);
+
+            // redefine index
+            p.index = slides.index($this);
 
             // set position
-            props[position] = (index * tab.h) + pos;
+            p[p.position] = (p.index * tab.h) + pos;
 
             // animate single slide
-            core.animateSlide.call($this, props);
+            core.animateSlide.call($this, p);
           });
 
-        // set selected slide
-        core.setSelectedSlide.call(this);
+        core.setSelectedSlide.call(p.selected ? this.prev() : this);
       },
 
 
@@ -857,7 +858,7 @@
             props = {
               index : slides.index($slide),
               position : horizontal ? (settings.rtl ? 'right' : 'left') : 'top',
-              self : false
+              selected : false
             };
 
         // side 0 = left/top, side 1 = bottom/right (flipped for rtl)
@@ -865,9 +866,12 @@
 
         // if slide already selected, push to other side of expr
         if ($slide.hasClass('selected') && !props.side) {
-          props.self = true;
+          props.selected = props.index;
           props.index -= 1;
         };
+
+        // update slide refs
+        core.updateSlideRefs.call(props.selected ? $slide.prev() : $slide);
 
         // animate slides
         core.animateSlides.call($slide, props);
@@ -878,7 +882,7 @@
           core.animateSlides.call($slide, props);
 
           // fit accordion dimensions to content
-          core.fitToContent(props.self);
+          core.fitToContent(props.selected);
         }
       },
 
@@ -901,6 +905,8 @@
        */
 
       triggerCallbacks : function() {
+        if (core.currentSlide === core.previousSlide) return;
+
         // trigger onSlideOpen callback
         settings.onSlideOpen.call(slides.eq(core.currentSlide).children('div'));
 
@@ -1036,10 +1042,8 @@
       trigger : function(e) {
         var _this = (typeof e === 'number') ? tabs.eq(e)[0] : this;
 
-        core.updateSlideRefs.call(_this);
         core.trigger.call(_this, e);
         core.triggerCallbacks();
-        if (touch && settings.autoPlay) methods.pause();
       },
 
       play : function() {
@@ -1088,9 +1092,10 @@
           .removeClass();
 
         slides
-          .removeClass()
-          .removeAttr('style')
+          .off('.accordionPro')
           .removeAttr('data-slide-name')
+          .removeAttr('style')
+          .removeClass()
           .children()
           .removeAttr('style');
 

@@ -6,10 +6,8 @@
       trigger : function(e) {
         var _this = (typeof e === 'number') ? tabs.eq(e)[0] : this;
 
-        core.updateSlideRefs.call(_this);
         core.trigger.call(_this, e);
         core.triggerCallbacks();
-        if (touch && settings.autoPlay) methods.pause();
       },
 
       play : function() {
@@ -58,9 +56,10 @@
           .removeClass();
 
         slides
-          .removeClass()
-          .removeAttr('style')
+          .off('.accordionPro')
           .removeAttr('data-slide-name')
+          .removeAttr('style')
+          .removeClass()
           .children()
           .removeAttr('style');
 

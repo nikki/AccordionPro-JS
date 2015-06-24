@@ -41,14 +41,16 @@ $dark-blue: #103978;
       $(function() {
         var elem = $('#accordion').accordionPro({
           // activateOn : 'mouseover',
-          orientation : 'horizontal',
+          // orientation : 'vertical',
+          verticalWidth: '100%',
           autoPlay: true,
-          theme : 'bordered',
+          theme : 'basic',
           // startClosed: true,
           colour : {
             scheme : 'teal',
             style : 'flat'
           },
+          // cycleSpeed : 3000,
           rounded: true,
           tab : {
             // size : 36,                            // set tab size
@@ -69,11 +71,11 @@ $dark-blue: #103978;
               '#59abb7',
               '#bb6098'
             */],
-            // selected : 3
+            selected : 3
           },
-          linkable : true,
+          // linkable : true,
           panel : {
-            // scrollable : true,
+            scrollable : true,
             scaleImages : true
           },
           onSlideOpen : function() {

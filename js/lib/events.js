@@ -8,7 +8,7 @@
        * Bind click
        */
 
-      click : function() { // +touchstart
+      click : function() {
         if (settings.activateOn === 'click') {
           // trigger animation cycle
           tabs.on('click.accordionPro touchstart.accordionPro', methods.trigger);
@@ -27,31 +27,49 @@
       mouseover : function() {
         if (settings.activateOn === 'mouseover') {
           // trigger animation cycle
-          tabs.on('mouseover.accordionPro', methods.trigger);
+          tabs.on('mouseover.accordionPro touchstart.accordionPro', methods.trigger);
 
           // fire start closed event once
           if (settings.startClosed) {
-            tabs.on('mouseover.accordionPro.closed', core.triggerFromClosed);
+            tabs.on('mouseover.accordionPro.closed touchstart.accordionPro.closed', core.triggerFromClosed);
           }
         }
       },
 
 
       /**
-       * Pause on hover
+       * Pause autoPlay on hover
        */
 
       hover : function() {
         if (settings.pauseOnHover && settings.autoPlay && !touch) {
           elem
-            .on('mouseover.accordionPro', function() {
-              if (!elem.hasClass('closed')) {
-                core.timer && methods.stop();
+            .on({
+              'mouseover.accordionPro' : function() {
+                if (!elem.hasClass('closed')) {
+                  core.timer && methods.stop();
+                }
+              },
+              'mouseout.accordionPro' : function() {
+                if (!elem.hasClass('closed')) {
+                  !core.timer && methods.play();
+                }
               }
-            })
-            .on('mouseout.accordionPro', function() {
-              if (!elem.hasClass('closed')) {
-                !core.timer && methods.play();
+            });
+        }
+      },
+
+
+      /**
+       * Pause autoPlay on touch interaction
+       */
+
+      touch : function() {
+        if (settings.autoPlay && touch) {
+          elem
+            .on({
+              'touchmove.accordionPro' : function() {
+                core.timer && methods.pause();
               }
             });
         }
@@ -102,19 +120,19 @@
 
           // bind swipe events
           slides.on({
-            touchstart : function(e) {
+            'touchstart.accordionPro' : function(e) {
               if (e.originalEvent.target.nodeName === 'H3') {
                 tap = true;
               }
-// console.log(e);
+
               startPos = getTouchPos(e.originalEvent, 1);
             },
 
-            touchmove : function(e) {
+            'touchmove.accordionPro' : function(e) {
               e.preventDefault();
             },
 
-            touchend : function(e) {
+            'touchend.accordionPro' : function(e) {
               var endPos = getTouchPos(e.originalEvent, 0);
 
               // calculate swipe direction

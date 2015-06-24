@@ -502,11 +502,15 @@
           _this.setPluginVisible();
           // _this.internetExploder();
 
+
           // init autoPlay
           if (!settings.startClosed && settings.autoPlay) methods.play();
 
           // init fitToContent
           if (!settings.startClosed && fitToContent) core.fitToContent();
+
+          // trigger callbacks for first slide
+          core.triggerCallbacks();
         });
       }
     };
