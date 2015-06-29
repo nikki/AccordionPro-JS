@@ -55,9 +55,35 @@
     }
 }
 
+.accordionPro.vertical {
+    .slide {
+        > :first-child {
+            &.number:after, &.custom:after {
+                -webkit-transform: rotate(0deg) !important;
+                -moz-transform: rotate(0deg) !important;
+                -o-transform: rotate(0deg) !important;
+                transform: rotate(0deg) !important;
+            }
+        }
+    }
+
+    .slide.selected {
+        > :first-child.chevron:after {
+            -webkit-transform: rotate(90deg);
+            -moz-transform: rotate(90deg);
+            -o-transform: rotate(90deg);
+            transform: rotate(90deg);
+        }
+    }
+
+    &.bordered .slide > :first-child:after {
+        top: 9px;
+    }
+}
+
 /*************************************** Rounded */
 .accordionPro.rounded {
-    overflow: hidden;
+    // overflow: hidden;
 
     /* fix for iOS */
     -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
@@ -75,20 +101,16 @@
     &.bordered {
         border-radius: 15px;
 
-        .slide {
-            > * {
-                border-radius: 6px;
-            }
+        > ol, .slide > * {
+            border-radius: 6px;
         }
     }
 
     &.stitch {
         border-radius: 11px;
 
-        .slide {
-            > * {
-                border-radius: 6px;
-            }
+        > ol, .slide > * {
+            border-radius: 6px;
         }
     }
 }
@@ -126,7 +148,7 @@
                     right: 5px;
                 }
 
-                &.custom:after {
+                &.number:after, &.custom:after {
                     -webkit-transform: rotate(-90deg) !important;
                     -moz-transform: rotate(-90deg) !important;
                     -o-transform: rotate(-90deg) !important;
@@ -141,6 +163,24 @@
                 -moz-transform: rotate(90deg);
                 -o-transform: rotate(90deg);
                 transform: rotate(90deg);
+            }
+        }
+
+        &.stitch {
+            .slide > :first-child:after {
+                right: 0;
+            }
+        }
+
+        &.ie8 {
+            .slide {
+                > :first-child {
+                    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
+
+                    &:after {
+                        -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
+                    }
+                }
             }
         }
     }
@@ -165,6 +205,22 @@
                 -o-transform: rotate(-90deg);
                 transform: rotate(-90deg);
             }
+        }
+
+        &.bordered, &.stitch {
+            .slide > :first-child:after {
+                right: auto;
+                left: 0;
+            }
+        }
+    }
+}
+
+/************************* Vertical FitToContent */
+.accordionPro.vertical.fitToContent {
+    .slide {
+        > div {
+            height: auto;
         }
     }
 }

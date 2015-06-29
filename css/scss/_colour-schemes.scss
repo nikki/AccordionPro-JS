@@ -101,32 +101,32 @@ $schemes: (
             -o-box-shadow: 0 -1px 0 lighten(map-get($colours, $name), 9%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
             box-shadow: 0 -1px 0 lighten(map-get($colours, $name), 9%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
 
+            &.horizontal {
+                .slide {
+                    > :first-child {
+                        -webkit-box-shadow: 0 1px 0 darken(map-get($colours, $name), 12%);
+                        -moz-box-shadow: 0 1px 0 darken(map-get($colours, $name), 12%);
+                        -ms-box-shadow: 0 1px 0 darken(map-get($colours, $name), 12%);
+                        -o-box-shadow: 0 1px 0 darken(map-get($colours, $name), 12%);
+                        box-shadow: 0 1px 0 darken(map-get($colours, $name), 12%);
+                    }
+                }
+            }
+
+            &.vertical {
+                .slide {
+                    > :first-child {
+                        -webkit-box-shadow: 0 1px 0 darken(map-get($colours, $name), 12%);
+                        -moz-box-shadow: 0 1px 0 darken(map-get($colours, $name), 12%);
+                        -ms-box-shadow: 0 1px 0 darken(map-get($colours, $name), 12%);
+                        -o-box-shadow: 0 1px 0 darken(map-get($colours, $name), 12%);
+                        box-shadow: 0 1px 0 darken(map-get($colours, $name), 12%);
+                    }
+                }
+            }
+
             .slide {
                 background-color: darken(map-get($colours, $name), 9%);
-            }
-        }
-
-        &.bordered.horizontal {
-            .slide {
-                > :first-child {
-                    -webkit-box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 15%) inset, 1px 0 0 darken(map-get($colours, $name), 15%) inset;
-                    -moz-box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 15%) inset, 1px 0 0 darken(map-get($colours, $name), 15%) inset;
-                    -ms-box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 15%) inset, 1px 0 0 darken(map-get($colours, $name), 15%) inset;
-                    -o-box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 15%) inset, 1px 0 0 darken(map-get($colours, $name), 15%) inset;
-                    box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 15%) inset, 1px 0 0 darken(map-get($colours, $name), 15%) inset;
-                }
-            }
-        }
-
-        &.bordered.vertical {
-            .slide {
-                > :first-child {
-                    -webkit-box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 15%) inset, 1px 0 0 darken(map-get($colours, $name), 15%) inset;
-                    -moz-box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 15%) inset, 1px 0 0 darken(map-get($colours, $name), 15%) inset;
-                    -ms-box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 15%) inset, 1px 0 0 darken(map-get($colours, $name), 15%) inset;
-                    -o-box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 15%) inset, 1px 0 0 darken(map-get($colours, $name), 15%) inset;
-                    box-shadow: 0 -5px 0 darken(map-get($colours, $name), 9%) inset, 0 -6px 0 darken(map-get($colours, $name), 15%) inset, 1px 0 0 darken(map-get($colours, $name), 15%) inset;
-                }
             }
         }
 

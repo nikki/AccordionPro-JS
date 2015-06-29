@@ -1016,6 +1016,24 @@ function getPrefixed(prop){
 
 
     /**
+     * PLUGIN HELPERS
+     */
+
+    function addRule(selector, rules) {
+      var sheet = document.styleSheets[0];
+
+      if (!sheet) return;
+      if ('insertRule' in sheet) {
+        sheet.insertRule(selector + '{' + rules + '}', sheet.cssRules.length);
+        console.log(sheet.cssRules.length)
+      } else if ('addRule' in sheet) {
+        console.log(sheet.rules.length);
+        sheet.addRule(selector, rules, sheet.rules.length);
+      }
+    }
+
+
+    /**
      * SETUP PLUGIN
      */
 
@@ -1162,15 +1180,14 @@ function getPrefixed(prop){
           parseInt(firstPanel.css('marginRight'), 10) ||
           parseInt(firstPanel.css('marginBottom'), 10) || 0;
 
-        // calculate padding
+        // calculate padding and tab border (a lot more work than it should be because FF gets it wrong)
         if (horizontal) {
           padding = parseInt(elem.css('paddingLeft'), 10) + parseInt(elem.css('paddingRight'), 10);
+          tabBorder = Math.ceil(+(tabs.eq(0).css('borderTopWidth')).slice(0, -2)) * 2;
         } else {
           padding = parseInt(elem.css('paddingTop'), 10) + parseInt(elem.css('paddingBottom'), 10);
+          tabBorder = Math.ceil(+(tabs.eq(0).css('borderLeftWidth')).slice(0, -2)) * 2;
         }
-
-        // calculate tab border (a lot more work than it should be because FF gets it wrong)
-        tabBorder = Math.ceil(+(tabs.eq(0).css('borderLeftWidth')).slice(0, -2)) * 2;
       },
 
 
@@ -1289,8 +1306,8 @@ function getPrefixed(prop){
             'font-family' : settings.tab.font
           });
 
-        // fixes for stitch
-        if (settings.theme === 'stitch' && horizontal) {
+        // fixes for stitch // !!! refactor
+        if ((settings.theme === 'stitch' || settings.theme === 'bordered')) {
           this.width(this.width() - tabBorder);
         }
       },
@@ -1303,7 +1320,6 @@ function getPrefixed(prop){
       setTabsDimensions : function() {
         var _this = this,
             $first = tabs.first(),
-            sheet = document.styleSheets[0],
             calc;
 
         // calculate global tab dimensions
@@ -1315,10 +1331,12 @@ function getPrefixed(prop){
         });
 
         // adjust line-height on :after
-        if (padding && sheet && sheet.insertRule) {
+        if (padding) {
           calc = (tab.h - (tabBorder ? (tabBorder + padding) : padding));
           calc += (calc % 2) ? 0.5 : 0;
-          sheet.insertRule('.accordionPro .slide > :first-child:after { left: ' + padding + 'px; height: ' + calc + 'px }', sheet.cssRules.length);
+
+          // add rule to css
+          addRule('.accordionPro .slide > :first-child:after', 'left: ' + padding + 'px; height: ' + calc + 'px');
         }
       },
 
@@ -1393,8 +1411,7 @@ function getPrefixed(prop){
        */
 
       setCustomTabImages : function() {
-        var imgs = [],
-            sheet = document.styleSheets[0];
+        var imgs = [];
 
         if (settings.tab.icon !== 'custom') return;
         if (!settings.tab.customIcons.length) return;
@@ -1404,9 +1421,7 @@ function getPrefixed(prop){
 
         // create styles for icons
         tabs.each(function(index) {
-          if (sheet && sheet.insertRule) {
-            sheet.insertRule('.accordionPro .slide-' + (index + 1) + ' > :first-child:after { background-image: url(' + imgs[index % imgs.length] + ') }', sheet.cssRules.length);
-          }
+          addRule('.accordionPro .slide-' + (index + 1) + ' > :first-child:after', 'background-image: url(' + imgs[index % imgs.length] + ')');
         });
       },
 
@@ -1416,8 +1431,7 @@ function getPrefixed(prop){
        */
 
       setCustomTabColours : function() {
-        var colours = [],
-            sheet = document.styleSheets[0];
+        var colours = [];
 
         if (!settings.tab.customColours.length) return;
 
@@ -1426,11 +1440,9 @@ function getPrefixed(prop){
 
         // create styles for custom colours (so no need to remove style attr on destroy())
         tabs.each(function(index) {
-          if (sheet && sheet.insertRule) {
-            sheet.insertRule('.accordionPro .slide-' + (index + 1) + ' > :first-child { background: ' + colours[index] + ' !important }', sheet.cssRules.length);
-            sheet.insertRule('.accordionPro.stitch .slide-' + (index + 1) + ' > :first-child { background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAQAAAC0NkA6AAAMOElEQVRYCQXBWXCchWEA4P+lM3lok2kym+Bv+paZzvShfc1jp2QyzdnAZEjSoU1LoMbmMmCMMBhbtmQhWdZ9e3Xt6lxpJa2k1S3t6r5Wt60L+QAbjIE0JdAmKWlCvy/YD81JG5Gw6rb3jcgVE1YoqdQ1KXXyhI3pkTJo2KiMQU3ed9c9686psGXYrE+C68at6BIT86YiffZ9HAQ1oSFr3vb74IFhTRa1elHYlJS0ZUmvqTdj1V2t/toPVbjkgrgBFzXZc9esPAWSFmy7bkmhhE+DXQ2umJIQfCv0ujHDMuKekCMi5WkXLBmWtGHLsndsKnFFRLESCQkRpTpNKTSlS79uMbU6HOpyzQk1tsVdELahW7AZuuZnviPid8Gaaf0umjBr3oZ+4yq8bsKkMSOaFChRqlbajhGr3lXlpBeVu2dTmbeUWZPR66zHdIubcSgYCC1I6TZhxjUFquzJKHbOqwpMWDJk3a48xVoUareiQ4N+v3TGrtse2JIxbkTYRTN2JXUZ0yJbvRnTgnOhYtO2dSvWI6lOh2k3ZdQYsC4sR7ZX9Bh3zx+CXTt+E2xI6HdRmRKlBk2bVuTn8jV6S5M+h3oU+Ils64Lt0KaUtBqn5au2665Pgl23/Sm4b0mHev3iakxaNCVl1KyoiBldesSc8DdeNCJj26KoerW2pXUblVSqXDAfmjNpzIQBOUbsi+jRateU08ok9Lph1Y6on7si25OytNoUtWBbpULj7lpUZ9S6OlUW5TquTUyNs7IFZaF+R/atGpOSr0CdbiPm1Hnaq7q0OafBuLRuSSl14trk2LCsx7IPfB58JGHCkDINEg7FVOpT76JcYcFgaMY1EYuKvKFeSljEhg51vuvPXbWowWP+XdqaGcVKNckzbkqTGTO2lDkjatO+McWK7Vo3KuOGSUmjguFQ3Jxlg2oVWTWm1pRx/RLitn0azKi3LiJfuUbrupwX1aNRwqxmP/GoCut2DEha0O0lj8oV0yzjIw2CtdCiRgM+Dv4n+DTYddORuDwvqrRkzb5DK+KWrRsxoMuqFaOGDFkWsWDdA7267Fp3YFaLcWFPeFOdHV8EtwV/F3pYoUG9GvT7OGhVqFezMnEpw+KmRGTpk9DrtNeUuOQV+U44psKY+/4YHGg34a5uV7W67DWtNkSc1uuuoDRUp0+n8152SbZTzgiblLHgBT/VY9CACcsueFa2HresueqCpLgxDyRlmdTqHz2pWr/7VmxbMalbvRmNgl8Fvw5m9JmxY8OyTRNOecaYdm8oFVWm3Y5Bz6kxbNMnwbzzwnalVen0A9+SZ9CAUlmeE5fUJmlJjnpXPSz4TfC2eZuWTRrytltWzWp3Xqv7JoRtWVXikhved1+XGsW+7w0j2vQ5r9ibws74vipjJlTJl+fHnlSm05CUoCR0Ras5KSnv27Jm3++DPwTrpm0ZVG3N/wa7Fi0btCnbL1zRqMXPvG7PRx64btWaQWP2zMkIe9mKaTH5aq0JFkLLurQaFBXxmle84Iw2A1a1OS5LrQOdGiRVCstzXlLKqHdNSpiRtqRHsxlpaV1KbFl2y/8F9/WrUShoDi2IOSdiTI/nPatASqssj3levz5hV7RYMSlj1opblo3Zct8XwZQnXDBu1pRVc5q0umnBe8KeELXqnKcEraFO5a7pNGresHG7brjsnG692k3o0mfAiNsanZJn2JykcTctyldg0TsWzBlUo1yRad06hR2Xa9OeacFBaNumCfOmpbyrV4vLJjXr9K4tL3tKq3ITij3vkkHzkgrka3BKt1G1VrQr9CP/4JrzCl2144YFR/Y88K5gMhSVMO+GdWtuW7ZtVa4CSfmKHJmVdte6Xm3KRUwZNaTQGbs+lBLXLWPJvE61tvXqM6TdsG0TKuUKNkMjNtzWKdvj8ryuTLuoFRnzBkSkpQ3pseXTIKVBwrL3pQ26b01G3Buq9etWrcqIhBz/5CXf9oJi+SoFr4WKZevxu2BXu5hZo2alzelUqlajhCI/dFynDw3r1Kdcr5hiTUpE3LHorLckbVvVbMGCeVkekbJkzS3BSGjUjLS4Kbd9ZFtCtVH70vL02JIrLMcv/FK9aTn+Xo4BEavG1SvUoUvSGd/T6I6bDn0WfOjImlX/HczrEwyHap31sqedE1UgS4duT6owKW5WSr896wZFFagTk7LmhiWve0ytCYPO+5HTSuR41UXVooZ1qNGr0UVdgrdCFyW0qJdWaMCePosaVKkRM6LVpFWT9vUr0Opt637sYTWy/UShLVMq1VrX6Xu+q0CFXDmGTWjXatWG4Gpoyq5pYyKSYirdsO+mba2GjKjxlJ+asiwi4pIiJz2iVrZqB2pUWTArbt49OzKmDegxadS83wfjEuYEB6FdM7Y90KtFpSYdxnUo1OQFl9xz6KY5azYsWLVg3o510+5YVKhM2I4D01YcuOu3wYp8FerELFnVI0+QCV33cfBF8FkwqUCTZrkuanZavpSoJgc+CXbM+HVw05FD7/vPYMaGfXM2lKlWbEzEc6rNOdDmrFJlOlW54IqIYDA0o06NA3d8HCyb1GndoY98Fnwe3NVuSJ1eXaYsmLFn2UtOSmoR1qlJygV/6xFzfh10eMO/6LJqR6lHPOMZZwX7obQix33fN+XYFpalzrB5k7qlJF1UodOmW2JqPe6UqCa1qo1LmpV2356Es16XMmzDbTFnPa7IvoTnBZ2haj1WFTrpmqhh77hlRp9/9SPd4i675KJiVU74qZgjvUpUGnHHNRU61MjRYFLaDQeiilQIG9InbdUlQSx0TYVWURMOHbhrzD87IUubASXKNNlSr0GTar36zZk06o6bPrBmUFiZqEoFWoxLadPvNbnqXTVuyy3BROiC7zgpacU5b+gzLXasRoMFKzIWReyLOKVKpwFFcvVYt2TBomUrGpS5JOGa02I6zFmzJaFWxLCMacFaaMu0Je+ZFLVi3UHo4+DoobQOl9XYlzGnXYUlh/Z9qE2eZvWa5Jg1btSOG9ZkdOnyjl8F64rUKjIkKqJVsB9add2vggG1KrXIO/btv3z4K9lfO/zGxLGIQQUK1Flyw7ZhnYaNGpSrVNRlM1LGXBc3asuAfh1KXBIxqU+fNnnKBf8Wanbkpntu6PSIUw9988vBn4W+dPWrnwUfB/MWVXhUjYwFRbK06ZaU0mHdTdvGnXdVnQ79WlxyUo1xnwe3rVmSlpISVIZyVYmYsKvO+WONDzV9dflLs38xHLrgaeUilmyaMuakp9RbNmDMF8E7RjVpN+a7vuZN7WplHBk3qFfCrLgxm3YsCvpDc3Z1iNuSOlZ6rO3Y4UMb39h/aNQVUUMS1nS4qs2QIU16pez6PDjSoVefFhXOqpEwZUiLOzbUihk0b9aOBf2C3VCjWv3KDJq14tA9t7Xo06fDqlltmjSK23Rbu4g5kxpdUCNjxpQ+E5pccEqWWnUKtKn2ogElnnROk6AwFBfXqs0rXlRm2Jp7drUbN+64p2U74T8UGXHkQ8NyZJuwp0OWEte9a06jKRlpE6IqvOiEUhu2NDmnTDAQmrFnW55ntFt1zzUt3nHHhhZhcyKuKtVnUr0uc0Z1yFFo3Zol930W3DDgqrCosJRGV625r1K+tA6lgupQmQI/9Lh9nwWryhQZtiUjIW5Ys3LNulQbVGHeknazIorUuqhYkWHT2oTFDBj0qmfdktEoxzUNOgwLvhU64YoyDeqFlTutXES1qEa9VrznAxm1Sk0aN6pSjnzFesQ0e9lxCYsGpP1X8MdgXpkOs7IdV6JGp30dgodDrzpw26h2JxWZVadczHHn7VnRath1g8q1W5ZyUYuUyxrMu+5IrUXj6tW4ot+4OnExWcoMGXfeOU2CPwY3pAzpkrJlz4qIWkkpQ97gK3/15bceirii0YKYK0qUadUg6kjG+z7QqMykmBoJVZ4Tc2BUXLNR46bcFbwUKlSo2L7fBqum3BL1MxUaVJi09vX415uPLUiIqnZGlkr1coQd2VPhrJg6haatS5s3pdUzzsholLKlS5sZQVNo1JBxcy5rUK3Ve9YNGPHAn4L7dmwb0GtNgxHLIqqUm/DAun4ZKSmHDtxyoEuTa3I1aBMz67xH5XpFMBGqN2xH2AWFvudZu24b0m1BWrVqDaq8LOmuesVypewrcFGOXGmjtiW9KapfrbhtDzS6pNBxp/XJ6PL/yV94/SPS1f8AAAAASUVORK5CYII=") !important }', sheet.cssRules.length);
-            sheet.insertRule('.accordionPro .slide-' + (index + 1) + '.selected > :first-child:before { background-color: ' + colours[index] + ' !important }', sheet.cssRules.length);
-          }
+          addRule('.accordionPro .slide-' + (index + 1) + ' > :first-child', 'background: ' + colours[index] + ' !important');
+          addRule('.accordionPro.stitch .slide-' + (index + 1) + ' > :first-child', 'background-image: url("data:image/png;base64,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") !important');
+          addRule('.accordionPro .slide-' + (index + 1) + '.selected > :first-child:before', 'background-color: ' + colours[index] + ' !important');
         });
       },
 
@@ -1479,13 +1491,11 @@ function getPrefixed(prop){
           ua = ua.slice(index + 5, index + 7);
           ua = +ua;
 
-          // ie 9+ doesn't need additional styles...
-          if (ua >= 9) return;
+          // ie 10+ doesn't need additional styles...
+          if (ua >= 10) return;
 
-          // ... but ie 8 does :(
-          if (ua === 8) {
-
-          }
+          // ... but ie 8 & 9 do :(
+          //if (ua === 8) {
 
           // ie 7 and below
           if (ua <= 7) {
@@ -1524,8 +1534,7 @@ function getPrefixed(prop){
 
           _this.setClosedPluginDimensions();
           _this.setPluginVisible();
-          // _this.internetExploder();
-
+          _this.internetExploder();
 
           // init autoPlay
           if (!settings.startClosed && settings.autoPlay) methods.play();

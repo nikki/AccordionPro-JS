@@ -16,6 +16,18 @@
         transform: translateX(-100%) rotate(-90deg);
         transform-origin: right top;
     }
+
+    &.ie8 {
+        .slide {
+            > :first-child {
+                -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
+
+                &:after {
+                    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
+                }
+            }
+        }
+    }
 }
 
 /************************************** Vertical */
@@ -30,35 +42,6 @@
             &:after {
                 left: auto;
                 right: 5px;
-            }
-
-            &.custom:after {
-                -webkit-transform: rotate(0deg) !important;
-                -moz-transform: rotate(0deg) !important;
-                -o-transform: rotate(0deg) !important;
-                transform: rotate(0deg) !important;
-            }
-        }
-    }
-
-    .slide.selected {
-        > :first-child.chevron:after {
-            -webkit-transform: rotate(90deg);
-            -moz-transform: rotate(90deg);
-            -o-transform: rotate(90deg);
-            transform: rotate(90deg);
-        }
-    }
-
-
-    /**
-     * fitToContent
-     */
-
-    &.fitToContent {
-        .slide {
-            > div {
-                height: auto;
             }
         }
     }

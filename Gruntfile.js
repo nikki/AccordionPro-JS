@@ -22,6 +22,7 @@ module.exports = function (grunt) {
               [
                 'js/lib/start.js',
                 'js/lib/globals.js',
+                'js/lib/helpers.js',
                 'js/lib/setup.js',
                 'js/lib/events.js',
                 'js/lib/core.js',

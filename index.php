@@ -25,6 +25,7 @@
         -webkit-column-break-inside: avoid;
         -moz-column-break-inside: avoid;
         column-break-inside: avoid;
+        transform: translateZ(0); /* fixes Chrome multi column bug. */
       }
       fieldset .form-group { width: 100%; margin-bottom: 5px !important; position: relative; }
       fieldset .form-control { display: inline-block; }
