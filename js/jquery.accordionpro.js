@@ -1019,15 +1019,18 @@ function getPrefixed(prop){
      * PLUGIN HELPERS
      */
 
+    /**
+     * Convenience method for adding CSS rules to stylesheet
+     * (One of the few instances where IE's syntax makes more sense!)
+     */
+
     function addRule(selector, rules) {
       var sheet = document.styleSheets[0];
 
       if (!sheet) return;
       if ('insertRule' in sheet) {
         sheet.insertRule(selector + '{' + rules + '}', sheet.cssRules.length);
-        console.log(sheet.cssRules.length)
       } else if ('addRule' in sheet) {
-        console.log(sheet.rules.length);
         sheet.addRule(selector, rules, sheet.rules.length);
       }
     }
@@ -1068,7 +1071,6 @@ function getPrefixed(prop){
             style : 'gradient'
           };
         }
-
       },
 
 
@@ -1296,7 +1298,7 @@ function getPrefixed(prop){
        * Set individual tab widths, heights, positions
        */
 
-      setTabDimensions : function() {
+      setTabDimensions : function(ie) {
         this
           .width(tab.w)
           .height(tab.h - (tabBorder ? (tabBorder + padding) : 0))
@@ -1308,7 +1310,7 @@ function getPrefixed(prop){
 
         // fixes for stitch // !!! refactor
         if ((settings.theme === 'stitch' || settings.theme === 'bordered')) {
-          this.width(this.width() - tabBorder);
+          this.width((ie ? tab.w : this.width()) - tabBorder);
         }
       },
 
@@ -1480,7 +1482,8 @@ function getPrefixed(prop){
        */
 
       internetExploder : function() {
-        var ua = navigator.userAgent,
+        var _this = this,
+            ua = navigator.userAgent,
             index = ua.indexOf('MSIE');
 
         // not ie
@@ -1488,14 +1491,40 @@ function getPrefixed(prop){
 
         // ie
         if (index !== -1) {
-          ua = ua.slice(index + 5, index + 7);
-          ua = +ua;
+          ua = +(ua.slice(index + 5, index + 7));
 
-          // ie 10+ doesn't need additional styles...
-          if (ua >= 10) return;
+          // ie 9+ doesn't need additional styles...
+          if (ua >= 9) return;
 
-          // ... but ie 8 & 9 do :(
-          //if (ua === 8) {
+          // fixes for ie8
+          if (ua === 8) {
+            if (horizontal) {
+              // tab transforms
+              tabs.css((settings.rtl ? 'right' : 'left'), -(tab.w - tab.h + padding) + 'px');
+
+              // fixes responsive
+              slides.css('minHeight', tab.w + 'px');
+              if (!settings.startClosed) {
+                elem.children('ol').css({
+                  'minWidth' : (settings.horizontalWidth - border) + 'px',
+                  'minHeight' : tab.w + 'px'
+                });
+              }
+
+              // fixes for bordered calculating incorrect tab width before page fully loaded
+              if (settings.theme === 'bordered' && settings.colour.style === 'gradient') {
+                // re-set dimensions of each tab
+                tabs.each(function(index) {
+                  _this.setTabDimensions.call($(this), true);
+                });
+              }
+            }
+
+            // slides zIndex
+            slides.each(function(index) {
+              $(this).css({ 'zIndex' : 100 + index });
+            });
+          }
 
           // ie 7 and below
           if (ua <= 7) {
@@ -1504,7 +1533,7 @@ function getPrefixed(prop){
           }
 
           // add ie classes for css fallbacks
-          elem.addClass('ie ie' + ua);
+          elem.addClass('ie' + ua);
         }
       },
 
@@ -1672,7 +1701,7 @@ function getPrefixed(prop){
           // bind swipe events
           slides.on({
             'touchstart.accordionPro' : function(e) {
-              if (e.originalEvent.target.nodeName === 'H3') {
+              if ($(e.target).is(tabs)) {
                 tap = true;
               }
 
@@ -1707,7 +1736,7 @@ function getPrefixed(prop){
 
       hashchange : function() {
         if (settings.linkable) {
-          $window.on('load.accordionPro hashchange.accordionPro', core.triggerLink);
+          $window.on('hashchange.accordionPro', core.triggerLink);
         }
       },
 
@@ -1808,12 +1837,11 @@ function getPrefixed(prop){
        */
 
       animateSlides : function(p) {
-        var triggerHeight = slides.eq(p.index).height() - tab.h,
-            expr = '',
+        var expr = '',
             pos = 0;
 
         // side 0 = left/top, side 1 = bottom/right
-        pos = p.side ? 0 : fitToContent ? triggerHeight : slide[horizontal ? 'w' : 'h'];
+        pos = p.side ? 0 : fitToContent ? p.triggerHeight : slide[horizontal ? 'w' : 'h'];
 
         // build expression
         expr += p.side ? ':lt(' : ':gt(';
@@ -1849,6 +1877,8 @@ function getPrefixed(prop){
             props = {
               index : slides.index($slide),
               position : horizontal ? (settings.rtl ? 'right' : 'left') : 'top',
+              triggerHeight : 0,
+              side : 0,
               selected : false
             };
 
@@ -1858,8 +1888,10 @@ function getPrefixed(prop){
         // if slide already selected, push to other side of expr
         if ($slide.hasClass('selected') && !props.side) {
           props.selected = props.index;
-          props.index -= 1;
+          props.index -= props.selected ? 1 : 0;
         };
+
+        props.triggerHeight = slides.eq(props.index).height() - tab.h;
 
         // update slide refs
         core.updateSlideRefs.call(props.selected ? $slide.prev() : $slide);
@@ -1869,11 +1901,13 @@ function getPrefixed(prop){
 
         // animate both sides for vertical fitToContent
         if (fitToContent) {
-          props.side = !props.side;
-          core.animateSlides.call($slide, props);
+          if (props.side) { // bottom/right
+            props.side = false;
+            core.animateSlides.call($slide, props);
+          }
 
           // fit accordion dimensions to content
-          core.fitToContent(props.selected);
+          core.fitToContent(props);
         }
       },
 
@@ -1910,14 +1944,11 @@ function getPrefixed(prop){
        * Fit the accordion to the content height (vertical fitToContent option)
        */
 
-      fitToContent : function(selected) {
-        var $slide = slides.eq(core.currentSlide - (selected ? 1 : 0));
+      fitToContent : function(p) {
+        var height = p && (p.triggerHeight + tab.h) || slides.eq(core.currentSlide).height();
 
-        // ignore 'self' click on first slide
-        if (selected && !core.currentSlide) return;
-
-        // set height
-        elem.height(((slide.l - 1) * tab.h) + $slide.height());
+        // // set height
+        elem.height(((slide.l - 1) * tab.h) + height);
       },
 
 
@@ -1965,6 +1996,11 @@ function getPrefixed(prop){
         }
       },
 
+
+      /**
+       *
+       */
+
       triggerDirection : function(dir) {
         switch (dir) {
           case 'left':
@@ -2004,6 +2040,11 @@ function getPrefixed(prop){
             break;
         }
       },
+
+
+      /**
+       *
+       */
 
       scalePlugin : function() {
         var scale = Math.min(elem.parent().width() / settings.horizontalWidth), // linear scale

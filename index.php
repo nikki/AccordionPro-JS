@@ -11,14 +11,15 @@
     <title>Accordion Pro Demo Suite</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <link rel="stylesheet" href="css/accordionpro.min.css">
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/accordionpro.min.css">
 
     <style>
       body { padding-top: 30px }
       h1, h3 { font-size: 24px; border-bottom: 2px solid #333333; margin: 30px 0 10px; text-shadow: 1px 1px 0 white; clear: both; }
       .container > p { font-size: 16px; line-height: 1.5em; margin-bottom: 30px; }
       .container h1 + p { margin-bottom: 15px }
+      .wrapper { width: 100%; height: 100%; }
       fieldset {
         width: 100%;
         margin-bottom: 30px;
@@ -53,19 +54,18 @@
     </style>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <script src="js/jquery.accordionpro.min.js"></script>
+    <script src="js/jquery.accordionpro.js"></script>
 </head>
 <body>
 
 <div class="container">
 
-  <div id="demo">
+  <div id="demo" class="accordionPro">
       <ol>
           <li>
               <h2><span>Slide One</span></h2>
               <div>
-                  <img src="img-demo/1.jpg" alt="image" />
-                  <p class="ap-caption">Slide One</p>
+                  <p>Sed virtutem ipsam inchoavit, nihil amplius. <a href='http://loripsum.net/' target='_blank'>Cave putes quicquam esse verius.</a> Eam si varietatem diceres, intellegerem, ut etiam non dicente te intellego; <b>Ecce aliud simile dissimile.</b> <mark>Qui est in parvis malis.</mark> Bestiarum vero nullum iudicium puto. Ita multo sanguine profuso in laetitia et in victoria est mortuus. </p>
               </div>
           </li>
           <li>
@@ -97,8 +97,14 @@
           <li>
               <h2><span>Slide Four</span></h2>
               <div>
-                  <img src="img-demo/4.jpg" alt="image" />
-                  <p class="ap-caption">Slide One</p>
+                <ul>
+                  <li>Eodem modo is enim tibi nemo dabit, quod, expetendum sit, id esse laudabile.</li>
+                  <li>Quis contra in illa aetate pudorem, constantiam, etiamsi sua nihil intersit, non tamen diligat?</li>
+                  <li>Fortitudinis quaedam praecepta sunt ac paene leges, quae effeminari virum vetant in dolore.</li>
+                  <li>An vero, inquit, quisquam potest probare, quod perceptfum, quod.</li>
+                  <li>Si enim, ut mihi quidem videtur, non explet bona naturae voluptas, iure praetermissa est;</li>
+                  <li>Nos vero, inquit ille;</li>
+                </ul>
               </div>
           </li>
           <li>

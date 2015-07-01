@@ -121,7 +121,7 @@
           // bind swipe events
           slides.on({
             'touchstart.accordionPro' : function(e) {
-              if (e.originalEvent.target.nodeName === 'H3') {
+              if ($(e.target).is(tabs)) {
                 tap = true;
               }
 
@@ -156,7 +156,7 @@
 
       hashchange : function() {
         if (settings.linkable) {
-          $window.on('load.accordionPro hashchange.accordionPro', core.triggerLink);
+          $window.on('hashchange.accordionPro', core.triggerLink);
         }
       },
 

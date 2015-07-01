@@ -33,7 +33,6 @@
             style : 'gradient'
           };
         }
-
       },
 
 
@@ -261,7 +260,7 @@
        * Set individual tab widths, heights, positions
        */
 
-      setTabDimensions : function() {
+      setTabDimensions : function(ie) {
         this
           .width(tab.w)
           .height(tab.h - (tabBorder ? (tabBorder + padding) : 0))
@@ -273,7 +272,7 @@
 
         // fixes for stitch // !!! refactor
         if ((settings.theme === 'stitch' || settings.theme === 'bordered')) {
-          this.width(this.width() - tabBorder);
+          this.width((ie ? tab.w : this.width()) - tabBorder);
         }
       },
 
@@ -445,7 +444,8 @@
        */
 
       internetExploder : function() {
-        var ua = navigator.userAgent,
+        var _this = this,
+            ua = navigator.userAgent,
             index = ua.indexOf('MSIE');
 
         // not ie
@@ -453,14 +453,40 @@
 
         // ie
         if (index !== -1) {
-          ua = ua.slice(index + 5, index + 7);
-          ua = +ua;
+          ua = +(ua.slice(index + 5, index + 7));
 
-          // ie 10+ doesn't need additional styles...
-          if (ua >= 10) return;
+          // ie 9+ doesn't need additional styles...
+          if (ua >= 9) return;
 
-          // ... but ie 8 & 9 do :(
-          //if (ua === 8) {
+          // fixes for ie8
+          if (ua === 8) {
+            if (horizontal) {
+              // tab transforms
+              tabs.css((settings.rtl ? 'right' : 'left'), -(tab.w - tab.h + padding) + 'px');
+
+              // fixes responsive
+              slides.css('minHeight', tab.w + 'px');
+              if (!settings.startClosed) {
+                elem.children('ol').css({
+                  'minWidth' : (settings.horizontalWidth - border) + 'px',
+                  'minHeight' : tab.w + 'px'
+                });
+              }
+
+              // fixes for bordered calculating incorrect tab width before page fully loaded
+              if (settings.theme === 'bordered' && settings.colour.style === 'gradient') {
+                // re-set dimensions of each tab
+                tabs.each(function(index) {
+                  _this.setTabDimensions.call($(this), true);
+                });
+              }
+            }
+
+            // slides zIndex
+            slides.each(function(index) {
+              $(this).css({ 'zIndex' : 100 + index });
+            });
+          }
 
           // ie 7 and below
           if (ua <= 7) {
@@ -469,7 +495,7 @@
           }
 
           // add ie classes for css fallbacks
-          elem.addClass('ie ie' + ua);
+          elem.addClass('ie' + ua);
         }
       },
 

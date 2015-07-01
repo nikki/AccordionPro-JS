@@ -11,6 +11,8 @@
         -webkit-transform-origin: right top;
         -moz-transform: translateX(-100%) rotate(-90deg);
         -moz-transform-origin: right top;
+        -ms-transform: translateX(-100%) rotate(-90deg);
+        -ms-transform-origin: right top;
         -o-transform: translateX(-100%) rotate(-90deg);
         -o-transform-origin: right top;
         transform: translateX(-100%) rotate(-90deg);
@@ -20,11 +22,7 @@
     &.ie8 {
         .slide {
             > :first-child {
-                -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
-
-                &:after {
-                    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
-                }
+                filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
             }
         }
     }

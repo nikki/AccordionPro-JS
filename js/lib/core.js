@@ -56,12 +56,11 @@
        */
 
       animateSlides : function(p) {
-        var triggerHeight = slides.eq(p.index).height() - tab.h,
-            expr = '',
+        var expr = '',
             pos = 0;
 
         // side 0 = left/top, side 1 = bottom/right
-        pos = p.side ? 0 : fitToContent ? triggerHeight : slide[horizontal ? 'w' : 'h'];
+        pos = p.side ? 0 : fitToContent ? p.triggerHeight : slide[horizontal ? 'w' : 'h'];
 
         // build expression
         expr += p.side ? ':lt(' : ':gt(';
@@ -97,6 +96,8 @@
             props = {
               index : slides.index($slide),
               position : horizontal ? (settings.rtl ? 'right' : 'left') : 'top',
+              triggerHeight : 0,
+              side : 0,
               selected : false
             };
 
@@ -106,8 +107,10 @@
         // if slide already selected, push to other side of expr
         if ($slide.hasClass('selected') && !props.side) {
           props.selected = props.index;
-          props.index -= 1;
+          props.index -= props.selected ? 1 : 0;
         };
+
+        props.triggerHeight = slides.eq(props.index).height() - tab.h;
 
         // update slide refs
         core.updateSlideRefs.call(props.selected ? $slide.prev() : $slide);
@@ -117,11 +120,13 @@
 
         // animate both sides for vertical fitToContent
         if (fitToContent) {
-          props.side = !props.side;
-          core.animateSlides.call($slide, props);
+          if (props.side) { // bottom/right
+            props.side = false;
+            core.animateSlides.call($slide, props);
+          }
 
           // fit accordion dimensions to content
-          core.fitToContent(props.selected);
+          core.fitToContent(props);
         }
       },
 
@@ -158,14 +163,11 @@
        * Fit the accordion to the content height (vertical fitToContent option)
        */
 
-      fitToContent : function(selected) {
-        var $slide = slides.eq(core.currentSlide - (selected ? 1 : 0));
+      fitToContent : function(p) {
+        var height = p && (p.triggerHeight + tab.h) || slides.eq(core.currentSlide).height();
 
-        // ignore 'self' click on first slide
-        if (selected && !core.currentSlide) return;
-
-        // set height
-        elem.height(((slide.l - 1) * tab.h) + $slide.height());
+        // // set height
+        elem.height(((slide.l - 1) * tab.h) + height);
       },
 
 
@@ -213,6 +215,11 @@
         }
       },
 
+
+      /**
+       *
+       */
+
       triggerDirection : function(dir) {
         switch (dir) {
           case 'left':
@@ -252,6 +259,11 @@
             break;
         }
       },
+
+
+      /**
+       *
+       */
 
       scalePlugin : function() {
         var scale = Math.min(elem.parent().width() / settings.horizontalWidth), // linear scale

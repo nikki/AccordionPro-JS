@@ -130,6 +130,10 @@
         right: auto;
         left: 38px;
     }
+
+    &.ie8 .slide.selected > :first-child:before {
+        display: none;
+    }
 }
 
 /*********************************** Transparent */

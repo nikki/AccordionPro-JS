@@ -81,6 +81,13 @@
     }
 }
 
+/**************************************** Closed */
+.accordionPro.closed {
+    &.horizontal.ie8 {
+        // overflow: hidden;
+    }
+}
+
 /*************************************** Rounded */
 .accordionPro.rounded {
     // overflow: hidden;
