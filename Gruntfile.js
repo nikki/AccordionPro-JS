@@ -40,7 +40,6 @@ module.exports = function (grunt) {
             separator: '\n\n',
           },
           src: [
-            'js/vendor/imagesloaded.js',
             'js/vendor/transitiontest.js',
             'js/vendor/animate.js',
             'js/accordionpro.js'

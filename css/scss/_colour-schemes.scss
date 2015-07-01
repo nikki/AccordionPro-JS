@@ -109,32 +109,16 @@ $schemes: (
             -o-box-shadow: 0 -1px 0 lighten(map-get($colours, $name), 9%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
             box-shadow: 0 -1px 0 lighten(map-get($colours, $name), 9%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
 
-            &.horizontal {
-                .slide {
-                    > :first-child {
-                        -webkit-box-shadow: 0 1px 0 darken(map-get($colours, $name), 12%);
-                        -moz-box-shadow: 0 1px 0 darken(map-get($colours, $name), 12%);
-                        -ms-box-shadow: 0 1px 0 darken(map-get($colours, $name), 12%);
-                        -o-box-shadow: 0 1px 0 darken(map-get($colours, $name), 12%);
-                        box-shadow: 0 1px 0 darken(map-get($colours, $name), 12%);
-                    }
-                }
-            }
-
-            &.vertical {
-                .slide {
-                    > :first-child {
-                        -webkit-box-shadow: 0 1px 0 darken(map-get($colours, $name), 12%);
-                        -moz-box-shadow: 0 1px 0 darken(map-get($colours, $name), 12%);
-                        -ms-box-shadow: 0 1px 0 darken(map-get($colours, $name), 12%);
-                        -o-box-shadow: 0 1px 0 darken(map-get($colours, $name), 12%);
-                        box-shadow: 0 1px 0 darken(map-get($colours, $name), 12%);
-                    }
-                }
-            }
-
             .slide {
                 background-color: darken(map-get($colours, $name), 9%);
+
+                > :first-child {
+                    -webkit-box-shadow: 0 1px 0 darken(map-get($colours, $name), 12%);
+                    -moz-box-shadow: 0 1px 0 darken(map-get($colours, $name), 12%);
+                    -ms-box-shadow: 0 1px 0 darken(map-get($colours, $name), 12%);
+                    -o-box-shadow: 0 1px 0 darken(map-get($colours, $name), 12%);
+                    box-shadow: 0 1px 0 darken(map-get($colours, $name), 12%);
+                }
             }
         }
 
@@ -197,37 +181,19 @@ $schemes: (
 
     &.bordered {
         background-color: darken($white, 24%);
-        -webkit-box-shadow: 0 -1px 0 lighten($white, 24%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
-        -moz-box-shadow: 0 -1px 0 lighten($white, 24%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
-        -ms-box-shadow: 0 -1px 0 lighten($white, 24%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
-        -o-box-shadow: 0 -1px 0 lighten($white, 24%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
-        box-shadow: 0 -1px 0 lighten($white, 24%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
-    }
 
-    &.bordered.horizontal {
         .slide {
+            background-color: darken($white, 24%);
+
             > :first-child {
-                -webkit-box-shadow: 0 -5px 0 darken($white, 24%) inset, 0 -6px 0 darken($white, 32%) inset, 1px 0 0 darken($white, 32%) inset;
-                -moz-box-shadow: 0 -5px 0 darken($white, 24%) inset, 0 -6px 0 darken($white, 32%) inset, 1px 0 0 darken($white, 32%) inset;
-                -ms-box-shadow: 0 -5px 0 darken($white, 24%) inset, 0 -6px 0 darken($white, 32%) inset, 1px 0 0 darken($white, 32%) inset;
-                -o-box-shadow: 0 -5px 0 darken($white, 24%) inset, 0 -6px 0 darken($white, 32%) inset, 1px 0 0 darken($white, 32%) inset;
-                box-shadow: 0 -5px 0 darken($white, 24%) inset, 0 -6px 0 darken($white, 32%) inset, 1px 0 0 darken($white, 32%) inset;
+                -webkit-box-shadow: 0 1px 0 darken($white, 36%);
+                -moz-box-shadow: 0 1px 0 darken($white, 36%);
+                -ms-box-shadow: 0 1px 0 darken($white, 36%);
+                -o-box-shadow: 0 1px 0 darken($white, 36%);
+                box-shadow: 0 1px 0 darken($white, 36%);
             }
         }
     }
-
-    &.bordered.vertical {
-        .slide {
-            > :first-child {
-                -webkit-box-shadow: 0 -5px 0 darken($white, 24%) inset, 0 -6px 0 darken($white, 32%) inset, 1px 0 0 darken($white, 32%) inset;
-                -moz-box-shadow: 0 -5px 0 darken($white, 24%) inset, 0 -6px 0 darken($white, 32%) inset, 1px 0 0 darken($white, 32%) inset;
-                -ms-box-shadow: 0 -5px 0 darken($white, 24%) inset, 0 -6px 0 darken($white, 32%) inset, 1px 0 0 darken($white, 32%) inset;
-                -o-box-shadow: 0 -5px 0 darken($white, 24%) inset, 0 -6px 0 darken($white, 32%) inset, 1px 0 0 darken($white, 32%) inset;
-                box-shadow: 0 -5px 0 darken($white, 24%) inset, 0 -6px 0 darken($white, 32%) inset, 1px 0 0 darken($white, 32%) inset;
-            }
-        }
-    }
-
 }
 
 /**************************************** Silver */

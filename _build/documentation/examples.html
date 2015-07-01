@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
     <title>Accordion Pro JS Examples</title>
-    <link rel="stylesheet" href="css/accordionpro.min.css">
-    <link href="documentation/css/bootstrap.min.css" rel="stylesheet">
-    <link href="documentation/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/accordionpro.min.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
     <style>
         body { background: #EEEEEE; padding-bottom: 60px }
         pre { background: #FEFEFE; margin-bottom: 60px }
@@ -19,17 +19,19 @@
         .links { margin-top: 20px }
         .links li { float: left; margin-right: 22px }
         .links + h2 { clear: both }
+
+        #four { margin: 0 auto }
     </style>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script src="js/jquery.accordionpro.min.js"></script>
+    <script src="../js/jquery.accordionpro.min.js"></script>
 </head>
 <body>
 
     <div class="container">
         <h1>Accordion Pro JS Examples</h1>
 
-        <h2>Stitch theme</h2>
-        <div id="one">
+        <h2>Stitch theme with custom colours and icons</h2>
+        <div id="one" class="accordionPro">
             <ol>
                 <li>
                     <h2><span>Slide One</span></h2>
@@ -71,23 +73,39 @@
                 <p>Please enable JavaScript to get the full experience.</p>
             </noscript>
             <script>
-                function callback() {
-                    $('#one').find('.ap-caption').each(function() {
-                        if (!$(this).parents('.slide').hasClass('selected')) {
-                            $(this).fadeOut();
-                        } else {
-                            if (!$(this).is(':visible')) $(this).fadeIn();
-                        }
-                    });
+                function slideOpen() {
+                    this.find('.ap-caption').delay(800).fadeIn();
+                }
+
+                function slideClose() {
+                    this.find('.ap-caption').fadeOut();
                 }
 
                 $('#one').accordionPro({
                     autoPlay : true,
-                    onSlideOpen : callback,
-                    onSlideClose : callback,
+                    onSlideOpen : slideOpen,
+                    onSlideClose : slideClose,
                     theme : 'stitch',
+                    tab : {
+                        font : 'Helvetica Neue',
+                        icon : 'custom',
+                        customIcons : [
+                          '../documentation/img-demo/user-alt.png',
+                          '../documentation/img-demo/chat-alt.png',
+                          '../documentation/img-demo/letter-alt.png',
+                          '../documentation/img-demo/search-alt.png',
+                          '../documentation/img-demo/leaf-alt.png'
+                        ],
+                        customColours : [
+                          '#c25252',
+                          '#ca9859',
+                          '#96ba5f',
+                          '#59abb7',
+                          '#bb6098'
+                        ]
+                    },
                     rounded : true
-                }).find('.ap-caption:first').show();
+                });
             </script>
         </div>
 
@@ -98,8 +116,8 @@
         <h3>Code:</h3>
         <pre>&lt;script&gt;<br/>    function callback() {<br/>        $('#one').find('.ap-caption').each(function() {<br/>            if (!$(this).parents('.slide').hasClass('selected')) {<br/>                $(this).fadeOut();<br/>            } else {<br/>                if (!$(this).is(':visible')) $(this).fadeIn();<br/>            }<br/>        });<br/>    }<br/><br/>    $('#one').accordionPro({<br/>        autoPlay : true,<br/>        onSlideOpen : callback,<br/>        onSlideClose : callback,<br/>        theme : 'stitch',<br/>        rounded : true<br/>    }).find('.ap-caption:first').show();<br/>&lt;/script&gt;</pre>
 
-        <h2>Transparent theme</h2>
-        <div id="two">
+        <h2>Stitch theme with linkable slides and a blue colour scheme</h2>
+        <div id="two" class="accordionPro">
             <ol>
                 <li>
                     <h2><span>Slide One</span></h2>
@@ -142,7 +160,14 @@
             </noscript>
             <script>
                 $('#two').accordionPro({
-                    theme : 'transparent',
+                    theme : 'stitch',
+                    colour : {
+                        scheme : 'blue',
+                    },
+                    tab : {
+                        icon : 'chevron',
+                        font : 'Georgia'
+                    },
                     linkable : true
                 });
             </script>
@@ -164,8 +189,8 @@
         <h3>Code:</h3>
         <pre>&lt;script&gt;<br/>    $('#two').accordionPro({<br/>        theme : 'transparent',<br/>        linkable : true<br/>    });<br/>&lt;/script&gt;</pre>
 
-        <h2>Dark theme</h2>
-        <div id="three">
+        <h2>Bordered theme, starting closed, with a teal colour scheme and gradient style</h2>
+        <div id="three" class="accordionPro">
             <ol>
                 <li>
                     <h2><span>Slide One</span></h2>
@@ -210,8 +235,11 @@
                 $('#three').accordionPro({
                     autoPlay : true,
                     startClosed : true,
-                    orientation : 'vertical',
-                    theme : 'dark',
+                    theme : 'bordered',
+                    colour : {
+                        scheme : 'teal',
+                        style : 'gradient'
+                    },
                     rounded : true
                 });
             </script>
@@ -225,7 +253,7 @@
         <pre>&lt;script&gt;<br/>    $('#three').accordionPro({<br/>        autoPlay : true,<br/>        startClosed : true,<br/>        orientation : 'vertical',<br/>        theme : 'dark',<br/>        rounded : true<br/>    });<br/>&lt;/script&gt;</pre>
 
         <h2>Light theme</h2>
-        <div id="four">
+        <div id="four" class="accordionPro">
             <ol>
                 <li>
                     <h2><span>Slide One</span></h2>
@@ -268,8 +296,14 @@
             </noscript>
             <script>
                 $('#four').accordionPro({
+                    orientation : 'vertical',
                     startClosed : true,
-                    theme : 'light'
+                    theme : 'bordered',
+                    colour : {
+                        scheme : 'white',
+                        style : 'gradient'
+                    },
+                    verticalWidth : 600
                 });
             </script>
         </div>
@@ -282,7 +316,7 @@
         <pre>&lt;script&gt;<br/>    $('#four').accordionPro({<br/>        startClosed : true,<br/>        theme : 'light'<br/>    });<br/>&lt;/script&gt;</pre>
 
         <h2>Basic theme</h2>
-        <div id="five">
+        <div id="five" class="accordionPro">
             <ol>
                 <li>
                     <h2><span>Slide One</span></h2>
@@ -332,13 +366,23 @@
         </div>
 
         <p class="note">
-            <b>Note:</b> another oft-requested feature, right-to-left support, has also been implemented in this version.
+            <b>Note:</b> an oft-requested feature, right-to-left support, was implemented in the previous version.
         </p>
 
         <h3>Code:</h3>
         <pre>&lt;script&gt;<br/>    $('#five').accordionPro({<br/>        theme : 'basic',<br/>        rtl : true<br/>    });<br/>&lt;/script&gt;</pre>
 
     </div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-52406079-1', 'auto');
+  ga('send', 'event', 'engagement', 'view documentation', 'APJS');
+</script>
 
 </body>
 </html>

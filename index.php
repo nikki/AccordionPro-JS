@@ -90,7 +90,7 @@
           <li>
               <h2><span>Slide Three</span></h2>
               <div>
-                  <img src="img-demo/3.jpg" alt="image" />
+                  <img src="_build/documentation/img-demo/3.jpg" alt="image" />
                   <p class="ap-caption">Slide One</p>
               </div>
           </li>
@@ -110,7 +110,7 @@
           <li>
               <h2><span>Slide Five</span></h2>
               <div>
-                  <img src="img-demo/5.jpg" alt="image" />
+                  <img src="_build/documentation/img-demo/5.jpg" alt="image" />
                   <p class="ap-caption">Slide One</p>
               </div>
           </li>
