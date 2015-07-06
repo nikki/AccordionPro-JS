@@ -564,7 +564,7 @@ function getPrefixed(prop){
         if (!settings.startClosed) return;
 
         if (horizontal) {
-          elem.css('width', (slide.l * tab.h) + border - padding);
+          elem.css('width', (slide.l * tab.h) + border - padding - 1);
         } else {
           elem.css('height', slide.l * tab.h + border);
         }
@@ -600,8 +600,19 @@ function getPrefixed(prop){
         if (index !== -1) {
           ua = +(ua.slice(index + 5, index + 7));
 
-          // ie 9+ doesn't need additional styles...
-          if (ua >= 9) return;
+          // ie 10+ doesn't need additional styles...
+          if (ua > 9) return;
+
+          // fixes for ie 8 & 9
+          if (ua <= 9) {
+            // fixes for bordered calculating incorrect tab width before page fully loaded
+            if (settings.theme === 'bordered' && settings.colour.style === 'gradient') {
+              // re-set dimensions of each tab
+              tabs.each(function(index) {
+                _this.setTabDimensions.call($(this), true);
+              });
+            }
+          }
 
           // fixes for ie8
           if (ua === 8) {
@@ -615,14 +626,6 @@ function getPrefixed(prop){
                 elem.children('ol').css({
                   'minWidth' : (settings.horizontalWidth - border) + 'px',
                   'minHeight' : tab.w + 'px'
-                });
-              }
-
-              // fixes for bordered calculating incorrect tab width before page fully loaded
-              if (settings.theme === 'bordered' && settings.colour.style === 'gradient') {
-                // re-set dimensions of each tab
-                tabs.each(function(index) {
-                  _this.setTabDimensions.call($(this), true);
                 });
               }
             }
@@ -1169,9 +1172,8 @@ function getPrefixed(prop){
             elem.css((prefix + 'Transform'), 'scale(' + scale + ')');
           });
 
-          if (horizontal) {
-            elem.css('margin-bottom', -(settings.horizontalHeight - (settings.horizontalHeight * scale)).toFixed(2));
-          }
+          // scale margin bottom
+          elem.css('margin-bottom', -(settings.horizontalHeight - (settings.horizontalHeight * scale)).toFixed(2));
         } else {
           elem.css('zoom', scale);
         }

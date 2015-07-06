@@ -419,7 +419,7 @@
         if (!settings.startClosed) return;
 
         if (horizontal) {
-          elem.css('width', (slide.l * tab.h) + border - padding);
+          elem.css('width', (slide.l * tab.h) + border - padding - 1);
         } else {
           elem.css('height', slide.l * tab.h + border);
         }

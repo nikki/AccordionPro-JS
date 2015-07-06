@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
-    <title>Accordion Pro JS Examples</title>
-    <link rel="stylesheet" href="../../css/accordionpro.min.css">
+    <title>Accordion Pro JS Documentation</title>
+    <link rel="stylesheet" href="../css/accordionpro.min.css">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.min.css" rel="stylesheet">
     <style>
@@ -23,15 +23,104 @@
         #four { margin: 0 auto }
     </style>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script src="../../js/jquery.accordionpro.min.js"></script>
+    <script src="../js/jquery.accordionpro.min.js"></script>
 </head>
 <body>
 
     <div class="container">
         <h1>Accordion Pro JS Examples</h1>
 
-        <h2>Stitch theme with custom colours and icons</h2>
+        <h2>Demo Suite Available</h2>
+        <p>Don't forget - you can use the <a href="http://stitchui.com/accordion-pro-demo-suite/?APJS=1" target="_blank">demo suite</a> to customise your plugin.  Use the dropdowns to customise your settings, and then copy and paste the output into your web page. Easy!<br /><br /></p>
+
+        <h2>Stitch theme with linkable slides and a blue colour scheme</h2>
         <div id="one" class="accordionPro">
+            <ol>
+                <li>
+                    <h2><span>Slide One</span></h2>
+                    <div>
+                        <img src="img-demo/1.jpg" alt="image" />
+                        <p class="ap-caption">Slide One</p>
+                    </div>
+                </li>
+                <li>
+                    <h2><span>Slide Two</span></h2>
+                    <div>
+                        <img src="img-demo/2.jpg" alt="image" />
+                        <p class="ap-caption">Slide Two</p>
+                    </div>
+                </li>
+                <li>
+                    <h2><span>Slide Three</span></h2>
+                    <div>
+                        <img src="img-demo/3.jpg" alt="image" />
+                        <p class="ap-caption">Slide Three</p>
+                    </div>
+                </li>
+                <li>
+                    <h2><span>Slide Four</span></h2>
+                    <div>
+                        <img src="img-demo/4.jpg" alt="image" />
+                        <p class="ap-caption">Slide Four</p>
+                    </div>
+                </li>
+                <li>
+                    <h2><span>Slide Five</span></h2>
+                    <div>
+                        <img src="img-demo/5.jpg" alt="image" />
+                        <p class="ap-caption">Slide Five</p>
+                    </div>
+                </li>
+            </ol>
+            <noscript>
+                <p>Please enable JavaScript to get the full experience.</p>
+            </noscript>
+            <script>
+                $('#one').accordionPro({
+                    theme : 'stitch',
+                    colour : {
+                        scheme : 'blue',
+                    },
+                    tab : {
+                        icon : 'chevron',
+                        font : 'Arial'
+                    },
+                    linkable : true
+                });
+            </script>
+        </div>
+
+        <p class="linkable">
+            <b>Note:</b> when the <b>linkable</b> option is set, you can link to slides by using #yourDivId-slide-1, #yourDivId-slide-2, etc. in the link's href attribute.
+        </p>
+
+        <ul class="links">
+            <li>Links:</li>
+            <li><a href="#one-slide-1">#one-slide-1</a></li>
+            <li><a href="#one-slide-2">#one-slide-2</a></li>
+            <li><a href="#one-slide-3">#one-slide-3</a></li>
+            <li><a href="#one-slide-4">#one-slide-4</a></li>
+            <li><a href="#one-slide-5">#one-slide-5</a></li>
+        </ul>
+
+        <h3>Code:</h3>
+        <pre>&lt;script>
+    $('#one').accordionPro({
+        theme : 'stitch',
+        colour : {
+            scheme : 'blue',
+        },
+        tab : {
+            icon : 'chevron',
+            font : 'Arial'
+        },
+        linkable : true
+    });
+&lt;/script></pre>
+
+
+        <h2>Stitch theme with custom colours and icons</h2>
+        <div id="two" class="accordionPro">
             <ol>
                 <li>
                     <h2><span>Slide One</span></h2>
@@ -81,7 +170,7 @@
                     this.find('.ap-caption').fadeOut();
                 }
 
-                $('#one').accordionPro({
+                $('#two').accordionPro({
                     autoPlay : true,
                     onSlideOpen : slideOpen,
                     onSlideClose : slideClose,
@@ -90,11 +179,11 @@
                         font : 'Helvetica Neue',
                         icon : 'custom',
                         customIcons : [
-                          '../_build/documentation/img-demo/user-alt.png',
-                          '../_build/documentation/img-demo/chat-alt.png',
-                          '../_build/documentation/img-demo/letter-alt.png',
-                          '../_build/documentation/img-demo/search-alt.png',
-                          '../_build/documentation/img-demo/leaf-alt.png'
+                          '../documentation/img-demo/user-alt.png',
+                          '../documentation/img-demo/chat-alt.png',
+                          '../documentation/img-demo/letter-alt.png',
+                          '../documentation/img-demo/search-alt.png',
+                          '../documentation/img-demo/leaf-alt.png'
                         ],
                         customColours : [
                           '#c25252',
@@ -114,80 +203,41 @@
         </p>
 
         <h3>Code:</h3>
-        <pre>&lt;script&gt;<br/>    function callback() {<br/>        $('#one').find('.ap-caption').each(function() {<br/>            if (!$(this).parents('.slide').hasClass('selected')) {<br/>                $(this).fadeOut();<br/>            } else {<br/>                if (!$(this).is(':visible')) $(this).fadeIn();<br/>            }<br/>        });<br/>    }<br/><br/>    $('#one').accordionPro({<br/>        autoPlay : true,<br/>        onSlideOpen : callback,<br/>        onSlideClose : callback,<br/>        theme : 'stitch',<br/>        rounded : true<br/>    }).find('.ap-caption:first').show();<br/>&lt;/script&gt;</pre>
+        <pre>&lt;script>
+    function slideOpen() {
+        this.find('.ap-caption').delay(800).fadeIn();
+    }
 
-        <h2>Stitch theme with linkable slides and a blue colour scheme</h2>
-        <div id="two" class="accordionPro">
-            <ol>
-                <li>
-                    <h2><span>Slide One</span></h2>
-                    <div>
-                        <img src="img-demo/1.jpg" alt="image" />
-                        <p class="ap-caption">Slide One</p>
-                    </div>
-                </li>
-                <li>
-                    <h2><span>Slide Two</span></h2>
-                    <div>
-                        <img src="img-demo/2.jpg" alt="image" />
-                        <p class="ap-caption">Slide Two</p>
-                    </div>
-                </li>
-                <li>
-                    <h2><span>Slide Three</span></h2>
-                    <div>
-                        <img src="img-demo/3.jpg" alt="image" />
-                        <p class="ap-caption">Slide Three</p>
-                    </div>
-                </li>
-                <li>
-                    <h2><span>Slide Four</span></h2>
-                    <div>
-                        <img src="img-demo/4.jpg" alt="image" />
-                        <p class="ap-caption">Slide Four</p>
-                    </div>
-                </li>
-                <li>
-                    <h2><span>Slide Five</span></h2>
-                    <div>
-                        <img src="img-demo/5.jpg" alt="image" />
-                        <p class="ap-caption">Slide Five</p>
-                    </div>
-                </li>
-            </ol>
-            <noscript>
-                <p>Please enable JavaScript to get the full experience.</p>
-            </noscript>
-            <script>
-                $('#two').accordionPro({
-                    theme : 'stitch',
-                    colour : {
-                        scheme : 'blue',
-                    },
-                    tab : {
-                        icon : 'chevron',
-                        font : 'Arial'
-                    },
-                    linkable : true
-                });
-            </script>
-        </div>
+    function slideClose() {
+        this.find('.ap-caption').fadeOut();
+    }
 
-        <p class="linkable">
-            <b>Note:</b> when the <b>linkable</b> option is set, you can link to slides by using #yourDivId-slide-1, #yourDivId-slide-2, etc. in the link's href attribute.
-        </p>
-
-        <ul class="links">
-            <li>Links:</li>
-            <li><a href="#two-slide-1">#two-slide-1</a></li>
-            <li><a href="#two-slide-2">#two-slide-2</a></li>
-            <li><a href="#two-slide-3">#two-slide-3</a></li>
-            <li><a href="#two-slide-4">#two-slide-4</a></li>
-            <li><a href="#two-slide-5">#two-slide-5</a></li>
-        </ul>
-
-        <h3>Code:</h3>
-        <pre>&lt;script&gt;<br/>    $('#two').accordionPro({<br/>        theme : 'transparent',<br/>        linkable : true<br/>    });<br/>&lt;/script&gt;</pre>
+    $('#two').accordionPro({
+        autoPlay : true,
+        onSlideOpen : slideOpen,
+        onSlideClose : slideClose,
+        theme : 'stitch',
+        tab : {
+            font : 'Helvetica Neue',
+            icon : 'custom',
+            customIcons : [
+              '../documentation/img-demo/user-alt.png',
+              '../documentation/img-demo/chat-alt.png',
+              '../documentation/img-demo/letter-alt.png',
+              '../documentation/img-demo/search-alt.png',
+              '../documentation/img-demo/leaf-alt.png'
+            ],
+            customColours : [
+              '#c25252',
+              '#ca9859',
+              '#96ba5f',
+              '#59abb7',
+              '#bb6098'
+            ]
+        },
+        rounded : true
+    });
+&lt;/script></pre>
 
         <h2>Bordered theme, starting closed, with a teal colour scheme and gradient style</h2>
         <div id="three" class="accordionPro">
@@ -250,7 +300,18 @@
         </p>
 
         <h3>Code:</h3>
-        <pre>&lt;script&gt;<br/>    $('#three').accordionPro({<br/>        autoPlay : true,<br/>        startClosed : true,<br/>        orientation : 'vertical',<br/>        theme : 'dark',<br/>        rounded : true<br/>    });<br/>&lt;/script&gt;</pre>
+        <pre>&lt;script>
+    $('#three').accordionPro({
+        autoPlay : true,
+        startClosed : true,
+        theme : 'bordered',
+        colour : {
+            scheme : 'teal',
+            style : 'gradient'
+        },
+        rounded : true
+    });
+&lt;/script></pre>
 
         <h2>Light theme</h2>
         <div id="four" class="accordionPro">
@@ -313,7 +374,18 @@
         </p>
 
         <h3>Code:</h3>
-        <pre>&lt;script&gt;<br/>    $('#four').accordionPro({<br/>        startClosed : true,<br/>        theme : 'light'<br/>    });<br/>&lt;/script&gt;</pre>
+        <pre>&lt;script>
+    $('#four').accordionPro({
+        orientation : 'vertical',
+        startClosed : true,
+        theme : 'bordered',
+        colour : {
+            scheme : 'white',
+            style : 'gradient'
+        },
+        verticalWidth : 600
+    });
+&lt;/script></pre>
 
         <h2>Basic theme</h2>
         <div id="five" class="accordionPro">
@@ -360,17 +432,33 @@
             <script>
                 $('#five').accordionPro({
                     theme : 'basic',
-                    rtl : true
+                    rtl : true,
+                    colour: {
+                        scheme : 'red',
+                        style : 'gradient'
+                    },
+                    rounded : true
                 });
             </script>
         </div>
 
         <p class="note">
-            <b>Note:</b> an oft-requested feature, right-to-left support, was implemented in the previous version.
+            <b>Note:</b> this example shows the right-to-left option in action.
         </p>
 
         <h3>Code:</h3>
-        <pre>&lt;script&gt;<br/>    $('#five').accordionPro({<br/>        theme : 'basic',<br/>        rtl : true<br/>    });<br/>&lt;/script&gt;</pre>
+        <pre>&lt;script>
+    $('#five').accordionPro({
+        theme : 'basic',
+        rtl : true,
+        colour: {
+            scheme : 'red',
+            style : 'gradient'
+        },
+        rounded : true
+    });
+&lt;/script>
+        </pre>
 
     </div>
 

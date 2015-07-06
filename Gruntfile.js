@@ -49,10 +49,10 @@ module.exports = function (grunt) {
       },
 
       uglify: {
-        options: {
-          preserveComments: 'some'
-        },
         build: {
+          options: {
+            preserveComments: 'some'
+          },
           files: {
             'js/jquery.accordionpro.min.js' : 'js/jquery.accordionpro.js'
           }

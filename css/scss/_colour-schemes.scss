@@ -1,6 +1,8 @@
-@mixin gradient($from, $to, $vertical: false) {
-    $from : ie-hex-str($from);
-    // $to : ie-hex-str($to);
+@mixin gradient($from, $to, $vertical: false, $ie: false) {
+    @if $ie {
+        $from : ie-hex-str($from);
+        $to : ie-hex-str($to);
+    }
 
     @if $vertical {
       background-color: $to;
@@ -72,11 +74,35 @@ $schemes: (
                 .slide > :first-child {
                     @include gradient(darken(map-get($colours, $name), 3%), lighten(map-get($colours, $name), 3%));
                 }
+
+                &.rtl {
+                    .slide > :first-child {
+                        @include gradient(lighten(map-get($colours, $name), 3%), darken(map-get($colours, $name), 3%));
+                    }
+                }
+
+                &.ie {
+                    .slide > :first-child {
+                        @include gradient(darken(map-get($colours, $name), 3%), lighten(map-get($colours, $name), 3%), false, true);
+                    }
+
+                    &.rtl { // !!!
+                        .slide > :first-child {
+                            @include gradient(lighten(map-get($colours, $name), 3%), darken(map-get($colours, $name), 3%), false, true);
+                        }
+                    }
+                }
             }
 
             &.vertical {
                 .slide > :first-child {
                     @include gradient(lighten(map-get($colours, $name), 3%), darken(map-get($colours, $name), 3%), true);
+                }
+
+                &.ie {
+                    .slide > :first-child {
+                        @include gradient(lighten(map-get($colours, $name), 3%), darken(map-get($colours, $name), 3%), true, true);
+                    }
                 }
             }
         }
@@ -87,11 +113,11 @@ $schemes: (
             }
 
             &.horizontal.ie8 .slide.selected > :first-child {
-                filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+                @include gradient(lighten(map-get($colours, $name), 3%), lighten(map-get($colours, $name), 3%), false, true);
             }
 
             &.vertical.ie8 .slide.selected > :first-child {
-                filter: none;
+                @include gradient(lighten(map-get($colours, $name), 3%), lighten(map-get($colours, $name), 3%), true, true);
             }
         }
 
@@ -166,6 +192,12 @@ $schemes: (
     &.style-gradient {
         .slide > :first-child {
             @include gradient(darken($white, 9%), $white);
+        }
+
+        &.ie {
+            .slide > :first-child {
+                @include gradient(darken($white, 9%), $white, false, true);
+            }
         }
     }
 
