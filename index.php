@@ -54,7 +54,7 @@
     </style>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <script src="js/jquery.accordionpro.js"></script>
+    <script src="js/jquery.accordionpro.min.js"></script>
 </head>
 <body>
 
@@ -69,7 +69,7 @@
               </div>
           </li>
           <li>
-              <h2>Slide Two</h2>
+              <h2>No span</h2>
               <div>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mene ergo et Triarium dignos existimas, apud quos turpiter loquare? <a href='http://loripsum.net/' target='_blank'>Quibus ego vehementer assentior.</a> Res enim se praeclare habebat, et quidem in utraque parte. Vitae autem degendae ratio maxime quidem illis placuit quieta. An vero, inquit, quisquam potest probare, quod perceptfum, quod. Deinde qui fit, ut ego nesciam, sciant omnes, quicumque Epicurei esse voluerunt? Hoc est dicere: Non reprehenderem asotos, si non essent asoti. <mark>Prioris generis est docilitas, memoria;</mark> Duo Reges: constructio interrete. </p>
 

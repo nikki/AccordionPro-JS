@@ -81,17 +81,8 @@
     }
 }
 
-/**************************************** Closed */
-.accordionPro.closed {
-    &.horizontal.ie8 {
-        // overflow: hidden;
-    }
-}
-
 /*************************************** Rounded */
 .accordionPro.rounded {
-    // overflow: hidden;
-
     /* fix for iOS */
     -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
 
@@ -108,7 +99,7 @@
     &.bordered {
         border-radius: 15px;
 
-        > ol, .slide > * {
+        .slide > * {
             border-radius: 6px;
         }
     }
@@ -116,7 +107,7 @@
     &.stitch {
         border-radius: 11px;
 
-        > ol, .slide > * {
+        .slide > * {
             border-radius: 6px;
         }
     }

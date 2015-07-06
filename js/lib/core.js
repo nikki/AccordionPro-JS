@@ -281,9 +281,8 @@
             elem.css((prefix + 'Transform'), 'scale(' + scale + ')');
           });
 
-          if (horizontal) {
-            elem.css('margin-bottom', -(settings.horizontalHeight - (settings.horizontalHeight * scale)).toFixed(2));
-          }
+          // scale margin bottom
+          elem.css('margin-bottom', -(settings.horizontalHeight - (settings.horizontalHeight * scale)).toFixed(2));
         } else {
           elem.css('zoom', scale);
         }

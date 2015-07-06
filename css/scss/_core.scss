@@ -46,11 +46,6 @@
 
     &, & .slide, &.slide > * {
         -webkit-tap-highlight-color: transparent;
-        -webkit-transform: translate3d(0,0,0);
-        -moz-transform: translate3d(0,0,0);
-        -ms-transform: translate3d(0,0,0);
-        -o-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
     }
 
     .slide {
@@ -59,6 +54,9 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
+        -moz-transform: translateZ(0);
+        -ms-transform: translateZ(0);
+        -o-transform: translateZ(0);
 
 
         /**
@@ -66,7 +64,7 @@
          */
 
         > :first-child {
-            -webkit-backface-visibility: hidden; /* fixes chrome bug */
+            // -webkit-backface-visibility: hidden;
             color: $white;
             text-shadow: 0 -1px 0 $charcoal;
             font-size: 16px;
@@ -157,4 +155,14 @@
         margin: 0;
         background: white;
     }
+}
+
+
+/**
+ * Hack to ensure Chrome doesn't do layer compositing
+ * (actually just enables HW/A in Safari but not Chrome)
+ */
+
+_::-webkit-full-page-media, _:future, :root .accordionPro .slide {
+    background: red !important
 }

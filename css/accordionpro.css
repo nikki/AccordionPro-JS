@@ -28,6 +28,10 @@
    * Slides
    */
   /**
+   * Hack to ensure Chrome doesn't do layer compositing
+   * (actually just enables HW/A in Safari but not Chrome)
+   */
+  /**
    * Caption
    */
   /**
@@ -57,11 +61,6 @@
 }
 .accordionPro, .accordionPro .slide, .accordionPro.slide > * {
   -webkit-tap-highlight-color: transparent;
-  -webkit-transform: translate3d(0, 0, 0);
-  -moz-transform: translate3d(0, 0, 0);
-  -ms-transform: translate3d(0, 0, 0);
-  -o-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
 }
 .accordionPro .slide {
   list-style: none;
@@ -69,6 +68,9 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
   /**
    * Tabs
    */
@@ -77,8 +79,6 @@
    */
 }
 .accordionPro .slide > :first-child {
-  -webkit-backface-visibility: hidden;
-  /* fixes chrome bug */
   color: #ffffff;
   text-shadow: 0 -1px 0 #333333;
   font-size: 16px;
@@ -145,6 +145,10 @@
   padding: 10px;
   margin: 0;
   background: white;
+}
+
+_::-webkit-full-page-media, _:future, :root .accordionPro .slide {
+  background: red !important;
 }
 
 /*********************************** ORIENTATION */
@@ -245,7 +249,6 @@
   top: 9px;
 }
 
-/**************************************** Closed */
 /*************************************** Rounded */
 .accordionPro.rounded {
   /* fix for iOS */
@@ -260,13 +263,13 @@
 .accordionPro.rounded.bordered {
   border-radius: 15px;
 }
-.accordionPro.rounded.bordered > ol, .accordionPro.rounded.bordered .slide > * {
+.accordionPro.rounded.bordered .slide > * {
   border-radius: 6px;
 }
 .accordionPro.rounded.stitch {
   border-radius: 11px;
 }
-.accordionPro.rounded.stitch > ol, .accordionPro.rounded.stitch .slide > * {
+.accordionPro.rounded.stitch .slide > * {
   border-radius: 6px;
 }
 
@@ -395,11 +398,11 @@
 }
 .accordionPro.bordered.horizontal,
 .accordionPro.stitch.horizontal {
-  padding: 5px 0 5px 5px;
+  padding: 5px 0 6px 5px;
 }
 .accordionPro.bordered.horizontal.rtl,
 .accordionPro.stitch.horizontal.rtl {
-  padding: 5px 5px 5px 0;
+  padding: 5px 5px 6px 0;
 }
 .accordionPro.bordered.vertical,
 .accordionPro.stitch.vertical {
@@ -443,11 +446,11 @@
   position: absolute;
   bottom: -17px;
   right: 38px;
-  -webkit-transform: rotate(45deg) translateZ(0);
-  -moz-transform: rotate(45deg) translateZ(0);
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   -o-transform: rotate(45deg);
-  transform: rotate(45deg) translateZ(0);
+  transform: rotate(45deg);
   -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
   border: 9px solid transparent;
   border-top: 0;
@@ -535,9 +538,6 @@
   -o-box-shadow: 0 -1px 0 white inset, 0 5px 15px rgba(0, 0, 0, 0.4);
   box-shadow: 0 -1px 0 white inset, 0 5px 15px rgba(0, 0, 0, 0.4);
 }
-.accordionPro.scheme-white.bordered .slide, .accordionPro.scheme-white.stitch .slide {
-  background-color: #e8e8e8;
-}
 .accordionPro.scheme-white.bordered .slide > :first-child, .accordionPro.scheme-white.stitch .slide > :first-child {
   -webkit-box-shadow: 0 1px 0 #e0e0e0;
   -moz-box-shadow: 0 1px 0 #e0e0e0;
@@ -554,6 +554,9 @@
 }
 .accordionPro.scheme-white.transparent .slide > :first-child:hover {
   background-color: rgba(255, 255, 255, 0.75) !important;
+}
+.accordionPro.scheme-white .slide {
+  background-color: #e8e8e8;
 }
 
 /****************************************** silver */
@@ -605,9 +608,6 @@
   -o-box-shadow: 0 -1px 0 #e3e7ea inset, 0 5px 15px rgba(0, 0, 0, 0.4);
   box-shadow: 0 -1px 0 #e3e7ea inset, 0 5px 15px rgba(0, 0, 0, 0.4);
 }
-.accordionPro.scheme-silver.bordered .slide, .accordionPro.scheme-silver.stitch .slide {
-  background-color: #afbbc2;
-}
 .accordionPro.scheme-silver.bordered .slide > :first-child, .accordionPro.scheme-silver.stitch .slide > :first-child {
   -webkit-box-shadow: 0 1px 0 #a6b3bc;
   -moz-box-shadow: 0 1px 0 #a6b3bc;
@@ -624,6 +624,9 @@
 }
 .accordionPro.scheme-silver.transparent .slide > :first-child:hover {
   background-color: rgba(201, 209, 214, 0.75) !important;
+}
+.accordionPro.scheme-silver .slide {
+  background-color: #afbbc2;
 }
 
 /****************************************** grey */
@@ -675,9 +678,6 @@
   -o-box-shadow: 0 -1px 0 #a9aeae inset, 0 5px 15px rgba(0, 0, 0, 0.4);
   box-shadow: 0 -1px 0 #a9aeae inset, 0 5px 15px rgba(0, 0, 0, 0.4);
 }
-.accordionPro.scheme-grey.bordered .slide, .accordionPro.scheme-grey.stitch .slide {
-  background-color: #798282;
-}
 .accordionPro.scheme-grey.bordered .slide > :first-child, .accordionPro.scheme-grey.stitch .slide > :first-child {
   -webkit-box-shadow: 0 1px 0 #727a7a;
   -moz-box-shadow: 0 1px 0 #727a7a;
@@ -694,6 +694,9 @@
 }
 .accordionPro.scheme-grey.transparent .slide > :first-child:hover {
   background-color: rgba(145, 152, 152, 0.75) !important;
+}
+.accordionPro.scheme-grey .slide {
+  background-color: #798282;
 }
 
 /****************************************** charcoal */
@@ -745,9 +748,6 @@
   -o-box-shadow: 0 -1px 0 #666666 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
   box-shadow: 0 -1px 0 #666666 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
 }
-.accordionPro.scheme-charcoal.bordered .slide, .accordionPro.scheme-charcoal.stitch .slide {
-  background-color: #383838;
-}
 .accordionPro.scheme-charcoal.bordered .slide > :first-child, .accordionPro.scheme-charcoal.stitch .slide > :first-child {
   -webkit-box-shadow: 0 1px 0 #303030;
   -moz-box-shadow: 0 1px 0 #303030;
@@ -764,6 +764,9 @@
 }
 .accordionPro.scheme-charcoal.transparent .slide > :first-child:hover {
   background-color: rgba(79, 79, 79, 0.75) !important;
+}
+.accordionPro.scheme-charcoal .slide {
+  background-color: #383838;
 }
 
 /****************************************** pink */
@@ -815,9 +818,6 @@
   -o-box-shadow: 0 -1px 0 #d68fa7 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
   box-shadow: 0 -1px 0 #d68fa7 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
 }
-.accordionPro.scheme-pink.bordered .slide, .accordionPro.scheme-pink.stitch .slide {
-  background-color: #be4b71;
-}
 .accordionPro.scheme-pink.bordered .slide > :first-child, .accordionPro.scheme-pink.stitch .slide > :first-child {
   -webkit-box-shadow: 0 1px 0 #b74369;
   -moz-box-shadow: 0 1px 0 #b74369;
@@ -834,6 +834,9 @@
 }
 .accordionPro.scheme-pink.transparent .slide > :first-child:hover {
   background-color: rgba(202, 109, 140, 0.75) !important;
+}
+.accordionPro.scheme-pink .slide {
+  background-color: #be4b71;
 }
 
 /****************************************** red */
@@ -885,9 +888,6 @@
   -o-box-shadow: 0 -1px 0 #e13948 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
   box-shadow: 0 -1px 0 #e13948 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
 }
-.accordionPro.scheme-red.bordered .slide, .accordionPro.scheme-red.stitch .slide {
-  background-color: #a51926;
-}
 .accordionPro.scheme-red.bordered .slide > :first-child, .accordionPro.scheme-red.stitch .slide > :first-child {
   -webkit-box-shadow: 0 1px 0 #981723;
   -moz-box-shadow: 0 1px 0 #981723;
@@ -904,6 +904,9 @@
 }
 .accordionPro.scheme-red.transparent .slide > :first-child:hover {
   background-color: rgba(205, 31, 47, 0.75) !important;
+}
+.accordionPro.scheme-red .slide {
+  background-color: #a51926;
 }
 
 /****************************************** orange */
@@ -955,9 +958,6 @@
   -o-box-shadow: 0 -1px 0 #ed8d2e inset, 0 5px 15px rgba(0, 0, 0, 0.4);
   box-shadow: 0 -1px 0 #ed8d2e inset, 0 5px 15px rgba(0, 0, 0, 0.4);
 }
-.accordionPro.scheme-orange.bordered .slide, .accordionPro.scheme-orange.stitch .slide {
-  background-color: #b05f0f;
-}
 .accordionPro.scheme-orange.bordered .slide > :first-child, .accordionPro.scheme-orange.stitch .slide > :first-child {
   -webkit-box-shadow: 0 1px 0 #a2580e;
   -moz-box-shadow: 0 1px 0 #a2580e;
@@ -974,6 +974,9 @@
 }
 .accordionPro.scheme-orange.transparent .slide > :first-child:hover {
   background-color: rgba(218, 118, 19, 0.75) !important;
+}
+.accordionPro.scheme-orange .slide {
+  background-color: #b05f0f;
 }
 
 /****************************************** yellow */
@@ -1025,9 +1028,6 @@
   -o-box-shadow: 0 -1px 0 #ffd21c inset, 0 5px 15px rgba(0, 0, 0, 0.4);
   box-shadow: 0 -1px 0 #ffd21c inset, 0 5px 15px rgba(0, 0, 0, 0.4);
 }
-.accordionPro.scheme-yellow.bordered .slide, .accordionPro.scheme-yellow.stitch .slide {
-  background-color: #bf9900;
-}
 .accordionPro.scheme-yellow.bordered .slide > :first-child, .accordionPro.scheme-yellow.stitch .slide > :first-child {
   -webkit-box-shadow: 0 1px 0 #b08d00;
   -moz-box-shadow: 0 1px 0 #b08d00;
@@ -1044,6 +1044,9 @@
 }
 .accordionPro.scheme-yellow.transparent .slide > :first-child:hover {
   background-color: rgba(237, 190, 0, 0.75) !important;
+}
+.accordionPro.scheme-yellow .slide {
+  background-color: #bf9900;
 }
 
 /****************************************** green */
@@ -1095,9 +1098,6 @@
   -o-box-shadow: 0 -1px 0 #25aa44 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
   box-shadow: 0 -1px 0 #25aa44 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
 }
-.accordionPro.scheme-green.bordered .slide, .accordionPro.scheme-green.stitch .slide {
-  background-color: #155e26;
-}
 .accordionPro.scheme-green.bordered .slide > :first-child, .accordionPro.scheme-green.stitch .slide > :first-child {
   -webkit-box-shadow: 0 1px 0 #125221;
   -moz-box-shadow: 0 1px 0 #125221;
@@ -1114,6 +1114,9 @@
 }
 .accordionPro.scheme-green.transparent .slide > :first-child:hover {
   background-color: rgba(29, 132, 53, 0.75) !important;
+}
+.accordionPro.scheme-green .slide {
+  background-color: #155e26;
 }
 
 /****************************************** teal */
@@ -1165,9 +1168,6 @@
   -o-box-shadow: 0 -1px 0 #1cc8a7 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
   box-shadow: 0 -1px 0 #1cc8a7 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
 }
-.accordionPro.scheme-teal.bordered .slide, .accordionPro.scheme-teal.stitch .slide {
-  background-color: #107863;
-}
 .accordionPro.scheme-teal.bordered .slide > :first-child, .accordionPro.scheme-teal.stitch .slide > :first-child {
   -webkit-box-shadow: 0 1px 0 #0f6a58;
   -moz-box-shadow: 0 1px 0 #0f6a58;
@@ -1184,6 +1184,9 @@
 }
 .accordionPro.scheme-teal.transparent .slide > :first-child:hover {
   background-color: rgba(22, 160, 133, 0.75) !important;
+}
+.accordionPro.scheme-teal .slide {
+  background-color: #107863;
 }
 
 /****************************************** light-blue */
@@ -1235,9 +1238,6 @@
   -o-box-shadow: 0 -1px 0 #82c7f1 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
   box-shadow: 0 -1px 0 #82c7f1 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
 }
-.accordionPro.scheme-light-blue.bordered .slide, .accordionPro.scheme-light-blue.stitch .slide {
-  background-color: #30a3e9;
-}
 .accordionPro.scheme-light-blue.bordered .slide > :first-child, .accordionPro.scheme-light-blue.stitch .slide > :first-child {
   -webkit-box-shadow: 0 1px 0 #229ce7;
   -moz-box-shadow: 0 1px 0 #229ce7;
@@ -1254,6 +1254,9 @@
 }
 .accordionPro.scheme-light-blue.transparent .slide > :first-child:hover {
   background-color: rgba(89, 181, 237, 0.75) !important;
+}
+.accordionPro.scheme-light-blue .slide {
+  background-color: #30a3e9;
 }
 
 /****************************************** blue */
@@ -1305,9 +1308,6 @@
   -o-box-shadow: 0 -1px 0 #4f89e2 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
   box-shadow: 0 -1px 0 #4f89e2 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
 }
-.accordionPro.scheme-blue.bordered .slide, .accordionPro.scheme-blue.stitch .slide {
-  background-color: #1f5ab7;
-}
 .accordionPro.scheme-blue.bordered .slide > :first-child, .accordionPro.scheme-blue.stitch .slide > :first-child {
   -webkit-box-shadow: 0 1px 0 #1c54a9;
   -moz-box-shadow: 0 1px 0 #1c54a9;
@@ -1324,6 +1324,9 @@
 }
 .accordionPro.scheme-blue.transparent .slide > :first-child:hover {
   background-color: rgba(40, 110, 219, 0.75) !important;
+}
+.accordionPro.scheme-blue .slide {
+  background-color: #1f5ab7;
 }
 
 /****************************************** dark-blue */
@@ -1375,9 +1378,6 @@
   -o-box-shadow: 0 -1px 0 #154ca1 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
   box-shadow: 0 -1px 0 #154ca1 inset, 0 5px 15px rgba(0, 0, 0, 0.4);
 }
-.accordionPro.scheme-dark-blue.bordered .slide, .accordionPro.scheme-dark-blue.stitch .slide {
-  background-color: #0b2650;
-}
 .accordionPro.scheme-dark-blue.bordered .slide > :first-child, .accordionPro.scheme-dark-blue.stitch .slide > :first-child {
   -webkit-box-shadow: 0 1px 0 #091f42;
   -moz-box-shadow: 0 1px 0 #091f42;
@@ -1394,6 +1394,9 @@
 }
 .accordionPro.scheme-dark-blue.transparent .slide > :first-child:hover {
   background-color: rgba(16, 57, 120, 0.75) !important;
+}
+.accordionPro.scheme-dark-blue .slide {
+  background-color: #0b2650;
 }
 
 /************************** COLOUR SCHEME TWEAKS */

@@ -110,8 +110,6 @@ $schemes: (
             box-shadow: 0 -1px 0 lighten(map-get($colours, $name), 9%) inset, 0 5px 15px rgba(0, 0, 0, 0.4);
 
             .slide {
-                background-color: darken(map-get($colours, $name), 9%);
-
                 > :first-child {
                     -webkit-box-shadow: 0 1px 0 darken(map-get($colours, $name), 12%);
                     -moz-box-shadow: 0 1px 0 darken(map-get($colours, $name), 12%);
@@ -143,6 +141,10 @@ $schemes: (
                     }
                 }
             }
+        }
+
+        .slide {
+            background-color: darken(map-get($colours, $name), 9%);
         }
     }
 }

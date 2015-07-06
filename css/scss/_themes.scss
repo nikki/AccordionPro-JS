@@ -52,10 +52,10 @@
     }
 
     &.horizontal {
-        padding: 5px 0 5px 5px;
+        padding: 5px 0 6px 5px;
 
         &.rtl {
-            padding: 5px 5px 5px 0;
+            padding: 5px 5px 6px 0;
         }
     }
 
@@ -105,11 +105,11 @@
             position: absolute;
             bottom: -17px;
             right: 38px;
-            -webkit-transform: rotate(45deg) translateZ(0);
-            -moz-transform: rotate(45deg) translateZ(0);
+            -webkit-transform: rotate(45deg);
+            -moz-transform: rotate(45deg);
             -ms-transform: rotate(45deg);
             -o-transform: rotate(45deg);
-            transform: rotate(45deg) translateZ(0);
+            transform: rotate(45deg);
             -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
             border: 9px solid transparent;
             border-top: 0;
