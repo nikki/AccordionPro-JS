@@ -164,5 +164,5 @@
  */
 
 _::-webkit-full-page-media, _:future, :root .accordionPro .slide {
-    background: red !important
+    -webkit-transform: translateZ(0);
 }

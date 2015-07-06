@@ -1,15 +1,14 @@
 $white: #ffffff;
 $silver: #c9d1d6;
 $grey: #919898;
-$charcoal: #333333;
-$black: #000000;
-$pink: #cc6699;
-$red: #cf091c;
-$orange: #ff7700;
+$charcoal: #4F4F4F;
+$pink: #ca6d8c;
+$red: #cd1f2f;
+$orange: #da7613;
 $yellow: #edbe00;
-$green: #2ecc71;
+$green: #1D8435;
 $teal: #16a085;
-$light-blue: #87cefa;
+$light-blue: #59b5ed;
 $blue: #286edb;
 $dark-blue: #103978;
 
@@ -18,4 +17,3 @@ $dark-blue: #103978;
 @import 'options';
 @import 'themes';
 @import 'colour-schemes';
-@import 'ie';

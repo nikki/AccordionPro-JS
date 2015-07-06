@@ -173,11 +173,7 @@
         &.ie8 {
             .slide {
                 > :first-child {
-                    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
-
-                    &:after {
-                        -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
-                    }
+                    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)" !important;
                 }
             }
         }
