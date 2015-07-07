@@ -12,7 +12,7 @@ Tab settings:
   fontSize : 16,
   font : 'Arial',
   icon : 'none',
-  textOrientation : 'normal',
+
 
 panel.scrollable option
 

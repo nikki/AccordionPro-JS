@@ -17,6 +17,8 @@
     <style>
       body { padding-top: 30px }
       h1, h3 { font-size: 24px; border-bottom: 2px solid #333333; margin: 30px 0 10px; text-shadow: 1px 1px 0 white; clear: both; }
+      h1 { overflow: hidden; line-height: 90px; border-top: 2px solid #333333; }
+      h1 img { width: 80px; height: 80px; float: right; margin: 5px 0 5px 5px; }
       .container > p { font-size: 16px; line-height: 1.5em; margin-bottom: 15px; }
       .container > p:last-of-type { margin-bottom: 30px }
       fieldset {
@@ -111,11 +113,17 @@
       </noscript>
   </div>
 
-  <h1>Accordion Pro Demo Suite</h1>
-  <p>This demo suite is intended to help users of <a href="http://stitchui.com/accordion-pro-js/">Accordion Pro JS</a> and <a href="http://stitchui.com/accordion-pro-wp/">Accordion Pro WP</a> design their own accordion implementation.  Use to options below to configure
+  <h1>
+    <span>Accordion Pro Demo Suite</span>
+    <a href="http://codecanyon.net/item/accordion-pro/1506395?ref=StitchUI" class="tn buy right" title="horizontal accordion plugin for WordPress"><img src="/wp-content/uploads/thumbnail_accordion_pro_wp.jpg" alt="Accordion Pro WP"></a>
+    <a href="http://codecanyon.net/item/accordion-pro-js-responsive-jquery-accordion/5480772?ref=StitchUI" class="tn buy right" title="responsive jQuery accordion plugin"><img src="/wp-content/uploads/thumbnail_accordion_pro_js.jpg" alt="Accordion Pro JS"></a>
+  </h1>
+
+  <p>This demo suite is intended to help users of Accordion Pro JS and Accordion Pro WP design their own accordion implementation.  Use to options below to configure
     your setup visually - any changes made will be reflected in the plugin instance above.</p>
   <p>As an added bonus, users of Accordion Pro JS can use the generated code output to instantiate the plugin on their own websites.</p>
   <p><b>Please note: </b>not all of the tab customisation options are available in this demo. For information on how to set set custom colours and icons for each tab, please see the documentation. <b>Some of these features are not yet available in Accordion Pro WP.</b></p>
+  <p><b><a href="http://codecanyon.net/item/accordion-pro-js-responsive-jquery-accordion/5480772?ref=StitchUI">Buy Accordion Pro JS</a></b> or <b><a href="http://codecanyon.net/item/accordion-pro/1506395?ref=StitchUI">Buy Accordion Pro WP</a></b> from CodeCanyon <b>now!</b></p>
 
   <form class="form-inline" method="GET" name="demo">
   <?php
