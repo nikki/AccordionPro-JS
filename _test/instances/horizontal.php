@@ -12,6 +12,7 @@
     .wrapper > ul > li { display: inline-block; padding-right: 12px; margin-right: 8px; border-right: 1px solid black; line-height: 12px; }
     .wrapper > ul > li a { text-decoration: none }
     .wrapper > ul > li a:hover { text-decoration: underline }
+    h2 { margin-top: 40px }
   </style>
   <link rel="stylesheet" href="../../css/accordionpro.css">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
@@ -21,75 +22,75 @@
 <body>
 
   <div class="wrapper">
-    <ul>
-      <li><a href="index.php">index</a></li>
-      <li><a href="vertical.php">index vertical</a></li>
 
-      <li><a href="startclosed.php">startclosed</a></li>
-      <li><a href="startclosed-vertical.php">startclosed vertical</a></li>
-
-      <li><a href="firstslide.php">firstslide</a></li>
-      <li><a href="firstslide-vertical.php">firstslide vertical</a></li>
-
-      <li><a href="rounded.php">rounded</a></li>
-      <li><a href="rounded-vertical.php">rounded vertical</a></li>
-
-      <li><a href="rtl.php">rtl</a></li>
-      <li><a href="rtl-vertical.php">rtl vertical</a></li>
-
-      <li><a href="rtl-startclosed.php">rtl startclosed</a></li>
-      <li><a href="rtl-vertical-startclosed.php">rtl vertical startclosed</a></li>
-
-      <li><a href="autoplay.php">autoplay</a></li>
-      <li><a href="autoplay-vertical.php">autoplay-vertical</a></li>
-
-      <li><a href="autoplay-startclosed-firstslide.php">autoplay startclosed firstslide</a></li>
-      <li><a href="autoplay-startclosed.php">autoplay startclosed</a></li>
-      <li><a href="autoplay-vertical-startclosed.php">autoplay vertical startclosed</a></li>
-
-      <li><a href="slidenumbers.php">disable slidenumbers</a></li>
-      <li><a href="slidenumbers-vertical.php">disable slidenumbers vertical</a></li>
-
-      <li><a href="linkable.php">linkable</a></li>
-      <li><a href="linkable-vertical.php">linkable vertical</a></li>
-      <li><a href="linkable-autoplay.php">linkable autoplay</a></li>
-      <li><a href="linkable-vertical-autoplay.php">linkable vertical autoplay</a></li>
-
-      <li><a href="vertical-fittocontent.php">vertical fittocontent</a></li>
-      <li><a href="vertical-fittocontent-closed.php">vertical fittocontent closed</a></li>
-    </ul>
-
-    <h1>Basic setup - horizontal accordion</h1>
+    <h1>Horizontal Accordion Examples</h1>
 
     <?php
 
       // have to wrap bools in string for js
       $jQueryOptions = array(
-        'basic' => array(
-          'orientation' => 'horizontal',
-          'theme'       => 'basic'
+        array(
+          'desc' => 'Stitch theme with custom colours and icons',
+          'theme' => 'stitch',
+          'tab' => array(
+            'icon' => 'custom',
+            'customIcons' => array(
+              '../../_build/documentation/img-demo/user-alt.png',
+              '../../_build/documentation/img-demo/chat-alt.png',
+              '../../_build/documentation/img-demo/letter-alt.png',
+              '../../_build/documentation/img-demo/search-alt.png',
+              '../../_build/documentation/img-demo/leaf-alt.png'
+            ),
+            'customColours' => array(
+              '#c25252',
+              '#ca9859',
+              '#96ba5f',
+              '#59abb7',
+              '#bb6098'
+            )
+          ),
         ),
-        'dark' => array(
-          'orientation' => 'horizontal',
-          'theme'       => 'dark'
+        array(
+          'desc' => 'Stitch theme, rounded with a teal colour scheme',
+          'theme' => 'stitch',
+          'rounded' => true,
+          'tab' => array(
+            'selected' => 2
+          ),
+          'colour' => array(
+            'scheme' => 'teal'
+          )
         ),
-        'light' => array(
-          'orientation' => 'horizontal',
-          'theme'       => 'light'
+        array(
+          'desc' => 'Bordered theme with charcoal gradient colour scheme and chevron icons',
+          'theme' => 'bordered',
+          'colour' => array(
+            'scheme' => 'charcoal',
+            'style' => 'gradient'
+          ),
+          'tab' => array(
+            'selected' => 3,
+            'icon' => 'chevron'
+          )
         ),
-        'stitch' => array(
-          'orientation' => 'horizontal',
-          'theme'       => 'stitch'
-        ),
-        'transparent' => array(
-          'orientation' => 'horizontal',
-          'theme'       => 'transparent'
+        array(
+          'desc' => 'Bordered theme with blue colour scheme, rounded, custom tab colours, square icons',
+          'theme' => 'bordered',
+          'rounded' => true,
+          'colour' => array(
+            'scheme' => 'blue'
+          ),
+          'tab' => array(
+            'selected' => 4,
+            'icon' => 'square'
+          )
         )
       );
 
       foreach ($jQueryOptions as $key => $value) { ?>
-        <h2><?php echo $key; ?></h2>
-        <div id="<?php echo $key; ?>">
+        <h2><?php echo $value['desc']; ?></h2>
+
+        <div id="<?php echo $value['theme'] . $key; ?>">
             <ol>
                 <li>
                     <h2><span>Slide One</span></h2>
@@ -132,11 +133,13 @@
             </noscript>
             <script>
               (function() {
-                $('#<?php echo $key; ?>').accordionPro(<?php echo json_encode($value); ?>);
+                $('#<?php echo $value["theme"] . $key; ?>').accordionPro(<?php echo json_encode($value); ?>);
               })();
             </script>
         </div>
-    <?php } ?>
+    <?php
+      }
+    ?>
   </div>
 
 </body>
