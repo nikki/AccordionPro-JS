@@ -13,7 +13,6 @@
     "test"
   ],
   "dependencies": {
-    "jasmine-jquery": "~2.0.5",
     "jquery": "1.11.1"
   }
 }

@@ -3,17 +3,13 @@
   // ini_set('display_startup_errors',1);
   // error_reporting(-1);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <title>Accordion Pro Demo Suite</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
-    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/accordionpro.min.css">
-
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <style>
       body { padding-top: 30px }
       h1, h3 { font-size: 24px; border-bottom: 2px solid #333333; margin: 30px 0 10px; text-shadow: 1px 1px 0 white; clear: both; }
@@ -55,6 +51,7 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script src="js/jquery.accordionpro.min.js"></script>
+    <script src="js/analytics.js"></script>
 </head>
 <body>
 
@@ -65,25 +62,25 @@
           <li>
               <h2><span>Slide One</span></h2>
               <div>
-                  <img src="_build/documentation/img-demo/1.jpg" alt="image" />
+                  <img src="img-demo/1.jpg" alt="image" />
               </div>
           </li>
           <li>
               <h2><span>Slide Two</span></h2>
               <div>
-                  <img src="_build/documentation/img-demo/2.jpg" alt="image" />
+                  <img src="img-demo/2.jpg" alt="image" />
               </div>
           </li>
           <li>
               <h2><span>Slide Three</span></h2>
               <div>
-                  <img src="_build/documentation/img-demo/3.jpg" alt="image" />
+                  <img src="img-demo/3.jpg" alt="image" />
               </div>
           </li>
           <li>
               <h2><span>Slide Four</span></h2>
               <div>
-                  <img src="_build/documentation/img-demo/4.jpg" alt="image" />
+                  <img src="img-demo/4.jpg" alt="image" />
               </div>
           </li>
           <li>
@@ -118,6 +115,7 @@
   <p><b>Please note: </b>not all of the tab customisation options are available in this demo. For information on how to set set custom colours and icons for each tab, please see the documentation. <b>Some of these features are not yet available in Accordion Pro WP.</b></p>
 
   <form class="form-inline" method="GET" name="demo">
+
   <?php
     $defaults = array(
       'Layout' => array(
@@ -408,102 +406,6 @@ EOT;
     <textarea></textarea>
     <input id='reset' type='button' value='reset' />
   </div>
-
-  <script>
-    $(function() {
-      var output = JSON.parse($("#demo-output").val()),
-          tmp;
-
-      for (var i in output) {
-        // cast strings to bool
-        if (output.hasOwnProperty(i)) {
-          if (output[i] === 'true') {
-            output[i] = true;
-          }
-
-          if (output[i] === 'false') {
-            output[i] = false;
-          }
-        }
-
-        // delete tab.customIcons and tab.customColours
-        if (i.indexOf('custom') >= 0) {
-          delete output[i];
-          continue;
-        }
-
-        // create any sub-objects
-        if (i.indexOf('.') >= 0) {
-          tmp = i.split('.');
-
-          if (!output[tmp[0]]) output[tmp[0]] = {};
-          output[tmp[0]][tmp[1]] = output[i];
-
-          delete output[i];
-        }
-
-        // ...
-        if (typeof output[i] === 'string' && output[i].indexOf('<') >= 0) {
-          delete output[i];
-          location.replace('http://bringvictory.com/');
-          return;
-        }
-      }
-
-      // init demo
-      $('#demo').accordionPro(output);
-
-      // set textarea output
-      var stringify = JSON.stringify(output);
-      if (stringify === 'null') stringify = '';
-
-      // prettify a little
-      // stringify = stringify.split(',');
-      // $.each(stringify, function(index, str) {
-      //   stringify[index] = '\n' + str;
-      // });
-      // stringify = stringify.join(',');
-
-      // insert text into textarea
-      $('textarea').html("$('#demo').accordionPro(" + stringify + ");");
-
-      var $form = $('form');
-
-      // submit form on change
-      $form
-        .find('input, select')
-        .on('change', function(e) {
-          $('form').submit();
-        })
-
-      // submit form on enter
-      $(window).keyup(function(e) {
-        if (e.keyCode === 13) $('form').submit();
-      });
-
-      // show tooltip
-      $form
-        .on({
-          mouseenter : function() {
-            $(this).parent().find('p').show();
-          },
-          mouseleave : function() {
-            $(this).parent().find('p').hide();
-          }
-        }, 'i');
-
-      // move linkable triggers
-      $('div#linkable')
-        .detach()
-        .insertAfter('fieldset:last');
-
-      // reset
-      $('#reset').click(function(e) {
-        // why IE can't have loc.origin I have no idea
-        location.replace("http://" + location.hostname + location.pathname);
-      });
-    });
-  </script>
 
 </div>
 
