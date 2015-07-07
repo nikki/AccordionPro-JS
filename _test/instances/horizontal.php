@@ -7,21 +7,20 @@
   <style>
     html { overflow-y: scroll }
     body { font: 14px/24px 'Helvetica Neue', Arial, sans-serif; color: #333; margin: 30px auto 60px; background: #fff }
-    .wrapper { max-width: 600px; margin: 0 auto }
+    .wrapper { max-width: 900px; margin: 0 auto }
     .wrapper > ul { margin: 0; padding: 0 }
     .wrapper > ul > li { display: inline-block; padding-right: 12px; margin-right: 8px; border-right: 1px solid black; line-height: 12px; }
     .wrapper > ul > li a { text-decoration: none }
     .wrapper > ul > li a:hover { text-decoration: underline }
   </style>
-  <link rel="stylesheet" href="css/accordionpro.min.css">
+  <link rel="stylesheet" href="../../css/accordionpro.css">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-  <script src="js/modernizr.2.6.2.min.js"></script>
-  <script src="js/jquery.accordionpro.min.js"></script>
+  <script src="../../js/jquery.accordionpro.min.js"></script>
+
 </head>
 <body>
 
   <div class="wrapper">
-
     <ul>
       <li><a href="index.php">index</a></li>
       <li><a href="vertical.php">index vertical</a></li>
@@ -60,36 +59,31 @@
       <li><a href="vertical-fittocontent-closed.php">vertical fittocontent closed</a></li>
     </ul>
 
-    <h1>Rounded corners - vertical accordion</h1>
+    <h1>Basic setup - horizontal accordion</h1>
 
     <?php
 
       // have to wrap bools in string for js
       $jQueryOptions = array(
         'basic' => array(
-          'orientation' => 'vertical',
-          'theme'       => 'basic',
-          'rounded'     => 'true'
+          'orientation' => 'horizontal',
+          'theme'       => 'basic'
         ),
         'dark' => array(
-          'orientation' => 'vertical',
-          'theme'       => 'dark',
-          'rounded'     => 'true'
+          'orientation' => 'horizontal',
+          'theme'       => 'dark'
         ),
         'light' => array(
-          'orientation' => 'vertical',
-          'theme'       => 'light',
-          'rounded'     => 'true'
+          'orientation' => 'horizontal',
+          'theme'       => 'light'
         ),
         'stitch' => array(
-          'orientation' => 'vertical',
-          'theme'       => 'stitch',
-          'rounded'     => 'true'
+          'orientation' => 'horizontal',
+          'theme'       => 'stitch'
         ),
         'transparent' => array(
-          'orientation' => 'vertical',
-          'theme'       => 'transparent',
-          'rounded'     => 'true'
+          'orientation' => 'horizontal',
+          'theme'       => 'transparent'
         )
       );
 
@@ -100,35 +94,35 @@
                 <li>
                     <h2><span>Slide One</span></h2>
                     <div>
-                        <img src="img-demo/1.jpg" alt="image" />
+                        <img src="../../_build/documentation/img-demo/1.jpg" alt="image" />
                         <p class="ap-caption">Slide One</p>
                     </div>
                 </li>
                 <li>
                     <h2><span>Slide Two</span></h2>
                     <div>
-                        <img src="img-demo/2.jpg" alt="image" />
+                        <img src="../../_build/documentation/img-demo/2.jpg" alt="image" />
                         <p class="ap-caption">Slide Two</p>
                     </div>
                 </li>
                 <li>
                     <h2><span>Slide Three</span></h2>
                     <div>
-                        <img src="img-demo/3.jpg" alt="image" />
+                        <img src="../../_build/documentation/img-demo/3.jpg" alt="image" />
                         <p class="ap-caption">Slide Three</p>
                     </div>
                 </li>
                 <li>
                     <h2><span>Slide Four</span></h2>
                     <div>
-                        <img src="img-demo/4.jpg" width="768" alt="image" />
+                        <img src="../../_build/documentation/img-demo/4.jpg" width="768" alt="image" />
                         <p class="ap-caption">Slide Four</p>
                     </div>
                 </li>
                 <li>
                     <h2><span>Slide Five</span></h2>
                     <div>
-                        <img src="img-demo/5.jpg" alt="image" />
+                        <img src="../../_build/documentation/img-demo/5.jpg" alt="image" />
                         <p class="ap-caption">Slide Five</p>
                     </div>
                 </li>
