@@ -11,8 +11,7 @@ Tab settings:
   size : 48,
   fontSize : 16,
   font : 'Arial',
-  icon : 'none',
-
+  icon : 'none'
 
 panel.scrollable option
 
