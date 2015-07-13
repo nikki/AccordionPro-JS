@@ -1,19 +1,25 @@
-CHANGELOG
+# CHANGELOG
 
-5/5/15
-Moved APWP to it's own repo
+## 13/07/15
+Testing post-commit hook
 
-2014
+## 07/07/15
+Released v2
+
+## 05/15 - 07/15
 Colour schemes
 Colour styles
+Tab settings
+  size
+  fontSize
+  font
+  icon
+  customIcons
+  customColours
+Panel settings
+  scrollable
+  selected
+  scaleImages
 
-Tab settings:
-  size : 48,
-  fontSize : 16,
-  font : 'Arial',
-  icon : 'none'
-
-panel.scrollable option
-
-moved firstSlide setting to tab.selected
-moved scaleImages to panel.scaleImages
+## 05/05/15
+Moved APWP to it's own repo
