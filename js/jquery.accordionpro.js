@@ -1249,6 +1249,16 @@ function getPrefixed(prop){
         tabs
           .off('.accordionPro')
           .removeClass();
+      },
+
+      debug : function() {
+        return {
+          elem : elem,
+          settings : settings,
+          methods : methods,
+          setup : setup,
+          core : core
+        };
       }
     };
 
@@ -1351,12 +1361,17 @@ function getPrefixed(prop){
 
     // otherwise, call method on current instance
     } else if (typeof method === 'string' && instance[method]) {
-      // zero-based index for trigger method
-      if (method === 'trigger' && typeof param === 'number') param -= 1;
+      // debug method isn't chainable b/c we need the debug object to be returned
+      if (method === 'debug') {
+        return instance[method].call(elem);
+      } else {
+        // zero-based index for trigger method
+        if (method === 'trigger' && typeof param === 'number') param -= 1;
 
-      // chainable methods
-      instance[method].call(elem, param);
-      return elem;
+        // chainable methods
+        instance[method].call(elem, param);
+        return elem;
+      }
     }
   };
 

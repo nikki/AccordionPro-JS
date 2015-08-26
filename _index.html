@@ -11,169 +11,48 @@
     <style>
       body {
         background: #F3F1EC;
+        font-family: Helvetica, sans-serif;
       }
     </style>
 
     <!-- JS -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script src="js/jquery.accordionpro.js"></script>
 
-
-<!--
-$white: #ffffff;
-$silver: #c9d1d6;
-$grey: #919898;
-$charcoal: #333333;
-$black: #000000;
-$pink: #ca6d8c;
-$red: #cf091c;
-$orange: #ff7700;
-$yellow: #edbe00;
-$green: #2ecc71;
-$teal: #16a085;
-$light-blue: #87cefa;
-$blue: #286edb;
-$dark-blue: #103978;
--->
-
-
     <script>
-      $(function() {
-        var elem = $('#accordion').accordionPro({
-          // activateOn : 'mouseover',
-          // orientation : 'vertical',
-          // verticalWidth: '100%',
-          // autoPlay: true,
-          theme : 'bordered',
-          // startClosed: true,
-          colour : {
-            scheme : 'teal',
-            style : 'gradient'
-          },
-          // rtl: true,
-          // cycleSpeed : 3000,
-          rounded: true,
-          tab : {
-            // size : 36,                            // set tab size
-            // fontSize : 12,                        // set tab font size
-            font : 'Helvetica Neue',                       // set tab font family
-            icon : 'custom',                        // set tab icon -> none, number, chevron, disc, square, custom
-            customIcons : [
-              '../_build/documentation/img-demo/user.png',
-              '../_build/documentation/img-demo/chat.png',
-              '../_build/documentation/img-demo/letter.png',
-              '../_build/documentation/img-demo/search.png',
-              '../_build/documentation/img-demo/leaf.png'
-            ],
-            customColours : [
-              '#c25252',
-              '#ca9859',
-              '#96ba5f',
-              '#59abb7',
-              '#bb6098'
-            ],
-            selected : 3
-          },
-          // linkable : true,
-          panel : {
-            scrollable : true,
-            scaleImages : true
-          },
-          onSlideOpen : function() {
-            // console.log('open', $('.slide').index(this.parent()));
-            this.css('background', 'red');
-          },
-          onSlideClose : function() {
-            // console.log('close', $('.slide').index(this.parent()));
-            this.css('background', 'white');
+      $.ajax({
+          url: 'ajax-template.html',
+          type: 'GET',
+          data: null,
+          success: function(html) {
+            $('#container').append(html);
+            $('#accordion').accordionPro({
+              theme : 'stitch',
+              tab: {
+                customColours : [
+                  '#c25252',
+                  '#ca9859',
+                  '#96ba5f',
+                  '#59abb7',
+                  '#bb6098'
+                ]
+              }
+            });
           }
-        });
-
-        // elem.accordionPro('destroy')
-
       });
     </script>
-
 
 </head>
 <body>
 
-  <div id="accordion">
-    <ol>
-      <li>
-        <h3>Slide One</h3>
-        <div>
+  <h1>Ajax Demo</h1>
+  <p>Hey Carlos!</p>
+  <p>To get the plugin working with Ajax, you'll need to use the unminified version of Accordion Pro JS (the file is called jquery.accordionpro.js) and comment out lines 668 and 686.</p>
+  <p>If you view source on this page, you can see the Ajax call. <a href="./ajax-template.html">ajax-template.html</a> is the ajax template.</p>
+  <p>I wouldn't call this a bug as such, more an unforeseen use case - you're the first person that's ever wanted to create an accordion via Ajax :)</p>
+  <p>Hope this helps!</p>
 
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mene ergo et Triarium dignos existimas, apud quos turpiter loquare? <a href='http://loripsum.net/' target='_blank'>Quibus ego vehementer assentior.</a> Res enim se praeclare habebat, et quidem in utraque parte. Vitae autem degendae ratio maxime quidem illis placuit quieta. An vero, inquit, quisquam potest probare, quod perceptfum, quod. Deinde qui fit, ut ego nesciam, sciant omnes, quicumque Epicurei esse voluerunt? Hoc est dicere: Non reprehenderem asotos, si non essent asoti. <mark>Prioris generis est docilitas, memoria;</mark> Duo Reges: constructio interrete. </p>
-
-          <p>Sed virtutem ipsam inchoavit, nihil amplius. <a href='http://loripsum.net/' target='_blank'>Cave putes quicquam esse verius.</a> Eam si varietatem diceres, intellegerem, ut etiam non dicente te intellego; <b>Ecce aliud simile dissimile.</b> <mark>Qui est in parvis malis.</mark> Bestiarum vero nullum iudicium puto. Ita multo sanguine profuso in laetitia et in victoria est mortuus. </p>
-
-          <ul>
-            <li>Eodem modo is enim tibi nemo dabit, quod, expetendum sit, id esse laudabile.</li>
-            <li>Quis contra in illa aetate pudorem, constantiam, etiamsi sua nihil intersit, non tamen diligat?</li>
-            <li>Fortitudinis quaedam praecepta sunt ac paene leges, quae effeminari virum vetant in dolore.</li>
-            <li>An vero, inquit, quisquam potest probare, quod perceptfum, quod.</li>
-            <li>Si enim, ut mihi quidem videtur, non explet bona naturae voluptas, iure praetermissa est;</li>
-            <li>Nos vero, inquit ille;</li>
-          </ul>
-
-
-          <p>Ut in geometria, prima si dederis, danda sunt omnia. <i>Si longus, levis dictata sunt.</i> Egone quaeris, inquit, quid sentiam? <a href='http://loripsum.net/' target='_blank'>Quid de Pythagora?</a> </p>
-
-          <ol>
-            <li>Nam si quae sunt aliae, falsum est omnis animi voluptates esse e corporis societate.</li>
-            <li>Nam his libris eum malo quam reliquo ornatu villae delectari.</li>
-            <li>Non laboro, inquit, de nomine.</li>
-            <li>Universa enim illorum ratione cum tota vestra confligendum puto.</li>
-            <li>Nam si propter voluptatem, quae est ista laus, quae possit e macello peti?</li>
-          </ol>
-
-
-          <p>Quid enim? Sed haec in pueris; A primo, ut opinor, animantium ortu petitur origo summi boni. Diodorus, eius auditor, adiungit ad honestatem vacuitatem doloris. Longum est enim ad omnia respondere, quae a te dicta sunt. Haec bene dicuntur, nec ego repugno, sed inter sese ipsa pugnant. Bonum liberi: misera orbitas. Deprehensus omnem poenam contemnet. <i>Hoc non est positum in nostra actione.</i> </p>
-
-          <p><b>Scrupulum, inquam, abeunti;</b> Sed emolumenta communia esse dicuntur, recte autem facta et peccata non habentur communia. Ne in odium veniam, si amicum destitero tueri. <b>Quo modo autem philosophus loquitur?</b> Ne amores quidem sanctos a sapiente alienos esse arbitrantur. <a href='http://loripsum.net/' target='_blank'>Proclivi currit oratio.</a> <a href='http://loripsum.net/' target='_blank'>Quis est tam dissimile homini.</a> <a href='http://loripsum.net/' target='_blank'>Ita prorsus, inquam;</a> </p>
-
-          <dl>
-            <dt><dfn>Tenent mordicus.</dfn></dt>
-            <dd>Nec enim ignoras his istud honestum non summum modo, sed etiam, ut tu vis, solum bonum videri.</dd>
-            <dt><dfn>Cur iustitia laudatur?</dfn></dt>
-            <dd>Hoc dictum in una re latissime patet, ut in omnibus factis re, non teste moveamur.</dd>
-            <dt><dfn>Stoicos roga.</dfn></dt>
-            <dd>Si sapiens, ne tum quidem miser, cum ab Oroete, praetore Darei, in crucem actus est.</dd>
-          </dl>
-
-        </div>
-      </li>
-      <li>
-        <h3>Slide Two</h3>
-        <div>
-
-        </div>
-      </li>
-      <li>
-        <h3>Slide Three</h3>
-        <div>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mene ergo et Triarium dignos existimas, apud quos turpiter loquare? <a href='http://loripsum.net/' target='_blank'>Quibus ego vehementer assentior.</a> Res enim se praeclare habebat, et quidem in utraque parte. Vitae autem degendae ratio maxime quidem illis placuit quieta. An vero, inquit, quisquam potest probare, quod perceptfum, quod. Deinde qui fit, ut ego nesciam, sciant omnes, quicumque Epicurei esse voluerunt? Hoc est dicere: Non reprehenderem asotos, si non essent asoti. <mark>Prioris generis est docilitas, memoria;</mark> Duo Reges: constructio interrete. </p>
-        </div>
-      </li>
-      <li>
-        <h3>Slide Four</h3>
-        <div>
-
-        </div>
-      </li>
-      <li>
-        <h3>Slide Five</h3>
-        <div>
-          <p>ksgdfsbj</p>
-        </div>
-      </li>
-    </ol>
-  </div>
-
-
-
-  <a href="#accordion-slide-2">slide 2</a>
+  <div id="container"></div>
 
 </body>
 </html>

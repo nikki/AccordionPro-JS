@@ -66,6 +66,16 @@
         tabs
           .off('.accordionPro')
           .removeClass();
+      },
+
+      debug : function() {
+        return {
+          elem : elem,
+          settings : settings,
+          methods : methods,
+          setup : setup,
+          core : core
+        };
       }
     };
 

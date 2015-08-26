@@ -1,25 +1,15 @@
-# CHANGELOG
+## CHANGELOG
 
-## 13/07/15
-Testing post-commit hook some more
+### v2.0 - 07/07/15
 
-## 07/07/15
-Released v2
-
-## 05/15 - 07/15
-Colour schemes
-Colour styles
-Tab settings
-  size
-  fontSize
-  font
-  icon
-  customIcons
-  customColours
-Panel settings
-  scrollable
-  selected
-  scaleImages
-
-## 05/05/15
-Moved APWP to it's own repo
+### v2.0a - 05-07/15
+  - Colour schemes
+  - Colour styles
+  - Tab settings
+    - Size
+    - Font size
+    - Font family
+    - Custom tab colours
+    - Custom tab icons
+  - Panel settings
+    - Scrollable (w/ customised scrollbars)

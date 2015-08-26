@@ -81,17 +81,6 @@ module.exports = function (grunt) {
         }
       },
 
-      jasmine: {
-        src: 'js/jquery.accordionpro.js',
-        options: {
-          vendor: [
-            'bower_components/jquery/dist/jquery.js',
-            'bower_components/jasmine-jquery/lib/jasmine-jquery.js'
-          ],
-          specs: 'test/**/*.js'
-        }
-      },
-
       watch: {
         options: {
           livereload: true,
@@ -124,7 +113,6 @@ module.exports = function (grunt) {
     });
 
     // These plugins provide necessary tasks
-    grunt.loadNpmTasks('grunt-contrib-jasmine');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
@@ -132,7 +120,6 @@ module.exports = function (grunt) {
 
     // Default task
     grunt.registerTask('default', ['sass', 'concat', 'uglify']);
-    grunt.registerTask('test', ['default', 'jasmine']);
 
   };
 
