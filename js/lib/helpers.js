@@ -12,9 +12,9 @@
 
       if (!sheet) return;
       if ('insertRule' in sheet) {
-        sheet.insertRule(selector + '{' + rules + '}', sheet.cssRules.length);
+        sheet.insertRule(selector + '{' + rules + '}', (sheet.cssRules ? sheet.cssRules.length : 0));
       } else if ('addRule' in sheet) {
-        sheet.addRule(selector, rules, sheet.rules.length);
+        sheet.addRule(selector, rules, (sheet.rules ? sheet.rules.length : 0));
       }
     }
 
