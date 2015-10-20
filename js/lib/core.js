@@ -83,6 +83,7 @@
             core.animateSlide.call($this, p);
           });
 
+        // set selected
         core.setSelectedSlide.call(p.selected ? this.prev() : this);
       },
 
@@ -91,7 +92,7 @@
        * Trigger slide animation
        */
 
-      trigger : function() {
+      trigger : function(e) {
         var $slide = $(this).parent(),
             props = {
               index : slides.index($slide),
@@ -128,6 +129,11 @@
           // fit accordion dimensions to content
           core.fitToContent(props);
         }
+
+        // update hash on user click
+        if (settings.linkable && typeof e !== 'number') {
+          history.replaceState(null, null, '#' + elem[0].id + '-slide-' + (core.currentSlide + 1));
+        }
       },
 
 
@@ -136,6 +142,8 @@
        */
 
       setSelectedSlide : function() {
+        var index = slides.index(this);
+
         // remove selected class
         slides.removeClass('selected');
 

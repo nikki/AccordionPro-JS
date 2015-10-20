@@ -8,13 +8,16 @@
      */
 
     function addRule(selector, rules) {
-      var sheet = document.styleSheets[0];
-
+      var sheet = document.styleSheets[document.styleSheets.length - 1];
       if (!sheet) return;
-      if ('insertRule' in sheet) {
-        sheet.insertRule(selector + '{' + rules + '}', (sheet.cssRules ? sheet.cssRules.length : 0));
-      } else if ('addRule' in sheet) {
-        sheet.addRule(selector, rules, (sheet.rules ? sheet.rules.length : 0));
+
+      try {
+        if ('insertRule' in sheet) {
+          sheet.insertRule(selector + '{' + rules + '}', (sheet.cssRules ? sheet.cssRules.length : 0));
+        } else if ('addRule' in sheet) {
+          sheet.addRule(selector, rules, (sheet.rules ? sheet.rules.length : 0));
+        }
+      } catch(e) {
+        // addRule(selector, rules, index + 1);
       }
     }
-

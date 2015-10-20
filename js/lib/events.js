@@ -156,7 +156,7 @@
 
       hashchange : function() {
         if (settings.linkable) {
-          $window.on('hashchange.accordionPro', core.triggerLink);
+          $window.on('load.accordionPro hashchange.accordionPro', core.triggerLink);
         }
       },
 

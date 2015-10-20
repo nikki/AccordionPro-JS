@@ -1,7 +1,7 @@
 /*!
  * Plugin Name:    Accordion Pro JS - a responsive accordion plugin for jQuery
  * Plugin URI:     http://stitchui.com/accordion-pro-js/
- * Version:        2.0.1
+ * Version:        2.0.2
  * Author:         Nicola Hibbert
  * Author URI:     http://stitchui.com
  *
@@ -50,17 +50,19 @@
      */
 
     function addRule(selector, rules) {
-      var sheet = document.styleSheets[0];
-
+      var sheet = document.styleSheets[document.styleSheets.length - 1];
       if (!sheet) return;
-      if ('insertRule' in sheet) {
-        sheet.insertRule(selector + '{' + rules + '}', (sheet.cssRules ? sheet.cssRules.length : 0));
-      } else if ('addRule' in sheet) {
-        sheet.addRule(selector, rules, (sheet.rules ? sheet.rules.length : 0));
+
+      try {
+        if ('insertRule' in sheet) {
+          sheet.insertRule(selector + '{' + rules + '}', (sheet.cssRules ? sheet.cssRules.length : 0));
+        } else if ('addRule' in sheet) {
+          sheet.addRule(selector, rules, (sheet.rules ? sheet.rules.length : 0));
+        }
+      } catch(e) {
+        // addRule(selector, rules, index + 1);
       }
     }
-
-
     /**
      * SETUP PLUGIN
      */
@@ -764,7 +766,7 @@
 
       hashchange : function() {
         if (settings.linkable) {
-          $window.on('hashchange.accordionPro', core.triggerLink);
+          $window.on('load.accordionPro hashchange.accordionPro', core.triggerLink);
         }
       },
 
@@ -893,6 +895,7 @@
             core.animateSlide.call($this, p);
           });
 
+        // set selected
         core.setSelectedSlide.call(p.selected ? this.prev() : this);
       },
 
@@ -901,7 +904,7 @@
        * Trigger slide animation
        */
 
-      trigger : function() {
+      trigger : function(e) {
         var $slide = $(this).parent(),
             props = {
               index : slides.index($slide),
@@ -938,6 +941,11 @@
           // fit accordion dimensions to content
           core.fitToContent(props);
         }
+
+        // update hash on user click
+        if (settings.linkable && typeof e !== 'number') {
+          history.replaceState(null, null, '#' + elem[0].id + '-slide-' + (core.currentSlide + 1));
+        }
       },
 
 
@@ -946,6 +954,8 @@
        */
 
       setSelectedSlide : function() {
+        var index = slides.index(this);
+
         // remove selected class
         slides.removeClass('selected');
 
