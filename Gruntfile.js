@@ -82,6 +82,18 @@ module.exports = function (grunt) {
       },
 
       sync: {
+        toBuild: {
+          files: [
+            {
+              src: ['README'],
+              dest: '_build'
+            }
+          ],
+          failOnError: true,
+          pretend: false, // Don't do any IO. Before you run the task with `updateAndDelete` PLEASE MAKE SURE it doesn't remove too much.
+          verbose: false // Display log messages when copying files
+        },
+
         toBuildCSS: {
           files: [
             {
@@ -105,6 +117,7 @@ module.exports = function (grunt) {
           pretend: false, // Don't do any IO. Before you run the task with `updateAndDelete` PLEASE MAKE SURE it doesn't remove too much.
           verbose: false // Display log messages when copying files
         },
+
         toWPCSS: {
           files: [
             {
@@ -127,20 +140,7 @@ module.exports = function (grunt) {
           failOnError: true,
           pretend: false, // Don't do any IO. Before you run the task with `updateAndDelete` PLEASE MAKE SURE it doesn't remove too much.
           verbose: false // Display log messages when copying files
-        },
-
-        /*,
-
-        toWP: {
-          files: [{
-            cwd: '_build',
-            src: ['**'],
-            dest: '/Volumes/files/webserver/websites/wordpress_4-1/wp-content/plugins/accordionpro_wp',
-          }],
-          failOnError: true,
-          pretend: false, // Don't do any IO. Before you run the task with `updateAndDelete` PLEASE MAKE SURE it doesn't remove too much.
-          verbose: false // Display log messages when copying files
-        }*/
+        }
       },
 
       watch: {

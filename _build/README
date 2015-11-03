@@ -1,0 +1,25 @@
+## CHANGELOG
+
+### v2.0.2 - 03/11/15
+  - Minor bug fixes
+    - Linkable hash is now updated when a tab is triggered manually
+    - Resolved issue with Firefox not creating custom style rules on external stylesheets
+
+### v2.0.1 - 27/08/15
+  - Minor bug fixes
+    - Prevent scaling on page load if responsive set to false
+    - Edge case with css rules
+
+### v2.0.0 - 07/07/15
+
+### v2.0.0a - 05-07/15
+  - Colour schemes
+  - Colour styles
+  - Tab settings
+    - Size
+    - Font size
+    - Font family
+    - Custom tab colours
+    - Custom tab icons
+  - Panel settings
+    - Scrollable (w/ customised scrollbars)
