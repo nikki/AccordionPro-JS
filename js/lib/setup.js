@@ -384,6 +384,8 @@
         imgs = settings.tab.customIcons;
 
         // create styles for icons
+        // using a relative path? Path will be relative to CSS file location
+        // best to use an absolute path instead
         tabs.each(function(index) {
           addRule('#' + elem[0].id + ' .slide-' + (index + 1) + ' > :first-child:after', 'background-image: url(' + imgs[index % imgs.length] + ')');
         });

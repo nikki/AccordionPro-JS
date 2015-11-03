@@ -17,5 +17,6 @@
         easing = 'ease-in-out',
         fitToContent = !horizontal && settings.verticalSlideHeight === 'fitToContent' ? true : false,
         transparent = (settings.theme === 'transparent'),
-        touch = !!('ontouchstart' in window);
+        touch = !!('ontouchstart' in window),
+        sheet;
 
