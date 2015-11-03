@@ -61,6 +61,7 @@
           // find accordion stylesheet
           if (sheets[i].href.indexOf('accordionpro') >= 0) {
             sheet = sheets[i];
+            return;
           }
         }
       }
