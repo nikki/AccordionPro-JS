@@ -81,6 +81,68 @@ module.exports = function (grunt) {
         }
       },
 
+      sync: {
+        toBuildCSS: {
+          files: [
+            {
+              src: ['css/accordionpro.css', 'css/accordionpro.min.css'],
+              dest: '_build'
+            }
+          ],
+          failOnError: true,
+          pretend: false, // Don't do any IO. Before you run the task with `updateAndDelete` PLEASE MAKE SURE it doesn't remove too much.
+          verbose: false // Display log messages when copying files
+        },
+
+        toBuildJS: {
+          files: [
+            {
+              src: ['js/jquery.accordionpro.js', 'js/jquery.accordionpro.min.js'],
+              dest: '_build'
+            }
+          ],
+          failOnError: true,
+          pretend: false, // Don't do any IO. Before you run the task with `updateAndDelete` PLEASE MAKE SURE it doesn't remove too much.
+          verbose: false // Display log messages when copying files
+        },
+        toWPCSS: {
+          files: [
+            {
+              src: ['css/accordionpro.css', 'css/accordionpro.min.css'],
+              dest: '../accordionpro_wp/'
+            }
+          ],
+          failOnError: true,
+          pretend: false, // Don't do any IO. Before you run the task with `updateAndDelete` PLEASE MAKE SURE it doesn't remove too much.
+          verbose: false // Display log messages when copying files
+        },
+
+        toWPJS: {
+          files: [
+            {
+              src: ['js/jquery.accordionpro.js', 'js/jquery.accordionpro.min.js'],
+              dest: '../accordionpro_wp/'
+            }
+          ],
+          failOnError: true,
+          pretend: false, // Don't do any IO. Before you run the task with `updateAndDelete` PLEASE MAKE SURE it doesn't remove too much.
+          verbose: false // Display log messages when copying files
+        },
+
+        /*,
+
+        toWP: {
+          files: [{
+            cwd: '_build',
+            src: ['**'],
+            dest: '/Volumes/files/webserver/websites/wordpress_4-1/wp-content/plugins/accordionpro_wp',
+          }],
+          failOnError: true,
+          pretend: false, // Don't do any IO. Before you run the task with `updateAndDelete` PLEASE MAKE SURE it doesn't remove too much.
+          verbose: false // Display log messages when copying files
+        }*/
+      },
+
       watch: {
         options: {
           livereload: true,
@@ -117,9 +179,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-sync');
 
     // Default task
-    grunt.registerTask('default', ['sass', 'concat', 'uglify']);
+    grunt.registerTask('default', ['sass', 'concat', 'uglify', 'sync']);
 
   };
 
