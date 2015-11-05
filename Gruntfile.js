@@ -73,7 +73,8 @@ module.exports = function (grunt) {
         compressed: {
           options: {
             banner: '<%= banner %>',
-            style: 'compressed'
+            style: 'compressed',
+            "sourcemap=none": ''
           },
           files: {
             'css/accordionpro.min.css' : 'css/scss/accordionpro.scss'
@@ -85,7 +86,7 @@ module.exports = function (grunt) {
         toBuild: {
           files: [
             {
-              src: ['README'],
+              src: ['CHANGELOG'],
               dest: '_build'
             }
           ],
