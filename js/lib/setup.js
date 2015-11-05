@@ -183,6 +183,7 @@
           // variable height or flexible (fitToContent) height
           if (fitToContent) {
             calc.height = transparent ? panelH : panelH + tab.h + padding; // variable height
+            if (panelPadding) calc.height += panelPadding * 2;
           } else {
             calc.height = slide.h + tab.h; // fixed height
           }
@@ -327,6 +328,7 @@
         } else {
           if (fitToContent) {
             calc.height = slides.eq(index).children('div').height();
+            if (panelPadding) calc.height += panelPadding * 2;
           } else {
             calc.height = transparent ? (slide.h + tab.h) : slide.h - offset - padding;
           }
@@ -349,10 +351,16 @@
        */
 
       setPanelDimensions : function(calc) {
+        // set panel dimensions
         this
           .width(calc.width)
           .height(calc.height)
           .css(calc.position);
+
+        // set panel padding
+        if (panelPadding) {
+          this.wrapInner('<div class="ap-inner"></div>').find('.ap-inner').css('padding', panelPadding);
+        }
       },
 
 

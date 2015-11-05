@@ -1,7 +1,7 @@
 /*!
  * Plugin Name:    Accordion Pro JS - a responsive accordion plugin for jQuery
  * Plugin URI:     http://stitchui.com/accordion-pro-js/
- * Version:        2.0.2
+ * Version:        2.0.3
  * Author:         Nicola Hibbert
  * Author URI:     http://stitchui.com
  *
@@ -33,10 +33,11 @@
         offset = 0,
         padding = 0,
         tabBorder = 0,
+        panelPadding = (settings.panel && settings.panel.padding && typeof settings.panel.padding === 'number') ? settings.panel.padding : 0,
         horizontal = settings.orientation === 'horizontal' ? 1 : 0,
-        easing = 'ease-in-out',
         fitToContent = !horizontal && settings.verticalSlideHeight === 'fitToContent' ? true : false,
         transparent = (settings.theme === 'transparent'),
+        easing = 'ease-in-out',
         touch = !!('ontouchstart' in window),
         sheet;
 
@@ -272,6 +273,7 @@
           // variable height or flexible (fitToContent) height
           if (fitToContent) {
             calc.height = transparent ? panelH : panelH + tab.h + padding; // variable height
+            if (panelPadding) calc.height += panelPadding * 2;
           } else {
             calc.height = slide.h + tab.h; // fixed height
           }
@@ -416,6 +418,7 @@
         } else {
           if (fitToContent) {
             calc.height = slides.eq(index).children('div').height();
+            if (panelPadding) calc.height += panelPadding * 2;
           } else {
             calc.height = transparent ? (slide.h + tab.h) : slide.h - offset - padding;
           }
@@ -438,10 +441,16 @@
        */
 
       setPanelDimensions : function(calc) {
+        // set panel dimensions
         this
           .width(calc.width)
           .height(calc.height)
           .css(calc.position);
+
+        // set panel padding
+        if (panelPadding) {
+          this.wrapInner('<div class="ap-inner"></div>').find('.ap-inner').css('padding', panelPadding);
+        }
       },
 
 
@@ -1012,7 +1021,7 @@
       fitToContent : function(p) {
         var height = p && (p.triggerHeight + tab.h) || slides.eq(core.currentSlide).height();
 
-        // // set height
+        // set height
         elem.height(((slide.l - 1) * tab.h) + height);
       },
 
@@ -1277,7 +1286,8 @@
     /* panels */
     panel : {
       scrollable : false,                   // trigger scrollbar on vertical overflow
-      scaleImages : true                    // scales images to fit slide width and height
+      scaleImages : true,                   // scales images to fit slide width and height
+      padding : 0                           // adds padding (px [integer]) to the slide panel
     },
 
     /* events */

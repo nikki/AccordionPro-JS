@@ -5,7 +5,7 @@ module.exports = function (grunt) {
       banner: '/*!\n' +
               ' * Plugin Name:    Accordion Pro JS - a responsive accordion plugin for jQuery\n' +
               ' * Plugin URI:     http://stitchui.com/accordion-pro-js/\n' +
-              ' * Version:        2.0.2\n' +
+              ' * Version:        2.0.3\n' +
               ' * Author:         Nicola Hibbert\n' +
               ' * Author URI:     http://stitchui.com\n' +
               ' *\n' +

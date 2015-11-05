@@ -13,10 +13,11 @@
         offset = 0,
         padding = 0,
         tabBorder = 0,
+        panelPadding = (settings.panel && settings.panel.padding && typeof settings.panel.padding === 'number') ? settings.panel.padding : 0,
         horizontal = settings.orientation === 'horizontal' ? 1 : 0,
-        easing = 'ease-in-out',
         fitToContent = !horizontal && settings.verticalSlideHeight === 'fitToContent' ? true : false,
         transparent = (settings.theme === 'transparent'),
+        easing = 'ease-in-out',
         touch = !!('ontouchstart' in window),
         sheet;
 

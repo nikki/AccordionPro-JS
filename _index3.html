@@ -16,38 +16,6 @@
         font-family: Helvetica, sans-serif;
       }
       #container { margin: 50px }
-
-      .accordionPro .slide > :first-child {
-        background-color: #ebecdc !important;
-        -webkit-box-shadow: inset 0 -1px 0 #97978b;
-        -moz-box-shadow: inset 0 -1px 0 #97978b;
-        box-shadow: inset 0 -1px 0 #97978b;
-      }
-
-      .accordionPro .slide.selected > :first-child::after {
-        display: block;
-        height: 30px;
-        width: 30px;
-        position: absolute;
-        top: 32px !important;
-        right: 40px !important;
-        -webkit-transform: rotate(45deg) translateZ(0);
-        -moz-transform: rotate(45deg) translateZ(0);
-        -o-transform: rotate(45deg);
-        transform: rotate(45deg) translateZ(0);
-        -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
-        filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
-        content: '' !important;
-        border: 1px solid #97978b;
-        border-left: 0;
-        border-top: 0;
-        background-color: #ebecdc !important;
-      }
-
-      .accordionPro .slide > div {
-        background-color: #dfdac7 !important;
-      }
-
     </style>
 
     <!-- JS -->
@@ -143,9 +111,7 @@
 
   <script>
     $('#accordion').accordionPro({
-      tab : {
-        icon : 'none'
-      },
+      orientation : 'vertical',
       panel : {
         padding : 20
       }
