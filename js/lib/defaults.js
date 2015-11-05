@@ -41,7 +41,7 @@
     panel : {
       scrollable : false,                   // trigger scrollbar on vertical overflow
       scaleImages : true,                   // scales images to fit slide width and height
-      padding : 0                           // adds padding (px [integer]) to the slide panel
+      padding : 0                           // adds internal padding (px [integer]) to slide panels
     },
 
     /* events */

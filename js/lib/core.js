@@ -172,7 +172,7 @@
        */
 
       fitToContent : function(p) {
-        var height = p && (p.triggerHeight + tab.h) || slides.eq(core.currentSlide).height();
+        var height = p && (p.triggerHeight + tab.h) || slides.eq(core.currentSlide).children('div').height() + tab.h; // don't change this
 
         // set height
         elem.height(((slide.l - 1) * tab.h) + height);

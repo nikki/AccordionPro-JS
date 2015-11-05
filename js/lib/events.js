@@ -165,7 +165,7 @@
        * Bind resize and orientationchange
        */
 
-      resize : function() { // +orientationchange
+      resize : function() {
         var timer = 0;
 
         if (horizontal && settings.responsive) {
@@ -181,6 +181,16 @@
             timer = setTimeout(function() {
               core.scalePlugin();
             }, 200);
+          });
+        }
+
+        if (fitToContent) {
+          $window.on('resize.accordionPro orientationchange.accordionPro', function() {
+            // trigger fitToContent
+            core.fitToContent();
+
+            // reflow slide positions
+            setup.setSlidesDimensions(true);
           });
         }
       },
