@@ -86,7 +86,8 @@
         slides.each(function(index) {
           $(this)
             .addClass('slide slide-' + (index + 1))
-            .attr('data-slide-name', elem[0].id + '-slide-' + (index + 1));
+            .attr('data-slide-name', elem[0].id + '-slide-' + (index + 1))
+            .css({ 'zIndex' : 100 + index });
         });
       },
 
@@ -504,11 +505,6 @@
                 });
               }
             }
-
-            // slides zIndex
-            slides.each(function(index) {
-              $(this).css({ 'zIndex' : 100 + index });
-            });
           }
 
           // ie 7 and below

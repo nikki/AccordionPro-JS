@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v2.0.4 - 09/03/16
+  - Minor bug fix
+    - Fixed styles for vertical accordion when it's nested inside a horizontal accordion
+
 ### v2.0.3 - 05/11/15
   - New feature
     - Added a 'panel padding' option

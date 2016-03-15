@@ -36,6 +36,16 @@
         > :first-child {
             text-align: left;
             direction: ltr;
+            -webkit-transform: translateX(0) rotate(0);
+            -webkit-transform-origin: left top;
+            -moz-transform: translateX(0) rotate(0);
+            -moz-transform-origin: left top;
+            -ms-transform: translateX(0) rotate(0);
+            -ms-transform-origin: left top;
+            -o-transform: translateX(0) rotate(0);
+            -o-transform-origin: left top;
+            transform: translateX(0) rotate(0);
+            transform-origin: left top;
 
             &:after {
                 left: auto;

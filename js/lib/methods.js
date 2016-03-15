@@ -53,6 +53,7 @@
           .off('.accordionPro')
           .removeData('accordionPro')
           .removeAttr('style')
+          .removeAttr('id')
           .removeClass();
 
         slides

@@ -14,6 +14,7 @@
     .wrapper > ul > li a:hover { text-decoration: underline }
     .wrapper > div { margin: 0 auto }
     h2 { margin-top: 40px }
+    textarea { width: 50%; height: 200px; margin-bottom: 60px; font-family: Menlo, Monaco, Consolas, "Courier New", monospace }
   </style>
   <link rel="stylesheet" href="../../css/accordionpro.css">
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
@@ -54,11 +55,11 @@
           'tab' => array(
             'icon' => 'custom',
             'customIcons' => array(
-              '../../_build/documentation/img-demo/user-alt.png',
-              '../../_build/documentation/img-demo/chat-alt.png',
-              '../../_build/documentation/img-demo/letter-alt.png',
-              '../../_build/documentation/img-demo/search-alt.png',
-              '../../_build/documentation/img-demo/leaf-alt.png'
+              '../_build/documentation/img-demo/user-alt.png',
+              '../_build/documentation/img-demo/chat-alt.png',
+              '../_build/documentation/img-demo/letter-alt.png',
+              '../_build/documentation/img-demo/search-alt.png',
+              '../_build/documentation/img-demo/leaf-alt.png'
             ),
             'customColours' => array(
               '#c25252',
@@ -145,12 +146,18 @@
             <noscript>
                 <p>Please enable JavaScript to get the full experience.</p>
             </noscript>
+
+            <?php unset($value["desc"]); ?>
+
             <script>
               (function() {
                 $('#<?php echo $value["theme"] . $key; ?>').accordionPro(<?php echo json_encode($value); ?>);
               })();
             </script>
         </div>
+
+        <textarea><?php echo "$('#" . $value["theme"] . $key . "').accordionPro(" . json_encode($value) . ");"; ?></textarea>
+
     <?php
       }
     ?>

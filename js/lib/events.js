@@ -11,10 +11,18 @@
       click : function() {
         if (settings.activateOn === 'click') {
           // trigger animation cycle
-          tabs.on('click.accordionPro touchstart.accordionPro', methods.trigger);
+          // if (window.PointerEvent) {
+          //   tabs.on('pointerdown.accordionPro', methods.trigger);
+          // } else {
+            tabs.on('click.accordionPro touchstart.accordionPro', methods.trigger);
+          // }
 
           if (settings.startClosed) {
-            tabs.on('click.accordionPro.closed touchstart.accordionPro.closed', core.triggerFromClosed);
+            // if (window.PointerEvent) {
+            //   tabs.on('pointerdown.accordionPro.closed', core.triggerFromClosed);
+            // } else {
+              tabs.on('click.accordionPro.closed touchstart.accordionPro.closed', core.triggerFromClosed);
+            // }
           }
         }
       },
