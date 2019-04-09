@@ -1,3 +1,5 @@
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
 # Accordion Pro JS
 A responsive accordion plugin for jQuery.
 
