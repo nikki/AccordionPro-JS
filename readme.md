@@ -193,5 +193,5 @@ This plugin wouldn't be possible if it weren't for the open-source efforts of ot
 
 Thanks a bunch guys!
 
-## Thank You!
+## Thank You!
 I hope you have fun with your new plugin. If you have any questions that aren’t covered by this document, then please don’t hesitate to get in touch.
