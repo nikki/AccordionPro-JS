@@ -91,7 +91,7 @@ Options are passed into the plugin using a JavaScript object. For example, the i
 
 The [examples.html](./documentation/examples.html) file has a number of different plugin setups for you to copy and paste as required.
 
-## Options
+## Options
 The plugin has a multitude of options, so you can tailor the aesthetics and functionality to suit your needs.
 
 ```
@@ -151,9 +151,7 @@ pauseOnHover : true,                    // pause on hover
 linkable : false                        // link slides via hash
 ```
 
-Methods
--------
-
+## Methods
 Accordion Pro JS has a number of methods available.
 
 ```
@@ -184,14 +182,10 @@ To chain methods:
 $('#yourdiv').accordionPro('next').accordionPro('next');
 ```
 
-Browser Differences
--------------------
-
+## Browser Differences
 Not all of the CSS3 properties used to create Accordion Pro JS are supported in all browsers. The appearance of accordions will be consistent in modern browsers (Chrome, Firefox, Safari), but where older versions of Internet Explorer are lacking the requisite CSS3 support, styles will degrade gracefully.
 
-Credits
--------
-
+## Credits
 This plugin wouldn't be possible if it weren't for the open-source efforts of others. Many thanks to:
 
 *   Orman Clark for the original [accordion design](http://www.premiumpixels.com/freebies/horizontal-accordion-slider-psd/);
@@ -199,7 +193,5 @@ This plugin wouldn't be possible if it weren't for the open-source efforts of ot
 
 Thanks a bunch guys!
 
-Thank You!
-----------
-
+## Thank You!
 I hope you have fun with your new plugin. If you have any questions that aren’t covered by this document, then please don’t hesitate to get in touch.
