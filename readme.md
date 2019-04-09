@@ -151,7 +151,7 @@ pauseOnHover : true,                    // pause on hover
 linkable : false                        // link slides via hash
 ```
 
-## Methods
+## Methods
 Accordion Pro JS has a number of methods available.
 
 ```
@@ -182,10 +182,10 @@ To chain methods:
 $('#yourdiv').accordionPro('next').accordionPro('next');
 ```
 
-## Browser Differences
+## Browser Differences
 Not all of the CSS3 properties used to create Accordion Pro JS are supported in all browsers. The appearance of accordions will be consistent in modern browsers (Chrome, Firefox, Safari), but where older versions of Internet Explorer are lacking the requisite CSS3 support, styles will degrade gracefully.
 
-## Credits
+## Credits
 This plugin wouldn't be possible if it weren't for the open-source efforts of others. Many thanks to:
 
 *   Orman Clark for the original [accordion design](http://www.premiumpixels.com/freebies/horizontal-accordion-slider-psd/);
